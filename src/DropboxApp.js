@@ -1,13 +1,61 @@
 var TelegramBot = require('node-telegram-bot-api');
 var MongoClient = require('mongodb').MongoClient;
+var fs = require('fs');
 
 var ProviderHandler = require('./ProviderHandler');
+var Logger = require('./Logger');
 var Express = require('./Express');
+
+function ensureExists(path, mask) {
+    return new Promise((resolve, reject) => {
+        if (typeof mask == 'function') { // allow the `mask` parameter to be optional
+            cb = mask;
+            mask = "0777";
+        }
+        fs.mkdir(path, mask, function (err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    })
+}
 
 module.exports = class DropboxApp {
     constructor(token) {
         // Create a new blackjack bot
         this._TelegramBot = new TelegramBot(token, {polling: true});
+
+        // photo
+        this._TelegramBot.on('photo', (msg) => {
+            var directory = __dirname + "/../downloads/" + msg.from.id;
+
+            ensureExists(directory, '0744')
+                .then(() => {
+                    this._TelegramBot.downloadFile(
+                        msg.photo[0].file_id,
+                        directory
+                    ).then((info) => {
+                        Logger.log(info);
+                    })
+                })
+                .catch(Logger.error);
+
+
+        });
+
+        // // random file
+        // this._TelegramBot.on('document', (msg) => {
+        //     this._TelegramBot.downloadFile(
+        //         'AgADBAADsqcxG_q1lQfV5K60PAtzBJnFnBkABEwDhRbmgGRENKAAAgI',
+        //         // 'AgADBAADsacxG_q1lQfvlzY6iDKClfmQZBkABHxtquqWN7YYcSMCAAEC',
+        //         __dirname + "/../downloads"
+        //     )
+        //         .then((info) => {
+        //             Logger.log(info);
+        //         })
+        // });
 
         // connect to mongodb
         this.connectDb()
@@ -26,7 +74,7 @@ module.exports = class DropboxApp {
             .then(() => {
                 // finished loading everything
             })
-            .catch(console.error);
+            .catch(Logger.error);
     }
 
     providers() {
@@ -39,7 +87,7 @@ module.exports = class DropboxApp {
         this._ProviderHandler.register('login', /\/login/, require('./Providers/Login'));
         // this._ProviderHandler.register('help param', /\/help (.+)/, require('./Providers/Help'));
 
-        console.log('Loaded ' + this._ProviderHandler.commandCount + ' providers');
+        Logger.log('Loaded ' + this._ProviderHandler.commandCount + ' providers');
 
         // not used for now
         return Promise.resolve();
@@ -50,7 +98,7 @@ module.exports = class DropboxApp {
             // attempt to connect to mongoserver
             MongoClient.connect(process.env.MONGODB_URL)
                 .then((db) => {
-                    console.log("Connected to " + process.env.MONGODB_URL);
+                    Logger.log("Connected to " + process.env.MONGODB_URL);
                     resolve(db);
                 })
                 .catch(reject);
