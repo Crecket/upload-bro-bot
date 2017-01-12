@@ -1,6 +1,6 @@
 var ProviderInterface = require('./ProviderInterface');
 
-module.exports = class Game extends ProviderInterface {
+module.exports = class Help extends ProviderInterface {
     constructor() {
         super();
     }

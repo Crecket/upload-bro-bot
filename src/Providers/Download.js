@@ -1,6 +1,6 @@
 var ProviderInterface = require('./ProviderInterface');
 
-module.exports = class Start extends ProviderInterface {
+module.exports = class Download extends ProviderInterface {
     constructor() {
         super();
     }
@@ -8,7 +8,7 @@ module.exports = class Start extends ProviderInterface {
     handle(msg, match) {
         var userId = msg.from.id;
 
-        super._logger.debug("Start command: ", userId);
+        super._logger.debug("Download command: ", userId);
 
         // get the users collection
         var usersCollection = this._db.collection('users');

@@ -9,15 +9,14 @@ module.exports = class DropboxApp {
         // Create a new blackjack bot
         this._TelegramBot = new TelegramBot(token, {polling: true});
 
-        // this._TelegramBot.on('message',(msg)=>{
-        // console.log(msg);
-        // })
-
         // connect to mongodb
         this.connectDb()
             .then((db) => {
                 // store the database
                 this._Db = db;
+
+                // start express listener
+                Express(db);
             })
             // first load the providers
             .then(this.providers.bind(this))
@@ -26,7 +25,6 @@ module.exports = class DropboxApp {
             // finish setup
             .then(() => {
                 // finished loading everything
-                console.log("Finished setup");
             })
             .catch(console.error);
     }
@@ -36,9 +34,10 @@ module.exports = class DropboxApp {
         this._ProviderHandler = new ProviderHandler(this._Db, this._TelegramBot);
 
         // Add the commands
-        this._ProviderHandler.register('game', /\/game (.+)/, require('./Providers/Game'));
-        this._ProviderHandler.register('start', /\/start/, require('./Providers/Start'));
+        this._ProviderHandler.register('help', /\/help/, require('./Providers/Help'));
+        this._ProviderHandler.register('download', /\/download/, require('./Providers/Download'));
         this._ProviderHandler.register('login', /\/login/, require('./Providers/Login'));
+        // this._ProviderHandler.register('help param', /\/help (.+)/, require('./Providers/Help'));
 
         console.log('Loaded ' + this._ProviderHandler.commandCount + ' providers');
 
