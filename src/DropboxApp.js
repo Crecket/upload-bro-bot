@@ -2,64 +2,15 @@ var TelegramBot = require('node-telegram-bot-api');
 var MongoClient = require('mongodb').MongoClient;
 var fs = require('fs');
 
-var ProviderHandler = require('./ProviderHandler');
+var ProviderHandler = require('./CommandHandler');
 var Logger = require('./Logger');
+var Utils = require('./Utils');
 var Express = require('./Express');
-
-function ensureExists(path, mask) {
-    return new Promise((resolve, reject) => {
-        if (typeof mask == 'function') { // allow the `mask` parameter to be optional
-            cb = mask;
-            mask = "0777";
-        }
-        fs.mkdir(path, mask, function (err) {
-            if (err && err.code !== "EEXIST") {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    })
-}
 
 module.exports = class DropboxApp {
     constructor(token) {
         // Create a new blackjack bot
         this._TelegramBot = new TelegramBot(token, {polling: true});
-
-        // photo
-        this._TelegramBot.on('photo', (msg) => {
-            var directory = __dirname + "/../downloads/" + msg.from.id;
-
-            // TODO check file size, width/height and other security settings
-
-            Logger.debug(msg);
-            ensureExists(directory, '0744')
-                .then(() => {
-
-                    this._TelegramBot.downloadFile(
-                        msg.photo[0].file_id,
-                        directory
-                    ).then((info) => {
-                        Logger.log(info);
-                    })
-                })
-                .catch(Logger.error);
-
-
-        });
-
-        // // random file
-        // this._TelegramBot.on('document', (msg) => {
-        //     this._TelegramBot.downloadFile(
-        //         'AgADBAADsqcxG_q1lQfV5K60PAtzBJnFnBkABEwDhRbmgGRENKAAAgI',
-        //         // 'AgADBAADsacxG_q1lQfvlzY6iDKClfmQZBkABHxtquqWN7YYcSMCAAEC',
-        //         __dirname + "/../downloads"
-        //     )
-        //         .then((info) => {
-        //             Logger.log(info);
-        //         })
-        // });
 
         // connect to mongodb
         this.connectDb()
@@ -86,9 +37,9 @@ module.exports = class DropboxApp {
         this._ProviderHandler = new ProviderHandler(this._Db, this._TelegramBot);
 
         // Add the commands
-        this._ProviderHandler.register('help', /\/help/, require('./Providers/Help'));
-        this._ProviderHandler.register('download', /\/download/, require('./Providers/Download'));
-        this._ProviderHandler.register('login', /\/login/, require('./Providers/Login'));
+        this._ProviderHandler.register('help', /\/help/, require('./Commands/Help'));
+        this._ProviderHandler.register('download', /\/download/, require('./Commands/Download'));
+        this._ProviderHandler.register('login', /\/login/, require('./Commands/Login'));
         // this._ProviderHandler.register('help param', /\/help (.+)/, require('./Providers/Help'));
 
         Logger.log('Loaded ' + this._ProviderHandler.commandCount + ' providers');
@@ -109,7 +60,51 @@ module.exports = class DropboxApp {
         });
     }
 
+    sendDropboxFile(location) {
+        var Dropbox = require('dropbox');
+        var dbx = new Dropbox({accessToken: process.env.DROPBOX_API_TEST_TOKEN});
+        dbx.filesListFolder({path: ''})
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    /**
+     * Event listener for messages with a file added
+     * @param msg
+     */
+    messageFile(msg) {
+        // we currently only support photos and documents
+        var file = (!!msg.photo) ? msg.photo : msg.document;
+
+        var directory = __dirname + "/../downloads/" + msg.chat.id;
+        // TODO check file size, width/height and other security settings
+
+        Logger.debug(msg);
+
+        return;
+        Utils.ensureExists(directory, '0744')
+            .then(() => {
+
+                this._TelegramBot.downloadFile(
+                    msg.photo[0].file_id,
+                    directory
+                ).then((info) => {
+                    Logger.log(info);
+                })
+            })
+            .catch(Logger.error);
+    }
+
     eventListeners() {
+
+        // photo message
+        this._TelegramBot.on('photo', this.messageFile.bind(this));
+        this._TelegramBot.on('document', this.messageFile.bind(this));
+
         return Promise.resolve();
 
         this._TelegramBot.on('inline_query', (inline_query) => {

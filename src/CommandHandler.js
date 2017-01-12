@@ -1,4 +1,4 @@
-module.exports = class ProviderHandler {
+module.exports = class CommandHandler {
     constructor(db, bot) {
         this._db = db;
         this._bot = bot;
