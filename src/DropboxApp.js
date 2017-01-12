@@ -13,7 +13,7 @@ function ensureExists(path, mask) {
             mask = "0777";
         }
         fs.mkdir(path, mask, function (err) {
-            if (err) {
+            if (err && err.code !== "EEXIST") {
                 reject(err);
             } else {
                 resolve();
@@ -31,8 +31,12 @@ module.exports = class DropboxApp {
         this._TelegramBot.on('photo', (msg) => {
             var directory = __dirname + "/../downloads/" + msg.from.id;
 
+            // TODO check file size, width/height and other security settings
+
+            Logger.debug(msg);
             ensureExists(directory, '0744')
                 .then(() => {
+
                     this._TelegramBot.downloadFile(
                         msg.photo[0].file_id,
                         directory
