@@ -1,6 +1,10 @@
-var CommandInterface = require('./CommandInterface');
+var fs = require('fs');
+var path = require('path');
 
-module.exports = class Register extends CommandInterface {
+var CommandInterface = require(path.join(__dirname, './../../../Commands/CommandInterface'));
+var DropboxHelper = require(path.join(__dirname, '../DropboxHelper'));
+
+module.exports = class Login extends CommandInterface {
     constructor() {
         super();
     }

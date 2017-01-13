@@ -2,6 +2,6 @@
 // load env config
 require('dotenv').config()
 
-var DropboxApp = require('./src/DropboxApp');
+var App = require('./src/App');
 
-var bot = new DropboxApp(process.env.TELEGRAM_TOKEN);
+var BotApp = new App(process.env.TELEGRAM_TOKEN);

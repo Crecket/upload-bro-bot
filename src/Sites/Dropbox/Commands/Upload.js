@@ -1,7 +1,8 @@
 var fs = require('fs');
 var path = require('path');
 
-var CommandInterface = require('./CommandInterface');
+var CommandInterface = require(path.join(__dirname, './../../../Commands/CommandInterface'));
+var DropboxHelper = require(path.join(__dirname, '../DropboxHelper'));
 
 module.exports = class Upload extends CommandInterface {
     constructor() {

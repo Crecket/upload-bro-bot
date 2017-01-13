@@ -2,7 +2,6 @@ var fs = require('fs');
 var path = require('path');
 
 var SiteInteface = require(path.join(__dirname, '../SiteInterface'));
-var DropboxHelper = require(path.join(__dirname, './DropboxHelper'));
 
 module.exports = class Dropbox extends SiteInteface {
     constructor(db, bot, commandHandler) {

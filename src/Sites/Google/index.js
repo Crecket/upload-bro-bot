@@ -1,4 +1,7 @@
-var SiteInteface = require('./SiteInteface');
+var fs = require('fs');
+var path = require('path');
+
+var SiteInteface = require(path.join(__dirname, '../SiteInterface'));
 
 module.exports = class Google extends SiteInteface {
     constructor(db, bot, commandHandler) {
