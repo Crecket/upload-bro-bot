@@ -15,10 +15,10 @@ module.exports = class DropboxApp {
         this._TelegramBot = new TelegramBot(token, {polling: true});
 
         // Create new command handler
-        this._CommandHandler = new CommandHandler(this._Db, this._TelegramBot);
+        this._CommandHandler = new CommandHandler(this);
 
         // Create new site handler
-        this._SiteHandler = new SiteHandler(this._Db, this._TelegramBot, this._CommandHandler);
+        this._SiteHandler = new SiteHandler(this);
 
         // connect to mongodb
         this.connectDb()
@@ -46,8 +46,8 @@ module.exports = class DropboxApp {
         Logger.log('Loading websites');
 
         // Register the websites
-        this._SiteHandler.register('dropbox', 'dbx', require(path.join(__dirname, './Sites/Dropbox')));
-        this._SiteHandler.register('google', false, require(path.join(__dirname, './Sites/Google')));
+        this._SiteHandler.register('dropbox', require(path.join(__dirname, './Sites/Dropbox')));
+        this._SiteHandler.register('google', require(path.join(__dirname, './Sites/Google')));
 
         Logger.log('Loaded ' + this._SiteHandler.siteCount + ' sites');
 
@@ -64,6 +64,7 @@ module.exports = class DropboxApp {
 
         // Add the global commands
         this._CommandHandler.register('help', /\/help/, require(path.join(__dirname,'./Commands/Help')));
+        this._CommandHandler.register('login', /\/login/, require(path.join(__dirname,'./Commands/Login')));
 
         Logger.log('Loaded ' + this._CommandHandler.commandCount + ' commands in total');
 

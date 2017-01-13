@@ -9,13 +9,12 @@ module.exports = class Help extends CommandInterface {
     }
 
     handle(msg) {
-        var message = "<b>Available commands</b>\n" +
-            "- <a href='/help'>/help</a>: Display this command \n" +
-            "- <a href='/login'>/login</a>: Show the login url to connect the supported websites to your telegram account" +
-            "";
+        var loginUrl = process.env.WEBSITE_URL;
+        var message = "*Click here to setup your account!* \n" +
+            "[" + loginUrl + "](" + loginUrl + ")";
 
         super.sendMessage(msg.chat.id, message, {
-            parse_mode: "HTML"
+            parse_mode: "Markdown"
         });
     }
 }

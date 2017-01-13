@@ -1,8 +1,6 @@
 module.exports = class CommandHandler {
-    constructor(db, bot, dropboxHandler) {
-        this._db = db;
-        this._bot = bot;
-        this._dropboxHandler = dropboxHandler;
+    constructor(app) {
+        this._app = app;
 
         this._commands = {};
     }
@@ -16,28 +14,20 @@ module.exports = class CommandHandler {
     register(command, pattern, obj) {
         // store the command
         this._commands[command] = {
-            object: new obj(this._db, this._bot, this._dropboxHandler),
+            object: new obj(this._app),
             pattern: pattern
         }
 
         // set the event listener
-        this._bot.onText(pattern, this._commands[command].object.handle.bind(this))
+        this._app._TelegramBot.onText(pattern, this._commands[command].object.handle.bind(this))
     }
 
     /**
-     * Return db
+     * Return app
      * @returns {*}
      */
-    get db() {
-        return this._db;
-    }
-
-    /**
-     * Return the bot
-     * @returns {*}
-     */
-    get bot() {
-        return this._bot;
+    get app() {
+        return this._app;
     }
 
     /**

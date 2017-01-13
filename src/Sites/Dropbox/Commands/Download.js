@@ -15,7 +15,7 @@ module.exports = class Download extends CommandInterface {
         super._logger.debug("Download command: ", userId);
 
         // get the users collection
-        var usersCollection = this._db.collection('users');
+        var usersCollection = super._app._db.collection('users');
 
         // Find some documents
         usersCollection.findOne({id: userId})

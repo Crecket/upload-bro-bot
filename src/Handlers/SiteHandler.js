@@ -1,8 +1,6 @@
 module.exports = class SiteHandler {
-    constructor(db, bot, commandHandler) {
-        this._db = db;
-        this._bot = bot;
-        this._commandHandler = commandHandler;
+    constructor(app) {
+        this._app = app;
 
         this._sites = {};
     }
@@ -13,30 +11,22 @@ module.exports = class SiteHandler {
      * @param command
      * @param obj - a valid class object
      */
-    register(site_name, prefix, obj) {
+    register(site_name, obj) {
         // store the command
         this._sites[site_name] = {
-            object: new obj(this._db, this._bot, this._commandHandler),
-            prefix: prefix
+            object: new obj(this._app),
+            site_name: site_name,
         }
 
         this._sites[site_name]['object'].register();
     }
 
     /**
-     * Return db
+     * Return app
      * @returns {*}
      */
-    get db() {
-        return this._db;
-    }
-
-    /**
-     * Return the bot
-     * @returns {*}
-     */
-    get bot() {
-        return this._bot;
+    get app() {
+        return this._app;
     }
 
     /**
