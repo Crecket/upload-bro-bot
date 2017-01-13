@@ -2,7 +2,8 @@ var TelegramBot = require('node-telegram-bot-api');
 var MongoClient = require('mongodb').MongoClient;
 var fs = require('fs');
 
-var ProviderHandler = require('./CommandHandler');
+var CommandHandler = require('./CommandHandler');
+var DropboxHandler = require('./DropboxHandler');
 var Logger = require('./Logger');
 var Utils = require('./Utils');
 var Express = require('./Express');
@@ -17,32 +18,43 @@ module.exports = class DropboxApp {
             .then((db) => {
                 // store the database
                 this._Db = db;
-
-                // start express listener
-                Express(db);
             })
-            // first load the providers
-            .then(this.providers.bind(this))
+            // setup dropbox handler
+            .then(this.loadDropboxHandler.bind(this))
+            // load all the commands
+            .then(this.loadCommands.bind(this))
             // start the event listeners
             .then(this.eventListeners.bind(this))
             // finish setup
             .then(() => {
                 // finished loading everything
+
+                // start express listener
+                Express(this._Db);
             })
             .catch(Logger.error);
     }
 
-    providers() {
+    loadDropboxHandler() {
+        Logger.log('Setting up dropbox handler');
+
+        // create dropbox handler
+        this._DropboxHandler = new DropboxHandler(this._Db, this._TelegramBot);
+
+        return Promise.resolve();
+    }
+
+    loadCommands() {
         // Create new handler
-        this._ProviderHandler = new ProviderHandler(this._Db, this._TelegramBot);
+        this._CommandHandler = new CommandHandler(this._Db, this._TelegramBot, this._DropboxHandler);
 
         // Add the commands
-        this._ProviderHandler.register('help', /\/help/, require('./Commands/Help'));
-        this._ProviderHandler.register('download', /\/download/, require('./Commands/Download'));
-        this._ProviderHandler.register('login', /\/login/, require('./Commands/Login'));
-        // this._ProviderHandler.register('help param', /\/help (.+)/, require('./Providers/Help'));
+        this._CommandHandler.register('help', /\/help/, require('./Commands/Help'));
+        this._CommandHandler.register('download', /\/download/, require('./Commands/Download'));
+        this._CommandHandler.register('login', /\/login/, require('./Commands/Login'));
+        // this._CommandHandler.register('help param', /\/help (.+)/, require('./Providers/Help'));
 
-        Logger.log('Loaded ' + this._ProviderHandler.commandCount + ' providers');
+        Logger.log('Loaded ' + this._CommandHandler.commandCount + ' commands');
 
         // not used for now
         return Promise.resolve();
@@ -58,18 +70,6 @@ module.exports = class DropboxApp {
                 })
                 .catch(reject);
         });
-    }
-
-    sendDropboxFile(location) {
-        var Dropbox = require('dropbox');
-        var dbx = new Dropbox({accessToken: process.env.DROPBOX_API_TEST_TOKEN});
-        dbx.filesListFolder({path: ''})
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
     }
 
     /**

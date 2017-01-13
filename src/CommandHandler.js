@@ -1,7 +1,8 @@
 module.exports = class CommandHandler {
-    constructor(db, bot) {
+    constructor(db, bot, dropboxHandler) {
         this._db = db;
         this._bot = bot;
+        this._dropboxHandler = dropboxHandler;
 
         this._commands = {};
     }
@@ -15,7 +16,7 @@ module.exports = class CommandHandler {
     register(command, pattern, obj) {
         // store the command
         this._commands[command] = {
-            object: new obj(this._db, this._bot),
+            object: new obj(this._db, this._bot, this._dropboxHandler),
             pattern: pattern
         }
 
