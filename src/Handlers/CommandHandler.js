@@ -25,6 +25,22 @@ module.exports = class CommandHandler {
     }
 
     /**
+     * Return db
+     * @returns {*}
+     */
+    get db() {
+        return this._db;
+    }
+
+    /**
+     * Return the bot
+     * @returns {*}
+     */
+    get bot() {
+        return this._bot;
+    }
+
+    /**
      * @returns {{}|*}
      */
     get commands() {

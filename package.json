@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -13,6 +12,8 @@
     "dropbox": "^2.5.0",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^16.1.0",
     "mongodb": "^2.2.20",
     "node-telegram-bot-api": "^0.25.0",
     "twig": "^0.10.3"

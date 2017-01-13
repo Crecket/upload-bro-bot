@@ -1,6 +1,6 @@
-var ProviderInterface = require('./ProviderInterface');
+var CommandInterface = require('./CommandInterface');
 
-module.exports = class Download extends ProviderInterface {
+module.exports = class Download extends CommandInterface {
     constructor() {
         super();
     }

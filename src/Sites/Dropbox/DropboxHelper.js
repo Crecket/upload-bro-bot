@@ -49,10 +49,6 @@ module.exports = class DropboxHandler {
             mute: false,
         }, newOptions);
 
-        // console.log(options);
-
-        // return Promise.resolve('nop');
-
         return dbx.filesUpload(options);
     }
 

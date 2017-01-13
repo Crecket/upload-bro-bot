@@ -3,7 +3,8 @@ var MongoClient = require('mongodb').MongoClient;
 var fs = require('fs');
 var path = require('path');
 
-var CommandHandler = require('./CommandHandler');
+var CommandHandler = require(path.join(__dirname, 'Handlers/CommandHandler'));
+var SiteHandler = require(path.join(__dirname, 'Handlers/SiteHandler'));
 var Logger = require('./Logger');
 var Utils = require('./Utils');
 var Express = require('./Express');
@@ -13,6 +14,12 @@ module.exports = class DropboxApp {
         // Create a new blackjack bot
         this._TelegramBot = new TelegramBot(token, {polling: true});
 
+        // Create new command handler
+        this._CommandHandler = new CommandHandler(this._Db, this._TelegramBot);
+
+        // Create new site handler
+        this._SiteHandler = new SiteHandler(this._Db, this._TelegramBot, this._CommandHandler);
+
         // connect to mongodb
         this.connectDb()
             .then((db) => {
@@ -20,7 +27,7 @@ module.exports = class DropboxApp {
                 this._Db = db;
             })
             // setup dropbox handler
-            .then(this.loadDropboxHandler.bind(this))
+            .then(this.loadWebsites.bind(this))
             // load all the commands
             .then(this.loadCommands.bind(this))
             // start the event listeners
@@ -35,8 +42,14 @@ module.exports = class DropboxApp {
             .catch(Logger.error);
     }
 
-    loadDropboxHandler() {
-        Logger.log('Setting up dropbox handler');
+    loadWebsites() {
+        Logger.log('Loading websites');
+
+        // Register the websites
+        this._SiteHandler.register('dropbox', 'dbx', require(path.join(__dirname, './Sites/Dropbox')));
+        this._SiteHandler.register('google', false, require(path.join(__dirname, './Sites/Google')));
+
+        Logger.log('Loaded ' + this._SiteHandler.siteCount + ' sites');
 
         return Promise.resolve();
     }
@@ -47,21 +60,22 @@ module.exports = class DropboxApp {
      * @returns {Promise.<T>}
      */
     loadCommands() {
-        // Create new handler
-        this._CommandHandler = new CommandHandler(this._Db, this._TelegramBot, this._DropboxHandler);
+        Logger.log('Loading global commands');
 
-        // Add the commands
-        this._CommandHandler.register('help', /\/help/, require('./Commands/Help'));
-        this._CommandHandler.register('download', /\/download/, require('./Commands/Download'));
-        this._CommandHandler.register('login', /\/login/, require('./Commands/Login'));
-        // this._CommandHandler.register('help param', /\/help (.+)/, require('./Providers/Help'));
+        // Add the global commands
+        this._CommandHandler.register('help', /\/help/, require(path.join(__dirname,'./Commands/Help')));
 
-        Logger.log('Loaded ' + this._CommandHandler.commandCount + ' commands');
+        Logger.log('Loaded ' + this._CommandHandler.commandCount + ' commands in total');
 
         // not used for now
         return Promise.resolve();
     }
 
+    /**
+     * Connect to mongodb
+     *
+     * @returns {Promise}
+     */
     connectDb() {
         return new Promise((resolve, reject) => {
             // attempt to connect to mongoserver
@@ -78,7 +92,7 @@ module.exports = class DropboxApp {
      * Event listener for messages with a file added
      * @param msg
      */
-    messageFile(msg) {
+    messageFileListener(msg) {
         // we currently only support photos and documents
         var file = (!!msg.photo) ? msg.photo : msg.document;
 
@@ -101,10 +115,9 @@ module.exports = class DropboxApp {
     }
 
     eventListeners() {
-
         // photo message
-        this._TelegramBot.on('photo', this.messageFile.bind(this));
-        this._TelegramBot.on('document', this.messageFile.bind(this));
+        this._TelegramBot.on('photo', this.messageFileListener.bind(this));
+        this._TelegramBot.on('document', this.messageFileListener.bind(this));
 
         return Promise.resolve();
 
