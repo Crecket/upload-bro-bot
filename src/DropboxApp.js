@@ -1,6 +1,7 @@
 var TelegramBot = require('node-telegram-bot-api');
 var MongoClient = require('mongodb').MongoClient;
 var fs = require('fs');
+var path = require('path');
 
 var CommandHandler = require('./CommandHandler');
 var DropboxHandler = require('./DropboxHandler');
@@ -40,6 +41,21 @@ module.exports = class DropboxApp {
 
         // create dropbox handler
         this._DropboxHandler = new DropboxHandler(this._Db, this._TelegramBot);
+
+        var filePath = path.join(__dirname, '../downloads/127251962/file_69.jpg');
+        fs.readFile(filePath, {}, (err, data) => {
+            if (!err) {
+                this._DropboxHandler.uploadFile({
+                    contents: data,
+                    path: "/file_69.jpg"
+                })
+                    .then(Logger.debug)
+                    .catch(Logger.debug);
+            } else {
+                console.log(err);
+            }
+
+        });
 
         return Promise.resolve();
     }
@@ -86,11 +102,11 @@ module.exports = class DropboxApp {
         Logger.debug(msg);
 
         return;
-        Utils.ensureExists(directory, '0744')
+        Utils.ensureFolderExists(directory, '0744')
             .then(() => {
 
                 this._TelegramBot.downloadFile(
-                    msg.photo[0].file_id,
+                    file[0].file_id,
                     directory
                 ).then((info) => {
                     Logger.log(info);
