@@ -30,8 +30,6 @@ module.exports = function (db) {
             callbackURL: 'http://localhost/login/telegram/callback'
         },
         function (accessToken, refreshToken, profile, done) {
-            console.log(profile);
-
             // get the users collection
             var usersCollection = db.collection('users');
 

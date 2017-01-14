@@ -18,7 +18,7 @@
                     {% if user|default %}
                         <a href="/logout">Logout</a>
                     {% else %}
-                        <a href="/login">Login</a>
+                        <a href="/login/telegram">Login</a>
                     {% endif %}
                 </li>
             </ul>
@@ -44,12 +44,6 @@
                     <a class="btn btn-primary btn-lg btn-block" href="/login/telegram">
                         <i class="fa fa-btn fa-paper-plane"></i> Login with Telegram
                     </a>
-                    {#<a class="btn btn-info btn-lg btn-block" href="/login/dropbox">#}
-                        {#<i class="fa fa-btn fa-dropbox"></i> Login with Dropbox#}
-                    {#</a>#}
-                    {#<a class="btn btn-warning btn-lg btn-block" href="/login/google">#}
-                        {#<i class="fa fa-btn fa-google"></i> Login with Google#}
-                    {#</a>#}
                 </div>
 
                 {% else %}
@@ -76,34 +70,5 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
-      integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css"
-      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
-<style type="text/css">
-    body {
-        font-family: 'Lato';
-    }
-
-    .fa-btn {
-        margin-right: 6px;
-    }
-
-    h1 {
-        margin-top: 10px;
-    }
-
-    .table {
-        margin-top: 30px;
-        display: block;
-        overflow: hidden;
-    }
-
-    .panel-heading {
-        font-weight: 600;
-    }
-</style>
 </body>
 </html>
