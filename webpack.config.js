@@ -63,7 +63,8 @@ var config = {
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract('css!sass')
+                loaders: ["style-loader", "css-loader", "sass-loader"]
+                // loader: ExtractTextPlugin.extract('sass-loader')
             }
         ]
     }

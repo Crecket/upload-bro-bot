@@ -11,6 +11,8 @@ import store from "./store";
 // injection, required for materialze tap events
 injectTapEventPlugin();
 
+require("!css-loader!sass-loader!../scss/index.scss");
+
 // render the react app
 ReactDOM.render(
     <Provider store={store}>
