@@ -13,7 +13,8 @@ class Home extends React.Component {
         var homeDiv = (
             <div style={{margin: 30, textAlign: 'center', color: 'white'}}>
                 You're not logged in. To begin, <br/>
-                <FlatButton secondary={true} label="Click here to log in" containerElement={<NavLink to="/login"/>}/>
+                <FlatButton secondary={true} label="Login with Telegram"
+                            containerElement={<NavLink to="/login/telegram"/>} />
             </div>
         );
         if (this.props.user) {

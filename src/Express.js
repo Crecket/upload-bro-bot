@@ -17,11 +17,14 @@ module.exports = function (db) {
     //        });
 
     passport.serializeUser(function (user, done) {
-        done(null, user);
+        done(null, user.id);
     });
 
-    passport.deserializeUser(function (obj, done) {
-        done(null, obj);
+    passport.deserializeUser(function (user_id, done) {
+        db.collection('users').findOne({_id: user_id}, {},
+            function (err, user) {
+                done(err, user);
+            })
     });
 
     var TelegramStrategyObj = new TelegramStrategy({
@@ -34,25 +37,28 @@ module.exports = function (db) {
             var usersCollection = db.collection('users');
 
             // check if user exists
-            usersCollection.findOne({id: profile.id}, {}, function (err, user) {
+            usersCollection.findOne({_id: profile.id}, {}, function (err, user) {
                 if (err) {
-                    return done(err, profile);
+                    done(err, profile);
                 }
 
                 if (!user) {
+                    profile.provider_sites = [];
+
                     // insert new user
                     usersCollection.insertOne({
                         provider: "telegram",
-                        id: profile.id,
+                        _id: profile.id,
                         first_name: profile.first_name,
                         last_name: profile.last_name,
                         username: profile.username,
                         avatar: profile.avatar,
                         accessToken: accessToken,
+                        provider_sites: profile.provider_sites,
                         refreshToken: refreshToken,
                     })
-                        .then((err, result) => {
-                            done(err, profile);
+                        .then((result) => {
+                            done(null, profile);
                         })
                         .catch((err) => {
                             done(err, profile);
@@ -139,13 +145,6 @@ module.exports = function (db) {
 
     app.use(cookieParser());
     app.use(bodyParser.json());
-    app.use(passport.initialize());
-    app.use(passport.session());
-
-    // serve static files
-    app.use(express.static(__dirname + '/../public'));
-
-    // session middleware
     app.use(session({
         name: "SESS_ID",
         secret: 'a random secret value',
@@ -157,6 +156,11 @@ module.exports = function (db) {
             autoRemove: 'native'
         })
     }))
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    // serve static files
+    app.use(express.static(__dirname + '/../public'));
 
     // middleware variables
     var TelegramMiddleware = passport.authenticate('telegram');
@@ -168,22 +172,23 @@ module.exports = function (db) {
     // });
 
     // routes
-    app.get('/', function (req, res) {
-        var user = (req.session && req.session.passport) ? req.session.passport.user : false;
+    app.get(['/', '/failed/:type'], (req, res) => {
+        res.render('index', {});
+    })
 
-        // console.log(user);
+    app.post('get_user', (req, res) => {
 
-        res.render('index', {user: user, errors: false});
     });
 
-    // GET /failed
-    app.get('/failed/:type', function (req, res) {
-        var user = (req.session && req.session.passport) ? req.session.passport.user : false;
-
-        res.render('index', {user: req.user, errors: true, errorType: req.params.type});
-    });
-
-    app.get('/login/telegram', TelegramMiddleware, function (req, res) {
+    // login urls and callback
+    app.get('/login/telegram', function (req, res, next) {
+        if(req.user){
+            // already logged in
+            res.redirect('/');
+        }else{
+            // send to telegram login middleware
+            TelegramMiddleware(req, res, next);
+        }
     });
     app.get('/login/telegram/callback',
         passport.authenticate('telegram', {
@@ -192,7 +197,6 @@ module.exports = function (db) {
         }),
         function (req, res) {
             res.redirect('/');
-            // res.json(req.user);
         }
     );
 
@@ -224,7 +228,7 @@ module.exports = function (db) {
 
     // GET /logout
     app.get('/logout', function (req, res) {
-        req.session.passport = {};
+        req.logout();
         res.redirect('/');
     });
 
