@@ -55,7 +55,7 @@ module.exports = class DropboxApp {
                 // finished loading everything
 
                 // start express listener
-                Express(this._Db);
+                Express(this);
             })
             .catch(Logger.error);
     }

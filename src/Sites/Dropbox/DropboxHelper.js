@@ -1,6 +1,6 @@
 var Dropbox = require('dropbox');
 
-module.exports = class DropboxHandler {
+module.exports = class DropboxHelper {
     constructor(app) {
         this._app = app;
     }

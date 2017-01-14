@@ -1,3 +1,6 @@
+var path = require('path')
+var fs = require('fs')
+var mime = require('mime')
 var express = require('express')
 var session = require('express-session')
 var cookieParser = require('cookie-parser');
@@ -8,9 +11,12 @@ var TelegramStrategy = require('passport-telegram').Strategy;
 var refresh = require('passport-oauth2-refresh');
 
 var Logger = require('./Logger');
+var GoogleHelperObj = require('./Sites/Google/GoogleHelper');
 
-module.exports = function (db) {
+module.exports = function (uploadApp) {
     var app = express()
+    var db = uploadApp._Db;
+    var GoogleHelper = new GoogleHelperObj(uploadApp);
 
     // refresh using a refresh token example
     // refresh.requestNewAccessToken('facebook', 'some_refresh_token', function(err, accessToken, refreshToken) {
@@ -72,21 +78,8 @@ module.exports = function (db) {
             });
         })
 
-    var getGoogleCient = (tokens = false) => {
-        var oauthclient = new OAuth2(
-            process.env.GOOGLE_CLIENT_ID,
-            process.env.GOOGLE_SECRET,
-            process.env.GOOGLE_REDIRECT_URI
-        );
-        if (tokens) {
-            oauthclient.setCredentials(tokens);
-        }
-        return oauthclient;
-    }
-
     // use all strategies
     passport.use(TelegramStrategyObj);
-
     refresh.use(TelegramStrategyObj);
 
     // view renderer setup
@@ -110,11 +103,11 @@ module.exports = function (db) {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    // serve static files
-    app.use(express.static(__dirname + '/../public'));
-
     // middleware variables
     var TelegramMiddleware = passport.authenticate('telegram');
+
+    // serve static files
+    app.use(express.static(__dirname + '/../public'));
 
     // routes
     app.get(['/', '/failed/:type'], (req, res) => {
@@ -128,7 +121,7 @@ module.exports = function (db) {
 
     // returns a valid oauth url for the client
     app.get('/login/google_url', (req, res) => {
-        var url = getGoogleCient().generateAuthUrl({
+        var url = GoogleHelper.createOauthClient().generateAuthUrl({
             access_type: 'offline',
             scope: [
                 'https://www.googleapis.com/auth/userinfo.profile',
@@ -142,22 +135,21 @@ module.exports = function (db) {
     });
 
     app.get('/test_google', (request, response) => {
-        var authclient = getGoogleCient(request.user.provider_sites.google)
+        // get the correct path
+        var filePath = path.join(__dirname, '../downloads/127251962/file_1.jpg');
 
-        var drive = google.drive({version: 'v3', auth: authclient});
-
-        drive.files.create({
-            resource: {
-                name: 'topkekfile.txt',
-                mimeType: 'text/plain'
-            },
-            media: {
-                mimeType: 'text/plain',
-                body: 'Hello World'
-            }
-        }, (err, result) => {
-            response.json(result);
-        });
+        // upload the file
+        GoogleHelper.uploadFile(
+            request.user.provider_sites.google,
+            filePath,
+            "card.jpg"
+        )
+            .then((result) => {
+                response.json(result);
+            })
+            .catch((err) => {
+                response.json(err);
+            });
     })
 
     // handles the oauth callback
@@ -169,7 +161,7 @@ module.exports = function (db) {
             response.redirect('/');
             return;
         } else {
-            getGoogleCient().getToken(code, function (err, tokens) {
+            GoogleHelper.createOauthClient().getToken(code, function (err, tokens) {
                 if (err) {
                     console.log(err);
                     response.redirect('/');

@@ -1,8 +1,13 @@
 var fs = require('fs');
+var mime = require('mime');
+var path = require('path');
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 
-module.exports = class DropboxHandler {
+// https://developers.google.com/apis-explorer/#search/drive/
+// https://developers.google.com/drive/v3/web/about-sdk
+
+module.exports = class GoogleHelper {
     constructor(app) {
         this._app = app;
     }
@@ -35,7 +40,7 @@ module.exports = class DropboxHandler {
      * @see https://developers.google.com/drive/v3/web/search-parameters
      */
     searchFile(google_tokens, newOptions) {
-        return new Promise((resolve, reject) =>{
+        return new Promise((resolve, reject) => {
             var authclient = this.createOauthClient(google_tokens)
 
             // drive object
@@ -64,31 +69,44 @@ module.exports = class DropboxHandler {
      * Upload a file
      *
      * @param google_tokens
-     * @param resource
-     * @param media
+     * @param filePath
      * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
      *
      * @see https://developers.google.com/drive/v3/web/manage-uploads
      */
-    uploadFile(google_tokens, resource = {
-        name: 'topkekfile.txt',
-        mimeType: 'text/plain'
-    }, media = {
-        mimeType: 'text/plain',
-        body: 'Hello World'
-    }) {
+    uploadFile(google_tokens, filePath, fileName = false) {
         return new Promise((resolve, reject) => {
             var authclient = this.createOauthClient(google_tokens)
 
             // drive object
             var drive = google.drive({version: 'v3', auth: authclient});
 
-            // create the file
-            drive.files.create({
-                resource: resource,
-                media: media
-            }, (err, result) => {
-                resolve(result);
+            // get the contents
+            fs.readFile(filePath, {}, (err, data) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+
+                // get the file mimetype
+                var mimeType = mime.lookup(filePath);
+
+                // what file name to use
+                var uploadFileName = fileName ? fileName : path.basename(filePath);
+
+                // create the file
+                drive.files.create({
+                    resource: {
+                        name: uploadFileName,
+                        mimeType: mimeType
+                    },
+                    media: {
+                        mimeType: mimeType,
+                        body: data
+                    }
+                }, (err, result) => {
+                    resolve(result);
+                });
             });
         });
     }
