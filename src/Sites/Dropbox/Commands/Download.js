@@ -1,10 +1,10 @@
 var fs = require('fs');
 var path = require('path');
 
-var CommandInterface = require(path.join(__dirname, './../../../Commands/CommandInterface'));
+var HelperInterface = require(path.join(__dirname, './../../../HelperInterface'));
 var DropboxHelper = require(path.join(__dirname, '../DropboxHelper'));
 
-module.exports = class Download extends CommandInterface {
+module.exports = class Download extends HelperInterface {
     constructor() {
         super();
     }
@@ -27,6 +27,14 @@ module.exports = class Download extends CommandInterface {
                 }
             })
             .catch(console.error);
+    }
+
+    get name() {
+        return "download_dropbox";
+    }
+
+    get pattern() {
+        return /\/download dropbox/;
     }
 }
 

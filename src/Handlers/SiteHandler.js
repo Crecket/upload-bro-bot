@@ -8,17 +8,14 @@ module.exports = class SiteHandler {
     /**
      * Register a new website
      *
-     * @param command
-     * @param obj - a valid class object
+     * @param obj - a valid site object
      */
-    register(site_name, obj) {
+    register(obj) {
         // store the command
-        this._sites[site_name] = {
-            object: new obj(this._app),
-            site_name: site_name,
-        }
+        this._sites[obj.name] = obj;
 
-        this._sites[site_name]['object'].register();
+        // call register event
+        obj.register();
     }
 
     /**

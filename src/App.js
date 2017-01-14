@@ -5,9 +5,22 @@ var path = require('path');
 
 var CommandHandler = require(path.join(__dirname, 'Handlers/CommandHandler'));
 var SiteHandler = require(path.join(__dirname, 'Handlers/SiteHandler'));
+var QueryHandler = require(path.join(__dirname, 'Handlers/QueryHandler'));
 var Logger = require('./Logger');
 var Utils = require('./Utils');
 var Express = require('./Express');
+
+// commands
+var HelpObj = require(path.join(__dirname, 'Commands/Help'));
+var KeyboardObj = require(path.join(__dirname, 'Commands/Keyboard'));
+var LoginObj = require(path.join(__dirname, 'Commands/Login'));
+
+// sites
+var DropboxObj = require(path.join(__dirname, './Sites/Dropbox'));
+var GoogleObj = require(path.join(__dirname, './Sites/Google'));
+
+// queries
+var MySitesObj = require(path.join(__dirname, 'Queries/MySites'));
 
 module.exports = class DropboxApp {
     constructor(token) {
@@ -20,6 +33,9 @@ module.exports = class DropboxApp {
         // Create new site handler
         this._SiteHandler = new SiteHandler(this);
 
+        // Create new site handler
+        this._QueryHandler = new QueryHandler(this);
+
         // connect to mongodb
         this.connectDb()
             .then((db) => {
@@ -28,6 +44,8 @@ module.exports = class DropboxApp {
             })
             // setup dropbox handler
             .then(this.loadWebsites.bind(this))
+            // load all the queries
+            .then(this.loadQueries.bind(this))
             // load all the commands
             .then(this.loadCommands.bind(this))
             // start the event listeners
@@ -40,36 +58,6 @@ module.exports = class DropboxApp {
                 Express(this._Db);
             })
             .catch(Logger.error);
-    }
-
-    loadWebsites() {
-        Logger.overwrite('Loading websites');
-
-        // Register the websites
-        this._SiteHandler.register('dropbox', require(path.join(__dirname, './Sites/Dropbox')));
-        this._SiteHandler.register('google', require(path.join(__dirname, './Sites/Google')));
-
-        Logger.overwrite('Loaded ' + this._SiteHandler.siteCount + " sites      \n");
-
-        return Promise.resolve();
-    }
-
-    /**
-     * Global commands, not specific to a website
-     *
-     * @returns {Promise.<T>}
-     */
-    loadCommands() {
-        Logger.overwrite('Loading global commands');
-
-        // Add the global commands
-        this._CommandHandler.register('help', /\/help/, require(path.join(__dirname,'./Commands/Help')));
-        this._CommandHandler.register('login', /\/login/, require(path.join(__dirname,'./Commands/Login')));
-
-        Logger.overwrite('Loaded ' + this._CommandHandler.commandCount + " commands            \n");
-
-        // not used for now
-        return Promise.resolve();
     }
 
     /**
@@ -87,6 +75,58 @@ module.exports = class DropboxApp {
                 })
                 .catch(reject);
         });
+    }
+
+    /**
+     * Load websites
+     *
+     * @returns {Promise.<T>}
+     */
+    loadWebsites() {
+        Logger.overwrite('Loading websites');
+
+        // Register the websites
+        this._SiteHandler.register(new DropboxObj(this));
+        this._SiteHandler.register(new GoogleObj(this));
+
+        Logger.overwrite('Loaded ' + this._SiteHandler.siteCount + " sites      \n");
+
+        return Promise.resolve();
+    }
+
+    /**
+     * Global commands, not specific to a website
+     *
+     * @returns {Promise.<T>}
+     */
+    loadCommands() {
+        Logger.overwrite('Loading global commands');
+
+        // Add the global commands
+        this._CommandHandler.register(new HelpObj(this));
+        this._CommandHandler.register(new KeyboardObj(this));
+        this._CommandHandler.register(new LoginObj(this));
+
+        Logger.overwrite('Loaded ' + this._CommandHandler.commandCount + " commands            \n");
+
+        // not used for now
+        return Promise.resolve();
+    }
+
+    /**
+     * Load event handlers for callback_query
+     * @returns {Promise.<T>}
+     */
+    loadQueries() {
+        Logger.overwrite('Loading queries');
+
+        // Add the query handlers
+        this._QueryHandler.register(new MySitesObj(this));
+
+        Logger.overwrite('Loaded ' + this._QueryHandler.queryCount + " queries            \n");
+
+        // not used for now
+        return Promise.resolve();
     }
 
     /**
@@ -115,10 +155,55 @@ module.exports = class DropboxApp {
             .catch(Logger.error);
     }
 
+    /**
+     * query_callback event listener
+     *
+     * @param query
+     */
+    handleCallbackQuery(query) {
+        var queryList = this._QueryHandler.queries;
+        var selectedQuery = queryList[query.data];
+
+        // check if the selected query was found
+        if (selectedQuery) {
+            // start the handle request with this query
+            selectedQuery.handle(query)
+                .then((result_message = "", alert = false, options = {}) => {
+                    this.answerCallbackQuery(query.id, result_message, alert, options)
+                })
+                .catch((error_message = "", alert = false, options = {}) => {
+                    this.answerCallbackQuery(query.id, error_message, alert, options)
+                })
+        } else {
+            this.answerCallbackQuery(query.id, "We couldn't find this command. This is probably our fault.")
+        }
+    }
+
+    /**
+     * Respond to a callback query
+     *
+     * @param id
+     * @param text
+     * @param alert
+     * @param options
+     */
+    answerCallbackQuery(id, text = "", alert = false, options = {}) {
+        this._TelegramBot.answerCallbackQuery(id, text, alert, options)
+            .then((result) => {
+                Logger.log("Responded to query " + id + ":", result);
+            })
+            .catch(() => {
+                Logger.log("Failed to respond to query " + id);
+            });
+    }
+
     eventListeners() {
-        // photo message
+        // file messages
         this._TelegramBot.on('photo', this.messageFileListener.bind(this));
         this._TelegramBot.on('document', this.messageFileListener.bind(this));
+
+        // callback query listener
+        this._TelegramBot.on('callback_query', this.handleCallbackQuery.bind(this));
 
         return Promise.resolve();
 

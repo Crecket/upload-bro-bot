@@ -1,9 +1,9 @@
 var fs = require('fs');
 var path = require('path');
 
-var CommandInterface = require(path.join(__dirname, '/CommandInterface'));
+var HelperInterface = require(path.join(__dirname, '/../HelperInterface'));
 
-module.exports = class Help extends CommandInterface {
+module.exports = class Help extends HelperInterface {
     constructor() {
         super();
     }
@@ -17,6 +17,14 @@ module.exports = class Help extends CommandInterface {
         super.sendMessage(msg.chat.id, message, {
             parse_mode: "HTML"
         });
+    }
+
+    get name() {
+        return "help";
+    }
+
+    get pattern() {
+        return /\/help/;
     }
 }
 

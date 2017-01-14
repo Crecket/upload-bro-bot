@@ -1,21 +1,21 @@
-module.exports = class CommandHandler {
+module.exports = class QueryHandler {
     constructor(app) {
         this._app = app;
 
-        this._commands = {};
+        this._queries = {};
     }
 
     /**
-     * Register a new command
+     * Register a new query
      *
      * @param obj - a valid class object
      */
     register(obj) {
         // store the command
-        this._commands[obj.name] = obj;
+        this._queries[obj.event] = obj;
 
         // set the event listener
-        this._app._TelegramBot.onText(obj.pattern, obj.handle.bind(this))
+        this._app._TelegramBot.on(obj.event, obj.handle.bind(this))
     }
 
     /**
@@ -29,14 +29,14 @@ module.exports = class CommandHandler {
     /**
      * @returns {{}|*}
      */
-    get commands() {
-        return this._commands;
+    get queries() {
+        return this._queries;
     }
 
     /**
      * @returns int
      */
-    get commandCount() {
-        return Object.keys(this._commands).length;
+    get queryCount() {
+        return Object.keys(this._queries).length;
     }
 }

@@ -16,5 +16,14 @@ module.exports = class Google extends SiteInteface {
 
         return Promise.resolve();
     }
+
+    /**
+     * return this site name
+     *
+     * @returns {string}
+     */
+    get name() {
+        return 'Google';
+    }
 }
 

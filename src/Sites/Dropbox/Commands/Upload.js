@@ -1,10 +1,10 @@
 var fs = require('fs');
 var path = require('path');
 
-var CommandInterface = require(path.join(__dirname, './../../../Commands/CommandInterface'));
+var HelperInterface = require(path.join(__dirname, './../../../HelperInterface'));
 var DropboxHelper = require(path.join(__dirname, '../DropboxHelper'));
 
-module.exports = class Upload extends CommandInterface {
+module.exports = class Upload extends HelperInterface {
     constructor() {
         super();
     }
@@ -12,23 +12,30 @@ module.exports = class Upload extends CommandInterface {
     handle(msg, match) {
         var userId = msg.from.id;
 
-        super._logger.debug("Upload command: ", userId);
-
-        // get the users collection
-        var usersCollection = this._db.collection('users');
-
-        // Find some documents
-        usersCollection.findOne({id: userId})
-            .then((err, user) => {
-                if (user) {
-                    super._logger.debug("User found: ", user);
-                } else {
-                    super._logger.debug("No user found for: ", userId);
-                }
-            })
-            .catch(console.error);
+        // super._logger.debug("Upload command: ", userId);
+        //
+        // // get the users collection
+        // var usersCollection = this._db.collection('users');
+        //
+        // // Find some documents
+        // usersCollection.findOne({id: userId})
+        //     .then((err, user) => {
+        //         if (user) {
+        //             super._logger.debug("User found: ", user);
+        //         } else {
+        //             super._logger.debug("No user found for: ", userId);
+        //         }
+        //     })
+        //     .catch(console.error);
     }
 
+    get name() {
+        return "upload_dropbox";
+    }
+
+    get pattern() {
+        return /\/upload dropbox/;
+    }
 
     test() {
         // create dropbox handler
