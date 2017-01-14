@@ -44,6 +44,7 @@ var config = {
             "DEVELOPMENT_MODE": process.env.NODE_ENV === "production" ? false : true,
         }),
     ],
+    devtool: "source-map",
     module: {
         loaders: [
             {
@@ -63,11 +64,10 @@ var config = {
             },
             {
                 test: /\.scss$/,
-                loaders: ["style-loader", "css-loader", "sass-loader"]
-                // loader: ExtractTextPlugin.extract('sass-loader')
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap", "sass-loader?sourceMap")
             }
         ]
     }
-};
+}
 
 module.exports = config;

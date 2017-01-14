@@ -1,13 +1,14 @@
 import React  from 'react';
 
 import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
-import PaletteIcon from 'material-ui/svg-icons/image/palette';
+import FlatButton from 'material-ui/FlatButton';
+// import IconButton from 'material-ui/IconButton';
+// import IconMenu from 'material-ui/IconMenu';
+// import MenuItem from 'material-ui/MenuItem';
+//
+// import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+// import RefreshIcon from 'material-ui/svg-icons/navigation/refresh';
+// import PaletteIcon from 'material-ui/svg-icons/image/palette';
 
 const styles = {
     appbar: {
@@ -21,6 +22,15 @@ const styles = {
     }
 };
 
+{/*iconElementRight={*/}
+{/*<IconMenu*/}
+{/*iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}*/}
+{/*targetOrigin={{horizontal: 'right', vertical: 'top'}}*/}
+{/*anchorOrigin={{horizontal: 'right', vertical: 'top'}}>*/}
+{/*<MenuItem leftIcon={<RefreshIcon/>} primaryText="Update" onClick={this.props.updateStaticData}/>*/}
+{/*<MenuItem leftIcon={<PaletteIcon/>} primaryText="Change theme" onClick={this.props.setTheme}/>*/}
+{/*</IconMenu>}*/}
+
 
 class MainAppbar extends React.Component {
     constructor(props, context) {
@@ -31,16 +41,10 @@ class MainAppbar extends React.Component {
     render() {
         return (
             <AppBar
-                title="Mastery Points Lookup"
+                title="UploadyBot"
                 style={styles.appbar}
                 iconElementLeft={<img style={styles.customIcon} src="/assets/img/icon-200.png"/>}
-                iconElementRight={
-                    <IconMenu iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                              targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                              anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-                        <MenuItem leftIcon={<RefreshIcon/>} primaryText="Update" onClick={this.props.updateStaticData}/>
-                        <MenuItem leftIcon={<PaletteIcon/>} primaryText="Change theme" onClick={this.props.setTheme}/>
-                    </IconMenu>}
+                iconElementRight={<FlatButton label="Save" />}
             />
         );
     };
