@@ -1,9 +1,8 @@
 var Dropbox = require('dropbox');
 
 module.exports = class DropboxHandler {
-    constructor(db, bot) {
-        this._db = db;
-        this._bot = bot
+    constructor(app) {
+        this._app = app;
     }
 
     /**
@@ -13,12 +12,9 @@ module.exports = class DropboxHandler {
      * @param token
      * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
      */
-    getFilesList(path = '', dropboxToken = false) {
-        // get token or use my test token
-        var token = (dropboxToken) ? dropboxToken : process.env.DROPBOX_API_TEST_TOKEN;
-
+    getFilesList(path = '', dropboxToken) {
         // Create dropbox object
-        var dbx = new Dropbox({accessToken: token});
+        var dbx = new Dropbox({accessToken: dropboxToken});
 
         // return the promise
         return dbx.filesListFolder({path: path});
@@ -32,12 +28,9 @@ module.exports = class DropboxHandler {
      * @param dropboxToken
      * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadError>>}
      */
-    uploadFile(newOptions, dropboxToken = false) {
-        // get token or use my test token
-        var token = (dropboxToken) ? dropboxToken : process.env.DROPBOX_API_TEST_TOKEN;
-
+    uploadFile(newOptions, dropboxToken) {
         // Create dropbox object
-        var dbx = new Dropbox({accessToken: token});
+        var dbx = new Dropbox({accessToken: dropboxToken});
 
         // options to use in upload
         var options = Object.assign({

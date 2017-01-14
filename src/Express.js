@@ -42,11 +42,14 @@ module.exports = function (db) {
                     done(err, profile);
                 }
 
-                if (!user) {
-                    profile.provider_sites = [];
+                // site fallback
+                profile.provider_sites = (!!user) ? user.provider_sites : {};
 
-                    // insert new user
-                    usersCollection.insertOne({
+                // insert new user
+                usersCollection.updateOne({
+                    _id: profile.id
+                }, {
+                    $set: {
                         provider: "telegram",
                         _id: profile.id,
                         first_name: profile.first_name,
@@ -56,87 +59,35 @@ module.exports = function (db) {
                         accessToken: accessToken,
                         provider_sites: profile.provider_sites,
                         refreshToken: refreshToken,
+                    }
+                }, {
+                    upsert: true
+                })
+                    .then((result) => {
+                        done(null, profile);
                     })
-                        .then((result) => {
-                            done(null, profile);
-                        })
-                        .catch((err) => {
-                            done(err, profile);
-                        });
-                } else {
-                    done(null, profile);
-                }
+                    .catch((err) => {
+                        done(err, profile);
+                    });
             });
         })
 
-    // var GoogleStrategyObj = new GoogleStrategy({
-    //         clientID: process.env.GOOGLE_CLIENT_ID,
-    //         clientSecret: process.env.GOOGLE_SECRET,
-    //         callbackURL: "http://localhost/login/google/callback",
-    //         scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar'],
-    //         session: false,
-    //         accessType: 'offline',
-    //         approvalPrompt: 'force',
-    //         scope: [
-    //             'https://www.googleapis.com/auth/userinfo.profile',
-    //             'https://www.googleapis.com/auth/drive.appfolder',
-    //             'https://www.googleapis.com/auth/drive.file'
-    //         ]
-    //     },
-    //     function (accessToken, refreshToken, profile, done) {
-    //         Logger.debug("Received accesstoken and refreshtoken");
-    //
-    //         // get the users collection
-    //         var usersCollection = db.collection('users');
-    //
-    //         usersCollection.findOne({a: 2}, {fields: {b: 1}}, function (err, doc) {
-    //             test.equal(null, err);
-    //             test.equal(null, doc.a);
-    //             test.equal(2, doc.b);
-    //
-    //             db.close();
-    //         });
-    //
-    //         // Find some documents
-    //         usersCollection.findOne({id: profile.id})
-    //             .then((err, user) => {
-    //                 if (user) {
-    //                     Logger.debug("User found: ", user);
-    //                 } else {
-    //                     Logger.debug("No user found for: ", userId);
-    //                 }
-    //             })
-    //             .catch(console.error);
-    //
-    //
-    //         return done(null, {
-    //             profile: profile,
-    //             accessToken: accessToken,
-    //             refreshToken: refreshToken,
-    //         });
-    //     });
-    // var DropboxStrategy = new DropboxOAuth2Strategy({
-    //         apiVersion: '2',
-    //         clientID: process.env.DROPBOX_APP_KEY,
-    //         clientSecret: process.env.DROPBOX_APP_SECRET,
-    //         callbackURL: "http://localhost/login/dropbox/callback"
-    //     },
-    //     function (accessToken, refreshToken, profile, done) {
-    //         return done(null, {
-    //             profile: profile,
-    //             accessToken: accessToken,
-    //             refreshToken: refreshToken,
-    //         });
-    //     });
+    var getGoogleCient = (tokens = false) => {
+        var oauthclient = new OAuth2(
+            process.env.GOOGLE_CLIENT_ID,
+            process.env.GOOGLE_SECRET,
+            process.env.GOOGLE_REDIRECT_URI
+        );
+        if (tokens) {
+            oauthclient.setCredentials(tokens);
+        }
+        return oauthclient;
+    }
 
     // use all strategies
     passport.use(TelegramStrategyObj);
-    // passport.use(DropboxStrategy);
-    // passport.use(GoogleStrategyObj);
 
     refresh.use(TelegramStrategyObj);
-    // refresh.use(DropboxStrategy);
-    // refresh.use(GoogleStrategyObj);
 
     // view renderer setup
     app.set('views', __dirname + '/Views');
@@ -164,74 +115,127 @@ module.exports = function (db) {
 
     // middleware variables
     var TelegramMiddleware = passport.authenticate('telegram');
-    // var DropboxMiddleware = passport.authenticate('dropbox-oauth2');
-    // var GoogleMiddleware = passport.authenticate('google', {
-    //     session: false,
-    //     accessType: 'offline',
-    //     approvalPrompt: 'force'
-    // });
 
     // routes
     app.get(['/', '/failed/:type'], (req, res) => {
+        console.log(req.user.provider_sites);
         res.render('index', {});
     })
 
-    app.post('get_user', (req, res) => {
+    app.post('/get_user', (req, res) => {
+        res.json(req.user);
+    });
 
+    // returns a valid oauth url for the client
+    app.get('/login/google_url', (req, res) => {
+        var url = getGoogleCient().generateAuthUrl({
+            access_type: 'offline',
+            scope: [
+                'https://www.googleapis.com/auth/userinfo.profile',
+                'https://www.googleapis.com/auth/drive.appfolder',
+                'https://www.googleapis.com/auth/drive.file'
+            ]
+        });
+
+        // return the url
+        res.json({url: url});
+    });
+
+    app.get('/test_google', (request, response) => {
+        var authclient = getGoogleCient(request.user.provider_sites.google)
+
+        var drive = google.drive({version: 'v3', auth: authclient});
+
+        drive.files.create({
+            resource: {
+                name: 'topkekfile.txt',
+                mimeType: 'text/plain'
+            },
+            media: {
+                mimeType: 'text/plain',
+                body: 'Hello World'
+            }
+        }, (err, result) => {
+            response.json(result);
+        });
+    })
+
+    // handles the oauth callback
+    app.get('/login/google/callback', function (request, response) {
+        var code = request.query.code;
+
+        // make sure we have a code and we're logged in
+        if (!code || !request.user) {
+            response.redirect('/');
+            return;
+        } else {
+            getGoogleCient().getToken(code, function (err, tokens) {
+                if (err) {
+                    console.log(err);
+                    response.redirect('/');
+                    return;
+                }
+
+                // get collection and current sites
+                var current_provider_sites = request.user.provider_sites;
+                var usersCollection = db.collection('users');
+
+                if (current_provider_sites['google']) {
+                    // already exists, update existing values
+                    current_provider_sites.google.expiry_date = tokens.expiry_date;
+                    current_provider_sites.google.access_token = tokens.access_token;
+                    // current_provider_sites.google.id_token = tokens.id_token;
+                } else {
+                    // add new provider
+                    current_provider_sites.google = {
+                        expiry_date: tokens.expiry_date,
+                        access_token: tokens.access_token,
+                        refresh_token: tokens.refresh_token,
+                        // id_token: tokens.id_token,
+                    }
+                }
+
+                // update provider sites
+                usersCollection.updateOne({_id: request.user._id}, {
+                    $set: {
+                        provider_sites: current_provider_sites
+                    }
+                }).then((result) => {
+                    console.log('mongodb updated');
+                    console.log(result);
+                    response.redirect('/');
+                }).catch((err) => {
+                    console.log('mongodb error');
+                    console.log(err);
+                    response.redirect('/');
+                });
+            });
+        }
     });
 
     // login urls and callback
-    app.get('/login/telegram', function (req, res, next) {
-        if(req.user){
+    app.get('/login/telegram', (req, res, next) => {
+        if (req.user) {
             // already logged in
             res.redirect('/');
-        }else{
+        } else {
             // send to telegram login middleware
             TelegramMiddleware(req, res, next);
         }
     });
-    app.get('/login/telegram/callback',
-        passport.authenticate('telegram', {
+    app.get('/login/telegram/callback', passport.authenticate('telegram', {
             session: true,
-            failureRedirect: '/failed'
-        }),
-        function (req, res) {
+            failureRedirect: '/failed/telegram'
+        }), (req, res) => {
             res.redirect('/');
         }
     );
-
-    // app.get('/login/dropbox', DropboxMiddleware, function (req, res) {
-    // });
-    // app.get('/login/dropbox/callback',
-    //     passport.authenticate('dropbox-oauth2', {
-    //         session: false,
-    //         failureRedirect: '/failed'
-    //     }),
-    //     function (req, res) {
-    //         res.json(req.user);
-    //     }
-    // );
-    //
-    // app.get('/login/google', GoogleMiddleware, function (req, res) {
-    // });
-    //
-    // // GET /login/telegram/callback
-    // app.get('/login/google/callback',
-    //     passport.authenticate('google', {
-    //         session: false,
-    //         failureRedirect: '/failed'
-    //     }),
-    //     function (req, res) {
-    //         res.json(req.user);
-    //     }
-    // );
 
     // GET /logout
     app.get('/logout', function (req, res) {
         req.logout();
         res.redirect('/');
     });
-
 
     // start listening
     app.listen(80, function () {
