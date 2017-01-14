@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM  from 'react-dom';
 import {Provider} from "react-redux";
 import injectTapEventPlugin  from 'react-tap-event-plugin';
-import Logger from './Helpers/Logger.js';
+import {Router, browserHistory} from 'react-router'
 
 // main app
-import Main from './Components/Main';
+import Logger from './Helpers/Logger.js';
+import Routes from './Routes';
 import store from "./store";
 
 // injection, required for materialze tap events
@@ -16,7 +17,7 @@ require("!css-loader!sass-loader!../scss/index.scss");
 // render the react app
 ReactDOM.render(
     <Provider store={store}>
-        <Main />
+        <Router routes={Routes} history={browserHistory}/>
     </Provider>,
     document.getElementById('app')
 );

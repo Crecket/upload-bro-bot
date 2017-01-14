@@ -1,8 +1,11 @@
 import React from 'react';
 import {connect} from "react-redux";
-import Logger from '../Helpers/Logger';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import {Tabs, Tab} from 'material-ui/Tabs';
 
 // custom components
+import Logger from '../Helpers/Logger';
 import MainAppbar from './MainAppbar';
 
 // Themes
@@ -16,12 +19,7 @@ const ThemesList = {
     "CustomLight": getMuiTheme(CustomLight)
 };
 
-// material-ui components
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import CircularProgress from 'material-ui/CircularProgress';
-
+// actions
 import {openModal, closeModal} from "../actions/modalActions";
 
 // connect to redux
@@ -83,7 +81,16 @@ class Main extends React.Component {
     };
 
     render() {
-        var mainBody = '';
+
+        // get the children pages and give them some default props
+        var mainBody = React.Children.map(
+            this.props.children,
+            (child) => React.cloneElement(child, {
+                handleClose: this.handleClose,
+                handleModalOpen: this.handleModalOpen,
+                handleModalClose: this.handleModalClose
+            })
+        );
 
         return (
             <MuiThemeProvider muiTheme={ThemesList[this.state.muiTheme]}>
