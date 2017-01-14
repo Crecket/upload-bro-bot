@@ -43,13 +43,13 @@ module.exports = class DropboxApp {
     }
 
     loadWebsites() {
-        Logger.log('Loading websites');
+        Logger.overwrite('Loading websites');
 
         // Register the websites
         this._SiteHandler.register('dropbox', require(path.join(__dirname, './Sites/Dropbox')));
         this._SiteHandler.register('google', require(path.join(__dirname, './Sites/Google')));
 
-        Logger.log('Loaded ' + this._SiteHandler.siteCount + ' sites');
+        Logger.overwrite('Loaded ' + this._SiteHandler.siteCount + " sites      \n");
 
         return Promise.resolve();
     }
@@ -60,13 +60,13 @@ module.exports = class DropboxApp {
      * @returns {Promise.<T>}
      */
     loadCommands() {
-        Logger.log('Loading global commands');
+        Logger.overwrite('Loading global commands');
 
         // Add the global commands
         this._CommandHandler.register('help', /\/help/, require(path.join(__dirname,'./Commands/Help')));
         this._CommandHandler.register('login', /\/login/, require(path.join(__dirname,'./Commands/Login')));
 
-        Logger.log('Loaded ' + this._CommandHandler.commandCount + ' commands in total');
+        Logger.overwrite('Loaded ' + this._CommandHandler.commandCount + " commands            \n");
 
         // not used for now
         return Promise.resolve();

@@ -1,16 +1,20 @@
 var express = require('express')
 var session = require('express-session')
-var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var TelegramStrategy = require('passport-telegram').Strategy;
-var DropboxOAuth2Strategy = require('passport-dropbox-oauth2').Strategy;
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
+var refresh = require('passport-oauth2-refresh');
+
+var Logger = require('./Logger');
 
 module.exports = function (db) {
     var app = express()
+
+    // refresh using a refresh token example
+    // refresh.requestNewAccessToken('facebook', 'some_refresh_token', function(err, accessToken, refreshToken) {
+    //        });
 
     passport.serializeUser(function (user, done) {
         done(null, user);
@@ -20,55 +24,121 @@ module.exports = function (db) {
         done(null, obj);
     });
 
-    passport.use(new TelegramStrategy({
+    var TelegramStrategyObj = new TelegramStrategy({
             clientID: process.env.TELEPASS_APPID,
             clientSecret: process.env.TELEPASS_SECRET,
             callbackURL: 'http://localhost/login/telegram/callback'
         },
         function (accessToken, refreshToken, profile, done) {
-            // asynchronous verification, for effect...
-            process.nextTick(function () {
-                // User.findOrCreate({providerId: profile.id}, function (err, user) {
-                //     return done(err, user);
-                // });
-                return done(null, profile);
+            console.log(profile);
+
+            // get the users collection
+            var usersCollection = db.collection('users');
+
+            // check if user exists
+            usersCollection.findOne({id: profile.id}, {}, function (err, user) {
+                if (err) {
+                    return done(err, profile);
+                }
+
+                if (!user) {
+                    // insert new user
+                    usersCollection.insertOne({
+                        provider: "telegram",
+                        id: profile.id,
+                        first_name: profile.first_name,
+                        last_name: profile.last_name,
+                        username: profile.username,
+                        avatar: profile.avatar,
+                        accessToken: accessToken,
+                        refreshToken: refreshToken,
+                    })
+                        .then((err, result) => {
+                            done(err, profile);
+                        })
+                        .catch((err) => {
+                            done(err, profile);
+                        });
+                } else {
+                    done(null, profile);
+                }
             });
         })
-    );
 
+    // var GoogleStrategyObj = new GoogleStrategy({
+    //         clientID: process.env.GOOGLE_CLIENT_ID,
+    //         clientSecret: process.env.GOOGLE_SECRET,
+    //         callbackURL: "http://localhost/login/google/callback",
+    //         scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar'],
+    //         session: false,
+    //         accessType: 'offline',
+    //         approvalPrompt: 'force',
+    //         scope: [
+    //             'https://www.googleapis.com/auth/userinfo.profile',
+    //             'https://www.googleapis.com/auth/drive.appfolder',
+    //             'https://www.googleapis.com/auth/drive.file'
+    //         ]
+    //     },
+    //     function (accessToken, refreshToken, profile, done) {
+    //         Logger.debug("Received accesstoken and refreshtoken");
+    //
+    //         // get the users collection
+    //         var usersCollection = db.collection('users');
+    //
+    //         usersCollection.findOne({a: 2}, {fields: {b: 1}}, function (err, doc) {
+    //             test.equal(null, err);
+    //             test.equal(null, doc.a);
+    //             test.equal(2, doc.b);
+    //
+    //             db.close();
+    //         });
+    //
+    //         // Find some documents
+    //         usersCollection.findOne({id: profile.id})
+    //             .then((err, user) => {
+    //                 if (user) {
+    //                     Logger.debug("User found: ", user);
+    //                 } else {
+    //                     Logger.debug("No user found for: ", userId);
+    //                 }
+    //             })
+    //             .catch(console.error);
+    //
+    //
+    //         return done(null, {
+    //             profile: profile,
+    //             accessToken: accessToken,
+    //             refreshToken: refreshToken,
+    //         });
+    //     });
+    // var DropboxStrategy = new DropboxOAuth2Strategy({
+    //         apiVersion: '2',
+    //         clientID: process.env.DROPBOX_APP_KEY,
+    //         clientSecret: process.env.DROPBOX_APP_SECRET,
+    //         callbackURL: "http://localhost/login/dropbox/callback"
+    //     },
+    //     function (accessToken, refreshToken, profile, done) {
+    //         return done(null, {
+    //             profile: profile,
+    //             accessToken: accessToken,
+    //             refreshToken: refreshToken,
+    //         });
+    //     });
 
-    passport.use(new GoogleStrategy({
-            clientID: process.env.GOOGLE_SECRET,
-            clientSecret: process.env.GOOGLE_CLIENT_ID,
-            callbackURL: "http://localhost/login/google-drive/callback"
-        },
-        function(accessToken, refreshToken, profile, cb) {
-            User.findOrCreate({ googleId: profile.id }, function (err, user) {
-                return cb(err, user);
-            });
-        }
-    ));
+    // use all strategies
+    passport.use(TelegramStrategyObj);
+    // passport.use(DropboxStrategy);
+    // passport.use(GoogleStrategyObj);
 
-    passport.use(new DropboxOAuth2Strategy({
-            apiVersion: '2',
-            clientID: process.env.DROPBOX_APP_KEY,
-            clientSecret: process.env.DROPBOX_APP_SECRET,
-            callbackURL: "http://localhost/login/dropbox/callback"
-        },
-        function (accessToken, refreshToken, profile, done) {
-            // User.findOrCreate({providerId: profile.id}, function (err, user) {
-            //     return done(err, user);
-            // });
-            return done(null, profile);
-        })
-    );
+    refresh.use(TelegramStrategyObj);
+    // refresh.use(DropboxStrategy);
+    // refresh.use(GoogleStrategyObj);
 
     // view renderer setup
     app.set('views', __dirname + '/Views');
     app.set('view engine', 'twig');
     app.disable('view cache');
 
-    app.use(morgan('combined'));
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(passport.initialize());
@@ -90,22 +160,32 @@ module.exports = function (db) {
         })
     }))
 
+    // middleware variables
+    var TelegramMiddleware = passport.authenticate('telegram');
+    // var DropboxMiddleware = passport.authenticate('dropbox-oauth2');
+    // var GoogleMiddleware = passport.authenticate('google', {
+    //     session: false,
+    //     accessType: 'offline',
+    //     approvalPrompt: 'force'
+    // });
 
     // routes
     app.get('/', function (req, res) {
         var user = (req.session && req.session.passport) ? req.session.passport.user : false;
 
+        // console.log(user);
+
         res.render('index', {user: user, errors: false});
     });
 
     // GET /failed
-    app.get('/failed', function (req, res) {
+    app.get('/failed/:type', function (req, res) {
         var user = (req.session && req.session.passport) ? req.session.passport.user : false;
 
-        res.render('index', {user: req.user, errors: true});
+        res.render('index', {user: req.user, errors: true, errorType: req.params.type});
     });
 
-    app.get('/login/telegram', passport.authenticate('telegram'), function (req, res) {
+    app.get('/login/telegram', TelegramMiddleware, function (req, res) {
     });
     app.get('/login/telegram/callback',
         passport.authenticate('telegram', {
@@ -113,35 +193,36 @@ module.exports = function (db) {
             failureRedirect: '/failed'
         }),
         function (req, res) {
-            res.json(req.user);
+            res.redirect('/');
+            // res.json(req.user);
         }
     );
 
-    app.get('/login/dropbox', passport.authenticate('dropbox-oauth2'), function (req, res) {
-    });
-    app.get('/login/dropbox/callback',
-        passport.authenticate('dropbox-oauth2', {
-            session: false,
-            failureRedirect: '/failed'
-        }),
-        function (req, res) {
-            res.json(req.user);
-        }
-    );
-
-    app.get('/login/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/drive'] }), function (req, res) {
-    });
-
-    // GET /login/telegram/callback
-    app.get('/login/google/callback',
-        passport.authenticate('google', {
-            session: false,
-            failureRedirect: '/failed'
-        }),
-        function (req, res) {
-            res.json(req.user);
-        }
-    );
+    // app.get('/login/dropbox', DropboxMiddleware, function (req, res) {
+    // });
+    // app.get('/login/dropbox/callback',
+    //     passport.authenticate('dropbox-oauth2', {
+    //         session: false,
+    //         failureRedirect: '/failed'
+    //     }),
+    //     function (req, res) {
+    //         res.json(req.user);
+    //     }
+    // );
+    //
+    // app.get('/login/google', GoogleMiddleware, function (req, res) {
+    // });
+    //
+    // // GET /login/telegram/callback
+    // app.get('/login/google/callback',
+    //     passport.authenticate('google', {
+    //         session: false,
+    //         failureRedirect: '/failed'
+    //     }),
+    //     function (req, res) {
+    //         res.json(req.user);
+    //     }
+    // );
 
     // GET /logout
     app.get('/logout', function (req, res) {
@@ -155,11 +236,4 @@ module.exports = function (db) {
         console.log('Express app listening on port 80!')
     })
 
-};
-
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/login'); // <-- Attention: we don't have this page in the example.
 };
