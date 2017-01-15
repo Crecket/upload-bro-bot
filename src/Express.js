@@ -181,6 +181,20 @@ module.exports = function (uploadApp) {
             });
     })
 
+    app.get('/test_google/info', (request, response) => {
+        var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
+
+        // download the file
+        GoogleHelper.fileInfo(
+            request.user.provider_sites.google,
+            fileId
+        ).then((result) => {
+            response.json(result);
+        }).catch((err) => {
+            response.json(err);
+        });
+    })
+
     // handles the oauth callback
     app.get('/login/google/callback', function (request, response) {
         var code = request.query.code;

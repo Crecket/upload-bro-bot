@@ -148,6 +148,35 @@ module.exports = class GoogleHelper {
     }
 
     /**
+     * get file info
+     *
+     * @param google_tokens
+     * @param fileId
+     * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
+     *
+     * @see https://developers.google.com/drive/v3/web/manage-downloads
+     */
+    fileInfo(google_tokens, fileId) {
+        return new Promise((resolve, reject) => {
+            var authclient = this.createOauthClient(google_tokens)
+
+            // drive object
+            var drive = google.drive({version: 'v3', auth: authclient});
+
+            // start export
+            drive.files.get({
+                fileId: fileId
+            }, (err, buffer)=>{
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(buffer);
+                }
+            });
+        });
+    }
+
+    /**
      * get files list
      *
      * @param file
