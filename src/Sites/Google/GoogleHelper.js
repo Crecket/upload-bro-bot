@@ -190,7 +190,6 @@ module.exports = class GoogleHelper {
     getFilesList(google_tokens, path = "") {
         return new Promise((resolve, reject) => {
             var authclient = this.createOauthClient(google_tokens)
-
             var drive = google.drive({version: 'v3', auth: authclient});
 
             drive.files.list({
@@ -217,4 +216,37 @@ module.exports = class GoogleHelper {
         return 'https://drive.google.com/open?id=' + fileId;
     }
 
+    /**
+     * Automatically refresh accesstoken when required
+     *
+     * @param oauthClient
+     * @param user_id
+     * @returns {Promise}
+     */
+    getAccessToken(oauthClient, user_id) {
+        return new Promise((resolve, reject) => {
+            oauthClient.getAccessToken((err, access_token, response) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve({
+                        newTokens: response ? response.body : false,
+                        access_token: access_token
+                    });
+                }
+            });
+        });
+    }
+
+    /**
+     * Check if client tokens are expired
+     * @param client
+     * @returns {boolean}
+     */
+    isExpired(client) {
+        // get expiry date
+        var expiryDate = client.credentials.expiry_date;
+        // if no expiry time, assume it's not expired
+        return expiryDate ? expiryDate <= (new Date()).getTime() : false;
+    }
 }

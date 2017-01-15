@@ -2,98 +2,45 @@ var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
 
-var GoogleHelperObj = require('../Sites/Google/GoogleHelper');
+var DropboxHelperObj = require('../Sites/Dropbox/DropboxHelper');
 var UserHelperObj = require('../Userhelper.js');
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;
-    var GoogleHelper = new GoogleHelperObj(uploadApp);
+    var DropboxHelper = new DropboxHelperObj(uploadApp);
     var UserHelper = new UserHelperObj(uploadApp);
 
     // returns a valid oauth url for the client
-    app.get('/login/google', (request, response) => {
+    app.get('/login/dropbox', (request, response) => {
         if (!request.user) {
             // not logged in
             response.redirect('/');
         } else {
-            var urlOptions = {
-                access_type: 'offline',
-                approval_prompt: 'force',
-                scope: [
-                    'https://www.googleapis.com/auth/userinfo.profile',
-                    'https://www.googleapis.com/auth/drive.appfolder',
-                    'https://www.googleapis.com/auth/drive.file'
-                ]
-            };
             var redirectToUrl = true;
 
-            // check if we already have data for google
-            if (request.user.provider_sites.google) {
-
-                // check if we have a refresh token
-                if (request.user.provider_sites.google.refresh_token) {
-                    redirectToUrl = false;
-
-                    // get current user
-                    var userInfo = request.user;
-                    var userGoogleTokens = userInfo.provider_sites.google;
-
-                    // create a new client
-                    var client = GoogleHelper.createOauthClient(userGoogleTokens);
-
-                    // check if token is still valid
-                    if (!GoogleHelper.isExpired(client)) {
-                        // access token is still valid so we don't need to do this
-                        response.redirect('/');
-                        return;
-                    } else {
-
-                        // get a new access token
-                        GoogleHelper.getAccessToken(client)
-                            .then((token_result) => {
-
-                                if (token_result.newTokens) {
-                                    // store the new tokens
-                                    request.user.provider_sites.google = token_result.newTokens;
-
-                                    // update the database
-                                    UserHelper.updateUserTokens(request.user)
-                                        .then((success) => {
-                                            response.redirect('/');
-                                        })
-                                        .catch((err) => {
-                                            console.error(err);
-                                            response.redirect('/');
-                                        });
-                                }
-
-                            })
-                            .catch((err) => {
-                                console.error(err);
-                                response.redirect('/');
-                            });
-                    }
-
-                    // token is expired but we have a refresh token so no approval prompt required
-                    urlOptions.approval_prompt = null;
-                }
-            }
-
-            if (redirectToUrl) {
+            // check if we already have data for dropbox
+            if (request.user.provider_sites.dropbox) {
+                response.redirect('/');
+            } else {
                 // create the url
-                var url = GoogleHelper.createOauthClient()
-                    .generateAuthUrl(urlOptions);
+                var url = DropboxHelper.createClient()
+                    .getAuthenticationUrl(process.env.DROPBOX_REDIRECT_URI);
 
                 // redirect to it
-                // response.json(url);
-                response.redirect(url);
+                response.json(url);
+                // response.redirect(url);
             }
         }
     });
 
     // handles the oauth callback
-    app.get('/login/google/callback', function (request, response) {
+    app.get('/login/dropbox/callback', function (request, response) {
         var code = request.query.code;
+
+        var fullUrl = request.protocol + '://' + request.get('host') + request.originalUrl;
+
+        response.json([fullUrl, request.query, request.params]);
+        return;
 
         // make sure we have a code and we're logged in
         if (!code || !request.user) {

@@ -6,6 +6,19 @@ module.exports = class DropboxHelper {
     }
 
     /**
+     * Returns a dropbox client
+     *
+     * @param token
+     */
+    createClient(token) {
+        // Create dropbox object
+        return new Dropbox({
+            clientId: process.env.DROPBOX_APP_KEY,
+            accessToken: token
+        });
+    }
+
+    /**
      * Fetch all file for a specifc path
      *
      * @param path
@@ -14,7 +27,7 @@ module.exports = class DropboxHelper {
      */
     getFilesList(path = '', dropboxToken) {
         // Create dropbox object
-        var dbx = new Dropbox({accessToken: dropboxToken});
+        var dbx = this.createClient(dropboxToken);
 
         // return the promise
         return dbx.filesListFolder({path: path});
@@ -30,7 +43,7 @@ module.exports = class DropboxHelper {
      */
     uploadFile(newOptions, dropboxToken) {
         // Create dropbox object
-        var dbx = new Dropbox({accessToken: dropboxToken});
+        var dbx = this.createClient(dropboxToken);
 
         // options to use in upload
         var options = Object.assign({
@@ -43,6 +56,11 @@ module.exports = class DropboxHelper {
         }, newOptions);
 
         return dbx.filesUpload(options);
+    }
+
+    sharingCreateSharedLink(){
+        // share a file
+        // http://dropbox.github.io/dropbox-sdk-js/Dropbox.html#sharingCreateSharedLink__anchor
     }
 
 }

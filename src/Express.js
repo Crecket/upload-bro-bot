@@ -12,6 +12,7 @@ var refresh = require('passport-oauth2-refresh');
 var Logger = require('./Logger');
 
 var GoogleRoutes = require('./Routes/GoogleRoutes');
+var DropboxRoutes = require('./Routes/DropboxRoutes');
 var TelegramRoutes = require('./Routes/TelegramRoutes');
 
 module.exports = function (uploadApp) {
@@ -121,6 +122,7 @@ module.exports = function (uploadApp) {
 
     TelegramRoutes(app, passport, uploadApp);
     GoogleRoutes(app, passport, uploadApp);
+    DropboxRoutes(app, passport, uploadApp);
 
     // GET /logout
     app.get('/logout', function (req, res) {
