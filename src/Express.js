@@ -27,10 +27,16 @@ module.exports = function (uploadApp) {
         key: fs.readFileSync(process.env.EXPRESS_SSL_KEY)
     };
 
+    var httpServer = http.createServer(app);
+    var httpsServer = https.createServer(httpsOptions, app);
 
-    // refresh using a refresh token example
-    // refresh.requestNewAccessToken('facebook', 'some_refresh_token', function(err, accessToken, refreshToken) {
-    //        });
+    // force ssl
+    app.all('*', (req, res, next) => {
+        if (req.secure) {
+            return next();
+        }
+        res.redirect('https://' + req.hostname + req.url);
+    });
 
     passport.serializeUser(function (user, done) {
         done(null, user.id);
@@ -93,7 +99,7 @@ module.exports = function (uploadApp) {
     refresh.use(TelegramStrategyObj);
 
     // view renderer setup
-    app.set('views', __dirname + '/Views');
+    app.set('views', __dirname + '/Resources/Views');
     app.set('view engine', 'twig');
     app.disable('view cache');
 
@@ -139,16 +145,11 @@ module.exports = function (uploadApp) {
         res.redirect('/');
     });
 
-
-
-    var httpServer = http.createServer(app);
-    var httpsServer = https.createServer(httpsOptions, app);;
-
     // start listening
-    httpServer.listen(process.env.EXPRESS_PORT, function(){
+    httpServer.listen(process.env.EXPRESS_PORT, function () {
         console.log('Express listening on ' + process.env.EXPRESS_PORT)
     });
-    httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function(){
+    httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
         console.log('Express listening on ' + process.env.EXPRESS_HTTPS_PORT)
     });
 

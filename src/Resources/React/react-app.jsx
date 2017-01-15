@@ -12,6 +12,7 @@ import store from "./store";
 // injection, required for materialze tap events
 injectTapEventPlugin();
 
+require("../../../node_modules/flexboxgrid/dist/flexboxgrid.css");
 require("!css-loader!sass-loader!../scss/index.scss");
 
 // render the react app

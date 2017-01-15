@@ -16,8 +16,6 @@ module.exports = (app, passport, uploadApp) => {
             // not logged in
             response.redirect('/');
         } else {
-            var redirectToUrl = true;
-
             // check if we already have data for dropbox
             if (request.user.provider_sites.dropbox) {
                 response.redirect('/');
@@ -27,123 +25,112 @@ module.exports = (app, passport, uploadApp) => {
                     .getAuthenticationUrl(process.env.DROPBOX_REDIRECT_URI);
 
                 // redirect to it
-                response.json(url);
-                // response.redirect(url);
+                response.redirect(url);
             }
         }
     });
 
     // handles the oauth callback
     app.get('/login/dropbox/callback', function (request, response) {
-        var code = request.query.code;
-
-        var fullUrl = request.protocol + '://' + request.get('host') + request.originalUrl;
-
-        response.json([fullUrl, request.query, request.params]);
-        return;
+        response.render('index');
+    });
+    app.post('/login/dropbox/callback', function (request, response) {
+        var access_token = request.body.access_token;
+        var token_type = request.body.token_type;
+        var uid = request.body.uid;
+        var account_id = request.body.account_id;
 
         // make sure we have a code and we're logged in
-        if (!code || !request.user) {
-            response.redirect('/');
-            return;
+        if (!access_token || !token_type || !uid || !account_id) {
+            response.status(400).json({error: "bad request"});
+        } else if (!request.user) {
+            response.status(403).json({error: "forbidden"});
         } else {
-            GoogleHelper.createOauthClient().getToken(code, function (err, tokens) {
-                if (err) {
-                    response.redirect('/');
-                    return;
-                }
 
-                // get collection and current sites
-                var current_provider_sites = request.user.provider_sites;
+            // get collection and current sites
+            var current_provider_sites = request.user.provider_sites;
 
-                if (current_provider_sites['google']) {
-                    // already exists, update existing values
-                    current_provider_sites.google.expiry_date = tokens.expiry_date;
-                    current_provider_sites.google.access_token = tokens.access_token;
-                    current_provider_sites.google.id_token = tokens.id_token;
-                } else {
-                    // add new provider
-                    current_provider_sites.google = {
-                        expiry_date: tokens.expiry_date,
-                        access_token: tokens.access_token,
-                        refresh_token: tokens.refresh_token,
-                        id_token: tokens.id_token,
-                    }
-                }
+            // add new provider
+            current_provider_sites.dropbox = {
+                access_token: access_token,
+                token_type: token_type,
+                uid: uid,
+                account_id: account_id,
+            }
 
-                // update the tokens for this user
-                UserHelper.updateUserTokens(request.user, current_provider_sites)
-                    .then((result) => {
-                        response.redirect('/');
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        response.redirect('/');
-                    });
-            });
+            // update the tokens for this user
+            UserHelper.updateUserTokens(request.user, current_provider_sites)
+                .then((result) => {
+                    response.json(true);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    response.status(500).json({error: err});
+                });
         }
     });
 
-    app.get('/test_google/upload', (request, response) => {
-        // get the correct path
-        var filePath = path.join(__dirname, '../downloads/127251962/file_1.jpg');
+    /*
+     app.get('/test_google/upload', (request, response) => {
+     // get the correct path
+     var filePath = path.join(__dirname, '../downloads/127251962/file_1.jpg');
 
-        // upload the file
-        GoogleHelper.uploadFile(
-            request.user.provider_sites.google,
-            filePath,
-            "card_v2.jpg"
-        )
-            .then((result) => {
-                response.json(result);
-            })
-            .catch((err) => {
-                response.json(err);
-            });
-    })
+     // upload the file
+     GoogleHelper.uploadFile(
+     request.user.provider_sites.google,
+     filePath,
+     "card_v2.jpg"
+     )
+     .then((result) => {
+     response.json(result);
+     })
+     .catch((err) => {
+     response.json(err);
+     });
+     })
 
-    app.get('/test_google/download', (request, response) => {
-        // get the correct path
-        var filePath = path.join(__dirname, '../downloads/test.jpg');
+     app.get('/test_google/download', (request, response) => {
+     // get the correct path
+     var filePath = path.join(__dirname, '../downloads/test.jpg');
 
-        var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
+     var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
 
-        // download the file
-        GoogleHelper.downloadFile(
-            request.user.provider_sites.google,
-            fileId,
-            filePath
-        ).then((result) => {
-            response.json(result);
-        }).catch((err) => {
-            response.json(err);
-        });
-    })
+     // download the file
+     GoogleHelper.downloadFile(
+     request.user.provider_sites.google,
+     fileId,
+     filePath
+     ).then((result) => {
+     response.json(result);
+     }).catch((err) => {
+     response.json(err);
+     });
+     })
 
-    app.get('/test_google/files_list', (request, response) => {
-        // get file list
-        GoogleHelper.getFilesList(request.user.provider_sites.google)
-            .then((result) => {
-                response.json(result);
-            })
-            .catch((err) => {
-                response.json(err);
-            });
-    })
+     app.get('/test_google/files_list', (request, response) => {
+     // get file list
+     GoogleHelper.getFilesList(request.user.provider_sites.google)
+     .then((result) => {
+     response.json(result);
+     })
+     .catch((err) => {
+     response.json(err);
+     });
+     })
 
-    app.get('/test_google/info', (request, response) => {
-        var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
+     app.get('/test_google/info', (request, response) => {
+     var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
 
-        // download the file
-        GoogleHelper.fileInfo(
-            request.user.provider_sites.google,
-            fileId
-        ).then((result) => {
-            response.json(result);
-        }).catch((err) => {
-            response.json(err);
-        });
-    })
+     // download the file
+     GoogleHelper.fileInfo(
+     request.user.provider_sites.google,
+     fileId
+     ).then((result) => {
+     response.json(result);
+     }).catch((err) => {
+     response.json(err);
+     });
+     })
 
-
+     //*/
 }

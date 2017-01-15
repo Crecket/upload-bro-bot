@@ -1,0 +1,18 @@
+{
+  "restartable": "rs",
+  "verbose": true,
+  "ignore": [
+    ".git",
+    ".idea",
+    "node_modules/**/node_modules",
+    "public",
+    "src/Resources/React/*"
+  ],
+  "watch": [
+    "src/*",
+    "app.js"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

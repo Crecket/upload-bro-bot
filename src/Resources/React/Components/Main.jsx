@@ -97,7 +97,7 @@ class Main extends React.Component {
                 <div className={"wrap " + this.state.muiTheme}
                      style={{background: ThemesList[this.state.muiTheme].bodyBackground}}>
                     <div
-                        className="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3"
+                        className="col-xs-12"
                         style={{paddingLeft: 0, paddingRight: 0}}>
                         <div className="content">
                             <Dialog
