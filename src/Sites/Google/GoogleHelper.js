@@ -6,6 +6,7 @@ var OAuth2 = google.auth.OAuth2;
 
 // https://developers.google.com/apis-explorer/#search/drive/
 // https://developers.google.com/drive/v3/web/about-sdk
+// https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=
 
 module.exports = class GoogleHelper {
     constructor(app) {
@@ -166,10 +167,10 @@ module.exports = class GoogleHelper {
             // start export
             drive.files.get({
                 fileId: fileId
-            }, (err, buffer)=>{
-                if(err){
+            }, (err, buffer) => {
+                if (err) {
                     reject(err);
-                }else{
+                } else {
                     resolve(buffer);
                 }
             });
@@ -204,6 +205,16 @@ module.exports = class GoogleHelper {
                 }
             });
         })
+    }
+
+    /**
+     * Creates a shareable link
+     *
+     * @param fileId
+     * @returns {string}
+     */
+    getShareableLink(fileId) {
+        return 'https://drive.google.com/open?id=' + fileId;
     }
 
 }

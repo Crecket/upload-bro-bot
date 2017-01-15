@@ -1,8 +1,7 @@
-var path = require('path')
-var fs = require('fs')
-var mime = require('mime')
-var express = require('express')
-var session = require('express-session')
+var path = require('path');
+var fs = require('fs');
+var express = require('express');
+var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var MongoStore = require('connect-mongo')(session);
@@ -11,12 +10,13 @@ var TelegramStrategy = require('passport-telegram').Strategy;
 var refresh = require('passport-oauth2-refresh');
 
 var Logger = require('./Logger');
-var GoogleHelperObj = require('./Sites/Google/GoogleHelper');
+
+var GoogleRoutes = require('./Routes/GoogleRoutes');
+var TelegramRoutes = require('./Routes/TelegramRoutes');
 
 module.exports = function (uploadApp) {
     var app = express()
     var db = uploadApp._Db;
-    var GoogleHelper = new GoogleHelperObj(uploadApp);
 
     // refresh using a refresh token example
     // refresh.requestNewAccessToken('facebook', 'some_refresh_token', function(err, accessToken, refreshToken) {
@@ -111,160 +111,16 @@ module.exports = function (uploadApp) {
 
     // routes
     app.get(['/', '/failed/:type'], (req, res) => {
-        console.log(req.user.provider_sites);
         res.render('index', {});
     })
 
+    // fetch user info from api
     app.post('/get_user', (req, res) => {
         res.json(req.user);
     });
 
-    // returns a valid oauth url for the client
-    app.get('/login/google_url', (req, res) => {
-        var url = GoogleHelper.createOauthClient().generateAuthUrl({
-            access_type: 'offline',
-            scope: [
-                'https://www.googleapis.com/auth/userinfo.profile',
-                'https://www.googleapis.com/auth/drive.appfolder',
-                'https://www.googleapis.com/auth/drive.file'
-            ]
-        });
-
-        // return the url
-        res.json({url: url});
-    });
-
-    app.get('/test_google/upload', (request, response) => {
-        // get the correct path
-        var filePath = path.join(__dirname, '../downloads/127251962/file_1.jpg');
-
-        // upload the file
-        GoogleHelper.uploadFile(
-            request.user.provider_sites.google,
-            filePath,
-            "card_v2.jpg"
-        )
-            .then((result) => {
-                response.json(result);
-            })
-            .catch((err) => {
-                response.json(err);
-            });
-    })
-
-    app.get('/test_google/download', (request, response) => {
-        // get the correct path
-        var filePath = path.join(__dirname, '../downloads/test.jpg');
-
-        var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
-
-        // download the file
-        GoogleHelper.downloadFile(
-            request.user.provider_sites.google,
-            fileId,
-            filePath
-        ).then((result) => {
-            response.json(result);
-        }).catch((err) => {
-            response.json(err);
-        });
-    })
-
-    app.get('/test_google/files_list', (request, response) => {
-        // get file list
-        GoogleHelper.getFilesList(request.user.provider_sites.google)
-            .then((result) => {
-                response.json(result);
-            })
-            .catch((err) => {
-                response.json(err);
-            });
-    })
-
-    app.get('/test_google/info', (request, response) => {
-        var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
-
-        // download the file
-        GoogleHelper.fileInfo(
-            request.user.provider_sites.google,
-            fileId
-        ).then((result) => {
-            response.json(result);
-        }).catch((err) => {
-            response.json(err);
-        });
-    })
-
-    // handles the oauth callback
-    app.get('/login/google/callback', function (request, response) {
-        var code = request.query.code;
-
-        // make sure we have a code and we're logged in
-        if (!code || !request.user) {
-            response.redirect('/');
-            return;
-        } else {
-            GoogleHelper.createOauthClient().getToken(code, function (err, tokens) {
-                if (err) {
-                    console.log(err);
-                    response.redirect('/');
-                    return;
-                }
-
-                // get collection and current sites
-                var current_provider_sites = request.user.provider_sites;
-                var usersCollection = db.collection('users');
-
-                if (current_provider_sites['google']) {
-                    // already exists, update existing values
-                    current_provider_sites.google.expiry_date = tokens.expiry_date;
-                    current_provider_sites.google.access_token = tokens.access_token;
-                    // current_provider_sites.google.id_token = tokens.id_token;
-                } else {
-                    // add new provider
-                    current_provider_sites.google = {
-                        expiry_date: tokens.expiry_date,
-                        access_token: tokens.access_token,
-                        refresh_token: tokens.refresh_token,
-                        // id_token: tokens.id_token,
-                    }
-                }
-
-                // update provider sites
-                usersCollection.updateOne({_id: request.user._id}, {
-                    $set: {
-                        provider_sites: current_provider_sites
-                    }
-                }).then((result) => {
-                    console.log('mongodb updated');
-                    console.log(result);
-                    response.redirect('/');
-                }).catch((err) => {
-                    console.log('mongodb error');
-                    console.log(err);
-                    response.redirect('/');
-                });
-            });
-        }
-    });
-
-    // login urls and callback
-    app.get('/login/telegram', (req, res, next) => {
-        if (req.user) {
-            // already logged in
-            res.redirect('/');
-        } else {
-            // send to telegram login middleware
-            TelegramMiddleware(req, res, next);
-        }
-    });
-    app.get('/login/telegram/callback', passport.authenticate('telegram', {
-            session: true,
-            failureRedirect: '/failed/telegram'
-        }), (req, res) => {
-            res.redirect('/');
-        }
-    );
+    TelegramRoutes(app, passport, uploadApp);
+    GoogleRoutes(app, passport, uploadApp);
 
     // GET /logout
     app.get('/logout', function (req, res) {
@@ -273,8 +129,8 @@ module.exports = function (uploadApp) {
     });
 
     // start listening
-    app.listen(80, function () {
-        console.log('Express app listening on port 80!')
+    app.listen(process.env.EXPRESS_PORT, function () {
+        console.log('Express listening on ' + process.env.EXPRESS_PORT)
     })
 
 };
