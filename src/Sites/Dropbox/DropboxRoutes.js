@@ -2,8 +2,8 @@ var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
 
-var DropboxHelperObj = require('../Sites/Dropbox/DropboxHelper');
-var UserHelperObj = require('../Userhelper.js');
+var DropboxHelperObj = require('./DropboxHelper');
+var UserHelperObj = require('../../UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;
@@ -70,14 +70,47 @@ module.exports = (app, passport, uploadApp) => {
         }
     });
 
+    app.get('/test_dropbox/shar_link', (req, res) => {
+        var token = req.user.provider_sites.dropbox.access_token;
+        DropboxHelper.createShareLink('/file_69.jpg',token)
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((err) => {
+                res.json(err)
+            });
+    })
+
+    app.get('/test_dropbox/file_list', (req, res) => {
+        var token = req.user.provider_sites.dropbox.access_token;
+        DropboxHelper.getFilesList('', token)
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((err) => {
+                res.json(err)
+            });
+    })
+
+    app.get('/test_dropbox/user_info', (req, res) => {
+        var token = req.user.provider_sites.dropbox.access_token;
+        DropboxHelper.getUserInfo(token)
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((err) => {
+                res.json(err)
+            });
+    })
+
     /*
-     app.get('/test_google/upload', (request, response) => {
+     app.get('/test_dropbox/upload', (request, response) => {
      // get the correct path
      var filePath = path.join(__dirname, '../downloads/127251962/file_1.jpg');
 
      // upload the file
      GoogleHelper.uploadFile(
-     request.user.provider_sites.google,
+     request.user.provider_sites.dropbox,
      filePath,
      "card_v2.jpg"
      )
@@ -89,7 +122,7 @@ module.exports = (app, passport, uploadApp) => {
      });
      })
 
-     app.get('/test_google/download', (request, response) => {
+     app.get('/test_dropbox/download', (request, response) => {
      // get the correct path
      var filePath = path.join(__dirname, '../downloads/test.jpg');
 
@@ -97,7 +130,7 @@ module.exports = (app, passport, uploadApp) => {
 
      // download the file
      GoogleHelper.downloadFile(
-     request.user.provider_sites.google,
+     request.user.provider_sites.dropbox,
      fileId,
      filePath
      ).then((result) => {
@@ -107,9 +140,9 @@ module.exports = (app, passport, uploadApp) => {
      });
      })
 
-     app.get('/test_google/files_list', (request, response) => {
+     app.get('/test_dropbox/files_list', (request, response) => {
      // get file list
-     GoogleHelper.getFilesList(request.user.provider_sites.google)
+     GoogleHelper.getFilesList(request.user.provider_sites.dropbox)
      .then((result) => {
      response.json(result);
      })
@@ -118,12 +151,12 @@ module.exports = (app, passport, uploadApp) => {
      });
      })
 
-     app.get('/test_google/info', (request, response) => {
+     app.get('/test_dropbox/info', (request, response) => {
      var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
 
      // download the file
      GoogleHelper.fileInfo(
-     request.user.provider_sites.google,
+     request.user.provider_sites.dropbox,
      fileId
      ).then((result) => {
      response.json(result);

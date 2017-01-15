@@ -2,8 +2,8 @@ var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
 
-var GoogleHelperObj = require('../Sites/Google/GoogleHelper');
-var UserHelperObj = require('../Userhelper.js');
+var GoogleHelperObj = require('./GoogleHelper');
+var UserHelperObj = require('../../UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;

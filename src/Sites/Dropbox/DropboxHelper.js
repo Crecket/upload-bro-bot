@@ -25,7 +25,7 @@ module.exports = class DropboxHelper {
      * @param token
      * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
      */
-    getFilesList(path = '', dropboxToken) {
+    getFilesList(path, dropboxToken) {
         // Create dropbox object
         var dbx = this.createClient(dropboxToken);
 
@@ -58,9 +58,41 @@ module.exports = class DropboxHelper {
         return dbx.filesUpload(options);
     }
 
-    sharingCreateSharedLink(){
-        // share a file
-        // http://dropbox.github.io/dropbox-sdk-js/Dropbox.html#sharingCreateSharedLink__anchor
+    /**
+     * Get user account info for a token
+     *
+     * @param dropboxToken
+     * @returns {*}
+     */
+    getUserInfo(dropboxToken){
+        // create a dropboxclient
+        var client = this.createClient(dropboxToken);
+
+        // return the info promise
+       return client.usersGetCurrentAccount();
+    }
+
+    /**
+     * Create a file share link
+     *
+     * @param path
+     * @param dropboxToken
+     * @param short
+     */
+    createShareLink(path, dropboxToken, short = false) {
+        // create a dropboxclient
+        var client = this.createClient(dropboxToken);
+
+        // client.usersGetCurrentAccount()
+        //     .then((result) => {
+        //         console.log(result);
+        //     });
+
+        // return the share link
+        return client.sharingCreateSharedLink({
+            path: path,
+            short_url: short
+        })
     }
 
 }
