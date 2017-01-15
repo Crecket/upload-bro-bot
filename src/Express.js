@@ -134,7 +134,7 @@ module.exports = function (uploadApp) {
         res.json({url: url});
     });
 
-    app.get('/test_google', (request, response) => {
+    app.get('/test_google/upload', (request, response) => {
         // get the correct path
         var filePath = path.join(__dirname, '../downloads/127251962/file_1.jpg');
 
@@ -142,8 +142,37 @@ module.exports = function (uploadApp) {
         GoogleHelper.uploadFile(
             request.user.provider_sites.google,
             filePath,
-            "card.jpg"
+            "card_v2.jpg"
         )
+            .then((result) => {
+                response.json(result);
+            })
+            .catch((err) => {
+                response.json(err);
+            });
+    })
+
+    app.get('/test_google/download', (request, response) => {
+        // get the correct path
+        var filePath = path.join(__dirname, '../downloads/test.jpg');
+
+        var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
+
+        // download the file
+        GoogleHelper.downloadFile(
+            request.user.provider_sites.google,
+            fileId,
+            filePath
+        ).then((result) => {
+            response.json(result);
+        }).catch((err) => {
+            response.json(err);
+        });
+    })
+
+    app.get('/test_google/files_list', (request, response) => {
+        // get file list
+        GoogleHelper.getFilesList(request.user.provider_sites.google)
             .then((result) => {
                 response.json(result);
             })

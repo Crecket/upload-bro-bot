@@ -116,31 +116,32 @@ module.exports = class GoogleHelper {
      *
      * @param google_tokens
      * @param fileId
-     * @param target
-     * @param mimeType
+     * @param filePath
      * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
      *
      * @see https://developers.google.com/drive/v3/web/manage-downloads
      */
-    downloadFile(google_tokens, fileId, target, mimeType) {
+    downloadFile(google_tokens, fileId, filePath) {
         return new Promise((resolve, reject) => {
             var authclient = this.createOauthClient(google_tokens)
 
             // drive object
             var drive = google.drive({version: 'v3', auth: authclient});
 
+            // get the file mimetype
+            var mimeType = mime.lookup(filePath);
+
             // create target stream
-            var dest = fs.createWriteStream(target);
+            var dest = fs.createWriteStream(filePath);
 
             // start export
-            drive.files.export({
+            drive.files.get({
                 fileId: fileId,
-                mimeType: mimeType
-            }).on('end', function () {
-                console.log('Done');
+                mimeType: mimeType,
+                alt: "media"
+            }).on('end', () => {
                 resolve(true);
-            }).on('error', function (err) {
-                console.log('Error during download', err);
+            }).on('error', (err) => {
                 reject(err);
             }).pipe(dest);
         });
@@ -166,12 +167,12 @@ module.exports = class GoogleHelper {
                 auth: authclient,
                 pageSize: 10,
                 fields: "nextPageToken, files(id, name)"
-            }, function (err, response) {
+            }, (err, response) => {
                 if (err) {
-                    console.log('The API returned an error: ' + err);
-                    return reject(err);
+                    reject(err);
+                } else {
+                    resolve(response.files);
                 }
-                resolve(response.files);
             });
         })
     }
