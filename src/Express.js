@@ -1,6 +1,8 @@
 var path = require('path');
 var fs = require('fs');
 var express = require('express');
+var http = require('http');
+var https = require('https');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -18,6 +20,13 @@ var TelegramRoutes = require('./Routes/TelegramRoutes');
 module.exports = function (uploadApp) {
     var app = express()
     var db = uploadApp._Db;
+
+    var httpsOptions = {
+        // ca: [''],
+        cert: fs.readFileSync(process.env.EXPRESS_SSL_CERT),
+        key: fs.readFileSync(process.env.EXPRESS_SSL_KEY)
+    };
+
 
     // refresh using a refresh token example
     // refresh.requestNewAccessToken('facebook', 'some_refresh_token', function(err, accessToken, refreshToken) {
@@ -130,9 +139,17 @@ module.exports = function (uploadApp) {
         res.redirect('/');
     });
 
+
+
+    var httpServer = http.createServer(app);
+    var httpsServer = https.createServer(httpsOptions, app);;
+
     // start listening
-    app.listen(process.env.EXPRESS_PORT, function () {
+    httpServer.listen(process.env.EXPRESS_PORT, function(){
         console.log('Express listening on ' + process.env.EXPRESS_PORT)
-    })
+    });
+    httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function(){
+        console.log('Express listening on ' + process.env.EXPRESS_HTTPS_PORT)
+    });
 
 };
