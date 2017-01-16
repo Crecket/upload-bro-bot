@@ -39,4 +39,17 @@ module.exports = class CommandHandler {
     get commandCount() {
         return Object.keys(this._commands).length;
     }
+
+    /**
+     * Returns a list of all the info items for each command,
+     * can be used to create the command list for bot father settings
+     * @returns {string}
+     */
+    get info(){
+        var info = "";
+        Object.keys(this._commands).map((key)=>{
+            info += this._commands[key].info + "\n";
+        })
+        return info;
+    }
 }

@@ -2,30 +2,41 @@ var TelegramBot = require('node-telegram-bot-api');
 var MongoClient = require('mongodb').MongoClient;
 var fs = require('fs');
 var path = require('path');
+var Cacheman = require('cacheman');
+var MongoDbEngine = require('cacheman-mongo');
+var requireFix = require('app-root-path').require;
 
-var CommandHandler = require('./Handlers/CommandHandler');
-var SiteHandler = require('./Handlers/SiteHandler');
-var QueryHandler = require('./Handlers/QueryHandler');
-var Logger = require('./Logger');
-var Utils = require('./Utils');
-var Express = require('./Express');
-var UserHelperObj = require('./UserHelper');
+// utilities
+var Logger = requireFix('/src/Logger');
+var Utils = requireFix('/src/Utils');
+
+// express server
+var Express = requireFix('/src/Express');
+
+// handlers and other helpers
+var CommandHandler = requireFix('/src/Handlers/CommandHandler');
+var SiteHandler = requireFix('/src/Handlers/SiteHandler');
+var QueryHandler = requireFix('/src/Handlers/QueryHandler');
+var UserHelperObj = requireFix('/src/UserHelper');
 
 // commands
-var HelpObj = require('./Commands/Help');
-var KeyboardObj = require('./Commands/Keyboard');
-var LoginObj = require('./Commands/Login');
+var HelpCommandObj = requireFix('/src/Commands/Help');
+var StartCommandObj = requireFix('/src/Commands/Start');
 
 // sites
-var DropboxObj = require('././Sites/Dropbox');
-var GoogleObj = require('././Sites/Google');
+var DropboxSiteObj = requireFix('/src/./Sites/Dropbox');
+var GoogleSiteObj = requireFix('/src/./Sites/Google');
 
 // queries
-var MySitesObj = require('./Queries/MySites');
-var ScanChatObj = require('./Queries/ScanChat');
+var MySitesQueryObj = requireFix('/src/Queries/MySites');
+var ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
+
+// event handlers
+var EventHandlersObj = requireFix('/src/EventHandlers');
 
 module.exports = class DropboxApp {
     constructor(token) {
+
         // Create a new blackjack bot
         this._TelegramBot = new TelegramBot(token, {polling: true});
 
@@ -46,13 +57,22 @@ module.exports = class DropboxApp {
             .then((db) => {
                 // store the database
                 this._Db = db;
+
+                // create mongodb cache engine
+                var engine = new MongoDbEngine(db, {collection: 'cache'});
+
+                // store the cache in the app
+                this._Cache = new Cacheman('uploadbro_cache', {
+                    engine: engine, // mongodb engine
+                    ttl: 60 * 60, // default ttl
+                });
             })
+            // load all the commands
+            .then(this.loadCommands.bind(this))
             // setup dropbox handler
             .then(this.loadWebsites.bind(this))
             // load all the queries
             .then(this.loadQueries.bind(this))
-            // load all the commands
-            .then(this.loadCommands.bind(this))
             // start the event listeners
             .then(this.eventListeners.bind(this))
             // finish setup
@@ -91,8 +111,8 @@ module.exports = class DropboxApp {
         Logger.overwrite('Loading websites');
 
         // Register the websites
-        this._SiteHandler.register(new DropboxObj(this));
-        this._SiteHandler.register(new GoogleObj(this));
+        this._SiteHandler.register(new DropboxSiteObj(this));
+        this._SiteHandler.register(new GoogleSiteObj(this));
 
         Logger.overwrite('Loaded ' + this._SiteHandler.siteCount + " sites      \n");
 
@@ -108,9 +128,8 @@ module.exports = class DropboxApp {
         Logger.overwrite('Loading global commands');
 
         // Add the global commands
-        this._CommandHandler.register(new HelpObj(this));
-        this._CommandHandler.register(new KeyboardObj(this));
-        this._CommandHandler.register(new LoginObj(this));
+        this._CommandHandler.register(new HelpCommandObj(this));
+        this._CommandHandler.register(new StartCommandObj(this));
 
         Logger.overwrite('Loaded ' + this._CommandHandler.commandCount + " commands            \n");
 
@@ -126,8 +145,8 @@ module.exports = class DropboxApp {
         Logger.overwrite('Loading queries');
 
         // Add the query handlers
-        this._QueryHandler.register(new MySitesObj(this));
-        this._QueryHandler.register(new ScanChatObj(this));
+        this._QueryHandler.register(new MySitesQueryObj(this));
+        this._QueryHandler.register(new ScanChatQueryObj(this));
 
         Logger.overwrite('Loaded ' + this._QueryHandler.queryCount + " queries            \n");
 
@@ -135,54 +154,7 @@ module.exports = class DropboxApp {
         return Promise.resolve();
     }
 
-    /**
-     * Event listener for messages with a file added
-     * @param msg
-     */
-    messageFileListener(msg) {
-        // TODO get allowed sites for this user
-        var file = (!!msg.photo) ? msg.photo[msg.photo.length - 1] : msg.document;
-
-        this._UserHelper.getUser(msg.from.id)
-            .then((user_info) => {
-                if (user_info) {
-                    // user is registered, generate the download buttons
-                    var buttonList = [];
-                    // loop through existing provider sites
-                    Object.keys(user_info.provider_sites).map((key) => {
-                        var providerSite = user_info.provider_sites[key];
-
-                        // push item into the button list
-                        buttonList.push({
-                            text: key.toUpperCase(),
-                            callback_data: "upload_" + key + "|" + file.file_id
-                        });
-                    })
-
-                    if (buttonList.length > 0) {
-                        // send the keyboard
-                        this._TelegramBot.sendMessage(msg.from.id, "Do you want to upload this file?", {
-                            reply_markup: {
-                                inline_keyboard: [
-                                    buttonList
-                                ]
-                            }
-                        });
-                    } else {
-                        var message = "Please go to <a href='/login'>/login</a> and add a website to your account";
-                        this._TelegramBot.sendMessage(msg.chat.id, message, {
-                            parse_mode: "HTML"
-                        });
-                    }
-
-                } else {
-                    // nothing to do, this user isn't registered
-                }
-            })
-            .catch(console.error);
-
-    }
-
+    // TODO add this as func
     downloadFile(msg) {
         // we currently only support photos and documents
         var file = (!!msg.photo) ? msg.photo[msg.photo.length - 1] : msg.document;
@@ -211,32 +183,6 @@ module.exports = class DropboxApp {
     }
 
     /**
-     * query_callback event listener
-     *
-     * @param query
-     */
-    handleCallbackQuery(query) {
-        var queryList = this._QueryHandler.queries;
-        var splitData = query.data.split('|');
-
-        var selectedQuery = queryList[splitData[0]];
-
-        // check if the selected query was found
-        if (selectedQuery) {
-            // start the handle request with this query
-            selectedQuery.handle(query)
-                .then((query_id, text = "", alert = false, options = {}) => {
-                    this.answerCallbackQuery(query.id, text, alert, options);
-                })
-                .catch((error, text = "", alert = false, options = {}) => {
-                    this.answerCallbackQuery(query.id, text, alert, options);
-                })
-        } else {
-            this.answerCallbackQuery(query.id, "We couldn't find this command.").bind(this);
-        }
-    }
-
-    /**
      * Respond to a callback query
      *
      * @param id
@@ -245,7 +191,7 @@ module.exports = class DropboxApp {
      * @param options
      */
     answerCallbackQuery(id, text = "", alert = false, options = {}) {
-        this._TelegramBot.answerCallbackQuery(id, text, alert, options)
+        return this._TelegramBot.answerCallbackQuery(id, text, alert, options)
             .then((result) => {
                 Logger.log("Responded to query " + id + ":", result);
             })
@@ -260,67 +206,22 @@ module.exports = class DropboxApp {
      * @returns {Promise.<T>}
      */
     eventListeners() {
+        // create event listeners event
+        var EventListeners = new EventHandlersObj(this);
+
         // file messages
-        this._TelegramBot.on('photo', this.messageFileListener.bind(this));
-        this._TelegramBot.on('document', this.messageFileListener.bind(this));
+        this._TelegramBot.on('audio', EventListeners.messageFileLIstener.bind(this));
+        this._TelegramBot.on('video', EventListeners.messageFileLIstener.bind(this));
+        this._TelegramBot.on('photo', EventListeners.messageFileLIstener.bind(this));
+        this._TelegramBot.on('document', EventListeners.messageFileLIstener.bind(this));
 
         // callback query listener
-        this._TelegramBot.on('callback_query', this.handleCallbackQuery.bind(this));
+        this._TelegramBot.on('callback_query', EventListeners.callbackQuery.bind(this));
+
+        // inline query search event
+        this._TelegramBot.on('inline_query', EventListeners.inlineQuery.bind(this))
 
         return Promise.resolve();
 
-        this._TelegramBot.on('inline_query', (inline_query) => {
-            return;
-            console.log("inline_query");
-            console.log(inline_query);
-            this._TelegramBot.answerInlineQuery(inline_query.id, [
-                {
-                    title: "title1",
-                    caption: "caption1",
-                    description: "description1",
-                    type: "photo",
-                    id: "blackjack_bot_test_id1",
-                    photo_url: "https://www.masterypoints.com/assets/cards/2_of_hearts.png",
-                    thumb_url: "https://www.masterypoints.com/assets/cards/2_of_hearts.png",
-                },
-                {
-                    title: "title2",
-                    caption: "caption2",
-                    description: "description2",
-                    type: "photo",
-                    id: "blackjack_bot_test_id2",
-                    photo_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-                    thumb_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-                },
-                {
-                    title: "title3",
-                    caption: "caption3",
-                    description: "description3",
-                    type: "photo",
-                    id: "blackjack_bot_test_id3",
-                    photo_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-                    thumb_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-                },
-                {
-                    title: "title4",
-                    caption: "caption4",
-                    description: "description4",
-                    type: "photo",
-                    id: "blackjack_bot_test_id4",
-                    photo_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-                    thumb_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-                },
-                {
-                    type: "article",
-                    id: "blackjack_bot_article_id",
-                    title: "Hit",
-                    input_message_content: {
-                        message_text: "Hit",
-                        // parse_mode: "",
-                        disable_web_page_preview: true
-                    },
-                }
-            ])
-        })
     }
 }

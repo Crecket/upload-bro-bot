@@ -6,16 +6,18 @@ var DownloadObj = require(path.join(__dirname, 'Queries/Download'));
 var UploadObj = require(path.join(__dirname, 'Queries/Upload'));
 
 module.exports = class Google extends SiteInteface {
-    constructor() {
-        super();
+    constructor(app) {
+        super(app);
+
+        this._app = app;
     }
 
     /**
      * Load all commands for this website
      */
     register() {
-        // this._app._QueryHandler.register(new DownloadObj(this));
-        // this._app._QueryHandler.register(new UploadObj(this));
+        // this._app._QueryHandler.register(new DownloadObj(this._app));
+        this._app._QueryHandler.register(new UploadObj(this._app));
 
         return Promise.resolve();
     }

@@ -11,11 +11,8 @@ module.exports = class QueryHandler {
      * @param obj - a valid class object
      */
     register(obj) {
-        // store the command
+        // store the query
         this._queries[obj.event] = obj;
-
-        // set the event listener
-        this._app._TelegramBot.on(obj.event, obj.handle.bind(this))
     }
 
     /**

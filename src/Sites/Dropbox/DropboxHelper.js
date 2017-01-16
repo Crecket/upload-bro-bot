@@ -83,11 +83,6 @@ module.exports = class DropboxHelper {
         // create a dropboxclient
         var client = this.createClient(dropboxToken);
 
-        // client.usersGetCurrentAccount()
-        //     .then((result) => {
-        //         console.log(result);
-        //     });
-
         // return the share link
         return client.sharingCreateSharedLink({
             path: path,

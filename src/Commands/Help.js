@@ -16,15 +16,31 @@ module.exports = class Help extends HelperInterface {
             "- <a href='/login'>/login</a>: Show the login url to connect the supported websites to your telegram account" +
             "";
 
-        super.sendMessage(msg.chat.id, message, {
+        return super.sendMessage(msg.chat.id, message, {
             parse_mode: "HTML"
         });
     }
 
+    /**
+     * The name for this command
+     * @returns {string}
+     */
     get name() {
         return "help";
     }
 
+    /**
+     * Returns a string with the <command> - <description>
+     * @returns {string}
+     */
+    get info(){
+        return "help - Helpful information about the bot and it's options";
+    }
+
+    /**
+     * Pattern used for this command
+     * @returns {RegExp}
+     */
     get pattern() {
         return /\/help/;
     }

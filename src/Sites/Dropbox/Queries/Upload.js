@@ -22,25 +22,19 @@ module.exports = class MySites extends HelperInterface {
             this._app._UserHelper.getUser(query.from.id)
                 .then((user_info) => {
                     if (user_info) {
-                        // get provider sites from user info
-                        var provider_sites = user_info.provider_sites;
 
-                        // setup the message
-                        var message = "<b>Your registered services</b>\n";
-                        Object.keys(provider_sites).map((key) => {
-                            message += " - " + key + "\n";
-                        });
                     } else {
                         var message = "We can't seem to find your telegram account in our system. ";
                         message += "Make sure you login first and connect the available services.";
                     }
 
                     // send the message
-                    super.sendMessage(query.message.chat.id, message, {
-                        parse_mode: "HTML"
-                    }).then(() => {
-                        resolve();
-                    }).catch(reject);
+                    // super.sendMessage(query.message.chat.id, message, {
+                    //     parse_mode: "HTML"
+                    // }).then(() => {
+                    //     resolve();
+                    // }).catch(reject);
+                    resolve();
                 })
                 .catch((err) => {
                     console.log(err);
