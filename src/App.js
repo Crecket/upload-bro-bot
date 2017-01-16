@@ -168,19 +168,18 @@ module.exports = class DropboxApp {
         var queryList = this._QueryHandler.queries;
         var selectedQuery = queryList[query.data];
 
-        console.log("");
-        console.log(selectedQuery);
-
         // check if the selected query was found
         if (selectedQuery) {
             // start the handle request with this query
             selectedQuery.handle(query)
-                .then(this.answerCallbackQuery)
-                .catch(this.answerCallbackQuery)
+                .then((query_id, text = "", alert = false, options = {}) => {
+                    this.answerCallbackQuery(query.id, text, alert, options);
+                })
+                .catch((error, text = "", alert = false, options = {}) => {
+                    this.answerCallbackQuery(query.id, text, alert, options);
+                })
         } else {
-            this.answerCallbackQuery(query.id, "We couldn't find this command. This is probably our fault.")
-                .then(console.log)
-                .catch(console.log);
+            this.answerCallbackQuery(query.id, "We couldn't find this command.").bind(this);
         }
     }
 
@@ -193,8 +192,6 @@ module.exports = class DropboxApp {
      * @param options
      */
     answerCallbackQuery(id, text = "", alert = false, options = {}) {
-        console.log(id, text, alert, options);
-
         this._TelegramBot.answerCallbackQuery(id, text, alert, options)
             .then((result) => {
                 Logger.log("Responded to query " + id + ":", result);

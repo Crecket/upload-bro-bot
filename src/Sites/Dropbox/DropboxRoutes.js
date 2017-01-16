@@ -70,9 +70,9 @@ module.exports = (app, passport, uploadApp) => {
         }
     });
 
-    app.get('/test_dropbox/shar_link', (req, res) => {
+    app.get('/test_dropbox/share_link', (req, res) => {
         var token = req.user.provider_sites.dropbox.access_token;
-        DropboxHelper.createShareLink('/file_69.jpg',token)
+        DropboxHelper.createShareLink('/file_69.jpg', token)
             .then((result) => {
                 res.json(result);
             })
