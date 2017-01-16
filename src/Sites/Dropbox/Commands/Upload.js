@@ -36,7 +36,7 @@ module.exports = class Upload extends HelperInterface {
     }
 
     get pattern() {
-        return /\/upload dropbox/;
+        return /\/upload_dropbox/;
     }
 
     test() {

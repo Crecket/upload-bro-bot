@@ -2,13 +2,16 @@ var fs = require('fs');
 var path = require('path');
 
 var HelperInterface = require(path.join(__dirname, './../../../HelperInterface'));
-var DropboxHelper = require(path.join(__dirname, '../DropboxHelper'));
+var GoogleHelperObj = require(path.join(__dirname, '../GoogleHelper'));
 
 module.exports = class Download extends HelperInterface {
     constructor(app) {
         super(app);
 
         this._app = app;
+
+        // create google helper
+        this._GoogleHelper = new GoogleHelperObj(app);
     }
 
     handle(msg, match) {
@@ -31,12 +34,12 @@ module.exports = class Download extends HelperInterface {
             .catch(console.error);
     }
 
-    get name() {
-        return "download_dropbox";
-    }
-
-    get pattern() {
-        return /\/download_dropbox/;
+    /**
+     * Get event name for this query
+     * @returns {string}
+     */
+    get event() {
+        return "download_google";
     }
 }
 

@@ -20,11 +20,11 @@ module.exports = class ScanChat extends HelperInterface {
         return new Promise((resolve, reject) => {
             this._app._TelegramBot.getUpdates().bind(this)
                 .then((res) => {
-                    console.log('123', res[0]);
+                    console.log(res);
                     resolve(query.id);
                 })
                 .catch((err) => {
-                    console.error('321', err);
+                    console.error('getUpdates error', err);
                     reject(query.id);
                 });
         })

@@ -3,25 +3,26 @@ var MongoClient = require('mongodb').MongoClient;
 var fs = require('fs');
 var path = require('path');
 
-var CommandHandler = require(path.join(__dirname, 'Handlers/CommandHandler'));
-var SiteHandler = require(path.join(__dirname, 'Handlers/SiteHandler'));
-var QueryHandler = require(path.join(__dirname, 'Handlers/QueryHandler'));
+var CommandHandler = require('./Handlers/CommandHandler');
+var SiteHandler = require('./Handlers/SiteHandler');
+var QueryHandler = require('./Handlers/QueryHandler');
 var Logger = require('./Logger');
 var Utils = require('./Utils');
 var Express = require('./Express');
+var UserHelperObj = require('./UserHelper');
 
 // commands
-var HelpObj = require(path.join(__dirname, 'Commands/Help'));
-var KeyboardObj = require(path.join(__dirname, 'Commands/Keyboard'));
-var LoginObj = require(path.join(__dirname, 'Commands/Login'));
+var HelpObj = require('./Commands/Help');
+var KeyboardObj = require('./Commands/Keyboard');
+var LoginObj = require('./Commands/Login');
 
 // sites
-var DropboxObj = require(path.join(__dirname, './Sites/Dropbox'));
-var GoogleObj = require(path.join(__dirname, './Sites/Google'));
+var DropboxObj = require('././Sites/Dropbox');
+var GoogleObj = require('././Sites/Google');
 
 // queries
-var MySitesObj = require(path.join(__dirname, 'Queries/MySites'));
-var ScanChatObj = require(path.join(__dirname, 'Queries/ScanChat'));
+var MySitesObj = require('./Queries/MySites');
+var ScanChatObj = require('./Queries/ScanChat');
 
 module.exports = class DropboxApp {
     constructor(token) {
@@ -36,6 +37,9 @@ module.exports = class DropboxApp {
 
         // Create new site handler
         this._QueryHandler = new QueryHandler(this);
+
+        // user helper object
+        this._UserHelper = new UserHelperObj(this);
 
         // connect to mongodb
         this.connectDb()
@@ -136,27 +140,74 @@ module.exports = class DropboxApp {
      * @param msg
      */
     messageFileListener(msg) {
-        // we currently only support photos and documents
-        var file = (!!msg.photo) ? msg.photo : msg.document;
+        // TODO get allowed sites for this user
+        var file = (!!msg.photo) ? msg.photo[msg.photo.length - 1] : msg.document;
 
-        return;
+        this._UserHelper.getUser(msg.from.id)
+            .then((user_info) => {
+                if (user_info) {
+                    // user is registered, generate the download buttons
+                    var buttonList = [];
+                    // loop through existing provider sites
+                    Object.keys(user_info.provider_sites).map((key) => {
+                        var providerSite = user_info.provider_sites[key];
+
+                        // push item into the button list
+                        buttonList.push({
+                            text: key.toUpperCase(),
+                            callback_data: "upload_" + key + "|" + file.file_id
+                        });
+                    })
+
+                    if (buttonList.length > 0) {
+                        // send the keyboard
+                        this._TelegramBot.sendMessage(msg.from.id, "Do you want to upload this file?", {
+                            reply_markup: {
+                                inline_keyboard: [
+                                    buttonList
+                                ]
+                            }
+                        });
+                    } else {
+                        var message = "Please go to <a href='/login'>/login</a> and add a website to your account";
+                        this._TelegramBot.sendMessage(msg.chat.id, message, {
+                            parse_mode: "HTML"
+                        });
+                    }
+
+                } else {
+                    // nothing to do, this user isn't registered
+                }
+            })
+            .catch(console.error);
+
+    }
+
+    downloadFile(msg) {
+        // we currently only support photos and documents
+        var file = (!!msg.photo) ? msg.photo[msg.photo.length - 1] : msg.document;
 
         var directory = __dirname + "/../downloads/" + msg.chat.id;
-        // TODO check file size, width/height and other security settings
-
         Logger.debug(msg);
 
-        Utils.ensureFolderExists(directory, '0744')
-            .then(() => {
+        // assert the lower folder exists
+        Utils.ensureFolderExists(directory, '0744').then(() => {
+            // download the file
+            this._TelegramBot.downloadFile(
+                file.file_id,
+                directory
+            ).then((finalPath) => {
+                Logger.log(finalPath);
+                var fileExtension = path.extname(finalPath);
+                var targetName = __dirname + "/../downloads/" + msg.chat.id + "/" + file.file_id + fileExtension;
 
-                this._TelegramBot.downloadFile(
-                    file[0].file_id,
-                    directory
-                ).then((info) => {
-                    Logger.log(info);
-                })
+                fs.rename(finalPath, targetName, (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
             })
-            .catch(Logger.error);
+        }).catch(Logger.error);
     }
 
     /**
@@ -166,7 +217,9 @@ module.exports = class DropboxApp {
      */
     handleCallbackQuery(query) {
         var queryList = this._QueryHandler.queries;
-        var selectedQuery = queryList[query.data];
+        var splitData = query.data.split('|');
+
+        var selectedQuery = queryList[splitData[0]];
 
         // check if the selected query was found
         if (selectedQuery) {
@@ -201,6 +254,11 @@ module.exports = class DropboxApp {
             });
     }
 
+    /**
+     * Register events
+     *
+     * @returns {Promise.<T>}
+     */
     eventListeners() {
         // file messages
         this._TelegramBot.on('photo', this.messageFileListener.bind(this));
