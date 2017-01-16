@@ -21,6 +21,7 @@ var GoogleObj = require(path.join(__dirname, './Sites/Google'));
 
 // queries
 var MySitesObj = require(path.join(__dirname, 'Queries/MySites'));
+var ScanChatObj = require(path.join(__dirname, 'Queries/ScanChat'));
 
 module.exports = class DropboxApp {
     constructor(token) {
@@ -122,6 +123,7 @@ module.exports = class DropboxApp {
 
         // Add the query handlers
         this._QueryHandler.register(new MySitesObj(this));
+        this._QueryHandler.register(new ScanChatObj(this));
 
         Logger.overwrite('Loaded ' + this._QueryHandler.queryCount + " queries            \n");
 
@@ -136,6 +138,8 @@ module.exports = class DropboxApp {
     messageFileListener(msg) {
         // we currently only support photos and documents
         var file = (!!msg.photo) ? msg.photo : msg.document;
+
+        return;
 
         var directory = __dirname + "/../downloads/" + msg.chat.id;
         // TODO check file size, width/height and other security settings
@@ -164,18 +168,19 @@ module.exports = class DropboxApp {
         var queryList = this._QueryHandler.queries;
         var selectedQuery = queryList[query.data];
 
+        console.log("");
+        console.log(selectedQuery);
+
         // check if the selected query was found
         if (selectedQuery) {
             // start the handle request with this query
             selectedQuery.handle(query)
-                .then((result_message = "", alert = false, options = {}) => {
-                    this.answerCallbackQuery(query.id, result_message, alert, options)
-                })
-                .catch((error_message = "", alert = false, options = {}) => {
-                    this.answerCallbackQuery(query.id, error_message, alert, options)
-                })
+                .then(this.answerCallbackQuery)
+                .catch(this.answerCallbackQuery)
         } else {
             this.answerCallbackQuery(query.id, "We couldn't find this command. This is probably our fault.")
+                .then(console.log)
+                .catch(console.log);
         }
     }
 
@@ -188,6 +193,8 @@ module.exports = class DropboxApp {
      * @param options
      */
     answerCallbackQuery(id, text = "", alert = false, options = {}) {
+        console.log(id, text, alert, options);
+
         this._TelegramBot.answerCallbackQuery(id, text, alert, options)
             .then((result) => {
                 Logger.log("Responded to query " + id + ":", result);

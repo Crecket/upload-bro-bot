@@ -52,7 +52,7 @@ module.exports = function (uploadApp) {
     var TelegramStrategyObj = new TelegramStrategy({
             clientID: process.env.TELEPASS_APPID,
             clientSecret: process.env.TELEPASS_SECRET,
-            callbackURL: 'http://localhost/login/telegram/callback'
+            callbackURL: process.env.TELEPASS_REDIRECT_URI
         },
         function (accessToken, refreshToken, profile, done) {
             // get the users collection

@@ -5,8 +5,10 @@ var HelperInterface = require(path.join(__dirname, './../../../HelperInterface')
 var DropboxHelper = require(path.join(__dirname, '../DropboxHelper'));
 
 module.exports = class Upload extends HelperInterface {
-    constructor() {
-        super();
+    constructor(app) {
+        super(app);
+
+        this._app = app;
     }
 
     handle(msg, match) {

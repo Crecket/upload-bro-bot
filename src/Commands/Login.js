@@ -4,8 +4,10 @@ var path = require('path');
 var HelperInterface = require(path.join(__dirname, '/../HelperInterface'));
 
 module.exports = class Login extends HelperInterface {
-    constructor() {
-        super();
+    constructor(app) {
+        super(app);
+
+        this._app = app;
     }
 
     handle(msg) {

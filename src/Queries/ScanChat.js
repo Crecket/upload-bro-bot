@@ -18,7 +18,15 @@ module.exports = class MySites extends HelperInterface {
      */
     handle(query) {
         return new Promise((resolve, reject) => {
-            resolve("");
+            this._app._TelegramBot.getUpdates()
+                .then((res) => {
+                    console.log(res);
+                    resolve(query.id);
+                })
+                .catch((err) => {
+                    console.error(err);
+                    reject(query.id);
+                });
         })
     }
 
@@ -27,7 +35,7 @@ module.exports = class MySites extends HelperInterface {
      * @returns {string}
      */
     get event() {
-        return "my_sites";
+        return "scan_chat";
     }
 }
 

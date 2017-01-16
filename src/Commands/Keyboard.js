@@ -8,8 +8,12 @@ module.exports = class Keyboard extends HelperInterface {
         super();
     }
 
+    /**
+     *Show a keyboard
+     * @param msg
+     */
     handle(msg) {
-        super.sendMessage(msg.chat.id, "Select a button: ", {
+        super.sendMessage(msg.chat.id, "Select a button, and this is text to make this box longer: ", {
             reply_markup: {
                 inline_keyboard: [
                     [
@@ -20,6 +24,10 @@ module.exports = class Keyboard extends HelperInterface {
                         {
                             text: "My sites",
                             callback_data: "my_sites"
+                        },
+                        {
+                            text: "Scan chat",
+                            callback_data: "scan_chat"
                         },
                     ]
                 ]
