@@ -124,8 +124,6 @@ module.exports = function (uploadApp) {
 
     // routes
     app.get(['/', '/failed/:type'], (req, res) => {
-        console.log(req.user);
-
         res.render('index', {});
     })
 
