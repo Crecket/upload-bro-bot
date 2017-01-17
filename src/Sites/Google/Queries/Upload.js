@@ -46,33 +46,43 @@ module.exports = class Upload extends HelperInterface {
                     if (error) {
                         return reject(error);
                     }
+                    if (!result) {
+                        return reject("Cache not found");
+                    }
                     var chat_id = result.chat_id;
                     var message_id = result.message_id;
                     var file_id = result.file_id;
                     var file_name = result.file_name;
 
-                    // \u{2705} finished icon
-
+                    // set initial message status
                     this.editMessage("\u{1F50E} Fetching file... 1/3", {
                         chat_id: chat_id,
                         message_id: message_id
                     }).then((result_message) => {
+                        // download the file from telegram
                         this.downloadFile(file_id, chat_id, file_name)
                             .then((file_location) => {
                                 // begin uploading to google drive
                                 this.editMessage("\u{231B} Uploading to Google Drive... 2/3", {
                                     chat_id: chat_id,
                                     message_id: message_id
-                                })
-                                    .then((result_message) => {
+                                }).then((result_message) => {
 
-                                        this._GoogleHelper
-                                            .uploadFile(user_info.provider_sites.google,
-                                                file_location,
-                                                "card_v2.jpg"
-                                            );
-
+                                    // upload to google
+                                    this._GoogleHelper.uploadFile(user_info.provider_sites.google,
+                                        file_location,
+                                        path.basename(file_location)
+                                    ).then((upload_res) => {
+                                        // begin uploading to google drive
+                                        this.editMessage("\u{2705} Finished uploading!", {
+                                            chat_id: chat_id,
+                                            message_id: message_id
+                                        }).then((result_message) => {
+                                            // finished uploading
+                                            resolve(true);
+                                        }).catch(reject);
                                     }).catch(reject);
+                                }).catch(reject);
                             }).catch(reject);
                     }).catch(reject);
                 })

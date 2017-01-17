@@ -74,18 +74,18 @@ module.exports = class EventHandlers {
             file.file_type = "video";
         } else if (msg.audio) {
             file = msg.audio;
-            file.file_name = msg.audio.title + mime.extension(file.mime_type);
-            ;
+            file.file_name = msg.audio.title + "." + mime.extension(file.mime_type);
             file.file_type = "audio";
         } else if (msg.voice) {
             file = msg.audio;
-            file.file_name = msg.voice.file_id + mime.extension(file.mime_type);
-            ;
+            file.file_name = msg.voice.file_id + "." + mime.extension(file.mime_type);
             file.file_type = "voice";
         } else {
             // invalid file type
             return;
         }
+
+        console.log(file);
 
         this._UserHelper.getUser(msg.from.id)
             .then((user_info) => {
