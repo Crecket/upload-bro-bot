@@ -119,20 +119,74 @@ module.exports = function (uploadApp) {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    // middleware variables
-    var TelegramMiddleware = passport.authenticate('telegram');
-
     // serve static files
     app.use(express.static(__dirname + '/../public'));
 
     // routes
     app.get(['/', '/failed/:type'], (req, res) => {
+        console.log(req.user);
+
         res.render('index', {});
     })
 
     // fetch user info from api
     app.post('/get_user', (req, res) => {
         res.json(req.user);
+    });
+
+    // fetch user info from api
+    app.get('/get_posts', (req, res) => {
+        res.json([
+            {
+                "id": 3,
+                "title": "Some title",
+                "content": "Some long text",
+                "category": "Categorie",
+                "date": "17-01-2017"
+            },
+            {
+                "id": 4,
+                "title": "Some title",
+                "content": "Some long text",
+                "category": "Categorie",
+                "date": "17-01-2017"
+            },
+            {
+                "id": 5,
+                "title": "Some title",
+                "content": "Some long text",
+                "category": "Categorie",
+                "date": "17-01-2017"
+            },
+            {
+                "id": 6,
+                "title": "Some title",
+                "content": "Some long text",
+                "category": "Categorie",
+                "date": "17-01-2017"
+            },
+            {
+                "id": 7,
+                "title": "Some title",
+                "content": "Some long text",
+                "category": "Categorie",
+                "date": "17-01-2017"
+            },
+            {
+                "id": 8,
+                "title": "Some title",
+                "content": "Some long text",
+                "category": "Categorie",
+                "date": "17-01-2017"
+            },
+            {
+                "id": 9,
+                "title": "Some title",
+                "content": "Some long text",
+                "category": "Categorie",
+                "date": "17-01-2017"
+            }
+        ]);
     });
 
     TelegramRoutes(app, passport, uploadApp);

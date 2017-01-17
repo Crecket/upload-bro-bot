@@ -54,38 +54,49 @@ module.exports = class EventHandlers {
     messageFileLIstener(msg) {
         var file = false;
 
-        // TODO limit size = 43189068 = 41.1mb
-
         // get file info
         if (msg.photo) {
             // get the highest quality picture
             file = msg.photo[msg.photo.length - 1];
-            file.file_name = file.file_id + path.extname(msg.photo[0]['file_path']);
+            if (!file.file_name) {
+                var ext = ".jpg";
+                if (file.mime_type) {
+                    ext = "." + mime.extension(file.mime_type)
+                }
+                file.file_name = file.file_id + ext;
+            }
             file.file_type = "photo";
         } else if (msg.document) {
             file = msg.document;
             file.file_type = "document";
         } else if (msg.video) {
             file = msg.video;
-            // title > file_name > file_id
-            file.file_name = msg.video.title ? msg.video.title :
-                (msg.video.file_name ? msg.video.file_name : msg.video.file_id)
-                + mime.extension(file.mime_type);
+            if (!file.file_name) {
+                file.file_name = msg.voice.file_id + ".mp4";
+            }
             file.file_type = "video";
         } else if (msg.audio) {
             file = msg.audio;
-            file.file_name = msg.audio.title + "." + mime.extension(file.mime_type);
+            if (!file.file_name) {
+                file.file_name = msg.audio.file_id + "." + mime.extension(file.mime_type);
+            }
             file.file_type = "audio";
         } else if (msg.voice) {
             file = msg.audio;
-            file.file_name = msg.voice.file_id + "." + mime.extension(file.mime_type);
+            if (!file.file_name) {
+                file.file_name = msg.voice.file_id + "." + mime.extension(file.mime_type);
+            }
             file.file_type = "voice";
         } else {
             // invalid file type
             return;
         }
 
-        console.log(file);
+        if (file.file_size > 50000000) {
+            // bigger then 50 mb
+
+            return;
+        }
 
         this._UserHelper.getUser(msg.from.id)
             .then((user_info) => {
@@ -105,13 +116,14 @@ module.exports = class EventHandlers {
 
                     if (buttonList.length > 0) {
                         // send the keyboard
-                        this._TelegramBot.sendMessage(msg.from.id, "Do you want to upload this file?", {
-                            reply_markup: {
-                                inline_keyboard: [
-                                    buttonList
-                                ]
-                            }
-                        }).then((resulting_message) => {
+                        this._TelegramBot.sendMessage(msg.from.id,
+                            "Do you want to upload this file?", {
+                                reply_markup: {
+                                    inline_keyboard: [
+                                        buttonList
+                                    ]
+                                }
+                            }).then((resulting_message) => {
                             // setup the key to store the file
                             var storeKey = "upload_" + resulting_message.chat.id +
                                 "-" + resulting_message.message_id;
