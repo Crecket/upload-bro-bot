@@ -212,6 +212,7 @@ module.exports = class DropboxApp {
         // file messages
         this._TelegramBot.on('audio', EventListeners.messageFileLIstener.bind(this));
         this._TelegramBot.on('video', EventListeners.messageFileLIstener.bind(this));
+        this._TelegramBot.on('voice', EventListeners.messageFileLIstener.bind(this));
         this._TelegramBot.on('photo', EventListeners.messageFileLIstener.bind(this));
         this._TelegramBot.on('document', EventListeners.messageFileLIstener.bind(this));
 

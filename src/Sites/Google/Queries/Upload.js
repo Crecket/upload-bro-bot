@@ -48,7 +48,8 @@ module.exports = class Upload extends HelperInterface {
                     }
                     var chat_id = result.chat_id;
                     var message_id = result.message_id;
-                    var file_id = result.file;
+                    var file_id = result.file_id;
+                    var file_name = result.file_name;
 
                     // \u{2705} finished icon
 
@@ -56,7 +57,7 @@ module.exports = class Upload extends HelperInterface {
                         chat_id: chat_id,
                         message_id: message_id
                     }).then((result_message) => {
-                        this.downloadFile(file_id, chat_id)
+                        this.downloadFile(file_id, chat_id, file_name)
                             .then((file_location) => {
                                 // begin uploading to google drive
                                 this.editMessage("\u{231B} Uploading to Google Drive... 2/3", {

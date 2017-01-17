@@ -1,4 +1,6 @@
 var Logger = require('./Logger');
+var mime = require('mime');
+var path = require('path');
 
 module.exports = class EventHandlers {
     constructor(app) {
@@ -52,11 +54,13 @@ module.exports = class EventHandlers {
     messageFileLIstener(msg) {
         var file = false;
 
+        // TODO limit size = 43189068 = 41.1mb
+
         // get file info
         if (msg.photo) {
             // get the highest quality picture
             file = msg.photo[msg.photo.length - 1];
-            file.file_name = file.file_id;
+            file.file_name = file.file_id + path.extname(msg.photo[0]['file_path']);
             file.file_type = "photo";
         } else if (msg.document) {
             file = msg.document;
@@ -64,18 +68,24 @@ module.exports = class EventHandlers {
         } else if (msg.video) {
             file = msg.video;
             // title > file_name > file_id
-            file.file_name = msg.video.title ? msg.video.title : (msg.video.file_name ? msg.video.file_name : msg.video.file_id);
+            file.file_name = msg.video.title ? msg.video.title :
+                (msg.video.file_name ? msg.video.file_name : msg.video.file_id)
+                + mime.extension(file.mime_type);
             file.file_type = "video";
         } else if (msg.audio) {
             file = msg.audio;
-            file.file_name = msg.audio.title;
+            file.file_name = msg.audio.title + mime.extension(file.mime_type);
+            ;
             file.file_type = "audio";
+        } else if (msg.voice) {
+            file = msg.audio;
+            file.file_name = msg.voice.file_id + mime.extension(file.mime_type);
+            ;
+            file.file_type = "voice";
         } else {
             // invalid file type
             return;
         }
-
-        console.log(file);
 
         this._UserHelper.getUser(msg.from.id)
             .then((user_info) => {
@@ -110,7 +120,8 @@ module.exports = class EventHandlers {
                                     chat_id: resulting_message.chat.id,
                                     message_id: resulting_message.message_id,
                                     file_name: file.file_name,
-                                    file: file.file_id
+                                    file_size: file.file_size,
+                                    file_id: file.file_id
                                 }, 60 * 60 * 24 * 30, // store for 1 month
                                 (err, result_cache) => {
 

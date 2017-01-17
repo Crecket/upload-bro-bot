@@ -31,9 +31,10 @@ module.exports = class HelperInterface {
      *
      * @param file_id
      * @param chat_id
+     * @param file_name
      * @returns {Promise}
      */
-    downloadFile(file_id, chat_id) {
+    downloadFile(file_id, chat_id, file_name = false) {
         return new Promise((resolve, reject) => {
 
             // target installation directory
@@ -46,20 +47,19 @@ module.exports = class HelperInterface {
                     file_id,
                     directory
                 ).then((finalPath) => {
-                    resolve(finalPath);
-
-                    // // get file extension
-                    // var fileExtension = path.extname(finalPath);
-                    // // set the target path
-                    // var targetName = appRoot + "/downloads/" + chat_id + "/" + file_id + fileExtension;
-                    // // rename the file
-                    // fs.rename(finalPath, targetName, (err) => {
-                    //     if (err) {
-                    //         reject(err);
-                    //     } else {
-                    //         resolve(finalPath);
-                    //     }
-                    // });
+                    if (!file_name) {
+                        return resolve(finalPath);
+                    }
+                    // set the target path
+                    var targetName = appRoot + "/downloads/" + chat_id + "/" + file_name;
+                    // rename the file
+                    fs.rename(finalPath, targetName, (err) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(targetName);
+                        }
+                    });
                 })
             }).catch((err) => {
                 reject(err);
