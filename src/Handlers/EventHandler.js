@@ -1,9 +1,12 @@
 var Logger = require('./../Logger');
 var mime = require('mime');
 var path = require('path');
+var requireFix = require('app-root-path').require;
+var HelperInterface = requireFix('src/HelperInterface');
 
-module.exports = class EventHandlers {
+module.exports = class EventHandlers extends HelperInterface{
     constructor(app) {
+        super(app);
         this._app = app;
 
         this._logger = Logger;
@@ -52,6 +55,8 @@ module.exports = class EventHandlers {
      */
     messageFileLIstener(msg) {
         var file = false;
+
+        console.log(this);
 
         // get file info
         if (msg.photo) {
@@ -108,8 +113,10 @@ module.exports = class EventHandlers {
                     // loop through existing provider sites
                     Object.keys(user_info.provider_sites).map((key) => {
 
+                        console.log(this);
+
                         // check if this site is active right now
-                        if (this._app._SiteHandler.isActive(key)) {
+                        if (this._SiteHandler.isActive(key)) {
                             // push item into the button list
                             buttonList.push({
                                 text: key.toUpperCase(),

@@ -181,7 +181,6 @@ module.exports = class DropboxApp {
      * @returns {Promise.<T>}
      */
     eventListeners() {
-
         // file messages
         this._TelegramBot.on('audio', this._EventHandler.messageFileLIstener.bind(this));
         this._TelegramBot.on('video', this._EventHandler.messageFileLIstener.bind(this));
@@ -193,7 +192,7 @@ module.exports = class DropboxApp {
         this._TelegramBot.on('callback_query', this._EventHandler.callbackQuery.bind(this));
 
         // inline query search event
-        this._TelegramBot.on('inline_query', this._EventHandler.inlineQuery.bind(this))
+        this._TelegramBot.on('inline_query', this._EventHandler.inlineQuery.bind(this));
 
         return Promise.resolve();
 
