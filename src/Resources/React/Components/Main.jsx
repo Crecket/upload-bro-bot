@@ -21,10 +21,13 @@ const ThemesList = {
 
 // actions
 import {openModal, closeModal} from "../actions/modalActions";
+import {userSetInfo, userUpdate, userLogout, userLoading, userNotLoading} from "../actions/user";
 
 // connect to redux
 @connect((store) => {
     return {
+        user_info: store.user.user_info,
+
         modalText: store.modal.message,
         modalTitle: store.modal.title,
         modalOpen: store.modal.modalOpen,
@@ -45,7 +48,8 @@ class Main extends React.Component {
     };
 
     componentDidMount() {
-
+        // update user status
+        this.updateUser();
     };
 
     // =========== Static data =============
@@ -77,7 +81,9 @@ class Main extends React.Component {
     };
 
     // update our static data
-    updateStaticData = () => {
+    updateUser = () => {
+        this.props.dispatch(userLoading());
+        this.props.dispatch(userUpdate());
     };
 
     render() {
@@ -86,6 +92,8 @@ class Main extends React.Component {
         var mainBody = React.Children.map(
             this.props.children,
             (child) => React.cloneElement(child, {
+                user_info: this.props.user_info,
+                updateUser: this.updateUser,
                 handleClose: this.handleClose,
                 handleModalOpen: this.handleModalOpen,
                 handleModalClose: this.handleModalClose
@@ -119,6 +127,7 @@ class Main extends React.Component {
 
                             <MainAppbar
                                 setTheme={this.setTheme}
+                                user_info={this.props.user_info}
                                 updateStaticData={this.updateStaticData}
                             />
 
