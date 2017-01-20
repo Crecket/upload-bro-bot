@@ -16,14 +16,6 @@ module.exports = class QueryHandler {
     }
 
     /**
-     * Return app
-     * @returns {*}
-     */
-    get app() {
-        return this._app;
-    }
-
-    /**
      * @returns {{}|*}
      */
     get queries() {

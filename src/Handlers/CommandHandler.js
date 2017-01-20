@@ -19,14 +19,6 @@ module.exports = class CommandHandler {
     }
 
     /**
-     * Return app
-     * @returns {*}
-     */
-    get app() {
-        return this._app;
-    }
-
-    /**
      * @returns {{}|*}
      */
     get commands() {

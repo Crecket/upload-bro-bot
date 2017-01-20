@@ -26,7 +26,7 @@ module.exports = class Keyboard extends HelperInterface {
                     "Use the <a href='/help'>/help</a> command for more help or " +
                     "use <a href='/login'>/login</a> UploadBro. \n\n" +
                     "<b>WARNING: </b> UploadBro will <b>NEVER</b> " +
-                    "directly ask you for a password for any!";
+                    "directly ask you for a password!";
 
                 // send the message
                 super.sendMessage(msg.chat.id, message, {

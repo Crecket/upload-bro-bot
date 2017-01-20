@@ -19,11 +19,13 @@ module.exports = class SiteHandler {
     }
 
     /**
-     * Return app
-     * @returns {*}
+     * Check if a site is registered and active
+     *
+     * @param name
+     * @returns {boolean}
      */
-    get app() {
-        return this._app;
+    isActive(name) {
+        return !!this._sites[name];
     }
 
     /**

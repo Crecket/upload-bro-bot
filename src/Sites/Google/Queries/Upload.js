@@ -91,17 +91,6 @@ module.exports = class Upload extends HelperInterface {
     }
 
     /**
-     * Edit a message
-     *
-     * @param text
-     * @param options
-     * @returns {*}
-     */
-    editMessage(text, options) {
-        return this._app._TelegramBot.editMessageText(text, options);
-    }
-
-    /**
      * Get event name for this query
      * @returns {string}
      */

@@ -17,6 +17,7 @@ var Express = requireFix('/src/Express');
 var CommandHandler = requireFix('/src/Handlers/CommandHandler');
 var SiteHandler = requireFix('/src/Handlers/SiteHandler');
 var QueryHandler = requireFix('/src/Handlers/QueryHandler');
+var EventHandlersObj = requireFix('/src/Handlers/EventHandler');
 var UserHelperObj = requireFix('/src/UserHelper');
 
 // commands
@@ -32,7 +33,6 @@ var MySitesQueryObj = requireFix('/src/Queries/MySites');
 var ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
 
 // event handlers
-var EventHandlersObj = requireFix('/src/EventHandlers');
 
 module.exports = class DropboxApp {
     constructor(token) {
@@ -51,6 +51,9 @@ module.exports = class DropboxApp {
 
         // user helper object
         this._UserHelper = new UserHelperObj(this);
+
+        // create event listeners event
+        this._EventHandler = new EventHandlersObj(this);
 
         // connect to mongodb
         this.connectDb()
@@ -111,7 +114,7 @@ module.exports = class DropboxApp {
         Logger.overwrite('Loading websites');
 
         // Register the websites
-        this._SiteHandler.register(new DropboxSiteObj(this));
+        // this._SiteHandler.register(new DropboxSiteObj(this));
         this._SiteHandler.register(new GoogleSiteObj(this));
 
         Logger.overwrite('Loaded ' + this._SiteHandler.siteCount + " sites      \n");
@@ -154,34 +157,6 @@ module.exports = class DropboxApp {
         return Promise.resolve();
     }
 
-    // TODO add this as func
-    downloadFile(msg) {
-        // we currently only support photos and documents
-        var file = (!!msg.photo) ? msg.photo[msg.photo.length - 1] : msg.document;
-
-        var directory = __dirname + "/../downloads/" + msg.chat.id;
-        Logger.debug(msg);
-
-        // assert the lower folder exists
-        Utils.ensureFolderExists(directory, '0744').then(() => {
-            // download the file
-            this._TelegramBot.downloadFile(
-                file.file_id,
-                directory
-            ).then((finalPath) => {
-                Logger.log(finalPath);
-                var fileExtension = path.extname(finalPath);
-                var targetName = __dirname + "/../downloads/" + msg.chat.id + "/" + file.file_id + fileExtension;
-
-                fs.rename(finalPath, targetName, (err, result) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                });
-            })
-        }).catch(Logger.error);
-    }
-
     /**
      * Respond to a callback query
      *
@@ -206,21 +181,19 @@ module.exports = class DropboxApp {
      * @returns {Promise.<T>}
      */
     eventListeners() {
-        // create event listeners event
-        var EventListeners = new EventHandlersObj(this);
 
         // file messages
-        this._TelegramBot.on('audio', EventListeners.messageFileLIstener.bind(this));
-        this._TelegramBot.on('video', EventListeners.messageFileLIstener.bind(this));
-        this._TelegramBot.on('voice', EventListeners.messageFileLIstener.bind(this));
-        this._TelegramBot.on('photo', EventListeners.messageFileLIstener.bind(this));
-        this._TelegramBot.on('document', EventListeners.messageFileLIstener.bind(this));
+        this._TelegramBot.on('audio', this._EventHandler.messageFileLIstener.bind(this));
+        this._TelegramBot.on('video', this._EventHandler.messageFileLIstener.bind(this));
+        this._TelegramBot.on('voice', this._EventHandler.messageFileLIstener.bind(this));
+        this._TelegramBot.on('photo', this._EventHandler.messageFileLIstener.bind(this));
+        this._TelegramBot.on('document', this._EventHandler.messageFileLIstener.bind(this));
 
         // callback query listener
-        this._TelegramBot.on('callback_query', EventListeners.callbackQuery.bind(this));
+        this._TelegramBot.on('callback_query', this._EventHandler.callbackQuery.bind(this));
 
         // inline query search event
-        this._TelegramBot.on('inline_query', EventListeners.inlineQuery.bind(this))
+        this._TelegramBot.on('inline_query', this._EventHandler.inlineQuery.bind(this))
 
         return Promise.resolve();
 

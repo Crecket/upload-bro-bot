@@ -1,4 +1,4 @@
-var Logger = require('./Logger');
+var Logger = require('./../Logger');
 var mime = require('mime');
 var path = require('path');
 
@@ -26,23 +26,22 @@ module.exports = class EventHandlers {
             // start the handle request with this query
             selectedQuery.handle(query)
                 .then((result) => {
-                    console.log(result);
                     return this.answerCallbackQuery(query.id)
                         .then((res) => {
                             console.log(res);
                         })
-                        .catch(console.log);
+                        .catch(err => console.log(err));
                 })
                 .catch((error) => {
                     console.log(error);
                     return this.answerCallbackQuery(query.id)
                         .then(console.log)
-                        .catch(console.log);
+                        .catch(err => console.log(err));
                 })
         } else {
             this.answerCallbackQuery(query.id, "We couldn't find this command.")
                 .then(console.log)
-                .catch(console.log);
+                .catch(err => console.log(err));
         }
     }
 
@@ -107,11 +106,15 @@ module.exports = class EventHandlers {
 
                     // loop through existing provider sites
                     Object.keys(user_info.provider_sites).map((key) => {
-                        // push item into the button list
-                        buttonList.push({
-                            text: key.toUpperCase(),
-                            callback_data: "upload_" + key
-                        });
+
+                        // check if this site is active right now
+                        if (this._app._SiteHandler.isActive(key)) {
+                            // push item into the button list
+                            buttonList.push({
+                                text: key.toUpperCase(),
+                                callback_data: "upload_" + key
+                            });
+                        }
                     })
 
                     if (buttonList.length > 0) {
@@ -120,7 +123,11 @@ module.exports = class EventHandlers {
                             "Do you want to upload this file?", {
                                 reply_markup: {
                                     inline_keyboard: [
-                                        buttonList
+                                        buttonList,
+                                        [{
+                                            text: "Refresh sites",
+                                            callback_data: "refresh_provider_buttons"
+                                        }]
                                     ]
                                 }
                             }).then((resulting_message) => {

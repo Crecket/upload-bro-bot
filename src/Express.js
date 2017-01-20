@@ -35,7 +35,17 @@ module.exports = function (uploadApp) {
         if (req.secure) {
             return next();
         }
-        res.redirect('https://' + req.hostname + req.url);
+        // check if we need to add a different port
+        var extraPort = "";
+        if (process.env.EXPRESS_HTTPS_PORT != 443) {
+            extraPort = ":" + process.env.EXPRESS_HTTPS_PORT
+        }
+
+        // setup the https url
+        var httpsUrl = 'https://' + req.hostname + extraPort + req.url;
+
+        // redirect to https
+        res.redirect(httpsUrl);
     });
 
     passport.serializeUser(function (user, done) {
@@ -101,7 +111,8 @@ module.exports = function (uploadApp) {
     // view renderer setup
     app.set('views', __dirname + '/Resources/Views');
     app.set('view engine', 'twig');
-    app.disable('view cache');
+    app.set('cache', true);
+    app.set('view cache', 'cache');
 
     app.use(cookieParser());
     app.use(bodyParser.json());
@@ -129,7 +140,8 @@ module.exports = function (uploadApp) {
 
     // fetch user info from api
     app.post('/get_user', (req, res) => {
-        res.json(req.user);
+        var user_info = (req.user) ? req.user : false;
+        res.json(user_info);
     });
 
     TelegramRoutes(app, passport, uploadApp);

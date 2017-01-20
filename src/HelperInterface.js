@@ -67,4 +67,15 @@ module.exports = class HelperInterface {
         })
     }
 
+    /**
+     * Edit a message
+     *
+     * @param text
+     * @param options
+     * @returns {*}
+     */
+    editMessage(text, options) {
+        return this._app._TelegramBot.editMessageText(text, options);
+    }
+
 }
