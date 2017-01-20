@@ -37,7 +37,7 @@ module.exports = function (uploadApp) {
         }
         // check if we need to add a different port
         var extraPort = "";
-        if (process.env.EXPRESS_HTTPS_PORT != 443) {
+        if (process.env.EXPRESS_HTTPS_PORT != "443") {
             extraPort = ":" + process.env.EXPRESS_HTTPS_PORT
         }
 

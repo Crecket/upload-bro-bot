@@ -49,11 +49,11 @@ module.exports = class DropboxApp {
         // Create new site handler
         this._QueryHandler = new QueryHandler(this);
 
+        // create event listeners handlers
+        this._EventHandler = new EventHandlersObj(this);
+
         // user helper object
         this._UserHelper = new UserHelperObj(this);
-
-        // create event listeners event
-        this._EventHandler = new EventHandlersObj(this);
 
         // connect to mongodb
         this.connectDb()

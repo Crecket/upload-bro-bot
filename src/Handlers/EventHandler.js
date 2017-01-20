@@ -25,8 +25,8 @@ module.exports = class EventHandlers {
         if (selectedQuery) {
             // start the handle request with this query
             selectedQuery.handle(query)
-                .then((result) => {
-                    return this.answerCallbackQuery(query.id)
+                .then((message = "") => {
+                    return this.answerCallbackQuery(query.id, message)
                         .then((res) => {
                             console.log(res);
                         })
@@ -97,6 +97,7 @@ module.exports = class EventHandlers {
             return;
         }
 
+        // get the user info
         this._UserHelper.getUser(msg.from.id)
             .then((user_info) => {
                 if (user_info) {
