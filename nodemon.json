@@ -6,7 +6,7 @@
     ".idea",
     "node_modules/**/node_modules",
     "public",
-    "src/Resources/React/*"
+    "src/Resources/React/**/*"
   ],
   "watch": [
     "src/*",

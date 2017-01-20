@@ -132,61 +132,6 @@ module.exports = function (uploadApp) {
         res.json(req.user);
     });
 
-    // fetch user info from api
-    app.get('/get_posts', (req, res) => {
-        res.json([
-            {
-                "id": 3,
-                "title": "Some title",
-                "content": "Some long text",
-                "category": "Categorie",
-                "date": "17-01-2017"
-            },
-            {
-                "id": 4,
-                "title": "Some title",
-                "content": "Some long text",
-                "category": "Categorie",
-                "date": "17-01-2017"
-            },
-            {
-                "id": 5,
-                "title": "Some title",
-                "content": "Some long text",
-                "category": "Categorie",
-                "date": "17-01-2017"
-            },
-            {
-                "id": 6,
-                "title": "Some title",
-                "content": "Some long text",
-                "category": "Categorie",
-                "date": "17-01-2017"
-            },
-            {
-                "id": 7,
-                "title": "Some title",
-                "content": "Some long text",
-                "category": "Categorie",
-                "date": "17-01-2017"
-            },
-            {
-                "id": 8,
-                "title": "Some title",
-                "content": "Some long text",
-                "category": "Categorie",
-                "date": "17-01-2017"
-            },
-            {
-                "id": 9,
-                "title": "Some title",
-                "content": "Some long text",
-                "category": "Categorie",
-                "date": "17-01-2017"
-            }
-        ]);
-    });
-
     TelegramRoutes(app, passport, uploadApp);
     GoogleRoutes(app, passport, uploadApp);
     DropboxRoutes(app, passport, uploadApp);
@@ -197,12 +142,11 @@ module.exports = function (uploadApp) {
         res.redirect('/');
     });
 
-    // start listening
+    // start listening http
     httpServer.listen(process.env.EXPRESS_PORT, function () {
-        console.log('Express listening on ' + process.env.EXPRESS_PORT)
+        // start https
+        httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
+            console.log('Express listening on ' + process.env.EXPRESS_HTTPS_PORT + " and " + process.env.EXPRESS_PORT)
+        });
     });
-    httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
-        console.log('Express listening on ' + process.env.EXPRESS_HTTPS_PORT)
-    });
-
 };
