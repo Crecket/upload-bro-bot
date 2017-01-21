@@ -17,22 +17,27 @@ var GoogleRoutes = require('./Sites/Google/Routes');
 var DropboxRoutes = require('./Sites/Dropbox/Routes');
 var TelegramRoutes = require('./Routes/TelegramRoutes');
 
+var useSsl = process.env.EXPRESS_USE_SSL === "true";
+
 module.exports = function (uploadApp) {
     var app = express()
     var db = uploadApp._Db;
 
-    var httpsOptions = {
-        // ca: [''],
-        cert: fs.readFileSync(process.env.EXPRESS_SSL_CERT),
-        key: fs.readFileSync(process.env.EXPRESS_SSL_KEY)
-    };
+    // use ssl?
+    if (useSsl) {
+        var httpsOptions = {
+            // ca: [''],
+            cert: fs.readFileSync(process.env.EXPRESS_SSL_CERT),
+            key: fs.readFileSync(process.env.EXPRESS_SSL_KEY)
+        };
+        var httpsServer = https.createServer(httpsOptions, app);
+    }
 
     var httpServer = http.createServer(app);
-    var httpsServer = https.createServer(httpsOptions, app);
 
     // force ssl
     app.all('*', (req, res, next) => {
-        if (req.secure) {
+        if (!useSsl || req.secure) {
             return next();
         }
         // check if we need to add a different port
@@ -157,8 +162,12 @@ module.exports = function (uploadApp) {
     // start listening http
     httpServer.listen(process.env.EXPRESS_PORT, function () {
         // start https
-        httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
-            console.log('Express listening on ' + process.env.EXPRESS_HTTPS_PORT + " and " + process.env.EXPRESS_PORT)
-        });
+        if (useSsl) {
+            httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
+                console.log('Express listening on ' + process.env.EXPRESS_HTTPS_PORT + " and " + process.env.EXPRESS_PORT)
+            });
+        } else {
+            console.log('Express listening on ' + process.env.EXPRESS_PORT)
+        }
     });
 };

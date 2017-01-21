@@ -192,6 +192,7 @@ module.exports = class EventHandlers extends HelperInterface {
      * @param inline_query
      */
     inlineQuery(inline_query) {
+        console.log(inline_query);
         return;
         console.log("inline_query");
         console.log(inline_query);

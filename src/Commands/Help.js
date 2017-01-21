@@ -13,6 +13,7 @@ module.exports = class Help extends HelperInterface {
     handle(msg) {
         var message = "<b>Available commands</b>\n" +
             "- <a href='/help'>/help</a>: Display this command \n" +
+            "- <a href='/start'>/start</a>: The start message \n" +
             "- <a href='/login'>/login</a>: Show the login url to connect the supported websites to your telegram account" +
             "";
 

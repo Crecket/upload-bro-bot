@@ -1,6 +1,7 @@
 var TelegramBot = require('node-telegram-bot-api');
 var MongoClient = require('mongodb').MongoClient;
 var fs = require('fs');
+var del = require('del');
 var path = require('path');
 var Cacheman = require('cacheman');
 var MongoDbEngine = require('cacheman-mongo');
@@ -81,10 +82,20 @@ module.exports = class DropboxApp {
             .then(this.loadQueries.bind(this))
             // start the event listeners
             .then(this.eventListeners.bind(this))
+            // clear downloads folder
+            .then(() => {
+                return new Promise((resolve, reject) => {
+                    del(['downloads/**', '!downloads', '!downloads/.gitkeep']).then(paths => {
+                        console.log('Cleared downloads folder:\n', paths.join('\n'));
+                        resolve();
+                    });
+                })
+            })
             // finish setup
             .then(() => {
                 // finished loading everything
-                // console.log(this._CommandHandler.info);
+                console.log("Loaded the following commands:");
+                console.log(this._CommandHandler.info);
 
                 // start express listener
                 Express(this);

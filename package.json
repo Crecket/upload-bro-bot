@@ -29,6 +29,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^3.1.4",
     "css-loader": "^0.26.1",
+    "del": "^2.2.2",
     "dotenv": "^4.0.0",
     "dropbox": "^2.5.0",
     "express": "^4.14.0",

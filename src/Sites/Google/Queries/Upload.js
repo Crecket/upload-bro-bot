@@ -81,6 +81,13 @@ module.exports = class Upload extends HelperInterface {
                                         }).then((result_message) => {
                                             // finished uploading
                                             resolve();
+
+                                            // attempt to remove file
+                                            fs.unlink(file_location, (err) => {
+                                                if (err) {
+                                                    return reject(err);
+                                                }
+                                            })
                                         }).catch(reject);
                                     }).catch(reject);
                                 }).catch(reject);
