@@ -1,5 +1,6 @@
 var path = require('path');
 var fs = require('fs');
+var requireFix = require('app-root-path').require;
 var express = require('express');
 var http = require('http');
 var https = require('https');
@@ -10,6 +11,7 @@ var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var TelegramStrategy = require('passport-telegram').Strategy;
 var refresh = require('passport-oauth2-refresh');
+var mongo_express = require('mongo-express/lib/middleware');
 
 // util helper
 var Logger = require('./Logger');
@@ -19,8 +21,8 @@ var GoogleRoutes = require('./Sites/Google/Routes');
 var DropboxRoutes = require('./Sites/Dropbox/Routes');
 var TelegramRoutes = require('./Routes/TelegramRoutes');
 
-var mongo_express = require('mongo-express/lib/middleware')
-var mongo_express_config = require('./mongo_express_config')
+// get the config
+var mongo_express_config = requireFix('mongo_express_config.js');
 
 // useSsl helper
 const useSsl = process.env.EXPRESS_USE_SSL === "true";

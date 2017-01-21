@@ -18,13 +18,13 @@ if (process.env.VCAP_SERVICES) {
     }
 } else {
     mongo = {
-        db: 'db',
+        db: 'uploady-bot',
         host: 'localhost',
-        password: 'pass',
+        // password: 'pass',
         port: 27017,
         ssl: false,
-        url: 'mongodb://localhost:27017/db',
-        username: 'admin',
+        url: 'mongodb://localhost:27017/uploady-bot',
+        // username: 'admin',
     };
 }
 
@@ -55,7 +55,7 @@ module.exports = {
         //set admin to true if you want to turn on admin features
         //if admin is true, the auth list below will be ignored
         //if admin is true, you will need to enter an admin username/password below (if it is needed)
-        admin: process.env.ME_CONFIG_MONGODB_ENABLE_ADMIN ? process.env.ME_CONFIG_MONGODB_ENABLE_ADMIN.toLowerCase() === 'true' : false,
+        admin: true,
 
         // >>>>  If you are using regular accounts, fill out auth details in the section below
         // >>>>  If you have admin auth, leave this section empty and skip to the next section
@@ -105,13 +105,13 @@ module.exports = {
     useBasicAuth: process.env.ME_CONFIG_BASICAUTH_USERNAME !== '',
 
     basicAuth: {
-        username: process.env.ME_CONFIG_BASICAUTH_USERNAME || 'admin',
-        password: process.env.ME_CONFIG_BASICAUTH_PASSWORD || 'pass',
+        username: process.env.ME_CONFIG_BASICAUTH_USERNAME || '',
+        password: process.env.ME_CONFIG_BASICAUTH_PASSWORD || '',
     },
 
     options: {
         // Display startup text on console
-        console: true,
+        // console: true,
 
         //documentsPerPage: how many documents you want to see at once in collection view
         documentsPerPage: 10,
@@ -150,7 +150,12 @@ module.exports = {
         gridFSEnabled: false,
 
         // logger: this object will be used to initialize router logger (morgan)
-        logger: {},
+        logger: {
+            skip: (req, res) => {
+                // no more morgan
+                return res.statusCode < 400;
+            }
+        },
     },
 
     // Specify the default keyname that should be picked from a document to display in collections list.
