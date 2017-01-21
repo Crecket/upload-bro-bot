@@ -175,7 +175,7 @@ module.exports = class DropboxApp {
     answerCallbackQuery(id, text = "", alert = false, options = {}) {
         return this._TelegramBot.answerCallbackQuery(id, text, alert, options)
             .then((result) => {
-                Logger.log("Responded to query " + id + ":");
+                Logger.log("Responded to query " + id);
             })
             .catch(() => {
                 Logger.log("Failed to respond to query " + id);

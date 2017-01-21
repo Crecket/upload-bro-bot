@@ -38,7 +38,7 @@ module.exports = class HelperInterface {
         return new Promise((resolve, reject) => {
 
             // target installation directory
-            var directory = appRoot + "/downloads/" + chat_id;
+            var directory = appRoot + "/downloads";
 
             // assert the lower folder exists
             Utils.ensureFolderExists(directory, '0744').then(() => {
@@ -51,7 +51,7 @@ module.exports = class HelperInterface {
                         return resolve(finalPath);
                     }
                     // set the target path
-                    var targetName = appRoot + "/downloads/" + chat_id + "/" + file_name;
+                    var targetName = appRoot + "/downloads/" + file_name;
                     // rename the file
                     fs.rename(finalPath, targetName, (err) => {
                         if (err) {

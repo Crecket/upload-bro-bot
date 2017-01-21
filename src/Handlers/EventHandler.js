@@ -22,8 +22,6 @@ module.exports = class EventHandlers extends HelperInterface {
         var queryList = this._QueryHandler.queries;
         var splitData = query.data.split('|');
 
-        console.log(this);
-
         // first part is the selected query type
         var selectedQuery = queryList[splitData[0]];
 
@@ -41,12 +39,16 @@ module.exports = class EventHandlers extends HelperInterface {
                 .catch((error) => {
                     console.log(error);
                     return this.answerCallbackQuery(query.id)
-                        .then(console.log)
+                        .then((res) => {
+                            // console.log(res);
+                        })
                         .catch(err => console.log(err));
                 })
         } else {
             this.answerCallbackQuery(query.id, "We couldn't find this command.")
-                .then(console.log)
+                .then((res) => {
+                    // console.log(res);
+                })
                 .catch(err => console.log(err));
         }
     }
@@ -125,9 +127,11 @@ module.exports = class EventHandlers extends HelperInterface {
 
                         // check if this site is active right now
                         if (this._SiteHandler.isActive(key)) {
+                            var siteInfo = this._SiteHandler.getSite(key);
+
                             // push item into the button list
                             buttonSiteList.push({
-                                text: key.toUpperCase(),
+                                text: siteInfo.title,
                                 callback_data: "upload_" + key
                             });
                         }

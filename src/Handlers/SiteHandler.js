@@ -29,6 +29,17 @@ module.exports = class SiteHandler {
     }
 
     /**
+     * Return a site or false
+     *
+     * @param name
+     * @returns {boolean}
+     */
+    getSite(name) {
+        var site = this._sites[name.toLowerCase()];
+        return site ? site : false;
+    }
+
+    /**
      * @returns {{}|*}
      */
     get sites() {

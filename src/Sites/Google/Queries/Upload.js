@@ -80,7 +80,7 @@ module.exports = class Upload extends HelperInterface {
                                             message_id: message_id
                                         }).then((result_message) => {
                                             // finished uploading
-                                            resolve(true);
+                                            resolve();
                                         }).catch(reject);
                                     }).catch(reject);
                                 }).catch(reject);
