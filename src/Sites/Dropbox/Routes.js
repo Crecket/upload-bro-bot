@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
 
-var DropboxHelperObj = require('./DropboxHelper');
+var DropboxHelperObj = require('./Helper');
 var UserHelperObj = require('../../UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {

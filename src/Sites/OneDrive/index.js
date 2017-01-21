@@ -3,9 +3,9 @@ var path = require('path');
 
 var SiteInteface = require(path.join(__dirname, '../SiteInterface.js'));
 
-module.exports = class Dropbox extends SiteInteface {
+module.exports = class OneDrive extends SiteInteface {
     constructor(app) {
-        super();
+        super(app);
 
         this._app = app;
     }
@@ -22,8 +22,8 @@ module.exports = class Dropbox extends SiteInteface {
      *
      * @returns {string}
      */
-    get name(){
-        return 'Dropbox';
+    get name() {
+        return 'OneDrive';
     }
 
     /**
@@ -32,7 +32,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get title(){
-        return 'Dropbox';
+        return 'Mircosoft One Drive';
     }
 
     /**
@@ -41,7 +41,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get description(){
-        return 'Securely Share, Sync & Collaborate.';
+        return 'Get to your files and photos from anywhere, on any device.';
     }
 
     /**
@@ -50,7 +50,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get url(){
-        return "https://www.dropbox.com";
+        return "https://onedrive.live.com";
     }
 }
 

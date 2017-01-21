@@ -3,8 +3,9 @@ var mime = require('mime');
 var path = require('path');
 var requireFix = require('app-root-path').require;
 var HelperInterface = requireFix('src/HelperInterface');
+var filesize = require('filesize');
 
-module.exports = class EventHandlers extends HelperInterface{
+module.exports = class EventHandlers extends HelperInterface {
     constructor(app) {
         super(app);
         this._app = app;
@@ -21,6 +22,8 @@ module.exports = class EventHandlers extends HelperInterface{
         var queryList = this._QueryHandler.queries;
         var splitData = query.data.split('|');
 
+        console.log(this);
+
         // first part is the selected query type
         var selectedQuery = queryList[splitData[0]];
 
@@ -31,7 +34,7 @@ module.exports = class EventHandlers extends HelperInterface{
                 .then((message = "") => {
                     return this.answerCallbackQuery(query.id, message)
                         .then((res) => {
-                            console.log(res);
+                            // console.log(res);
                         })
                         .catch(err => console.log(err));
                 })
@@ -55,8 +58,6 @@ module.exports = class EventHandlers extends HelperInterface{
      */
     messageFileLIstener(msg) {
         var file = false;
-
-        console.log(this);
 
         // get file info
         if (msg.photo) {
@@ -96,9 +97,18 @@ module.exports = class EventHandlers extends HelperInterface{
             return;
         }
 
-        if (file.file_size > 50000000) {
-            // bigger then 50 mb
+        var maxFileSize = 52428800;
+        if (file.file_size > maxFileSize) {
+            // bigger then 50 mb message
+            var message = "The file is to big (" + filesize(file.file_size) + "), " +
+                "we currently support up to " + filesize(52428800);
 
+            // send the message
+            this._TelegramBot.sendMessage(msg.chat.id, message, {
+                parse_mode: "HTML",
+                disable_notification: true
+            }).then((resulting_message) => {
+            }).catch(console.error);
             return;
         }
 
@@ -108,68 +118,67 @@ module.exports = class EventHandlers extends HelperInterface{
                 if (user_info) {
 
                     // user is registered, generate the download buttons
-                    var buttonList = [];
+                    var buttonSiteList = [];
 
                     // loop through existing provider sites
                     Object.keys(user_info.provider_sites).map((key) => {
 
-                        console.log(this);
-
                         // check if this site is active right now
                         if (this._SiteHandler.isActive(key)) {
                             // push item into the button list
-                            buttonList.push({
+                            buttonSiteList.push({
                                 text: key.toUpperCase(),
                                 callback_data: "upload_" + key
                             });
                         }
                     })
 
-                    if (buttonList.length > 0) {
+                    if (buttonSiteList.length > 0) {
                         // send the keyboard
                         this._TelegramBot.sendMessage(msg.from.id,
                             "Do you want to upload this file?", {
                                 reply_markup: {
                                     inline_keyboard: [
-                                        buttonList,
+                                        buttonSiteList,
                                         [{
                                             text: "Refresh sites",
                                             callback_data: "refresh_provider_buttons"
                                         }]
                                     ]
                                 }
-                            }).then((resulting_message) => {
-                            // setup the key to store the file
-                            var storeKey = "upload_" + resulting_message.chat.id +
-                                "-" + resulting_message.message_id;
-                            // store the file
-                            this._Cache.set(storeKey, {
-                                    chat_id: resulting_message.chat.id,
-                                    message_id: resulting_message.message_id,
-                                    file_name: file.file_name,
-                                    file_size: file.file_size,
-                                    file_id: file.file_id
-                                }, 60 * 60 * 24 * 30, // store for 1 month
-                                (err, result_cache) => {
-
-                                })
-                        }).catch(console.error);
-                    } else {
-                        var message = "Please go to <a href='/login'>/login</a> and add a service to your account";
-                        this._TelegramBot.sendMessage(msg.chat.id, message, {
-                            parse_mode: "HTML"
-                        })
+                            })
                             .then((resulting_message) => {
+                                // setup the key to store the file
+                                var storeKey = "upload_" + resulting_message.chat.id +
+                                    "-" + resulting_message.message_id;
+                                // store the file
+                                this._Cache.set(storeKey, {
+                                        chat_id: resulting_message.chat.id,
+                                        message_id: resulting_message.message_id,
+                                        file_name: file.file_name,
+                                        file_size: file.file_size,
+                                        file_id: file.file_id
+                                    }, 60 * 60 * 24 * 30, // store for 1 month
+                                    (err, result_cache) => {
 
+                                    })
                             })
                             .catch(console.error);
+                    } else {
+                        var message = "Your account is registered in our system but you havn't connected " +
+                            "any services yet! You can use the <a href='/login'>/login</a> command to find out how.";
+                        this._TelegramBot.sendMessage(msg.chat.id, message, {
+                            parse_mode: "HTML",
+                            disable_notification: true
+                        }).then((resulting_message) => {
+
+                        }).catch(console.error);
                     }
 
                 } else {
                     // nothing to do, this user isn't registered
                 }
-            })
-            .catch(console.error);
+            }).catch(console.error);
 
     }
 

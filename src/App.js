@@ -23,10 +23,13 @@ var UserHelperObj = requireFix('/src/UserHelper');
 // commands
 var HelpCommandObj = requireFix('/src/Commands/Help');
 var StartCommandObj = requireFix('/src/Commands/Start');
+var LoginCommandObj = requireFix('/src/Commands/Login');
 
 // sites
-var DropboxSiteObj = requireFix('/src/./Sites/Dropbox');
-var GoogleSiteObj = requireFix('/src/./Sites/Google');
+var DropboxSiteObj = requireFix('/src/Sites/Dropbox');
+var GoogleSiteObj = requireFix('/src/Sites/Google');
+var ImgurSiteObj = requireFix('/src/Sites/Imgur');
+var OneDriveObj = requireFix('/src/Sites/OneDrive');
 
 // queries
 var MySitesQueryObj = requireFix('/src/Queries/MySites');
@@ -81,6 +84,7 @@ module.exports = class DropboxApp {
             // finish setup
             .then(() => {
                 // finished loading everything
+                // console.log(this._CommandHandler.info);
 
                 // start express listener
                 Express(this);
@@ -115,6 +119,8 @@ module.exports = class DropboxApp {
 
         // Register the websites
         // this._SiteHandler.register(new DropboxSiteObj(this));
+        // this._SiteHandler.register(new ImgurSiteObj(this));
+        // this._SiteHandler.register(new OneDriveObj(this));
         this._SiteHandler.register(new GoogleSiteObj(this));
 
         Logger.overwrite('Loaded ' + this._SiteHandler.siteCount + " sites      \n");
@@ -133,6 +139,7 @@ module.exports = class DropboxApp {
         // Add the global commands
         this._CommandHandler.register(new HelpCommandObj(this));
         this._CommandHandler.register(new StartCommandObj(this));
+        this._CommandHandler.register(new LoginCommandObj(this));
 
         Logger.overwrite('Loaded ' + this._CommandHandler.commandCount + " commands            \n");
 
@@ -168,7 +175,7 @@ module.exports = class DropboxApp {
     answerCallbackQuery(id, text = "", alert = false, options = {}) {
         return this._TelegramBot.answerCallbackQuery(id, text, alert, options)
             .then((result) => {
-                Logger.log("Responded to query " + id + ":", result);
+                Logger.log("Responded to query " + id + ":");
             })
             .catch(() => {
                 Logger.log("Failed to respond to query " + id);

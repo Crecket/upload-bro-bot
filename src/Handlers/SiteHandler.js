@@ -11,8 +11,8 @@ module.exports = class SiteHandler {
      * @param obj - a valid site object
      */
     register(obj) {
-        // store the command
-        this._sites[obj.name] = obj;
+        // store the command using lowercase name
+        this._sites[obj.name.toLowerCase()] = obj;
 
         // call register event
         obj.register();
@@ -25,7 +25,7 @@ module.exports = class SiteHandler {
      * @returns {boolean}
      */
     isActive(name) {
-        return !!this._sites[name];
+        return !!this._sites[name] || !!this._sites[name.toLowerCase()];
     }
 
     /**

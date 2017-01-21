@@ -6,7 +6,7 @@ var requireFix = appRoot.require;
 var HelperInterface = requireFix('/src/HelperInterface');
 var Utils = requireFix('/src/Utils');
 
-var GoogleHelperObj = requireFix('/src/Sites/Google/GoogleHelper');
+var GoogleHelperObj = requireFix('/src/Sites/Google/Helper');
 
 module.exports = class Upload extends HelperInterface {
     constructor(app) {
@@ -30,11 +30,11 @@ module.exports = class Upload extends HelperInterface {
             // first get user info
             this._app._UserHelper.getUser(query.from.id).then((user_info) => {
                 if (!user_info) {
-                    return reject("User not found");
+                    return resolve("It looks like you're not registered in our system.");
                 }
 
                 if (!user_info.provider_sites.google) {
-                    return reject("Google service not provided");
+                    return resolve("Google service not connected to your account");
                 }
 
                 // store key to fetch info about file
@@ -47,7 +47,8 @@ module.exports = class Upload extends HelperInterface {
                         return reject(error);
                     }
                     if (!result) {
-                        return reject("Cache not found");
+                        return resolve("We couldn't find a file connected to this message. " +
+                            "Try forwarding the file to UploadBro.");
                     }
                     var chat_id = result.chat_id;
                     var message_id = result.message_id;
