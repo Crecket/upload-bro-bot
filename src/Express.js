@@ -11,13 +11,19 @@ var passport = require('passport');
 var TelegramStrategy = require('passport-telegram').Strategy;
 var refresh = require('passport-oauth2-refresh');
 
+// util helper
 var Logger = require('./Logger');
 
+// general routes
 var GoogleRoutes = require('./Sites/Google/Routes');
 var DropboxRoutes = require('./Sites/Dropbox/Routes');
 var TelegramRoutes = require('./Routes/TelegramRoutes');
 
-var useSsl = process.env.EXPRESS_USE_SSL === "true";
+var mongo_express = require('mongo-express/lib/middleware')
+var mongo_express_config = require('./mongo_express_config')
+
+// useSsl helper
+const useSsl = process.env.EXPRESS_USE_SSL === "true";
 
 module.exports = function (uploadApp) {
     var app = express()
@@ -134,6 +140,9 @@ module.exports = function (uploadApp) {
     }))
     app.use(passport.initialize());
     app.use(passport.session());
+
+    // mongodb express helper
+    app.use('/mongo_express', mongo_express(mongo_express_config))
 
     // serve static files
     app.use(express.static(__dirname + '/../public'));

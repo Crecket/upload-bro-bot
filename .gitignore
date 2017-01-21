@@ -1,4 +1,6 @@
 .env
+/mongo_express_config.js
+
 node_modules
 /downloads/*
 !/downloads/.gitkeep
