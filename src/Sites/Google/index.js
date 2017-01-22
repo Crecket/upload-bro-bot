@@ -3,6 +3,7 @@ var path = require('path');
 
 var SiteInteface = require(path.join(__dirname, '../SiteInterface.js'));
 var UploadObj = require(path.join(__dirname, 'Queries/Upload'));
+var SearchQueryObj = require(path.join(__dirname, 'InlineQueries/SearchQuery'));
 
 module.exports = class Google extends SiteInteface {
     constructor(app) {
@@ -15,7 +16,11 @@ module.exports = class Google extends SiteInteface {
      * Load all commands for this website
      */
     register() {
+        // register commands
         this._app._QueryHandler.register(new UploadObj(this._app));
+
+        // register inline queries
+        this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
 
         return Promise.resolve();
     }

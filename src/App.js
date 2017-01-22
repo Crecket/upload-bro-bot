@@ -19,6 +19,7 @@ var CommandHandler = requireFix('/src/Handlers/CommandHandler');
 var SiteHandler = requireFix('/src/Handlers/SiteHandler');
 var QueryHandler = requireFix('/src/Handlers/QueryHandler');
 var EventHandlersObj = requireFix('/src/Handlers/EventHandler');
+var InlineQueryHandlerObj = requireFix('/src/Handlers/InlineQueryHandler');
 var UserHelperObj = requireFix('/src/UserHelper');
 
 // commands
@@ -55,6 +56,9 @@ module.exports = class DropboxApp {
 
         // create event listeners handlers
         this._EventHandler = new EventHandlersObj(this);
+
+        // create event listeners handlers
+        this._InlineQueryHandler = new InlineQueryHandlerObj(this);
 
         // user helper object
         this._UserHelper = new UserHelperObj(this);
