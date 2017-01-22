@@ -21,8 +21,9 @@ module.exports = (app, passport, uploadApp) => {
                 approval_prompt: 'force',
                 scope: [
                     'https://www.googleapis.com/auth/userinfo.profile',
-                    'https://www.googleapis.com/auth/drive.appfolder',
-                    'https://www.googleapis.com/auth/drive.file'
+                    'https://www.googleapis.com/auth/drive',
+                    // 'https://www.googleapis.com/auth/drive.appfolder',
+                    // 'https://www.googleapis.com/auth/drive.file'
                 ]
             };
             var redirectToUrl = true;

@@ -1,5 +1,7 @@
 var fs = require('fs');
 var path = require('path');
+var path = require('path');
+var mime = require('mime');
 var appRoot = require('app-root-path');
 var requireFix = appRoot.require;
 
@@ -29,7 +31,7 @@ module.exports = class SearchQuery extends HelperInterface {
         // console.log(query);
         return new Promise((resolve, reject) => {
             // first get user info
-            this._app._UserHelper.getUser(query.from.id).then((user_info) => {
+            this._app._UserHelper.getUser(inline_query.from.id).then((user_info) => {
                 if (!user_info) {
                     return resolve("It looks like you're not registered in our system.");
                 }
@@ -43,10 +45,28 @@ module.exports = class SearchQuery extends HelperInterface {
                     user_info.provider_sites.google, // tokens
                     match, // file name to search for
                     {}
-                ).then((result) => {
-                    console.log(result);
+                ).then((file_results) => {
+                    console.log(file_results);
+                    var resultList = [];
+                    file_results.map((value, key) => {
+                        resultList.push({
+                            title: "title1",
+                            caption: "caption1",
+                            description: "description1",
+                            type: "photo",
+                            id: value.id,
+                            photo_url: "https://lh4.googleusercontent.com/TbYLToSXtbfyKuYtnXSsjXJBuUYy7ZJogvvBL8lqvscGS_yg8g7QN9b7R4Z0HSbsI7FYcQ=w320",
+                            thumb_url: "https://lh4.googleusercontent.com/TbYLToSXtbfyKuYtnXSsjXJBuUYy7ZJogvvBL8lqvscGS_yg8g7QN9b7R4Z0HSbsI7FYcQ=w320"
+                        })
+                    })
+
+                    // resolve this list
+                    resolve(resultList, {
+                        cacheTime: 1
+                    })
+
                 }).catch(err => console.log(err));
-            });
+            }).catch(err => console.log(err));
         });
     }
 

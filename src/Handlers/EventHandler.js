@@ -192,8 +192,6 @@ module.exports = class EventHandlers extends HelperInterface {
      * @param inline_query
      */
     inlineQuery(inline_query) {
-        console.log("inline_query");
-        console.log(inline_query);
 
         // get the query
         var queryData = inline_query.query;
@@ -209,6 +207,7 @@ module.exports = class EventHandlers extends HelperInterface {
 
             // get the regex matches
             var matches = queryData.match(queryTemp.match);
+
             if (matches) {
                 // query matches this inline query
                 queryTemp.handle(inline_query, matches[1])
@@ -223,62 +222,12 @@ module.exports = class EventHandlers extends HelperInterface {
                         this._TelegramBot.answerInlineQuery(inline_query.id,
                             inline_results,
                             options
-                        )
-                            .then((result) => {
-                                console.log(result);
-                            })
-                            .catch(err => console.log(err));
+                        ).then((result) => {
+                            // success
+                        }).catch(err => console.log(err));
                     })
                     .catch(err => console.log(err));
             }
         });
     }
 }
-
-// this._TelegramBot.answerInlineQuery(inline_query.id, [
-//     {
-//         title: "title1",
-//         caption: "caption1",
-//         description: "description1",
-//         type: "photo",
-//         id: "blackjack_bot_test_id1",
-//         photo_url: "https://www.masterypoints.com/assets/cards/2_of_hearts.png",
-//         thumb_url: "https://www.masterypoints.com/assets/cards/2_of_hearts.png",
-//     },
-//     {
-//         title: "title2",
-//         caption: "caption2",
-//         description: "description2",
-//         type: "photo",
-//         id: "blackjack_bot_test_id2",
-//         photo_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-//         thumb_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-//     },
-//     {
-//         title: "title3",
-//         caption: "caption3",
-//         description: "description3",
-//         type: "photo",
-//         id: "blackjack_bot_test_id3",
-//         photo_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-//         thumb_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-//     },
-//     {
-//         title: "title4",
-//         caption: "caption4",
-//         description: "description4",
-//         type: "photo",
-//         id: "blackjack_bot_test_id4",
-//         photo_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-//         thumb_url: "https://www.masterypoints.com/assets/cards/3_of_hearts.png",
-//     },
-//     {
-//         type: "article",
-//         id: "blackjack_bot_article_id",
-//         title: "Hit",
-//         input_message_content: {
-//             message_text: "Hit",
-//             // parse_mode: "",
-//             disable_web_page_preview: true
-//         },
-//     }

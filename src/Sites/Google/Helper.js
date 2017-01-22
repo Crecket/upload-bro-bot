@@ -49,7 +49,7 @@ module.exports = class GoogleHelper {
 
             // options to use in upload
             var options = Object.assign({
-                q: "name contains '"+file_name+"'",
+                q: "name contains '" + file_name + "'",
                 spaces: 'drive',
                 pageToken: null
             }, advanced_options);
@@ -213,6 +213,16 @@ module.exports = class GoogleHelper {
      */
     getShareableLink(fileId) {
         return 'https://drive.google.com/open?id=' + fileId;
+    }
+
+    /**
+     * A url that redirects to a thumbnail
+     *
+     * @param fileId
+     * @returns {string}
+     */
+    getThumbnailLink(fileId) {
+        return 'https://drive.google.com/thumbnail?authuser=0&sz=w320&id=' + fileId;
     }
 
     /**
