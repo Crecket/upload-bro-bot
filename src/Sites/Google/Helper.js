@@ -40,7 +40,7 @@ module.exports = class GoogleHelper {
      *
      * @see https://developers.google.com/drive/v3/web/search-parameters
      */
-    searchFile(google_tokens, newOptions) {
+    searchFile(google_tokens, file_name, advanced_options = {}) {
         return new Promise((resolve, reject) => {
             var authclient = this.createOauthClient(google_tokens)
 
@@ -49,11 +49,10 @@ module.exports = class GoogleHelper {
 
             // options to use in upload
             var options = Object.assign({
-                q: "mimeType='image/jpeg'",
-                fields: 'nextPageToken, files(id, name)',
+                q: "name contains '"+file_name+"'",
                 spaces: 'drive',
                 pageToken: null
-            }, newOptions);
+            }, advanced_options);
 
             // load the files
             drive.files.list(options, (err, res) => {

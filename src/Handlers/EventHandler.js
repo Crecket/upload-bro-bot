@@ -211,12 +211,12 @@ module.exports = class EventHandlers extends HelperInterface {
             var matches = queryData.match(queryTemp.match);
             if (matches) {
                 // query matches this inline query
-                queryTemp.handle(matches[1])
+                queryTemp.handle(inline_query, matches[1])
                     .then((inline_results = [], options = {
-                        cache_time: 1,
+                        cache_time: 300,
                         is_personal: true
                     }) => {
-                        // first this options
+                        // enforce this option
                         options.is_personal = true;
 
                         // return the query
