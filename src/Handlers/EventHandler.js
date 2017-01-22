@@ -58,7 +58,7 @@ module.exports = class EventHandlers extends HelperInterface {
      *
      * @param msg
      */
-    messageFileLIstener(msg) {
+    messageFileListener(msg) {
         var file = false;
 
         // get file info
@@ -96,6 +96,7 @@ module.exports = class EventHandlers extends HelperInterface {
             file.file_type = "voice";
         } else {
             // invalid file type
+            console.log(file);
             return;
         }
 

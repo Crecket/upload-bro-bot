@@ -37,8 +37,16 @@ module.exports = class SearchQuery extends HelperInterface {
                 }
 
                 if (!user_info.provider_sites.google) {
-                    return resolve("Google service not connected to your account");
+                    return resolve(
+                        [], // no results
+                        {
+                            switch_pm_text: "Google service not connected to your account",
+                            switch_pm_parameter: "login"
+                        }
+                    );
                 }
+
+                console.log("search");
 
                 // search for this file
                 this._GoogleHelper.searchFile(
@@ -48,17 +56,30 @@ module.exports = class SearchQuery extends HelperInterface {
                 ).then((file_results) => {
                     console.log(file_results);
                     var resultList = [];
-                    file_results.map((value, key) => {
-                        resultList.push({
-                            title: "title1",
-                            caption: "caption1",
-                            description: "description1",
-                            type: "photo",
-                            id: value.id,
-                            photo_url: "https://lh4.googleusercontent.com/TbYLToSXtbfyKuYtnXSsjXJBuUYy7ZJogvvBL8lqvscGS_yg8g7QN9b7R4Z0HSbsI7FYcQ=w320",
-                            thumb_url: "https://lh4.googleusercontent.com/TbYLToSXtbfyKuYtnXSsjXJBuUYy7ZJogvvBL8lqvscGS_yg8g7QN9b7R4Z0HSbsI7FYcQ=w320"
-                        })
+                    file_results.map((file, key) => {
+
+                        var fileUrl = this._GoogleHelper.getShareableLink(file.id);
+
+                        // create a new article
+                        var fileResult = {
+                            type: "article",
+                            id: file.id,
+                            title: file.name,
+                            url: file.webViewLink,
+                            input_message_content: {
+                                message_text: "<a href='" + fileUrl + "'>" + file.name + "</a>",
+                                parse_mode: "HTML"
+                            }
+                        };
+                        // optional thumbnail url
+                        if (file.thumbnailLink) {
+                            fileResult.thumb_url = file.thumbnailLink;
+                        }
+
+                        resultList.push(fileResult)
                     })
+
+                    // console.log(resultList);
 
                     // resolve this list
                     resolve(resultList, {

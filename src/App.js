@@ -204,11 +204,11 @@ module.exports = class DropboxApp {
      */
     eventListeners() {
         // file messages
-        this._TelegramBot.on('audio', this._EventHandler.messageFileLIstener.bind(this));
-        this._TelegramBot.on('video', this._EventHandler.messageFileLIstener.bind(this));
-        this._TelegramBot.on('voice', this._EventHandler.messageFileLIstener.bind(this));
-        this._TelegramBot.on('photo', this._EventHandler.messageFileLIstener.bind(this));
-        this._TelegramBot.on('document', this._EventHandler.messageFileLIstener.bind(this));
+        this._TelegramBot.on('audio', this._EventHandler.messageFileListener.bind(this));
+        this._TelegramBot.on('video', this._EventHandler.messageFileListener.bind(this));
+        this._TelegramBot.on('voice', this._EventHandler.messageFileListener.bind(this));
+        this._TelegramBot.on('photo', this._EventHandler.messageFileListener.bind(this));
+        this._TelegramBot.on('document', this._EventHandler.messageFileListener.bind(this));
 
         // callback query listener
         this._TelegramBot.on('callback_query', this._EventHandler.callbackQuery.bind(this));

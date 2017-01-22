@@ -50,6 +50,7 @@ module.exports = class GoogleHelper {
             // options to use in upload
             var options = Object.assign({
                 q: "name contains '" + file_name + "'",
+                fields: "nextPageToken, files(id, name, mimeType, thumbnailLink, webViewLink, webContentLink, description)",
                 spaces: 'drive',
                 pageToken: null
             }, advanced_options);
@@ -194,7 +195,7 @@ module.exports = class GoogleHelper {
             drive.files.list({
                 auth: authclient,
                 pageSize: 10,
-                fields: "nextPageToken, files(id, name)"
+                fields: "nextPageToken, files(id, name, thumbnailLink, description)"
             }, (err, response) => {
                 if (err) {
                     reject(err);
