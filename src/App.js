@@ -210,6 +210,13 @@ module.exports = class DropboxApp {
         this._TelegramBot.on('photo', this._EventHandler.messageFileListener.bind(this));
         this._TelegramBot.on('document', this._EventHandler.messageFileListener.bind(this));
 
+        this._TelegramBot.on('group_chat_created', (msg) => {
+            console.log('group_chat_created', msg);
+        })
+        this._TelegramBot.on('message', (msg) => {
+            console.log('message', msg);
+        })
+
         // callback query listener
         this._TelegramBot.on('callback_query', this._EventHandler.callbackQuery.bind(this));
 

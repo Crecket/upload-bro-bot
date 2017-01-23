@@ -23,7 +23,7 @@ module.exports = class GoogleHelper {
         var oauthclient = new OAuth2(
             process.env.GOOGLE_CLIENT_ID,
             process.env.GOOGLE_SECRET,
-            process.env.GOOGLE_REDIRECT_URI
+            process.env.WEBSITE_URL + process.env.GOOGLE_REDIRECT_URI
         );
         if (tokens) {
             oauthclient.setCredentials(tokens);

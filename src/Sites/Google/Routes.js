@@ -26,14 +26,20 @@ module.exports = (app, passport, uploadApp) => {
                     // 'https://www.googleapis.com/auth/drive.file'
                 ]
             };
-            var redirectToUrl = true;
+            var redirectToUrl = () => {
+                // create the url
+                var url = GoogleHelper.createOauthClient()
+                    .generateAuthUrl(urlOptions);
+
+                // redirect to it
+                response.redirect(url);
+            }
 
             // check if we already have data for google
             if (request.user.provider_sites.google) {
 
                 // check if we have a refresh token
                 if (request.user.provider_sites.google.refresh_token) {
-                    redirectToUrl = false;
 
                     // get current user
                     var userInfo = request.user;
@@ -63,32 +69,25 @@ module.exports = (app, passport, uploadApp) => {
                                             response.redirect('/');
                                         })
                                         .catch((err) => {
-                                            console.error(err);
-                                            response.redirect('/');
+                                            // failed to update tokens
+                                            redirectToUrl();
                                         });
+                                } else {
+                                    // failed to get new tokens
+                                    redirectToUrl();
                                 }
-
                             })
                             .catch((err) => {
-                                console.error(err);
-                                response.redirect('/');
+                                // failed to get new access token using refresh token
+                                redirectToUrl();
                             });
                     }
-
-                    // token is expired but we have a refresh token so no approval prompt required
-                    urlOptions.approval_prompt = null;
                 }
+            } else {
+                // no google provider
+                redirectToUrl();
             }
 
-            if (redirectToUrl) {
-                // create the url
-                var url = GoogleHelper.createOauthClient()
-                    .generateAuthUrl(urlOptions);
-
-                // redirect to it
-                // response.json(url);
-                response.redirect(url);
-            }
         }
     });
 

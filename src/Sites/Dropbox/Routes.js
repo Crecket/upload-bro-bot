@@ -22,7 +22,7 @@ module.exports = (app, passport, uploadApp) => {
             } else {
                 // create the url
                 var url = DropboxHelper.createClient()
-                    .getAuthenticationUrl(process.env.DROPBOX_REDIRECT_URI);
+                    .getAuthenticationUrl(process.env.WEBSITE_URL + process.env.DROPBOX_REDIRECT_URI);
 
                 // redirect to it
                 response.redirect(url);
