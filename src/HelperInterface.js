@@ -78,4 +78,29 @@ module.exports = class HelperInterface {
         return this._app._TelegramBot.editMessageText(text, options);
     }
 
+    /**
+     * generate a button list for inline keyboards
+     * @param user
+     */
+    generateProviderButtons(user) {
+        var buttonSiteList = [];
+
+        // loop through existing provider sites
+        Object.keys(user.provider_sites).map((key) => {
+
+            // check if this site is active right now
+            if (this._app._SiteHandler.isActive(key)) {
+                var siteInfo = this._app._SiteHandler.getSite(key);
+
+                // push item into the button list
+                buttonSiteList.push({
+                    text: siteInfo.title,
+                    callback_data: "upload_" + key
+                });
+            }
+        })
+
+        return buttonSiteList;
+    }
+
 }

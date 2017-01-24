@@ -121,22 +121,7 @@ module.exports = class EventHandlers extends HelperInterface {
                 if (user_info) {
 
                     // user is registered, generate the download buttons
-                    var buttonSiteList = [];
-
-                    // loop through existing provider sites
-                    Object.keys(user_info.provider_sites).map((key) => {
-
-                        // check if this site is active right now
-                        if (this._SiteHandler.isActive(key)) {
-                            var siteInfo = this._SiteHandler.getSite(key);
-
-                            // push item into the button list
-                            buttonSiteList.push({
-                                text: siteInfo.title,
-                                callback_data: "upload_" + key
-                            });
-                        }
-                    })
+                    var buttonSiteList = this.generateProviderButtons(user_info).bind(this);
 
                     if (buttonSiteList.length > 0) {
                         // send the keyboard

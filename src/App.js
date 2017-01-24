@@ -34,7 +34,7 @@ var ImgurSiteObj = requireFix('/src/Sites/Imgur');
 var OneDriveObj = requireFix('/src/Sites/OneDrive');
 
 // queries
-var MySitesQueryObj = requireFix('/src/Queries/MySites');
+var RefreshSitesObj = requireFix('/src/Queries/RefreshSites');
 var ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
 
 // event handlers
@@ -170,7 +170,7 @@ module.exports = class DropboxApp {
         Logger.overwrite('Loading queries');
 
         // Add the query handlers
-        this._QueryHandler.register(new MySitesQueryObj(this));
+        this._QueryHandler.register(new RefreshSitesObj(this));
         this._QueryHandler.register(new ScanChatQueryObj(this));
 
         Logger.overwrite('Loaded ' + this._QueryHandler.queryCount + " queries            \n");
