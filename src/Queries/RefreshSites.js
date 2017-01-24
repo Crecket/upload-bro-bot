@@ -21,22 +21,25 @@ module.exports = class MySites extends HelperInterface {
             // get the user for this request
             this._app._UserHelper.getUser(query.from.id)
                 .then((user_info) => {
+                    var buttonSiteList = [];
                     if (user_info) {
-                        // get provider sites from user info
-                        var provider_sites = user_info.provider_sites;
-
-                        // setup the message
-                        var message = "<b>Your registered services</b>\n";
-                        Object.keys(provider_sites).map((key) => {
-                            message += " - " + key + "\n";
-                        });
-                    } else {
-                        var message = "We can't seem to find your telegram account in our system. ";
-                        message += "Make sure you login first and connect the available services.";
+                        // user is registered, generate the download buttons
+                        buttonSiteList = this.generateProviderButtons(user_info);
                     }
 
                     // send the message
-                    super.sendMessage(query.message.chat.id, message, {
+                    this.editMessage(query.message.text, {
+                        chat_id: query.message.chat.id,
+                        message_id: query.message.message_id,
+                        reply_markup: {
+                            inline_keyboard: [
+                                buttonSiteList,
+                                [{
+                                    text: "Refresh sites",
+                                    callback_data: "refresh_provider_buttons"
+                                }]
+                            ]
+                        },
                         parse_mode: "HTML"
                     }).then(() => {
                         resolve();
@@ -54,7 +57,7 @@ module.exports = class MySites extends HelperInterface {
      * @returns {string}
      */
     get event() {
-        return "my_sites";
+        return "refresh_provider_buttons";
     }
 }
 
