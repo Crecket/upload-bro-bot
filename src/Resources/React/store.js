@@ -8,7 +8,7 @@ import reducer from "./reducers";
 
 // create middleware with logger
 var middleware = applyMiddleware(promise(), thunk)
-if (!PRODUCTION_MODE) {
+if (process.env.DEBUG === "true") {
     // create middleware with logger
     middleware = applyMiddleware(promise(), thunk, logger())
 }
