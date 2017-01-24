@@ -46,8 +46,7 @@ module.exports = class MySites extends HelperInterface {
                     }).catch(reject);
                 })
                 .catch((err) => {
-                    console.log(err);
-                    reject();
+                    reject(err);
                 });
         })
     }
