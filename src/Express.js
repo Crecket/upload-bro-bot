@@ -1,39 +1,40 @@
-var path = require('path');
-var fs = require('fs');
-var requireFix = require('app-root-path').require;
-var express = require('express');
-var http = require('http');
-var https = require('https');
-var session = require('express-session');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var MongoStore = require('connect-mongo')(session);
-var passport = require('passport');
-var TelegramStrategy = require('passport-telegram').Strategy;
-var refresh = require('passport-oauth2-refresh');
-var mongo_express = require('mongo-express/lib/middleware');
+const path = require('path');
+const fs = require('fs');
+const requireFix = require('app-root-path').require;
+const express = require('express');
+const http = require('http');
+const https = require('https');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const MongoStore = require('connect-mongo')(session);
+const passport = require('passport');
+const TelegramStrategy = require('passport-telegram').Strategy;
+const refresh = require('passport-oauth2-refresh');
+const mongo_express = require('mongo-express/lib/middleware');
+const ouch = require('ouch');
 
 // util helper
-var Logger = require('./Logger');
+const Logger = require('./Logger');
 
 // general routes
-var GoogleRoutes = require('./Sites/Google/Routes');
-var DropboxRoutes = require('./Sites/Dropbox/Routes');
-var TelegramRoutes = require('./Routes/TelegramRoutes');
+const GoogleRoutes = require('./Sites/Google/Routes');
+const DropboxRoutes = require('./Sites/Dropbox/Routes');
+const TelegramRoutes = require('./Routes/TelegramRoutes');
 
 // get the config
-var mongo_express_config = requireFix('mongo_express_config.js');
+const mongo_express_config = requireFix('mongo_express_config.js');
 
 // useSsl helper
 const useSsl = process.env.EXPRESS_USE_SSL === "true";
 
 module.exports = function (uploadApp) {
-    var app = express()
-    var db = uploadApp._Db;
+    let app = express()
+    let db = uploadApp._Db;
 
     // use ssl?
     if (useSsl) {
-        var httpsOptions = {
+        let httpsOptions = {
             // ca: [''],
             cert: fs.readFileSync(process.env.EXPRESS_SSL_CERT),
             key: fs.readFileSync(process.env.EXPRESS_SSL_KEY)
@@ -41,7 +42,7 @@ module.exports = function (uploadApp) {
         var httpsServer = https.createServer(httpsOptions, app);
     }
 
-    var httpServer = http.createServer(app);
+    let httpServer = http.createServer(app);
 
     // force ssl
     app.all('*', (req, res, next) => {
@@ -49,13 +50,13 @@ module.exports = function (uploadApp) {
             return next();
         }
         // check if we need to add a different port
-        var extraPort = "";
+        let extraPort = "";
         if (process.env.EXPRESS_HTTPS_PORT != "443") {
             extraPort = ":" + process.env.EXPRESS_HTTPS_PORT
         }
 
         // setup the https url
-        var httpsUrl = 'https://' + req.hostname + extraPort + req.url;
+        let httpsUrl = 'https://' + req.hostname + extraPort + req.url;
 
         // redirect to https
         res.redirect(httpsUrl);
@@ -72,14 +73,14 @@ module.exports = function (uploadApp) {
             })
     });
 
-    var TelegramStrategyObj = new TelegramStrategy({
+    let TelegramStrategyObj = new TelegramStrategy({
             clientID: process.env.TELEPASS_APPID,
             clientSecret: process.env.TELEPASS_SECRET,
             callbackURL: process.env.WEBSITE_URL + process.env.TELEPASS_REDIRECT_URI
         },
         function (accessToken, refreshToken, profile, done) {
             // get the users collection
-            var usersCollection = db.collection('users');
+            let usersCollection = db.collection('users');
 
             // check if user exists
             usersCollection.findOne({_id: profile.id}, {}, function (err, user) {
@@ -156,7 +157,7 @@ module.exports = function (uploadApp) {
 
     // fetch user info from api
     app.post('/get_user', (req, res) => {
-        var user_info = (req.user) ? req.user : false;
+        let user_info = (req.user) ? req.user : false;
         res.json(user_info);
     });
 
@@ -168,6 +169,17 @@ module.exports = function (uploadApp) {
     app.get('/logout', function (req, res) {
         req.logout();
         res.redirect('/');
+    });
+
+    // Debug errors
+    app.use(function (err, req, res, next) {
+        (new ouch()).pushHandler(
+            new ouch.handlers.PrettyPageHandler()
+        ).handleException(err, req, res,
+            function () {
+                console.log('Error handled');
+            }
+        );
     });
 
     // start listening http

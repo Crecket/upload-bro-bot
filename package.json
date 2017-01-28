@@ -34,6 +34,7 @@
     "mongo-express": "^0.35.0",
     "mongodb": "^2.2.20",
     "node-telegram-bot-api": "^0.25.0",
+    "ouch": "^1.0.0",
     "passport": "^0.3.2",
     "passport-oauth2-refresh": "^1.0.0",
     "passport-telegram": "^1.0.0",
