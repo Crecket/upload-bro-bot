@@ -105,8 +105,11 @@ class Main extends React.Component {
                 <div className={"wrap " + this.state.muiTheme}
                      style={{background: ThemesList[this.state.muiTheme].bodyBackground}}>
                     <div
-                        className="col-xs-12"
-                        style={{paddingLeft: 0, paddingRight: 0}}>
+                        style={{
+                            height: '100%',
+                            margin: 0, paddingLeft: 0, paddingRight: 0
+                        }}
+                        className="col-xs-12">
                         <div className="content">
                             <Dialog
                                 title={this.props.modalTitle}

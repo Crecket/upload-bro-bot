@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-// var CopyWebpackPlugin = require('copy-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'public/assets');
 var SRC_DIR = path.resolve(__dirname, 'src/Resources');
@@ -26,15 +26,15 @@ var config = {
         ]
     },
     plugins: [
-        // new CopyWebpackPlugin([
-        //     {
-        //         from: envConfig,
-        //         to: BUILD_DIR + '/js/config.js',
-        //         flatten: true
-        //     },
-        // ], {
-        //     copyUnmodified: false
-        // }),
+        new CopyWebpackPlugin([
+            {
+                from: SRC_DIR + "/Libraries/VanillaTilt",
+                to: BUILD_DIR + '/js/vanilla-tilt',
+                flatten: true
+            },
+        ], {
+            copyUnmodified: false
+        }),
         new webpack.NoErrorsPlugin(),
         new ExtractTextPlugin("[name].css", {
             allChunks: true
