@@ -42,7 +42,7 @@ class Main extends React.Component {
             connected: false,
 
             // theme options
-            muiTheme: 'CustomDark',
+            muiTheme: 'CustomLight',
         };
 
     };
@@ -106,11 +106,10 @@ class Main extends React.Component {
                      style={{background: ThemesList[this.state.muiTheme].bodyBackground}}>
                     <div
                         style={{
-                            height: '100%',
                             margin: 0, paddingLeft: 0, paddingRight: 0
                         }}
                         className="col-xs-12">
-                        <div className="content">
+                        <div className="container">
                             <Dialog
                                 title={this.props.modalTitle}
                                 actions={[

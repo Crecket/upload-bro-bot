@@ -1,7 +1,18 @@
 import React from "react";
 import FlatButton from "material-ui/FlatButton";
 
+import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
 import NavLink from "../Helpers/NavLink";
+
+const styles = {
+    wrapper: {
+        margin: 30,
+        // color: 'white'
+    },
+    notLoggedIn: {
+        textAlign: 'center'
+    }
+}
 
 class Home extends React.Component {
     constructor(props, context) {
@@ -9,45 +20,34 @@ class Home extends React.Component {
         this.state = {};
     };
 
-    componentDidMount() {
-
-    }
-
     render() {
         var homeDiv = (
-            <div style={{
-                margin: 30,
-                height: '100%',
-                textAlign: 'center',
-                color: 'white',
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}>
-                <div className="your-element">
-                    You're not logged in. To begin, <br/>
-                    <FlatButton
-                        secondary={true}
-                        label="Login with Telegram"
-                        href="/login/telegram"/>
-                </div>
+            <div style={styles.notLoggedIn}>
+                You're not logged in. To begin, <br/>
+                <FlatButton
+                    secondary={true}
+                    label="Login with Telegram"
+                    href="/login/telegram"/>
             </div>
         );
         if (this.props.user_info) {
             console.log(this.props.user_info);
             homeDiv = (
-                <div style={{margin: 30, textAlign: 'center', color: 'white'}}>
-                    <div class="your-element">
-                        You're logged in as:<br/>
-                        {this.props.user_info.username}<br/>
-                        {this.props.user_info.first_name} {this.props.user_info.last_name}
+                <div>
+                    <div className="row">
+                        <div className="box">
+                            You're logged in as:<br/>
+                            {this.props.user_info.username}<br/>
+                            {this.props.user_info.first_name} {this.props.user_info.last_name}
+                        </div>
                     </div>
+                    <ProviderBlocks provider_sites={this.props.user_info.provider_sites}/>
                 </div>
             );
         }
 
         return (
-            <div>
+            <div style={styles.wrapper}>
                 {homeDiv}
             </div>
         );

@@ -25,15 +25,6 @@ const styles = {
     }
 };
 
-// iconElementRight={
-// <IconMenu
-//     iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-//     targetOrigin={{horizontal: 'right', vertical: 'top'}}
-//     anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-//     <MenuItem leftIcon={<RefreshIcon/>} primaryText="Update" onClick={this.props.updateStaticData}/>
-//     <MenuItem leftIcon={<PaletteIcon/>} primaryText="Change theme" onClick={this.props.setTheme}/>
-// </IconMenu>}
-
 class MainAppbar extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -48,10 +39,8 @@ class MainAppbar extends React.Component {
         );
         if (this.props.user_info) {
             TopRightBtn = (
-                <a href="/logout">
-                    <FlatButton label="Logout"
-                                labelPosition="before" icon={<PowerOffIcon/>}/>
-                </a>
+                <FlatButton label="" labelPosition="before"
+                            icon={<PowerOffIcon/>}/>
             )
         }
 
