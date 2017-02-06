@@ -115,13 +115,15 @@ module.exports = class EventHandlers extends HelperInterface {
             return;
         }
 
+        console.log(this._HelperInterface);
+
         // get the user info
         this._UserHelper.getUser(msg.from.id)
             .then((user_info) => {
                 if (user_info) {
 
                     // user is registered, generate the download buttons
-                    var buttonSiteList = this.generateProviderButtons(user_info).bind(this);
+                    var buttonSiteList = this.generateProviderButtons(user_info);
 
                     if (buttonSiteList.length > 0) {
                         // send the keyboard
@@ -216,4 +218,5 @@ module.exports = class EventHandlers extends HelperInterface {
             }
         });
     }
+
 }

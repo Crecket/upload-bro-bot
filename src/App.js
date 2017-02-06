@@ -105,6 +105,7 @@ module.exports = class DropboxApp {
                 Express(this);
             })
             .catch(Logger.error);
+
     }
 
     /**
