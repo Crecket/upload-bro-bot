@@ -1,6 +1,6 @@
 import React  from 'react';
-
-import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
     container: {
@@ -25,12 +25,19 @@ export default class ProviderBlock extends React.Component {
     render() {
         return (
             <div style={styles.container} class="your-element">
+                {/*<a href={this.props.url} target="_blank">*/}
                 <img style={styles.img}
                      src={this.props.img}/>
                 <br/>
-                <div style={styles.popout}>
-                    {this.props.title}
-                </div>
+                <RaisedButton
+                    primary={true}
+                    href={this.props.url}
+                    style={styles.popout}>
+                    <div >
+                        {this.props.title}
+                    </div>
+                </RaisedButton>
+                {/*</a>*/}
             </div>
         );
     };

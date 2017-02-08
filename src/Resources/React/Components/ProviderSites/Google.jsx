@@ -12,6 +12,7 @@ export default class Google extends React.Component {
         return (
             <div>
                 <ProviderBlock
+                    url="https://drive.google.com/"
                     img="/assets/img/google-drive.png"
                     title="Google Drive"/>
             </div>

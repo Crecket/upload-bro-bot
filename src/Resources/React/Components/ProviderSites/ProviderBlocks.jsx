@@ -2,7 +2,6 @@ import React  from 'react';
 
 import Google from "./Google";
 import Dropbox from "./Dropbox";
-import Paper from 'material-ui/Paper';
 
 const styles = {
     container: {
@@ -10,6 +9,9 @@ const styles = {
     },
     img: {
         maxWidth: 150
+    },
+    block: {
+        margin: 20
     }
 }
 
@@ -48,7 +50,8 @@ export default class ProviderBlock extends React.Component {
 
             // add to the list
             finalBlocks.push((
-                <div className="col-xs-12 col-sm-8 col-md-6 col-lg-4" key={key}>
+                <div className="col-xs-12 col-sm-8 col-md-6 col-lg-4"
+                     key={key} style={styles.block}>
                     <div className="box">
                         <BlockType />
                     </div>
