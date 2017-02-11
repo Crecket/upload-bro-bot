@@ -26,15 +26,15 @@ var config = {
         ]
     },
     plugins: [
-        new CopyWebpackPlugin([
-            {
-                from: SRC_DIR + "/Libraries/VanillaTilt",
-                to: BUILD_DIR + '/js/vanilla-tilt',
-                flatten: true
-            },
-        ], {
-            copyUnmodified: false
-        }),
+        // new CopyWebpackPlugin([
+        //     {
+        //         from: SRC_DIR + "/Libraries/VanillaTilt",
+        //         to: BUILD_DIR + '/js/vanilla-tilt',
+        //         flatten: true
+        //     },
+        // ], {
+        //     copyUnmodified: false
+        // }),
         new webpack.NoErrorsPlugin(),
         new ExtractTextPlugin("[name].css", {
             allChunks: true

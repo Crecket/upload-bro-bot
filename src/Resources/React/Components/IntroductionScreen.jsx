@@ -12,10 +12,14 @@ export default class IntroductionScreen extends React.Component {
         };
     };
 
-    grayAreaClick = () => {
+    closeCarousel = () => {
         this.setState({
             open: !this.state.open
         });
+    }
+
+    startEvent = () => {
+        this.closeCarousel();
     }
 
     render() {
@@ -23,7 +27,8 @@ export default class IntroductionScreen extends React.Component {
             <AutoRotatingCarousel
                 label="Get started"
                 open={this.state.open}
-                onRequestClose={this.grayAreaClick}
+                onRequestClose={this.closeCarousel}
+                onStart={this.startEvent}
                 autoplay={false}
             >
                 <Slide

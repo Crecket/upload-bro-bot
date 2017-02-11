@@ -1,20 +1,15 @@
 import React  from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import HelpIcon from 'material-ui/svg-icons/action/help';
+import {green400, green600, blue400, blue600, red400, red600} from 'material-ui/styles/colors'
 
 const styles = {
-    container: {
-        position: 'relative',
-        'transformStyle': 'preserve-3d'
-    },
     img: {
         // maxWidth: 120,
         maxHeight: 120
     },
-    popout: {
-        'transform': 'translateZ(20px)'
-    },
-    button:{
+    button: {
         width: '100%'
     }
 }
@@ -26,19 +21,34 @@ export default class ProviderBlock extends React.Component {
     };
 
     render() {
+
+        let BlockBtn = (
+            <RaisedButton
+                secondary={true}
+                href={this.props.url}
+                style={styles.button}>
+                Login
+            </RaisedButton>
+        );
+        if (this.props.providerSite) {
+            // user is logged into this site
+            BlockBtn = (
+                <RaisedButton
+                    backgroundColor={green400}
+                    style={styles.button}>
+                    Logout
+                </RaisedButton>
+            )
+        }
         return (
             <div style={styles.container}>
-                <img style={styles.img}
-                     src={this.props.img}/>
+                <a href={this.props.urlInfo}>
+                    <img style={styles.img}
+                         src={this.props.img}/>
+                </a>
                 <br/>
-                <RaisedButton
-                    primary={true}
-                    href={this.props.url}
-                    style={Object.assign(styles.popout, styles.button)}>
-                    <div >
-                        {this.props.title}
-                    </div>
-                </RaisedButton>
+
+                {BlockBtn}
             </div>
         );
     };

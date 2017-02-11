@@ -1,4 +1,5 @@
 import React  from 'react';
+import {deepPurpleA700} from 'material-ui/styles/colors';
 
 import Google from "./Google";
 import Dropbox from "./Dropbox";
@@ -22,32 +23,55 @@ const styles = {
 export default class ProviderBlock extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {};
+        this.state = {
+            enabledSites: {
+                'google': true,
+                'dropbox': true,
+                'imgur': true
+            }
+        };
     };
 
     getBlockType = (type) => {
         switch (type) {
             case 'google':
-                return Google;
-                break;
+                if (this.state.enabledSites['google']) {
+                    return Google;
+                    break;
+                }
             case 'dropbox':
-                return Dropbox;
-                break;
+                if (this.state.enabledSites['dropbox']) {
+                    return Dropbox;
+                    break;
+                }
             case 'imgur':
-                return Imgur;
-                break;
+                if (this.state.enabledSites['imgur']) {
+                    return Imgur;
+                    break;
+                }
             default:
                 return false;
         }
     }
 
+    getBlockTemplate = (key, BlockType, providerSite = false) => {
+        return (
+            <div className="col-xs-12 col-sm-6 col-md-4"
+                 key={key} style={styles.block}>
+                <div className="box">
+                    <BlockType providerSite={providerSite}/>
+                </div>
+            </div>
+        );
+    }
+
     render() {
         let finalBlocks = [];
 
-        // this.props.provider_sites['imgur'] = true;
+        // loop through providers which havn't been verified
+        Object.keys(this.state.enabledSites).map((key) => {
+            let tempSite = this.state.enabledSites[key];
 
-        // loop through providers
-        Object.keys(this.props.provider_sites).map((key) => {
             // get the correct block
             let BlockType = this.getBlockType(key);
             if (!BlockType) {
@@ -55,15 +79,13 @@ export default class ProviderBlock extends React.Component {
                 return false;
             }
 
+            let providerSite = false;
+            if (this.props.provider_sites[key]) {
+                providerSite = this.props.provider_sites[key];
+            }
+
             // add to the list
-            finalBlocks.push((
-                <div className="col-xs-12 col-sm-6 col-md-4"
-                     key={key} style={styles.block}>
-                    <div className="box">
-                        <BlockType />
-                    </div>
-                </div>
-            ))
+            finalBlocks.push(this.getBlockTemplate(key, BlockType, providerSite));
         })
 
         return (

@@ -10,12 +10,12 @@ export default class Google extends React.Component {
 
     render() {
         return (
-            <div>
-                <ProviderBlock
-                    url="https://drive.google.com/"
-                    img="/assets/img/google-drive.png"
-                    title="Google Drive"/>
-            </div>
+            <ProviderBlock
+                providerSite={this.props.providerSite}
+                url="/login/google"
+                urlInfo="https://drive.google.com/"
+                img="/assets/img/google-drive.png"
+                title="Google Drive"/>
         );
     };
 }

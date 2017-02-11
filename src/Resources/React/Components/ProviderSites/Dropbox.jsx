@@ -10,12 +10,12 @@ export default class Dropbox extends React.Component {
 
     render() {
         return (
-            <div>
-                <ProviderBlock
-                    url="https://www.dropbox.com/"
-                    img="/assets/img/dropbox.png"
-                    title="Dropbox"/>
-            </div>
+            <ProviderBlock
+                providerSite={this.props.providerSite}
+                url="/login/dropbox"
+                urlInfo="https://www.dropbox.com/"
+                img="/assets/img/dropbox.png"
+                title="Dropbox"/>
         );
     };
 }

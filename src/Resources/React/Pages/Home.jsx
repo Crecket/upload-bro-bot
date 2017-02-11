@@ -7,7 +7,7 @@ import NavLink from "../Helpers/NavLink";
 
 const styles = {
     wrapper: {
-        margin: 30,
+        padding: 30,
         // color: 'white'
     },
     notLoggedIn: {

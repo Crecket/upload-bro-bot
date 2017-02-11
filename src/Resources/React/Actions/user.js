@@ -20,6 +20,11 @@ export function userUpdate() {
     }
 }
 export function userLogout() {
+    // logout and forget
+    axios.get('/logout').then(() => {
+        // logged out
+    }).catch(console.error);
+    // send user logout event
     return {type: 'USER_LOGOUT'};
 }
 export function userLoading() {
