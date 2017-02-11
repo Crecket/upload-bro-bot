@@ -1,30 +1,19 @@
 import {
-    cyan500, cyan700,
-    grey100, grey300, grey400, grey500, 
+    indigo500, indigo700,
+    lightGreenA200,lightGreenA500,
     pinkA200,
-    white, fullWhite,
-    darkBlack, fullBlack,
+    grey100, grey300, grey400, grey500,
+    white, darkBlack, fullBlack,
 } from 'material-ui/styles/colors';
 import {fade} from 'material-ui/utils/colorManipulator';
+import spacing from 'material-ui/styles/spacing';
 
-const CustomTheme = {
-    spacing: {
-        iconSize: 24,
-        desktopGutter: 24,
-        desktopGutterMore: 32,
-        desktopGutterLess: 16,
-        desktopGutterMini: 8,
-        desktopKeylineIncrement: 64,
-        desktopDropDownMenuItemHeight: 32,
-        desktopDropDownMenuFontSize: 15,
-        desktopDrawerMenuItemHeight: 48,
-        desktopSubheaderHeight: 48,
-        desktopToolbarHeight: 56,
-    },
+export default {
+    spacing: spacing,
     fontFamily: 'Roboto, sans-serif',
     palette: {
-        primary1Color: cyan500,
-        primary2Color: cyan700,
+        primary1Color: indigo500,
+        primary2Color: indigo700,
         primary3Color: grey400,
         accent1Color: pinkA200,
         accent2Color: grey100,
@@ -34,11 +23,8 @@ const CustomTheme = {
         canvasColor: white,
         borderColor: grey300,
         disabledColor: fade(darkBlack, 0.3),
-        pickerHeaderColor: cyan500,
+        pickerHeaderColor: indigo500,
         clockCircleColor: fade(darkBlack, 0.07),
         shadowColor: fullBlack,
     },
-    bodyBackground: fullWhite,
 };
-
-export default CustomTheme;

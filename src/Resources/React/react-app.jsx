@@ -13,7 +13,7 @@ import store from "./store";
 injectTapEventPlugin();
 
 require("../../../node_modules/flexboxgrid/dist/flexboxgrid.css");
-require("!css-loader!sass-loader!../scss/index.scss");
+require("../scss/index.scss");
 
 // render the react app
 ReactDOM.render(

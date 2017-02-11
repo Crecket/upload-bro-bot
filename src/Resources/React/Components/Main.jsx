@@ -107,39 +107,36 @@ class Main extends React.Component {
 
         return (
             <MuiThemeProvider muiTheme={ThemesList[this.state.muiTheme]}>
-                <div className={"wrap " + this.state.muiTheme}
-                     style={{background: ThemesList[this.state.muiTheme].bodyBackground}}>
-                    <div
-                        style={{
-                            margin: 0, paddingLeft: 0, paddingRight: 0
-                        }}
-                        className="col-xs-12">
-                        <div className="container">
-                            <Dialog
-                                title={this.props.modalTitle}
-                                actions={[
-                                    <FlatButton
-                                        label="Ok"
-                                        primary={true}
-                                        keyboardFocused={true}
-                                        onTouchTap={this.closeModalHelper}
-                                    />,
-                                ]}
-                                modal={false}
-                                open={this.props.modalOpen}
-                                onRequestClose={this.closeModalHelper}
-                            >
-                                {this.props.modalText}
-                            </Dialog>
+                <div className={"container-fluid " + this.state.muiTheme}>
+                    <div className={"row center-xs"}>
+                        <div className="col-xs-12 col-md-10 col-lg-8">
+                            <div className="box">
+                                <Dialog
+                                    title={this.props.modalTitle}
+                                    actions={[
+                                        <FlatButton
+                                            label="Ok"
+                                            primary={true}
+                                            keyboardFocused={true}
+                                            onTouchTap={this.closeModalHelper}
+                                        />,
+                                    ]}
+                                    modal={false}
+                                    open={this.props.modalOpen}
+                                    onRequestClose={this.closeModalHelper}
+                                >
+                                    {this.props.modalText}
+                                </Dialog>
 
-                            <MainAppbar
-                                setTheme={this.setTheme}
-                                user_info={this.props.user_info}
-                                updateStaticData={this.updateStaticData}
-                                logoutUser={this.logoutUser}
-                            />
+                                <MainAppbar
+                                    setTheme={this.setTheme}
+                                    user_info={this.props.user_info}
+                                    updateStaticData={this.updateStaticData}
+                                    logoutUser={this.logoutUser}
+                                />
 
-                            {mainBody}
+                                {mainBody}
+                            </div>
                         </div>
                     </div>
                 </div>

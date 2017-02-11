@@ -1,4 +1,5 @@
 import React  from 'react';
+import {connect} from "react-redux";
 import {deepPurpleA700} from 'material-ui/styles/colors';
 
 import Google from "./Google";
@@ -20,6 +21,17 @@ const styles = {
     }
 }
 
+// actions
+import {openModal, closeModal} from "../../actions/modalActions";
+
+// connect to redux
+@connect((store) => {
+    return {
+        modalText: store.modal.message,
+        modalTitle: store.modal.title,
+        modalOpen: store.modal.modalOpen,
+    };
+})
 export default class ProviderBlock extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -31,6 +43,10 @@ export default class ProviderBlock extends React.Component {
             }
         };
     };
+
+    showModal = (message, title) => {
+        this.props.dispatch(openModal(message, title));
+    }
 
     getBlockType = (type) => {
         switch (type) {
@@ -59,7 +75,9 @@ export default class ProviderBlock extends React.Component {
             <div className="col-xs-12 col-sm-6 col-md-4"
                  key={key} style={styles.block}>
                 <div className="box">
-                    <BlockType providerSite={providerSite}/>
+                    <BlockType
+                        showModal={this.showModal}
+                        providerSite={providerSite}/>
                 </div>
             </div>
         );

@@ -9,9 +9,7 @@ var SRC_DIR = path.resolve(__dirname, 'src/Resources');
 var config = {
     entry: {
         // react app js
-        "js/app": SRC_DIR + '/React/react-app.jsx',
-        // scss
-        "css/style": SRC_DIR + '/scss/index.scss',
+        "app": SRC_DIR + '/React/react-app.jsx',
     },
     output: {
         path: BUILD_DIR,

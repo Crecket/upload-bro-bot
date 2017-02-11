@@ -1,8 +1,6 @@
 import React  from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import HelpIcon from 'material-ui/svg-icons/action/help';
-import {green400, green600, blue400, blue600, red400, red600} from 'material-ui/styles/colors'
+import {blue500, lightGreenA200} from 'material-ui/styles/colors'
 
 const styles = {
     img: {
@@ -25,6 +23,7 @@ export default class ProviderBlock extends React.Component {
         let BlockBtn = (
             <RaisedButton
                 secondary={true}
+                backgroundColor={blue500}
                 href={this.props.url}
                 style={styles.button}>
                 Login
@@ -34,7 +33,7 @@ export default class ProviderBlock extends React.Component {
             // user is logged into this site
             BlockBtn = (
                 <RaisedButton
-                    backgroundColor={green400}
+                    backgroundColor={lightGreenA200}
                     style={styles.button}>
                     Logout
                 </RaisedButton>
@@ -42,7 +41,7 @@ export default class ProviderBlock extends React.Component {
         }
         return (
             <div style={styles.container}>
-                <a href={this.props.urlInfo}>
+                <a href={this.props.urlInfo} target="_blank">
                     <img style={styles.img}
                          src={this.props.img}/>
                 </a>
