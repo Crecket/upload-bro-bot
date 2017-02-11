@@ -2,6 +2,7 @@ import React  from 'react';
 
 import Google from "./Google";
 import Dropbox from "./Dropbox";
+import Imgur from "./Imgur";
 
 const styles = {
     container: {
@@ -11,6 +12,9 @@ const styles = {
         maxWidth: 150
     },
     block: {
+        marginBottom: 20
+    },
+    blocks: {
         margin: 20
     }
 }
@@ -22,13 +26,15 @@ export default class ProviderBlock extends React.Component {
     };
 
     getBlockType = (type) => {
-        console.log(type);
         switch (type) {
             case 'google':
                 return Google;
                 break;
             case 'dropbox':
                 return Dropbox;
+                break;
+            case 'imgur':
+                return Imgur;
                 break;
             default:
                 return false;
@@ -37,10 +43,11 @@ export default class ProviderBlock extends React.Component {
 
     render() {
         let finalBlocks = [];
+
+        // this.props.provider_sites['imgur'] = true;
+
         // loop through providers
         Object.keys(this.props.provider_sites).map((key) => {
-            let tempSite = this.props.provider_sites[key];
-
             // get the correct block
             let BlockType = this.getBlockType(key);
             if (!BlockType) {
@@ -50,7 +57,7 @@ export default class ProviderBlock extends React.Component {
 
             // add to the list
             finalBlocks.push((
-                <div className="col-xs-12 col-sm-8 col-md-6 col-lg-4"
+                <div className="col-xs-12 col-sm-6 col-md-4"
                      key={key} style={styles.block}>
                     <div className="box">
                         <BlockType />
@@ -60,7 +67,7 @@ export default class ProviderBlock extends React.Component {
         })
 
         return (
-            <div className="row center-xs">
+            <div className="row center-xs" style={styles.blocks}>
                 {finalBlocks}
             </div>
         );

@@ -2,6 +2,7 @@ import React from "react";
 import FlatButton from "material-ui/FlatButton";
 
 import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
+import IntroductionScreen from "../Components/IntroductionScreen";
 import NavLink from "../Helpers/NavLink";
 
 const styles = {
@@ -25,7 +26,7 @@ class Home extends React.Component {
             <div style={styles.notLoggedIn}>
                 You're not logged in. To begin, <br/>
                 <FlatButton
-                    secondary={true}
+                    secondary={true} target="_blank"
                     label="Login with Telegram"
                     href="/login/telegram"/>
             </div>
@@ -48,6 +49,7 @@ class Home extends React.Component {
 
         return (
             <div style={styles.wrapper}>
+                <IntroductionScreen/>
                 {homeDiv}
             </div>
         );

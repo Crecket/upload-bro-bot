@@ -8,11 +8,14 @@ const styles = {
         'transformStyle': 'preserve-3d'
     },
     img: {
-        maxWidth: 120,
+        // maxWidth: 120,
         maxHeight: 120
     },
     popout: {
         'transform': 'translateZ(20px)'
+    },
+    button:{
+        width: '100%'
     }
 }
 
@@ -24,20 +27,18 @@ export default class ProviderBlock extends React.Component {
 
     render() {
         return (
-            <div style={styles.container} class="your-element">
-                {/*<a href={this.props.url} target="_blank">*/}
+            <div style={styles.container}>
                 <img style={styles.img}
                      src={this.props.img}/>
                 <br/>
                 <RaisedButton
                     primary={true}
                     href={this.props.url}
-                    style={styles.popout}>
+                    style={Object.assign(styles.popout, styles.button)}>
                     <div >
                         {this.props.title}
                     </div>
                 </RaisedButton>
-                {/*</a>*/}
             </div>
         );
     };

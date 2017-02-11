@@ -35,11 +35,12 @@ class MainAppbar extends React.Component {
         var TopRightBtn = (
             <FlatButton secondary={true} label="Login"
                         labelPosition="before" icon={<ExitToAppIcon/>}
-                        containerElement={<NavLink to="/login"/>}/>
+                        href="/login/telegram"/>
         );
         if (this.props.user_info) {
             TopRightBtn = (
                 <FlatButton label="" labelPosition="before"
+                            onClick={this.props.logoutUser}
                             icon={<PowerOffIcon/>}/>
             )
         }

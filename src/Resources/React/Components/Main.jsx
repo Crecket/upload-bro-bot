@@ -86,6 +86,11 @@ class Main extends React.Component {
         this.props.dispatch(userUpdate());
     };
 
+    // update our static data
+    logoutUser = () => {
+        this.props.dispatch(userLogout());
+    };
+
     render() {
 
         // get the children pages and give them some default props
@@ -131,6 +136,7 @@ class Main extends React.Component {
                                 setTheme={this.setTheme}
                                 user_info={this.props.user_info}
                                 updateStaticData={this.updateStaticData}
+                                logoutUser={this.logoutUser}
                             />
 
                             {mainBody}
