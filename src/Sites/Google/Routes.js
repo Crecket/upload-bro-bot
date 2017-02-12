@@ -114,6 +114,7 @@ module.exports = (app, passport, uploadApp) => {
                     current_provider_sites.google.expiry_date = tokens.expiry_date;
                     current_provider_sites.google.access_token = tokens.access_token;
                     current_provider_sites.google.id_token = tokens.id_token;
+                    current_provider_sites.google.added = new Date();
                 } else {
                     // add new provider
                     current_provider_sites.google = {
@@ -121,6 +122,7 @@ module.exports = (app, passport, uploadApp) => {
                         access_token: tokens.access_token,
                         refresh_token: tokens.refresh_token,
                         id_token: tokens.id_token,
+                        added: new Date()
                     }
                 }
 

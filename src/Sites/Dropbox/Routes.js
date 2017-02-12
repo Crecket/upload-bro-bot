@@ -55,6 +55,7 @@ module.exports = (app, passport, uploadApp) => {
                 access_token: access_token,
                 token_type: token_type,
                 uid: uid,
+                added: new Date(),
                 account_id: account_id,
             }
 

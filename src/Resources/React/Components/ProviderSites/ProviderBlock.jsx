@@ -23,7 +23,6 @@ export default class ProviderBlock extends React.Component {
         let BlockBtn = (
             <RaisedButton
                 secondary={true}
-                backgroundColor={blue500}
                 href={this.props.url}
                 style={styles.button}>
                 Login
@@ -33,7 +32,7 @@ export default class ProviderBlock extends React.Component {
             // user is logged into this site
             BlockBtn = (
                 <RaisedButton
-                    backgroundColor={lightGreenA200}
+                    primary={true}
                     style={styles.button}>
                     Logout
                 </RaisedButton>
