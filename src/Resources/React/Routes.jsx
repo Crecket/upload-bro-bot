@@ -3,10 +3,10 @@ import {Route, IndexRoute} from 'react-router';
 
 import Main from './Components/Main';
 import Home from './Pages/Home';
-import Login from './Pages/Login';
 import NotFound from './Pages/NotFound';
 import DropboxLoginCallback from './Pages/DropboxLoginCallback';
-import GoogleLoginCallback from './Pages/GoogleLoginCallback';
+import ProviderRemove from './Pages/ProviderRemove';
+import LoginCallback from './Pages/LoginCallback';
 
 export default (
     <Route path="/" component={Main}>
@@ -14,8 +14,8 @@ export default (
         <IndexRoute component={Home}/>
 
         {/* Routes*/}
-        <Route path='/login' component={Login}/>
-        <Route path='/login/google/callback' component={GoogleLoginCallback}/>
+        <Route path='/login' component={LoginCallback}/>
+        <Route path='/remove/:type' component={ProviderRemove}/>
         <Route path='/login/dropbox/callback' component={DropboxLoginCallback}/>
 
         {/* fall back route, if no others are found show 404*/}

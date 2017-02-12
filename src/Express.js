@@ -19,6 +19,7 @@ const Logger = require('./Logger');
 
 // general routes
 const GoogleRoutes = require('./Sites/Google/Routes');
+const ImgurRoutes = require('./Sites/Imgur/Routes');
 const DropboxRoutes = require('./Sites/Dropbox/Routes');
 const TelegramRoutes = require('./Routes/TelegramRoutes');
 
@@ -130,9 +131,10 @@ module.exports = function (uploadApp) {
 
     app.use(cookieParser());
     app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
     app.use(session({
         name: "SESS_ID",
-        secret: 'a random secret value',
+        secret: process.env.EXPRESS_SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
         cookie: {secure: false},
@@ -151,7 +153,7 @@ module.exports = function (uploadApp) {
     app.use(express.static(__dirname + '/../public'));
 
     // routes
-    app.get(['/', '/failed/:type'], (req, res) => {
+    app.get(['/', '/remove/:type'], (req, res) => {
         res.render('index', {});
     })
 
@@ -164,6 +166,7 @@ module.exports = function (uploadApp) {
     TelegramRoutes(app, passport, uploadApp);
     GoogleRoutes(app, passport, uploadApp);
     DropboxRoutes(app, passport, uploadApp);
+    ImgurRoutes(app, passport, uploadApp);
 
     // GET /logout
     app.get('/logout', function (req, res) {

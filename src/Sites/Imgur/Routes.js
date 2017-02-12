@@ -2,13 +2,13 @@ var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
 
-var GoogleHelperObj = require('./Helper');
+var ImgurHelperObj = require('./Helper');
 var UserHelperObj = require('../../UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {
-    var db = uploadApp._Db;
-    var GoogleHelper = new GoogleHelperObj(uploadApp);
-    var UserHelper = new UserHelperObj(uploadApp);
+    let db = uploadApp._Db;
+    let ImgurHelper = new ImgurHelperObj(uploadApp);
+    let UserHelper = new UserHelperObj(uploadApp);
 
     // returns a valid oauth url for the client
     app.get('/login/imgur', (request, response) => {
@@ -16,15 +16,7 @@ module.exports = (app, passport, uploadApp) => {
             // not logged in
             response.redirect('/');
         } else {
-            var urlOptions = {
-                access_type: 'offline',
-                approval_prompt: 'force',
-                scope: [
-                    'https://www.googleapis.com/auth/userinfo.profile',
-                    'https://www.googleapis.com/auth/drive.appfolder',
-                    'https://www.googleapis.com/auth/drive.file'
-                ]
-            };
+
             var redirectToUrl = true;
 
             // check if we already have data for imgur
@@ -83,56 +75,56 @@ module.exports = (app, passport, uploadApp) => {
 
             if (redirectToUrl) {
                 // create the url
-                var url = GoogleHelper.createOauthClient()
-                    .generateAuthUrl(urlOptions);
+                var url = ImgurHelper.getAuthorizationUrl('code');
 
                 // redirect to it
-                // response.json(url);
                 response.redirect(url);
             }
         }
     });
 
     // handles the oauth callback
-    app.get('/login/google/callback', function (request, response) {
+    app.get('/login/imgur/callback', function (request, response) {
         var code = request.query.code;
 
-        return response.json(request.query);
+        let resultRoute = "/login#imgur";
 
         // make sure we have a code and we're logged in
         if (!code || !request.user) {
-            response.redirect('/');
+            response.redirect(resultRoute);
             return;
         } else {
 
+            ImgurHelper.requestAccessToken(code)
+                .then((result) => {
+                    let responseData = result.data;
 
-            // // get collection and current sites
-            // var current_provider_sites = request.user.provider_sites;
-            //
-            // if (current_provider_sites['google']) {
-            //     // already exists, update existing values
-            //     current_provider_sites.imgur.expiry_date = tokens.expiry_date;
-            //     current_provider_sites.imgur.access_token = tokens.access_token;
-            //     current_provider_sites.imgur.id_token = tokens.id_token;
-            // } else {
-            //     // add new provider
-            //     current_provider_sites.imgur = {
-            //         expiry_date: tokens.expiry_date,
-            //         access_token: tokens.access_token,
-            //         refresh_token: tokens.refresh_token,
-            //         id_token: tokens.id_token,
-            //     }
-            // }
-            //
-            // // update the tokens for this user
-            // UserHelper.updateUserTokens(request.user, current_provider_sites)
-            //     .then((result) => {
-            //         response.redirect('/');
-            //     })
-            //     .catch((err) => {
-            //         console.log(err);
-            //         response.redirect('/');
-            //     });
+                    // get collection and current sites
+                    var current_provider_sites = request.user.provider_sites;
+
+                    // set new data
+                    current_provider_sites.imgur = {
+                        access_token: responseData.access_token,
+                        expires_in: responseData.expires_in,
+                        token_type: responseData.token_type,
+                        scope: responseData.scope,
+                        refresh_token: responseData.refresh_token,
+                        account_id: responseData.account_id,
+                        account_username: responseData.account_username,
+                    };
+
+                    // update the tokens for this user
+                    UserHelper.updateUserTokens(request.user, current_provider_sites)
+                        .then((result) => {
+                            response.redirect(resultRoute);
+                        })
+                        .catch((err) => {
+                            response.redirect(resultRoute);
+                        });
+                })
+                .catch((err) => {
+                    response.redirect(resultRoute);
+                });
         }
     });
 

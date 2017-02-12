@@ -13,5 +13,11 @@ export default {
             hashParams[d(e[1])] = d(e[2]);
 
         return hashParams;
+    },
+    ucfirst: (str) => {
+        str += ''
+        var f = str.charAt(0)
+            .toUpperCase()
+        return f + str.substr(1)
     }
 };

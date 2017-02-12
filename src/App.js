@@ -31,7 +31,6 @@ var LoginCommandObj = requireFix('/src/Commands/Login');
 var DropboxSiteObj = requireFix('/src/Sites/Dropbox');
 var GoogleSiteObj = requireFix('/src/Sites/Google');
 var ImgurSiteObj = requireFix('/src/Sites/Imgur');
-var OneDriveObj = requireFix('/src/Sites/OneDrive');
 
 // queries
 var RefreshSitesObj = requireFix('/src/Queries/RefreshSites');

@@ -18,13 +18,12 @@ module.exports = (app, passport, uploadApp) => {
             TelegramMiddleware(req, res, next);
         }
     });
+
     app.get('/login/telegram/callback', passport.authenticate('telegram', {
-            session: true,
-            failureRedirect: '/failed/telegram'
+            session: true
         }), (req, res) => {
             res.redirect('/');
         }
     );
-
 
 }

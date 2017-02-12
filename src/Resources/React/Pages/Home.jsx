@@ -26,7 +26,7 @@ class Home extends React.Component {
             <div style={styles.notLoggedIn}>
                 You're not logged in. To begin, <br/>
                 <FlatButton
-                    secondary={true} target="_blank"
+                    secondary={true}
                     label="Login with Telegram"
                     href="/login/telegram"/>
             </div>
@@ -35,7 +35,7 @@ class Home extends React.Component {
             console.log(this.props.user_info);
             homeDiv = (
                 <div>
-                    <div className="row">
+                    <div className="row center-xs">
                         <div className="box">
                             You're logged in as:<br/>
                             {this.props.user_info.username}<br/>
