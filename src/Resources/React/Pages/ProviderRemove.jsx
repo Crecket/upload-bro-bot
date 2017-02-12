@@ -8,6 +8,7 @@ import {red500, red800, green800} from 'material-ui/styles/colors';
 import {browserHistory}  from 'react-router';
 
 import Utils from '../Helpers/Utils';
+import NavLink from '../Helpers/NavLink';
 import axios from 'axios';
 
 const styles = {
@@ -65,7 +66,7 @@ class ProviderRemove extends React.Component {
                 setTimeout(() => {
                     // send home after waiting a while
                     browserHistory.push('/');
-                }, 1000);
+                }, 2000);
             })
             .catch((error) => {
                 console.error(error);
@@ -75,7 +76,7 @@ class ProviderRemove extends React.Component {
                 setTimeout(() => {
                     // send home after waiting a while
                     browserHistory.push('/');
-                }, 1000);
+                }, 2000);
             })
     }
 
@@ -95,7 +96,8 @@ class ProviderRemove extends React.Component {
                 </div>
 
                 <div className="col-xs-6 col-md-4">
-                    <RaisedButton primary={true}>
+                    <RaisedButton primary={true}
+                                  containerElement={<NavLink to="/"/>}>
                         Cancel
                     </RaisedButton>
                 </div>

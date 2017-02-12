@@ -2,6 +2,9 @@ import React  from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import {blue500, lightGreenA200} from 'material-ui/styles/colors'
 
+import Utils from '../../Helpers/Utils';
+import NavLink from '../../Helpers/NavLink';
+
 const styles = {
     img: {
         // maxWidth: 120,
@@ -33,8 +36,9 @@ export default class ProviderBlock extends React.Component {
             BlockBtn = (
                 <RaisedButton
                     primary={true}
+                    containerElement={<NavLink to={"/remove/" + this.props.name}/>}
                     style={styles.button}>
-                    Logout
+                    Remove {Utils.ucfirst(this.props.name)}
                 </RaisedButton>
             )
         }

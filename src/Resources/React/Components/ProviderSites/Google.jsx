@@ -13,6 +13,7 @@ export default class Google extends React.Component {
             <ProviderBlock
                 providerSite={this.props.providerSite}
                 url="/login/google"
+                name="google"
                 urlInfo="https://drive.google.com/"
                 img="/assets/img/google.png"
                 title="Google Drive"/>

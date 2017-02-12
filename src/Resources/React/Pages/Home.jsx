@@ -49,7 +49,7 @@ class Home extends React.Component {
 
         return (
             <div style={styles.wrapper}>
-                <IntroductionScreen/>
+                {/*<IntroductionScreen/>*/}
                 {homeDiv}
             </div>
         );

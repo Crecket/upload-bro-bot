@@ -13,6 +13,7 @@ export default class Dropbox extends React.Component {
             <ProviderBlock
                 providerSite={this.props.providerSite}
                 url="/login/dropbox"
+                name="dropbox"
                 urlInfo="https://www.dropbox.com/"
                 img="/assets/img/dropbox.png"
                 title="Dropbox"/>
