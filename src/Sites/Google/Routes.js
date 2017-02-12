@@ -95,14 +95,16 @@ module.exports = (app, passport, uploadApp) => {
     app.get('/login/google/callback', function (request, response) {
         var code = request.query.code;
 
+        let resultRoute = "/login/google";
+
         // make sure we have a code and we're logged in
         if (!code || !request.user) {
-            response.redirect('/');
+            response.redirect(resultRoute);
             return;
         } else {
             GoogleHelper.createOauthClient().getToken(code, function (err, tokens) {
                 if (err) {
-                    response.redirect('/');
+                    response.redirect(resultRoute);
                     return;
                 }
 
@@ -129,11 +131,10 @@ module.exports = (app, passport, uploadApp) => {
                 // update the tokens for this user
                 UserHelper.updateUserTokens(request.user, current_provider_sites)
                     .then((result) => {
-                        response.redirect('/');
+                        response.redirect(resultRoute);
                     })
                     .catch((err) => {
-                        console.log(err);
-                        response.redirect('/');
+                        response.redirect(resultRoute);
                     });
             });
         }

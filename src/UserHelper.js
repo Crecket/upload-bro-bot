@@ -1,4 +1,3 @@
-
 module.exports = class UserHelper {
     constructor(app) {
         this._app = app;
@@ -19,7 +18,9 @@ module.exports = class UserHelper {
                 $set: {provider_sites: user.provider_sites}
             }).then((result) => {
                 resolve(result);
-            }).catch(reject);
+            }).catch((err) => {
+                reject(err);
+            });
         })
     }
 

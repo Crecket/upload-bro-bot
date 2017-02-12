@@ -28,7 +28,7 @@ export default class ProviderBlock extends React.Component {
                 secondary={true}
                 href={this.props.url}
                 style={styles.button}>
-                Login
+                Add {Utils.ucfirst(this.props.name)}
             </RaisedButton>
         );
         if (this.props.providerSite) {

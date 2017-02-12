@@ -57,7 +57,7 @@ class ProviderRemove extends React.Component {
         let providerType = this.props.params.type;
 
         // send our hashtag data
-        axios.post("/remove/" + providerType + "")
+        axios.post("/remove/" + providerType)
             .then((result) => {
                 this.setState({
                     loadingState: "removed"

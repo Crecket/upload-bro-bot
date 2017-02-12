@@ -87,7 +87,7 @@ module.exports = (app, passport, uploadApp) => {
     app.get('/login/imgur/callback', function (request, response) {
         var code = request.query.code;
 
-        let resultRoute = "/login#imgur";
+        let resultRoute = "/login/imgur";
 
         // make sure we have a code and we're logged in
         if (!code || !request.user) {

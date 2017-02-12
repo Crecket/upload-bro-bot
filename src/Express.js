@@ -22,6 +22,7 @@ const GoogleRoutes = require('./Sites/Google/Routes');
 const ImgurRoutes = require('./Sites/Imgur/Routes');
 const DropboxRoutes = require('./Sites/Dropbox/Routes');
 const TelegramRoutes = require('./Routes/TelegramRoutes');
+const GeneralRoutes = require('./Routes/GeneralRoutes');
 
 // get the config
 const mongo_express_config = requireFix('mongo_express_config.js');
@@ -152,27 +153,11 @@ module.exports = function (uploadApp) {
     // serve static files
     app.use(express.static(__dirname + '/../public'));
 
-    // routes
-    app.get(['/', '/remove/:type'], (req, res) => {
-        res.render('index', {});
-    })
-
-    // fetch user info from api
-    app.post('/get_user', (req, res) => {
-        let user_info = (req.user) ? req.user : false;
-        res.json(user_info);
-    });
-
     TelegramRoutes(app, passport, uploadApp);
+    GeneralRoutes(app, passport, uploadApp);
     GoogleRoutes(app, passport, uploadApp);
     DropboxRoutes(app, passport, uploadApp);
     ImgurRoutes(app, passport, uploadApp);
-
-    // GET /logout
-    app.get('/logout', function (req, res) {
-        req.logout();
-        res.redirect('/');
-    });
 
     // Debug errors
     app.use(function (err, req, res, next) {
