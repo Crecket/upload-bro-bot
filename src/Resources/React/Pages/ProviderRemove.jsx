@@ -63,6 +63,9 @@ class ProviderRemove extends React.Component {
                     loadingState: "removed"
                 });
 
+                // update the current user
+                this.props.updateUser();
+
                 setTimeout(() => {
                     // send home after waiting a while
                     browserHistory.push('/');

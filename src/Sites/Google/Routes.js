@@ -95,7 +95,7 @@ module.exports = (app, passport, uploadApp) => {
     app.get('/login/google/callback', function (request, response) {
         var code = request.query.code;
 
-        let resultRoute = "/login/google";
+        let resultRoute = "/new/google";
 
         // make sure we have a code and we're logged in
         if (!code || !request.user) {

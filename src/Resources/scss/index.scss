@@ -6,6 +6,10 @@ body {
   font-size: 18px;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   display: flex;
   min-height: 100vh;
@@ -14,16 +18,10 @@ body {
   font-weight: 400;
 }
 
-.box-row {
-  margin-bottom: 1rem;
-}
-
-.word-break {
-  word-break: break-all;
-}
-
-.monospace {
-  font-family: monospace !important;
+.wrap {
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .container-fluid {
@@ -37,8 +35,14 @@ body {
   margin-left: auto;
 }
 
-.wrap {
-  box-sizing: border-box;
-  max-width: 1200px;
-  margin: 0 auto;
+.box-row {
+  margin-bottom: 1rem;
+}
+
+.word-break {
+  word-break: break-all;
+}
+
+.monospace {
+  font-family: monospace !important;
 }

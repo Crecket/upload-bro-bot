@@ -2,7 +2,8 @@ import React  from 'react';
 
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
-import PowerOffIcon from 'material-ui/svg-icons/action/power-settings-new';
+import IconButton from 'material-ui/IconButton';
+import CloudUpload from 'material-ui/svg-icons/file/cloud-upload';
 import ExitToAppIcon from 'material-ui/svg-icons/action/exit-to-app';
 
 const styles = {
@@ -16,6 +17,8 @@ const styles = {
         marginLeft: '4px'
     }
 };
+
+// TODO clickable icon/title to home
 
 class MainAppbar extends React.Component {
     constructor(props, context) {
@@ -43,7 +46,7 @@ class MainAppbar extends React.Component {
             <AppBar
                 title="UploadBroBot"
                 style={styles.appbar}
-                iconElementLeft={<img style={styles.customIcon} src="/assets/img/logo-64.png"/>}
+                iconElementLeft={<IconButton><CloudUpload /></IconButton>}
                 iconElementRight={TopRightBtn}
             />
         );

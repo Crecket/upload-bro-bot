@@ -2,7 +2,7 @@ module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;
 
     // routes
-    app.get(['/', '/remove/:type', '/login/:type'], (req, res) => {
+    app.get(['/', '/remove/:type', '/new/:type'], (req, res) => {
         res.render('index', {});
     })
 

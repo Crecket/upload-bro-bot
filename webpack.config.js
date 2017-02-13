@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+// var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'public/assets');
 var SRC_DIR = path.resolve(__dirname, 'src/Resources');
