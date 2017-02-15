@@ -23,10 +23,10 @@ module.exports = (app, passport, uploadApp) => {
 
             // update the tokens for this user
             uploadApp._UserHelper.updateUserTokens(request.user)
-                .then((result) => {
+                .then(result => {
                     response.json(true);
                 })
-                .catch((err) => {
+                .catch(err => {
                     response.json(false);
                 });
         } else {
