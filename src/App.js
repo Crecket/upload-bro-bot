@@ -203,12 +203,13 @@ module.exports = class DropboxApp {
      * @returns {Promise.<T>}
      */
     eventListeners() {
+        const fn = this;
         // file messages
-        this._TelegramBot.on('audio', this._EventHandler.messageFileListener.bind(this));
-        this._TelegramBot.on('video', this._EventHandler.messageFileListener.bind(this));
-        this._TelegramBot.on('voice', this._EventHandler.messageFileListener.bind(this));
-        this._TelegramBot.on('photo', this._EventHandler.messageFileListener.bind(this));
-        this._TelegramBot.on('document', this._EventHandler.messageFileListener.bind(this));
+        this._TelegramBot.on('audio', (msg) => fn._EventHandler.messageFileListener(msg));
+        this._TelegramBot.on('video', (msg) => fn._EventHandler.messageFileListener(msg));
+        this._TelegramBot.on('voice', (msg) => fn._EventHandler.messageFileListener(msg));
+        this._TelegramBot.on('photo', (msg) => fn._EventHandler.messageFileListener(msg));
+        this._TelegramBot.on('document', (msg) => fn._EventHandler.messageFileListener(msg));
 
         this._TelegramBot.on('group_chat_created', (msg) => {
             console.log('group_chat_created', msg);

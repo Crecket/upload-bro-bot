@@ -107,7 +107,7 @@ module.exports = class EventHandlers extends HelperInterface {
                 "we currently support up to " + filesize(52428800);
 
             // send the message
-            this._TelegramBot.sendMessage(msg.chat.id, message, {
+            this._app._TelegramBot.sendMessage(msg.chat.id, message, {
                 parse_mode: "HTML",
                 disable_notification: true
             }).then((resulting_message) => {
@@ -115,10 +115,8 @@ module.exports = class EventHandlers extends HelperInterface {
             return;
         }
 
-        console.log(this._HelperInterface);
-
         // get the user info
-        this._UserHelper.getUser(msg.from.id)
+        this._app._UserHelper.getUser(msg.from.id)
             .then((user_info) => {
                 if (user_info) {
 
@@ -127,7 +125,7 @@ module.exports = class EventHandlers extends HelperInterface {
 
                     if (buttonSiteList.length > 0) {
                         // send the keyboard
-                        this._TelegramBot.sendMessage(msg.from.id,
+                        this._app._TelegramBot.sendMessage(msg.from.id,
                             "Do you want to upload this file?", {
                                 reply_markup: {
                                     inline_keyboard: [
@@ -144,7 +142,7 @@ module.exports = class EventHandlers extends HelperInterface {
                                 var storeKey = "upload_" + resulting_message.chat.id +
                                     "-" + resulting_message.message_id;
                                 // store the file
-                                this._Cache.set(storeKey, {
+                                this._app._Cache.set(storeKey, {
                                         chat_id: resulting_message.chat.id,
                                         message_id: resulting_message.message_id,
                                         file_name: file.file_name,
@@ -157,9 +155,9 @@ module.exports = class EventHandlers extends HelperInterface {
                             })
                             .catch(console.error);
                     } else {
-                        var message = "Your account is registered in our system but you havn't connected " +
+                        var message = "Your account is registered in our system but you haven't connected " +
                             "any services yet! You can use the <a href='/login'>/login</a> command to find out how.";
-                        this._TelegramBot.sendMessage(msg.chat.id, message, {
+                        this._app._TelegramBot.sendMessage(msg.chat.id, message, {
                             parse_mode: "HTML",
                             disable_notification: true
                         }).then((resulting_message) => {
