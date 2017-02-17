@@ -100,11 +100,11 @@ module.exports = class EventHandlers extends HelperInterface {
             return;
         }
 
-        var maxFileSize = 52428800;
+        const maxFileSize = 52428800;
         if (file.file_size > maxFileSize) {
             // bigger then 50 mb message
             var message = "The file is to big (" + filesize(file.file_size) + "), " +
-                "we currently support up to " + filesize(52428800);
+                "we currently support up to " + filesize(maxFileSize);
 
             // send the message
             this._app._TelegramBot.sendMessage(msg.chat.id, message, {
