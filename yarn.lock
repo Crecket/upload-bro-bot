@@ -1686,7 +1686,14 @@ cssesc@^0.1.0:
     postcss-value-parser "^3.2.3"
     postcss-zindex "^2.0.1"
 
-csso@~2.3.1:
+csso-loader@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/csso-loader/-/csso-loader-0.2.1.tgz#2a35d3c5f524a6b86ea4722060a3abe3fed40e64"
+  dependencies:
+    csso "^2.3.0"
+    loader-utils "^0.2.16"
+
+csso@^2.3.0, csso@~2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/csso/-/csso-2.3.1.tgz#4f8d91a156f2f1c2aebb40b8fb1b5eb83d94d3b9"
   dependencies:
@@ -5799,7 +5806,7 @@ superagent@^1.8.3:
     readable-stream "1.0.27-1"
     reduce-component "1.0.1"
 
-supports-color@3.1.2:
+supports-color@3.1.2, supports-color@^3.1.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.1.2.tgz#72a262894d9d408b956ca05ff37b2ed8a6e2a2d5"
   dependencies:
@@ -5809,7 +5816,7 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
-supports-color@^3.1.0, supports-color@^3.2.3:
+supports-color@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:

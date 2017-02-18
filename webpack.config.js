@@ -1,6 +1,6 @@
-var webpack = require('webpack');
-var path = require('path');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 // var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'public/assets');
@@ -58,11 +58,20 @@ var config = {
                 loader: 'json-loader'
             }, {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+                loader: ExtractTextPlugin.extract(
+                    "style-loader",
+                    "css-loader?sourceMap",
+                    "csso-loader?sourceMap"
+                )
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap", "sass-loader?sourceMap")
+                loader: ExtractTextPlugin.extract(
+                    "style-loader",
+                    "css-loader?sourceMap",
+                    "sass-loader?sourceMap",
+                    "csso-loader?sourceMap"
+                )
             }
         ]
     }
