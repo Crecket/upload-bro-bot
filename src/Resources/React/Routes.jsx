@@ -7,7 +7,6 @@ import NotFound from './Pages/NotFound';
 import DropboxLoginCallback from './Pages/DropboxLoginCallback';
 import ProviderRemove from './Pages/ProviderRemove';
 import ProviderLogin from './Pages/ProviderLogin';
-import LoginCallback from './Pages/LoginCallback';
 
 export default (
     <Route path="/" component={Main}>
@@ -15,7 +14,6 @@ export default (
         <IndexRoute component={Home}/>
 
         {/* Routes*/}
-        <Route path='/login' component={LoginCallback}/>
         <Route path='/new/:type' component={ProviderLogin}/>
         <Route path='/remove/:type' component={ProviderRemove}/>
         <Route path='/login/dropbox/callback' component={DropboxLoginCallback}/>

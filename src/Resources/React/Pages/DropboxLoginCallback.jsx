@@ -57,6 +57,9 @@ class DropboxLoginCallback extends React.Component {
                     loading: false
                 });
 
+                // update the current user
+                this.props.updateUser();
+
                 setTimeout(() => {
                     // send home after waiting a while
                     browserHistory.push('/');

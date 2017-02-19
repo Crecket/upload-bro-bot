@@ -58,11 +58,11 @@ module.exports = class EventHandlers extends HelperInterface {
      *
      * @param msg
      */
-    messageFileListener(msg) {
+    messageFileListener(msg, type) {
         var file = false;
 
         // get file info
-        if (msg.photo) {
+        if (type === "photo") {
             // get the highest quality picture
             file = msg.photo[msg.photo.length - 1];
             if (!file.file_name) {
@@ -73,27 +73,32 @@ module.exports = class EventHandlers extends HelperInterface {
                 file.file_name = file.file_id + ext;
             }
             file.file_type = "photo";
-        } else if (msg.document) {
+
+        } else if (type === "document") {
             file = msg.document;
             file.file_type = "document";
-        } else if (msg.video) {
+
+        } else if (type === "video") {
             file = msg.video;
             if (!file.file_name) {
                 file.file_name = msg.voice.file_id + ".mp4";
             }
             file.file_type = "video";
-        } else if (msg.audio) {
+
+        } else if (type === "audio") {
             file = msg.audio;
             if (!file.file_name) {
                 file.file_name = msg.audio.file_id + "." + mime.extension(file.mime_type);
             }
             file.file_type = "audio";
-        } else if (msg.voice) {
+
+        } else if (type === "voice") {
             file = msg.audio;
             if (!file.file_name) {
                 file.file_name = msg.voice.file_id + "." + mime.extension(file.mime_type);
             }
             file.file_type = "voice";
+
         } else {
             // invalid file type
             console.log(file);

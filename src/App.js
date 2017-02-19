@@ -1,45 +1,50 @@
-var TelegramBot = require('node-telegram-bot-api');
-var MongoClient = require('mongodb').MongoClient;
-var fs = require('fs');
-var del = require('del');
-var path = require('path');
-var Cacheman = require('cacheman');
-var MongoDbEngine = require('cacheman-mongo');
-var requireFix = require('app-root-path').require;
+"use strict";
+
+let TelegramBot = require('node-telegram-bot-api');
+let MongoClient = require('mongodb').MongoClient;
+let fs = require('fs');
+let del = require('del');
+let path = require('path');
+let Cacheman = require('cacheman');
+let MongoDbEngine = require('cacheman-mongo');
+let requireFix = require('app-root-path').require;
 
 // utilities
-var Logger = requireFix('/src/Logger');
-var Utils = requireFix('/src/Utils');
+let Logger = requireFix('/src/Logger');
+let Utils = requireFix('/src/Utils');
 
 // express server
-var Express = requireFix('/src/Express');
+let Express = requireFix('/src/Express');
 
 // handlers and other helpers
-var CommandHandler = requireFix('/src/Handlers/CommandHandler');
-var SiteHandler = requireFix('/src/Handlers/SiteHandler');
-var QueryHandler = requireFix('/src/Handlers/QueryHandler');
-var EventHandlersObj = requireFix('/src/Handlers/EventHandler');
-var InlineQueryHandlerObj = requireFix('/src/Handlers/InlineQueryHandler');
-var UserHelperObj = requireFix('/src/UserHelper');
+let CommandHandler = requireFix('/src/Handlers/CommandHandler');
+let SiteHandler = requireFix('/src/Handlers/SiteHandler');
+let QueryHandler = requireFix('/src/Handlers/QueryHandler');
+let EventHandlersObj = requireFix('/src/Handlers/EventHandler');
+let InlineQueryHandlerObj = requireFix('/src/Handlers/InlineQueryHandler');
+let UserHelperObj = requireFix('/src/UserHelper');
 
 // commands
-var HelpCommandObj = requireFix('/src/Commands/Help');
-var StartCommandObj = requireFix('/src/Commands/Start');
-var LoginCommandObj = requireFix('/src/Commands/Login');
+let HelpCommandObj = requireFix('/src/Commands/Help');
+let StartCommandObj = requireFix('/src/Commands/Start');
+let LoginCommandObj = requireFix('/src/Commands/Login');
 
 // sites
-var DropboxSiteObj = requireFix('/src/Sites/Dropbox');
-var GoogleSiteObj = requireFix('/src/Sites/Google');
-var ImgurSiteObj = requireFix('/src/Sites/Imgur');
+let DropboxSiteObj = requireFix('/src/Sites/Dropbox');
+let GoogleSiteObj = requireFix('/src/Sites/Google');
+let ImgurSiteObj = requireFix('/src/Sites/Imgur');
 
 // queries
-var RefreshSitesObj = requireFix('/src/Queries/RefreshSites');
-var ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
+let RefreshSitesObj = requireFix('/src/Queries/RefreshSites');
+let ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
 
 // event handlers
 
 module.exports = class DropboxApp {
     constructor(token) {
+
+        // create botan sdk helper
+        this._Botan = require('botanio')(process.env.BOTAN_API_TOKEN);
 
         // Create a new blackjack bot
         this._TelegramBot = new TelegramBot(token, {polling: true});
@@ -204,24 +209,38 @@ module.exports = class DropboxApp {
     eventListeners() {
         const fn = this;
         // file messages
-        this._TelegramBot.on('audio', (msg) => fn._EventHandler.messageFileListener(msg));
-        this._TelegramBot.on('video', (msg) => fn._EventHandler.messageFileListener(msg));
-        this._TelegramBot.on('voice', (msg) => fn._EventHandler.messageFileListener(msg));
-        this._TelegramBot.on('photo', (msg) => fn._EventHandler.messageFileListener(msg));
-        this._TelegramBot.on('document', (msg) => fn._EventHandler.messageFileListener(msg));
+        this._TelegramBot.on('audio', (msg) => {
+            fn._EventHandler.messageFileListener(msg, 'audio');
+        });
+        this._TelegramBot.on('video', (msg) => {
+            fn._EventHandler.messageFileListener(msg, 'video');
+        });
+        this._TelegramBot.on('voice', (msg) => {
+            fn._EventHandler.messageFileListener(msg, 'voice');
+        });
+        this._TelegramBot.on('photo', (msg) => {
+            fn._EventHandler.messageFileListener(msg, 'photo');
+        });
+        this._TelegramBot.on('document', (msg) => {
+            fn._EventHandler.messageFileListener(msg, 'document');
+        });
 
         this._TelegramBot.on('group_chat_created', (msg) => {
             console.log('group_chat_created', msg);
-        })
+        });
         this._TelegramBot.on('message', (msg) => {
             console.log('message', msg);
-        })
+        });
 
         // callback query listener
-        this._TelegramBot.on('callback_query', this._EventHandler.callbackQuery.bind(this));
+        this._TelegramBot.on('callback_query', (msg) => {
+            fn._EventHandler.callbackQuery(msg);
+        });
 
         // inline query search event
-        this._TelegramBot.on('inline_query', this._EventHandler.inlineQuery.bind(this));
+        this._TelegramBot.on('inline_query', (msg) => {
+            fn._EventHandler.inlineQuery(msg);
+        });
 
         return Promise.resolve();
 
