@@ -45,12 +45,30 @@ module.exports = class Dropbox extends SiteInteface {
     }
 
     /**
+     * the site's key
+     *
+     * @returns {string}
+     */
+    get key() {
+        return "dropbox";
+    }
+
+    /**
      * the main url for this service
      *
      * @returns {string}
      */
     get url(){
         return "https://www.dropbox.com";
+    }
+
+    /**
+     * the logo url
+     *
+     * @returns {string}
+     */
+    get logoUrl() {
+        return "/assets/img/dropbox.png";
     }
 }
 

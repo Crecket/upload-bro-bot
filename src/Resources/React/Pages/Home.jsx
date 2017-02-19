@@ -32,7 +32,6 @@ class Home extends React.Component {
             </div>
         );
         if (this.props.user_info) {
-            console.log(this.props.user_info);
             homeDiv = (
                 <div>
                     <div className="row center-xs">
@@ -42,7 +41,10 @@ class Home extends React.Component {
                             {this.props.user_info.first_name} {this.props.user_info.last_name}
                         </div>
                     </div>
-                    <ProviderBlocks provider_sites={this.props.user_info.provider_sites}/>
+                    <ProviderBlocks
+                        provider_sites={this.props.user_info.provider_sites}
+                        provider_sites_info={this.props.sites}
+                    />
                 </div>
             );
         }

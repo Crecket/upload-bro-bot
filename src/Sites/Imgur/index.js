@@ -23,7 +23,7 @@ module.exports = class Imgur extends SiteInteface {
      * @returns {string}
      */
     get name() {
-        return 'Imgur';
+        return "Imgur";
     }
 
     /**
@@ -31,8 +31,8 @@ module.exports = class Imgur extends SiteInteface {
      *
      * @returns {string}
      */
-    get title(){
-        return 'Imgur';
+    get title() {
+        return "Imgur";
     }
 
     /**
@@ -40,8 +40,17 @@ module.exports = class Imgur extends SiteInteface {
      *
      * @returns {string}
      */
-    get description(){
-        return 'The most awesome images on the Internet';
+    get description() {
+        return "The most awesome images on the Internet";
+    }
+
+    /**
+     * the site's key
+     *
+     * @returns {string}
+     */
+    get key() {
+        return "imgur";
     }
 
     /**
@@ -49,8 +58,17 @@ module.exports = class Imgur extends SiteInteface {
      *
      * @returns {string}
      */
-    get url(){
+    get url() {
         return "https://imgur.com";
+    }
+
+    /**
+     * the logo url
+     *
+     * @returns {string}
+     */
+    get logoUrl() {
+        return "/assets/img/imgur.png";
     }
 }
 

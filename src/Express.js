@@ -23,6 +23,7 @@ const ImgurRoutes = require('./Sites/Imgur/Routes');
 const DropboxRoutes = require('./Sites/Dropbox/Routes');
 const TelegramRoutes = require('./Routes/TelegramRoutes');
 const GeneralRoutes = require('./Routes/GeneralRoutes');
+const ApiRoutes = require('./Routes/ApiRoutes');
 
 // get the config
 const mongo_express_config = requireFix('mongo_express_config.js');
@@ -155,6 +156,10 @@ module.exports = function (uploadApp) {
 
     TelegramRoutes(app, passport, uploadApp);
     GeneralRoutes(app, passport, uploadApp);
+    ApiRoutes(app, passport, uploadApp);
+
+    // specific sites
+    // TODO make this loading automatic
     GoogleRoutes(app, passport, uploadApp);
     DropboxRoutes(app, passport, uploadApp);
     ImgurRoutes(app, passport, uploadApp);

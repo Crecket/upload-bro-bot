@@ -13,7 +13,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomDark from '../Themes/CustomDark';
 import CustomLight from '../Themes/CustomLight';
-// theme list so we can access them more easily
 const ThemesList = {
     "CustomDark": getMuiTheme(CustomDark),
     "CustomLight": getMuiTheme(CustomLight)
@@ -21,11 +20,14 @@ const ThemesList = {
 
 // actions
 import {openModal, closeModal} from "../actions/modalActions";
-import {userSetInfo, userUpdate, userLogout, userLoading, userNotLoading} from "../actions/user";
+import {userUpdate, userLogout} from "../actions/user";
+import {siteUpdate} from "../actions/sites";
 
 // connect to redux
 @connect((store) => {
     return {
+        sites: store.sites.sites,
+
         user_info: store.user.user_info,
 
         modalText: store.modal.message,
@@ -50,6 +52,9 @@ class Main extends React.Component {
     componentDidMount() {
         // update user status
         this.updateUser();
+
+        // fetch site data
+        this.siteUpdate();
     };
 
     // =========== Static data =============
@@ -80,13 +85,15 @@ class Main extends React.Component {
         this.props.dispatch(closeModal());
     };
 
-    // update our static data
-    updateUser = () => {
-        this.props.dispatch(userLoading());
-        this.props.dispatch(userUpdate());
+    // update provider info
+    siteUpdate = () => {
+        this.props.dispatch(siteUpdate());
     };
 
-    // update our static data
+    // update current user info
+    updateUser = () => {
+        this.props.dispatch(userUpdate());
+    };
     logoutUser = () => {
         this.props.dispatch(userLogout());
     };
@@ -98,6 +105,7 @@ class Main extends React.Component {
             this.props.children,
             (child) => React.cloneElement(child, {
                 user_info: this.props.user_info,
+                sites: this.props.sites,
                 updateUser: this.updateUser,
                 handleClose: this.handleClose,
                 handleModalOpen: this.handleModalOpen,

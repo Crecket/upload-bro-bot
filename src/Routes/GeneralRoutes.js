@@ -27,7 +27,7 @@ module.exports = (app, passport, uploadApp) => {
                     response.json(true);
                 })
                 .catch(err => {
-                    response.json(false);
+                    response.status(500).json(false);
                 });
         } else {
             // doesn't exist

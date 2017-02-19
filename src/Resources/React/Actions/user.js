@@ -8,8 +8,10 @@ export function userSetInfo(user_info) {
         }
     };
 }
+
 export function userUpdate() {
     return dispatch => {
+        dispatch(userLoading());
         axios.post('/get_user')
             .then(response => response.data)
             .then(json => {
@@ -19,6 +21,7 @@ export function userUpdate() {
             .catch(console.error);
     }
 }
+
 export function userLogout() {
     // logout and forget
     axios.get('/logout').then(() => {
@@ -27,9 +30,11 @@ export function userLogout() {
     // send user logout event
     return {type: 'USER_LOGOUT'};
 }
+
 export function userLoading() {
     return {type: 'USER_IS_LOADING'};
 }
+
 export function userNotLoading() {
     return {type: 'USER_IS_NOT_LOADING'};
 }

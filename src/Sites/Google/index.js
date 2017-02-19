@@ -59,6 +59,14 @@ module.exports = class Google extends SiteInteface {
         return 'Cloud Storage & File Backup for Photos, Docs & More';
     }
 
+    /**
+     * the site's key
+     *
+     * @returns {string}
+     */
+    get key() {
+        return "google";
+    }
 
     /**
      * the main url for this service
@@ -67,6 +75,15 @@ module.exports = class Google extends SiteInteface {
      */
     get url() {
         return "https://drive.google.com";
+    }
+
+    /**
+     * the logo url
+     *
+     * @returns {string}
+     */
+    get logoUrl() {
+        return "/assets/img/google.png";
     }
 }
 

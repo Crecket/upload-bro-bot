@@ -40,6 +40,8 @@ module.exports = class SiteHandler {
     }
 
     /**
+     * return the site list
+     *
      * @returns {{}|*}
      */
     get sites() {
@@ -47,9 +49,45 @@ module.exports = class SiteHandler {
     }
 
     /**
+     * amount of registered sites
+     *
      * @returns int
      */
     get siteCount() {
         return Object.keys(this._sites).length;
+    }
+
+    /**
+     * returns a info list of all enabled websites
+     *
+     * @returns {Array}
+     */
+    get siteList() {
+        return Object.keys(this._sites).map(siteKey => {
+            return {
+                name: this._sites[siteKey].name,
+                title: this._sites[siteKey].title,
+                description: this._sites[siteKey].description,
+                key: this._sites[siteKey].key,
+                url: this._sites[siteKey].url,
+                logoUrl: this._sites[siteKey].logoUrl
+            }
+        });
+    }
+
+    /**
+     * returns info for a specific site
+     *
+     * @returns {Array}
+     */
+    getSite(siteKey) {
+        return {
+            name: this._sites[siteKey].name,
+            title: this._sites[siteKey].title,
+            description: this._sites[siteKey].description,
+            key: this._sites[siteKey].key,
+            url: this._sites[siteKey].url,
+            logoUrl: this._sites[siteKey].logoUrl
+        }
     }
 }

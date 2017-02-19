@@ -22,13 +22,12 @@ export default class ProviderBlock extends React.Component {
     };
 
     render() {
-
         let BlockBtn = (
             <RaisedButton
                 secondary={true}
-                href={this.props.url}
+                href={"/login/" + this.props.siteInfo.key}
                 style={styles.button}>
-                Add {Utils.ucfirst(this.props.name)}
+                Add {this.props.siteInfo.name}
             </RaisedButton>
         );
         if (this.props.providerSite) {
@@ -36,17 +35,18 @@ export default class ProviderBlock extends React.Component {
             BlockBtn = (
                 <RaisedButton
                     primary={true}
-                    containerElement={<NavLink to={"/remove/" + this.props.name}/>}
+                    containerElement={<NavLink
+                        to={"/remove/" + this.props.siteInfo.key}/>}
                     style={styles.button}>
-                    Remove {Utils.ucfirst(this.props.name)}
+                    Remove {Utils.ucfirst(this.props.siteInfo.name)}
                 </RaisedButton>
             )
         }
         return (
             <div style={styles.container}>
-                <a href={this.props.urlInfo} target="_blank">
+                <a href={this.props.siteInfo.url} target="_blank">
                     <img style={styles.img}
-                         src={this.props.img}/>
+                         src={this.props.siteInfo.logoUrl}/>
                 </a>
                 <br/>
 

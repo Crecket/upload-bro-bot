@@ -133,9 +133,8 @@ module.exports = class DropboxApp {
         Logger.overwrite('Loading websites');
 
         // Register the websites
-        // this._SiteHandler.register(new DropboxSiteObj(this));
-        // this._SiteHandler.register(new ImgurSiteObj(this));
-        // this._SiteHandler.register(new OneDriveObj(this));
+        this._SiteHandler.register(new DropboxSiteObj(this));
+        this._SiteHandler.register(new ImgurSiteObj(this));
         this._SiteHandler.register(new GoogleSiteObj(this));
 
         Logger.overwrite('Loaded ' + this._SiteHandler.siteCount + " sites      \n");
