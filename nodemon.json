@@ -1,0 +1,18 @@
+{
+  "restartable": "rs",
+  "verbose": true,
+  "ignore": [
+    ".git",
+    ".idea",
+    "node_modules/**/node_modules",
+    "public"
+  ],
+  "watch": [
+    "src/*",
+    "app.js"
+  ],
+  "ext": "js json twig",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

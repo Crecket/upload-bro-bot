@@ -1,0 +1,11 @@
+# config files
+.env
+/mongo_express_config.js
+
+# library and cached files
+node_modules
+/downloads/*
+!/downloads/.gitkeep
+
+# ignore app compiled files
+public/assets/app.*

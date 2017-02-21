@@ -1,0 +1,48 @@
+html,
+body {
+  font-family: Roboto, sans-serif;
+  padding: 0;
+  margin: 0;
+  font-size: 18px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-weight: 400;
+}
+
+.wrap {
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.container-fluid {
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.container,
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.box-row {
+  margin-bottom: 1rem;
+}
+
+.word-break {
+  word-break: break-all;
+}
+
+.monospace {
+  font-family: monospace !important;
+}
