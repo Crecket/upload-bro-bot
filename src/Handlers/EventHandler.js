@@ -38,7 +38,7 @@ module.exports = class EventHandlers extends HelperInterface {
                 })
                 .catch((error) => {
                     console.log(error);
-                    return this._app.answerCallbackQuery(query.id)
+                    return this._app.answerCallbackQuery(query.id, "It looks like something went wrong.")
                         .then((res) => {
                             // console.log(res);
                         })
