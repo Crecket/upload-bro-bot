@@ -133,7 +133,9 @@ module.exports = class EventHandlers extends HelperInterface {
                     if (buttonSiteList.length > 0) {
                         // send the keyboard
                         this._app._TelegramBot.sendMessage(msg.from.id,
-                            "Do you want to upload this file? (" + file.file_name + ")", {
+                            "Do you want to upload this file? \n" +
+                            "Filename: " + file.file_name + " \n" +
+                            "Filesize: " + filesize(file.file_size), {
                                 reply_markup: {
                                     inline_keyboard: [
                                         buttonSiteList,

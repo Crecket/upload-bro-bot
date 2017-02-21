@@ -5,7 +5,7 @@ var requireFix = appRoot.require;
 
 var SiteInteface = requireFix('/src/Sites/SiteInterface.js');
 
-var ImgurHelperObj = requireFix('/src/Sites/Imgur/Helper');
+var UploadObj = requireFix('/src/Sites/Imgur/Queries/Upload');
 
 module.exports = class Imgur extends SiteInteface {
     constructor(app) {
@@ -18,6 +18,9 @@ module.exports = class Imgur extends SiteInteface {
      * Load all commands for this website
      */
     register() {
+        // register commands
+        this._app._QueryHandler.register(new UploadObj(this._app));
+
         return Promise.resolve();
     }
 

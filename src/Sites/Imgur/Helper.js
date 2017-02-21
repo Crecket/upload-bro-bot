@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const axios = require('axios');
 
 module.exports = class ImgurHelper {
@@ -50,6 +52,37 @@ module.exports = class ImgurHelper {
                     }
                 }).catch(reject);
         })
+    }
+
+    /**
+     * Upload a file
+     *
+     * @param userInfo
+     * @param filePath
+     * @returns {Promise}
+     */
+    uploadFile(userInfo, filePath, fileName = false) {
+        return new Promise((resolve, reject) => {
+            // create a new ouath client
+            this.createOauthClient(userInfo)
+                .then(imgurClient => {
+
+                    // get the contents
+                    fs.readFile(filePath, {}, (err, data) => {
+                        if (err) {
+                            reject(err);
+                            return;
+                        }
+
+                        // A single image
+                        imgurClient.uploadFile(filePath)
+                            .then((json) => {
+                                resolve(json);
+                            })
+                            .catch(reject);
+                    });
+                })
+        });
     }
 
     /**

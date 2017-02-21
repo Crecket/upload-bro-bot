@@ -48,7 +48,7 @@ module.exports = class Upload extends HelperInterface {
                     }
                     if (!result) {
                         return resolve("We couldn't find a file connected to this message. " +
-                            "Try forwarding the file to UploadBro.");
+                            "Try forwarding the file to UploadBro again so he can detect it more easily.");
                     }
                     var chat_id = result.chat_id;
                     var message_id = result.message_id;
@@ -64,13 +64,14 @@ module.exports = class Upload extends HelperInterface {
                         this.downloadFile(file_id, chat_id, file_name)
                             .then((file_location) => {
                                 // begin uploading to imgur drive
-                                this.editMessage("\u{231B} Uploading to imgur Drive... 2/3", {
+                                this.editMessage("\u{231B} Uploading to Imgur... 2/3", {
                                     chat_id: chat_id,
                                     message_id: message_id
                                 }).then((result_message) => {
 
                                     // upload to imgur
-                                    this._imgurHelper.uploadFile(user_info.provider_sites.imgur,
+                                    this._ImgurHelper.uploadFile(
+                                        user_info,
                                         file_location,
                                         path.basename(file_location)
                                     ).then((upload_res) => {
@@ -84,9 +85,7 @@ module.exports = class Upload extends HelperInterface {
 
                                             // attempt to remove file
                                             fs.unlink(file_location, (err) => {
-                                                if (err) {
-                                                    return reject(err);
-                                                }
+                                                // not important if it fails
                                             })
                                         }).catch(reject);
                                     }).catch(reject);
