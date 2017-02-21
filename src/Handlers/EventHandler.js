@@ -130,6 +130,7 @@ module.exports = class EventHandlers extends HelperInterface {
                     // user is registered, generate the download buttons
                     var buttonSiteList = this.generateProviderButtons(user_info, fileExtension);
 
+                    // check if we have atleast 1 connected server
                     if (buttonSiteList.length > 0) {
                         // send the keyboard
                         this._app._TelegramBot.sendMessage(msg.from.id,
@@ -139,10 +140,11 @@ module.exports = class EventHandlers extends HelperInterface {
                                 reply_markup: {
                                     inline_keyboard: [
                                         buttonSiteList,
-                                        [{
-                                            text: "Refresh sites",
-                                            callback_data: "refresh_provider_buttons"
-                                        }]
+                                        // TODO the refresh query has to check for valid extensions
+                                        // [{
+                                        //     text: "Refresh sites",
+                                        //     callback_data: "refresh_provider_buttons"
+                                        // }]
                                     ]
                                 }
                             })
@@ -164,13 +166,14 @@ module.exports = class EventHandlers extends HelperInterface {
                             })
                             .catch(console.error);
                     } else {
+                        // warn the user that we don't have any providers for them yet
                         var message = "Your account is registered in our system but you haven't connected " +
                             "any services yet! You can use the <a href='/login'>/login</a> command to find out how.";
                         this._app._TelegramBot.sendMessage(msg.chat.id, message, {
                             parse_mode: "HTML",
                             disable_notification: true
                         }).then((resulting_message) => {
-
+                            // don't care
                         }).catch(console.error);
                     }
 
