@@ -41,9 +41,9 @@ module.exports = class DropboxHelper {
      * @param dropboxToken
      * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadError>>}
      */
-    uploadFile(newOptions, dropboxToken) {
+    uploadFile(newOptions, dropboxTokens) {
         // Create dropbox object
-        var dbx = this.createClient(dropboxToken);
+        var dbx = this.createClient(dropboxTokens.access_token);
 
         // options to use in upload
         var options = Object.assign({

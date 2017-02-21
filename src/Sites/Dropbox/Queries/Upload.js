@@ -14,7 +14,7 @@ module.exports = class Upload extends HelperInterface {
 
         this._app = app;
 
-        // create imgur helper
+        // create dropbox helper
         this._DropboxHelper = new DropboxHelperObj(app);
     }
 
@@ -33,7 +33,7 @@ module.exports = class Upload extends HelperInterface {
                     return resolve("It looks like you're not registered in our system.");
                 }
 
-                if (!user_info.provider_sites.imgur) {
+                if (!user_info.provider_sites.dropbox) {
                     return resolve("Dropbox service not connected to your account");
                 }
 
@@ -63,37 +63,73 @@ module.exports = class Upload extends HelperInterface {
                         // download the file from telegram
                         this.downloadFile(file_id, chat_id, file_name)
                             .then((file_location) => {
-                                // begin uploading to imgur drive
+                                // begin uploading to dropbox drive
                                 this.editMessage("\u{231B} Uploading to Dropbox... 2/3", {
                                     chat_id: chat_id,
                                     message_id: message_id
                                 }).then((result_message) => {
 
-                                    // upload to imgur
-                                    this._DropboxHelper.uploadFile(
-                                        user_info,
-                                        file_location,
-                                        path.basename(file_location)
-                                    ).then((upload_res) => {
-                                        // show finished message with the final URL
-                                        this.editMessage("\u{2705} Finished uploading! URL: \n" + upload_res.link, {
-                                            chat_id: chat_id,
-                                            message_id: message_id
-                                        }).then((result_message) => {
-                                            // finished uploading
-                                            resolve();
+                                    // get file contents
+                                    fs.readFile(file_location, (err, data) => {
+                                        if (err) {
+                                            // error result message
+                                            reject(err);
+                                            this.editMessageError({
+                                                chat_id: chat_id,
+                                                message_id: message_id
+                                            });
+                                            return;
+                                        }
 
-                                            // attempt to remove file
-                                            fs.unlink(file_location, (err) => {
-                                                // not important if it fails
-                                            })
-                                        }).catch(reject);
-                                    }).catch(reject);
+                                        // upload to dropbox
+                                        this._DropboxHelper.uploadFile({
+                                                path: '/' + path.basename(file_location),
+                                                contents: data
+                                            },
+                                            user_info.provider_sites.dropbox
+                                        ).then((upload_res) => {
+                                            // show finished message with the final URL
+                                            this.editMessage("\u{2705} Finished uploading!", {
+                                                chat_id: chat_id,
+                                                message_id: message_id
+                                            }).then((result_message) => {
+                                                // finished uploading
+                                                resolve();
+
+                                                // attempt to remove file
+                                                fs.unlink(file_location, (err) => {
+                                                    // not important if it fails
+                                                })
+                                            }).catch(reject);
+                                        }).catch(err => {
+                                            // dropbox upload failed
+                                            reject(err);
+
+                                            // error result message
+                                            this.editMessageError({
+                                                chat_id: chat_id,
+                                                message_id: message_id
+                                            });
+                                        });
+
+                                    });
                                 }).catch(reject);
-                            }).catch(reject);
+                            }).catch(err => {
+                            // download failed
+                            reject(err);
+
+                            // error result message
+                            this.editMessageError({
+                                chat_id: chat_id,
+                                message_id: message_id
+                            });
+                        });
                     }).catch(reject);
                 })
-            }).catch(reject)
+            }).catch(err => {
+                // get user info failed
+                reject(err);
+            });
         });
     }
 
@@ -102,7 +138,7 @@ module.exports = class Upload extends HelperInterface {
      * @returns {string}
      */
     get event() {
-        return "upload_imgur";
+        return "upload_dropbox";
     }
 }
 

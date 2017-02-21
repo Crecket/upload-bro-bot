@@ -79,6 +79,18 @@ module.exports = class HelperInterface {
     }
 
     /**
+     * Edit a message that something went wrong. Attempt and throw-away
+     * @param options
+     */
+    editMessageError(options) {
+        this.editMessage("\u{26A0} It looks like something went wrong!", options)
+            .then(() => {
+            })
+            .catch(() => {
+            });
+    }
+
+    /**
      * generate a button list for inline keyboards
      * @param user
      */

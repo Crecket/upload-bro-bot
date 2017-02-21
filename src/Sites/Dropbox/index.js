@@ -1,7 +1,11 @@
 var fs = require('fs');
 var path = require('path');
+var appRoot = require('app-root-path');
+var requireFix = appRoot.require;
 
 var SiteInteface = require(path.join(__dirname, '../SiteInterface.js'));
+
+var UploadObj = requireFix('/src/Sites/Dropbox/Queries/Upload');
 
 module.exports = class Dropbox extends SiteInteface {
     constructor(app) {
@@ -14,6 +18,9 @@ module.exports = class Dropbox extends SiteInteface {
      * Load all commands for this website
      */
     register() {
+        // register commands
+        this._app._QueryHandler.register(new UploadObj(this._app));
+
         return Promise.resolve();
     }
 
