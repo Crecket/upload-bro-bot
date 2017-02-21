@@ -1,5 +1,7 @@
 import React  from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import LinkIcon from 'material-ui/svg-icons/content/link';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {blue500, lightGreenA200} from 'material-ui/styles/colors'
 
 import Utils from '../../Helpers/Utils';
@@ -7,11 +9,20 @@ import NavLink from '../../Helpers/NavLink';
 
 const styles = {
     img: {
-        // maxWidth: 120,
-        maxHeight: 120
+        maxHeight: 120,
+        zIndex: 5
+    },
+    container: {
+        position: 'relative'
     },
     button: {
         width: '100%'
+    },
+    floatingBtn: {
+        position: 'absolute',
+        zIndex: 1000,
+        top: 0,
+        right: 0
     }
 }
 
@@ -30,6 +41,8 @@ export default class ProviderBlock extends React.Component {
                 Add {this.props.siteInfo.name}
             </RaisedButton>
         );
+        let ImgUrl = "/login/" + this.props.siteInfo.key;
+
         if (this.props.providerSite) {
             // user is logged into this site
             BlockBtn = (
@@ -40,16 +53,22 @@ export default class ProviderBlock extends React.Component {
                     style={styles.button}>
                     Remove {Utils.ucfirst(this.props.siteInfo.name)}
                 </RaisedButton>
-            )
+            );
+            ImgUrl = "/remove/" + this.props.siteInfo.key;
         }
         return (
             <div style={styles.container}>
-                <a href={this.props.siteInfo.url} target="_blank">
+                <FloatingActionButton
+                    mini={true} style={styles.floatingBtn}
+                    href={this.props.siteInfo.url} target="_blank">
+                    <LinkIcon />
+                </FloatingActionButton>
+
+                <a href={ImgUrl} target="_blank">
                     <img style={styles.img}
                          src={this.props.siteInfo.logoUrl}/>
                 </a>
                 <br/>
-
                 {BlockBtn}
             </div>
         );
