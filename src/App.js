@@ -226,10 +226,10 @@ module.exports = class DropboxApp {
         });
 
         this._TelegramBot.on('group_chat_created', (msg) => {
-            console.log('group_chat_created', msg);
+            // console.log('group_chat_created', msg);
         });
         this._TelegramBot.on('message', (msg) => {
-            console.log('message', msg);
+            // console.log('message', msg);
         });
 
         // callback query listener

@@ -19,7 +19,7 @@ module.exports = class EventHandlers extends HelperInterface {
      * @param query
      */
     callbackQuery(query) {
-        var queryList = this._QueryHandler.queries;
+        var queryList = this._app._QueryHandler.queries;
         var splitData = query.data.split('|');
 
         // first part is the selected query type
@@ -30,7 +30,7 @@ module.exports = class EventHandlers extends HelperInterface {
             // start the handle request with this query
             selectedQuery.handle(query)
                 .then((message = "") => {
-                    return this.answerCallbackQuery(query.id, message)
+                    return this._app.answerCallbackQuery(query.id, message)
                         .then((res) => {
                             // console.log(res);
                         })
@@ -38,14 +38,14 @@ module.exports = class EventHandlers extends HelperInterface {
                 })
                 .catch((error) => {
                     console.log(error);
-                    return this.answerCallbackQuery(query.id)
+                    return this._app.answerCallbackQuery(query.id)
                         .then((res) => {
                             // console.log(res);
                         })
                         .catch(err => console.log(err));
                 })
         } else {
-            this.answerCallbackQuery(query.id, "We couldn't find this command.")
+            this._app.answerCallbackQuery(query.id, "We couldn't find this command.")
                 .then((res) => {
                     // console.log(res);
                 })
@@ -104,6 +104,8 @@ module.exports = class EventHandlers extends HelperInterface {
             console.log(file);
             return;
         }
+        // get the file extension
+        const fileExtension = path.extname(file.file_name);
 
         const maxFileSize = 52428800;
         if (file.file_size > maxFileSize) {
@@ -126,12 +128,12 @@ module.exports = class EventHandlers extends HelperInterface {
                 if (user_info) {
 
                     // user is registered, generate the download buttons
-                    var buttonSiteList = this.generateProviderButtons(user_info);
+                    var buttonSiteList = this.generateProviderButtons(user_info, fileExtension);
 
                     if (buttonSiteList.length > 0) {
                         // send the keyboard
                         this._app._TelegramBot.sendMessage(msg.from.id,
-                            "Do you want to upload this file?", {
+                            "Do you want to upload this file? (" + file.file_name + ")", {
                                 reply_markup: {
                                     inline_keyboard: [
                                         buttonSiteList,

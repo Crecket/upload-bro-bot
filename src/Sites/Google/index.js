@@ -85,5 +85,14 @@ module.exports = class Google extends SiteInteface {
     get logoUrl() {
         return "/assets/img/google.png";
     }
+
+    /**
+     * supported file types we will allow uploads for, true = wildcard
+     *
+     * @returns {boolean|[string]}
+     */
+    get supportedExtensions() {
+        return true;
+    }
 }
 

@@ -148,8 +148,10 @@ module.exports = function (uploadApp) {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    // mongodb express helper
-    app.use('/mongo_express', mongo_express(mongo_express_config))
+    if (process.env.MONGODB_EXPRESS_ENABLE === "true") {
+        // mongodb express helper
+        app.use('/mongo_express', mongo_express(mongo_express_config))
+    }
 
     // serve static files
     app.use(express.static(__dirname + '/../public'));

@@ -8,7 +8,7 @@ module.exports = (app, passport, uploadApp) => {
 
     // fetch info for a single provider
     app.get('/get_provider/:siteKey', (req, res) => {
-        res.json(uploadApp._SiteHandler.getSite(req.params.siteKey));
+        res.json(uploadApp._SiteHandler.getSiteBasic(req.params.siteKey));
     });
 
 }

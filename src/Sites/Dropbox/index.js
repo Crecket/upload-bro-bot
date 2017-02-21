@@ -70,5 +70,14 @@ module.exports = class Dropbox extends SiteInteface {
     get logoUrl() {
         return "/assets/img/dropbox.png";
     }
+
+    /**
+     * supported file types we will allow uploads for, true = wildcard
+     *
+     * @returns {boolean|[string]}
+     */
+    get supportedExtensions() {
+        return true;
+    }
 }
 

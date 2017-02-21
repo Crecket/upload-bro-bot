@@ -82,7 +82,7 @@ module.exports = class HelperInterface {
      * generate a button list for inline keyboards
      * @param user
      */
-    generateProviderButtons(user) {
+    generateProviderButtons(user, extension) {
         var buttonSiteList = [];
 
         // loop through existing provider sites
@@ -90,7 +90,17 @@ module.exports = class HelperInterface {
 
             // check if this site is active right now
             if (this._app._SiteHandler.isActive(key)) {
-                var siteInfo = this._app._SiteHandler.getSite(key);
+                var siteInfo = this._app._SiteHandler.getSiteBasic(key);
+
+                if (!siteInfo) {
+                    // site not enabled/does not exist
+                    return;
+                }
+
+                if (!this.verifyExtensions(siteInfo.supportedExtensions, extension)) {
+                    // invalid extension
+                    return;
+                }
 
                 // push item into the button list
                 buttonSiteList.push({
@@ -103,4 +113,22 @@ module.exports = class HelperInterface {
         return buttonSiteList;
     }
 
+    /**
+     * checks if ext-type is listed in the allowed array
+     *
+     * @param allowed
+     * @param type
+     * @returns {boolean}
+     */
+    verifyExtensions(allowed, ext) {
+        if (allowed === true) {
+            // wildcard enabled
+            return true;
+        }
+
+        // check allowed list
+        return allowed.some(extension => {
+            return "." + extension === ext.toLowerCase();
+        });
+    }
 }
