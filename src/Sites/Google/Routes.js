@@ -26,13 +26,17 @@ module.exports = (app, passport, uploadApp) => {
                     // 'https://www.googleapis.com/auth/drive.file'
                 ]
             };
-            var redirectToUrl = () => {
+            // redirect to the auth url
+            let redirectToUrl = () => {
                 // create the url
-                var url = GoogleHelper.createOauthClient()
-                    .generateAuthUrl(urlOptions);
+                GoogleHelper.createOauthClient()
+                    .then(authclient => {
+                        let url = authclient.generateAuthUrl(urlOptions);
 
-                // redirect to it
-                response.redirect(url);
+                        // redirect to it
+                        response.redirect(url);
+                    })
+                    .catch(console.error);
             }
 
             // check if we already have data for google
@@ -102,41 +106,47 @@ module.exports = (app, passport, uploadApp) => {
             response.redirect(resultRoute);
             return;
         } else {
-            GoogleHelper.createOauthClient().getToken(code, function (err, tokens) {
-                if (err) {
-                    response.redirect(resultRoute);
-                    return;
-                }
+            // create new client
+            GoogleHelper.createOauthClient()
+                .then(authclient => {
 
-                // get collection and current sites
-                var current_provider_sites = request.user.provider_sites;
+                    // get token using new code
+                    authclient.getToken(code, function (err, tokens) {
+                        if (err) {
+                            response.redirect(resultRoute);
+                            return;
+                        }
 
-                if (current_provider_sites['google']) {
-                    // already exists, update existing values
-                    current_provider_sites.google.expiry_date = tokens.expiry_date;
-                    current_provider_sites.google.access_token = tokens.access_token;
-                    current_provider_sites.google.id_token = tokens.id_token;
-                    current_provider_sites.google.added = new Date();
-                } else {
-                    // add new provider
-                    current_provider_sites.google = {
-                        expiry_date: tokens.expiry_date,
-                        access_token: tokens.access_token,
-                        refresh_token: tokens.refresh_token,
-                        id_token: tokens.id_token,
-                        added: new Date()
-                    }
-                }
+                        // get collection and current sites
+                        var current_provider_sites = request.user.provider_sites;
 
-                // update the tokens for this user
-                UserHelper.updateUserTokens(request.user, current_provider_sites)
-                    .then((result) => {
-                        response.redirect(resultRoute);
-                    })
-                    .catch((err) => {
-                        response.redirect(resultRoute);
+                        if (current_provider_sites['google']) {
+                            // already exists, update existing values
+                            current_provider_sites.google.expiry_date = tokens.expiry_date;
+                            current_provider_sites.google.access_token = tokens.access_token;
+                            current_provider_sites.google.id_token = tokens.id_token;
+                        } else {
+                            // add new provider
+                            current_provider_sites.google = {
+                                expiry_date: tokens.expiry_date,
+                                access_token: tokens.access_token,
+                                refresh_token: tokens.refresh_token,
+                                id_token: tokens.id_token
+                            }
+                        }
+
+                        // update the tokens for this user
+                        UserHelper.updateUserTokens(request.user, current_provider_sites)
+                            .then((result) => {
+                                response.redirect(resultRoute);
+                            })
+                            .catch((err) => {
+                                response.redirect(resultRoute);
+                            });
                     });
-            });
+                })
+                .catch(console.error);
+
         }
     });
 

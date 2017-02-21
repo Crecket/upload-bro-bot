@@ -1,7 +1,11 @@
 var fs = require('fs');
 var path = require('path');
+var appRoot = require('app-root-path');
+var requireFix = appRoot.require;
 
-var SiteInteface = require(path.join(__dirname, '../SiteInterface.js'));
+var SiteInteface = requireFix('/src/Sites/SiteInterface.js');
+
+var ImgurHelperObj = requireFix('/src/Sites/Imgur/Helper');
 
 module.exports = class Imgur extends SiteInteface {
     constructor(app) {

@@ -3,20 +3,15 @@ var path = require('path');
 var appRoot = require('app-root-path');
 var requireFix = appRoot.require;
 
-var SiteInteface = require(path.join(__dirname, '../SiteInterface.js'));
+var SiteInteface = requireFix('/src/Sites/SiteInterface.js');
 var UploadObj = require(path.join(__dirname, 'Queries/Upload'));
 var SearchQueryObj = require(path.join(__dirname, 'InlineQueries/SearchQuery'));
-
-var GoogleHelperObj = requireFix('/src/Sites/Google/Helper');
 
 module.exports = class Google extends SiteInteface {
     constructor(app) {
         super(app);
 
         this._app = app;
-
-        // create google helper
-        this._GoogleHelper = new GoogleHelperObj(app);
     }
 
     /**

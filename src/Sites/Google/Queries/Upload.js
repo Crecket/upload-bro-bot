@@ -70,7 +70,8 @@ module.exports = class Upload extends HelperInterface {
                                 }).then((result_message) => {
 
                                     // upload to google
-                                    this._GoogleHelper.uploadFile(user_info.provider_sites.google,
+                                    this._GoogleHelper.uploadFile(
+                                        user_info,
                                         file_location,
                                         path.basename(file_location)
                                     ).then((upload_res) => {

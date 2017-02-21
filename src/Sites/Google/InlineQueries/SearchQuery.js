@@ -46,11 +46,9 @@ module.exports = class SearchQuery extends HelperInterface {
                     );
                 }
 
-                console.log("search");
-
                 // search for this file
                 this._GoogleHelper.searchFile(
-                    user_info.provider_sites.google, // tokens
+                    user_info, // tokens
                     match, // file name to search for
                     {}
                 ).then((file_results) => {
@@ -78,8 +76,6 @@ module.exports = class SearchQuery extends HelperInterface {
 
                         resultList.push(fileResult)
                     })
-
-                    // console.log(resultList);
 
                     // resolve this list
                     resolve(resultList, {

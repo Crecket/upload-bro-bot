@@ -188,7 +188,7 @@ module.exports = class EventHandlers extends HelperInterface {
 
         // get the query
         var queryData = inline_query.query;
-        var inlineQueries = this._InlineQueryHandler.inlineQueries;
+        var inlineQueries = this._app._InlineQueryHandler.inlineQueries;
         var foundQuery = false;
 
         Object.keys(inlineQueries).map((key) => {
@@ -212,7 +212,7 @@ module.exports = class EventHandlers extends HelperInterface {
                         options.is_personal = true;
 
                         // return the query
-                        this._TelegramBot.answerInlineQuery(inline_query.id,
+                        this._app._TelegramBot.answerInlineQuery(inline_query.id,
                             inline_results,
                             options
                         ).then((result) => {
