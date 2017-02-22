@@ -43,9 +43,6 @@ let ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
 module.exports = class DropboxApp {
     constructor(token) {
 
-        // create botan sdk helper
-        this._BotanHelper = require('./BotanHelper');
-
         // Create a new blackjack bot
         this._TelegramBot = new TelegramBot(token, {polling: true});
 
@@ -104,9 +101,6 @@ module.exports = class DropboxApp {
                 // finished loading everything
                 console.log("Loaded the following commands:");
                 console.log(this._CommandHandler.info);
-
-                // start analytics
-                this._BotanHelper.basic('bot', 'Start');
 
                 // start express listener
                 Express(this);
