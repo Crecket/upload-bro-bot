@@ -32,12 +32,8 @@ module.exports = class UploadFinish extends HelperInterface {
                         .then(resolve)
                         .catch(reject);
 
-                    console.log(resolveResults.queueKey);
-
-                    // setTimeout(() =>{
-                        // finish queue item
-                        this._app._Queue.finish(resolveResults.queueKey);
-                    // }, 5000);
+                    // finish queue item
+                    this._app._Queue.finish(resolveResults.queueKey);
                 })
                 .catch(reject);
         });

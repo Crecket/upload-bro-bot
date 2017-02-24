@@ -60,10 +60,12 @@ module.exports = class Queue {
      * @returns {boolean}
      */
     _start(queueItem) {
+        console.log(queueItem);
+
         // check if queue item exists
         if (queueItem) {
             // move queue item to active list
-            this.active[queueItem.key] = Object.assign({}, queueItem);
+            this.active[queueItem.key] = queueItem;
 
             // resolve this queue item with the properties
             this.active[queueItem.key].ready(queueItem);
