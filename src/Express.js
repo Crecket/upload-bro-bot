@@ -25,9 +25,6 @@ const TelegramRoutes = require('./Routes/TelegramRoutes');
 const GeneralRoutes = require('./Routes/GeneralRoutes');
 const ApiRoutes = require('./Routes/ApiRoutes');
 
-// get the config
-const mongo_express_config = requireFix('mongo_express_config.js');
-
 // useSsl helper
 const useSsl = process.env.EXPRESS_USE_SSL === "true";
 
@@ -150,7 +147,8 @@ module.exports = function (uploadApp) {
 
     if (process.env.MONGODB_EXPRESS_ENABLE === "true") {
         // mongodb express helper
-        app.use('/mongo_express', mongo_express(mongo_express_config))
+        // const mongo_express_config = requireFix('mongo_express_config.js');
+        // app.use('/mongo_express', mongo_express(mongo_express_config))
     }
 
     // serve static files
