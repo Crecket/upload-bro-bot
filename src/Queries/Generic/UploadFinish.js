@@ -33,7 +33,7 @@ module.exports = class UploadFinish extends HelperInterface {
                         .catch(reject);
 
                     // finish queue item
-                    this._app._Queue.finish(resolveResults.queueKey);
+                    // this._app._Queue.finish(resolveResults.queueKey);
                 })
                 .catch(reject);
         });

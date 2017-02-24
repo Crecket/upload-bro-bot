@@ -35,7 +35,6 @@ module.exports = class UploadStart extends HelperInterface {
                 })
                 // show initial status
                 .then(resolveResults => {
-
                     // show status
                     return new Promise((resolveEdit, rejectEdit) => {
                         // set initial message status
@@ -52,19 +51,20 @@ module.exports = class UploadStart extends HelperInterface {
                 })
                 // check queue status
                 .then(resolveResults => {
-                    return new Promise((finish, failed) => {
-                        // enqueue this attempt
-                        this._app._Queue.enqueue('upload')
-                            .then(finished => {
-                                console.log('Finished: ', finished);
-                                // save queueKey
-                                resolveResults.queueKey = finished.key;
-
-                                // resolve the resolveResults, queue item is ready to go
-                                finish(resolveResults);
-                            })
-                            .catch(failed);
-                    });
+                    return Promise.resolve();
+                    // return new Promise((finish, failed) => {
+                    //     // enqueue this attempt
+                    //     this._app._Queue.enqueue('upload')
+                    //         .then(finished => {
+                    //             console.log('Finished: ', finished);
+                    //             // save queueKey
+                    //             resolveResults.queueKey = finished.key;
+                    //
+                    //             // resolve the resolveResults, queue item is ready to go
+                    //             finish(resolveResults);
+                    //         })
+                    //         .catch(failed);
+                    // });
                 })
                 // show initial status
                 .then(resolveResults => {
