@@ -165,15 +165,17 @@ module.exports = function (uploadApp) {
     ImgurRoutes(app, passport, uploadApp);
 
     // Debug errors
-    app.use(function (err, req, res, next) {
-        (new ouch()).pushHandler(
-            new ouch.handlers.PrettyPageHandler()
-        ).handleException(err, req, res,
-            function () {
-                console.log('Error handled');
-            }
-        );
-    });
+    if (process.env.DEBUG === "true") {
+        app.use(function (err, req, res, next) {
+            (new ouch()).pushHandler(
+                new ouch.handlers.PrettyPageHandler()
+            ).handleException(err, req, res,
+                function () {
+                    console.log('Error handled');
+                }
+            );
+        });
+    }
 
     // start listening http
     httpServer.listen(process.env.EXPRESS_PORT, function () {
