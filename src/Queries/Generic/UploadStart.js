@@ -41,7 +41,7 @@ module.exports = class UploadStart extends HelperInterface {
                     // show status
                     return new Promise((resolveEdit, rejectEdit) => {
                         // set initial message status
-                        this.editMessage("\u{1F50E} Fetching file... 1/3", {
+                        this.editMessage("\u{1F50E} Downloading file... 1/3", {
                             chat_id: msgInfo.chat_id,
                             message_id: msgInfo.message_id
                         })
@@ -56,7 +56,7 @@ module.exports = class UploadStart extends HelperInterface {
                     // show status
                     return new Promise((resolveEdit, rejectEdit) => {
                         // begin uploading to dropbox drive
-                        this.editMessage("\u{231B} Uploading to Dropbox... 2/3", {
+                        this.editMessage("\u{231B} Uploading... 2/3", {
                             chat_id: msgInfo.chat_id,
                             message_id: msgInfo.message_id
                         })
@@ -92,7 +92,7 @@ module.exports = class UploadStart extends HelperInterface {
                     }
 
                     if (!userInfo.provider_sites.dropbox) {
-                        return resolve("Dropbox service not connected to your account");
+                        return resolve("This service not connected to your account");
                     }
 
                     // store key to fetch info about file

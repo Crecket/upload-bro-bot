@@ -31,9 +31,6 @@ module.exports = class Upload extends HelperInterface {
     handle(query) {
         // console.log(query);
         return new Promise((resolve, reject) => {
-            // global helpers
-            let msgInfo;
-            let userInfo
 
             // generic start upload event
             this.UploadStart
