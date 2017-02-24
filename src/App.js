@@ -23,6 +23,7 @@ let QueryHandler = requireFix('/src/Handlers/QueryHandler');
 let EventHandlersObj = requireFix('/src/Handlers/EventHandler');
 let InlineQueryHandlerObj = requireFix('/src/Handlers/InlineQueryHandler');
 let UserHelperObj = requireFix('/src/UserHelper');
+let QueueObj = requireFix('/src/Queue');
 
 // commands
 let HelpCommandObj = requireFix('/src/Commands/Help');
@@ -42,9 +43,11 @@ let ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
 
 module.exports = class DropboxApp {
     constructor(token) {
-
         // Create a new blackjack bot
         this._TelegramBot = new TelegramBot(token, {polling: true});
+
+        // create a queue object
+        this._Queue = new QueueObj(1);
 
         // Create new command handler
         this._CommandHandler = new CommandHandler(this);

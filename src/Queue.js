@@ -1,7 +1,7 @@
-class Queue {
-    constructor(app, limit = 10) {
-        this._app = app;
+const crypto = require('crypto');
 
+module.exports = class Queue {
+    constructor(limit = 10) {
         this.limit = limit;
         this.queue = [];
         this.active = {};
@@ -10,45 +10,63 @@ class Queue {
         setInterval(() => {
             if (this.queue.length > 0) {
                 if (Object.keys(this.active).length < this.limit) {
-                    // there is room
-                    const firstItem = Object.keys(this.active)[0];
+                    // there is room, get the first item
+                    const firstItem = this.queue.shift();
+
+                    console.log('Starting item: ', firstItem);
+
+                    // start this queue item
+                    this._start(firstItem);
                 }
             }
         }, 100);
     }
 
-    // returns promise which resolves when this item is allowed to resolve
-    enqueue(key, type) {
-        return new Promise((resolve, reject) =>{
-            // add the resolve to the queue
-            this.queue.push({
-                started: new Date(),
-                ready: resolve,
-                type: type,
-                key: key
-            });
+    /**
+     * returns promise which resolves when this item is allowed to resolve
+     *
+     * @param type
+     * @returns {Promise}
+     */
+    enqueue(type) {
+        return new Promise((resolve, reject) => {
+            crypto.randomBytes(24, (err, buffer) => {
+                const key = buffer.toString('hex');
 
-            // check if a spot is already available
-            if(this.available()){
-                this._start(key);
-            }
+                // gather info
+                const newQueueItem = {
+                    started: new Date(),
+                    ready: resolve,
+                    type: type,
+                    key: key
+                }
+                // add the resolve to the queue
+                this.queue.push(newQueueItem);
+
+                console.log('Enqueued item: ', newQueueItem);
+
+                // check if a spot is already available
+                if (this.available()) {
+                    this._start(newQueueItem);
+                }
+            });
         });
     }
 
     /**
      * Add a new item to the active queue
      *
-     * @param key
+     * @param queueItem
      * @returns {boolean}
      */
-    _start(key) {
+    _start(queueItem) {
         // check if queue item exists
-        if (this.queue[key]) {
+        if (queueItem) {
             // move queue item to active list
-            this.active[key] = Object.assign({}, this.queue[key]);
+            this.active[queueItem.key] = Object.assign({}, queueItem);
 
-            // delete queue item
-            delete this.queue[key];
+            // resolve this queue item with the properties
+            this.active[queueItem.key].ready(queueItem);
 
             // return success
             return true;
@@ -78,7 +96,7 @@ class Queue {
      * @returns {boolean}
      */
     available() {
-        return Object.keys(this.active).length >= this.limit;
+        return Object.keys(this.active).length <= this.limit;
     }
 
     /**

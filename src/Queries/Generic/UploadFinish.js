@@ -31,6 +31,13 @@ module.exports = class UploadFinish extends HelperInterface {
                     this.removeOldFile(resolveResults.file_location)
                         .then(resolve)
                         .catch(reject);
+
+                    console.log(resolveResults.queueKey);
+
+                    // setTimeout(() =>{
+                        // finish queue item
+                        this._app._Queue.finish(resolveResults.queueKey);
+                    // }, 5000);
                 })
                 .catch(reject);
         });

@@ -23,7 +23,6 @@ module.exports = class UploadStart extends HelperInterface {
         // console.log(query);
         return new Promise((resolve, reject) => {
             // global helpers
-            let msgInfo;
             let userInfo
 
             // get information about this query user
@@ -32,44 +31,74 @@ module.exports = class UploadStart extends HelperInterface {
                     userInfo = resolveResults.userInfo;
 
                     // check the cache
-                    return this.checkCache(resolveResults.storeKey)
+                    return this.checkCache(resolveResults)
                 })
                 // show initial status
-                .then(messageInfoTemp => {
-                    msgInfo = messageInfoTemp;
+                .then(resolveResults => {
 
                     // show status
                     return new Promise((resolveEdit, rejectEdit) => {
                         // set initial message status
-                        this.editMessage("\u{1F50E} Downloading file... 1/3", {
-                            chat_id: msgInfo.chat_id,
-                            message_id: msgInfo.message_id
-                        })
-                            .then(resolveEdit)
-                            .catch(rejectEdit);
+                        this.editMessage("\u{1F50E} Checking queue status... 1/4", {
+                            chat_id: resolveResults.msgInfo.chat_id,
+                            message_id: resolveResults.msgInfo.message_id
+                        }).then(resultMessage => {
+                            // store message
+                            resolveResults.resultMessage = resultMessage;
+                            // resolve results
+                            resolveEdit(resolveResults);
+                        }).catch(rejectEdit);
+                    });
+                })
+                // check queue status
+                .then(resolveResults => {
+                    return new Promise((finish, failed) => {
+                        // enqueue this attempt
+                        this._app._Queue.enqueue('upload')
+                            .then(finished => {
+                                console.log('Finished: ', finished);
+                                // save queueKey
+                                resolveResults.queueKey = finished.key;
+
+                                // resolve the resolveResults, queue item is ready to go
+                                finish(resolveResults);
+                            })
+                            .catch(failed);
+                    });
+                })
+                // show initial status
+                .then(resolveResults => {
+                    // show status
+                    return new Promise((resolveEdit, rejectEdit) => {
+                        // set initial message status
+                        this.editMessage("\u{1F50E} Downloading file... 2/4", {
+                            chat_id: resolveResults.msgInfo.chat_id,
+                            message_id: resolveResults.msgInfo.message_id
+                        }).then(resultMessage => {
+                            // store message
+                            resolveResults.resultMessage = resultMessage;
+                            // resolve results
+                            resolveEdit(resolveResults);
+                        }).catch(rejectEdit);
                     });
                 })
                 // download file from telegram
-                .then(result_message => this.downloadTelegram(msgInfo))
+                .then(resolveResults => this.downloadTelegram(resolveResults))
                 // update status
-                .then(file_location => {
+                .then(resolveResults => {
                     // show status
                     return new Promise((resolveEdit, rejectEdit) => {
                         // begin uploading to dropbox drive
-                        this.editMessage("\u{231B} Uploading... 2/3", {
-                            chat_id: msgInfo.chat_id,
-                            message_id: msgInfo.message_id
-                        })
-                            .then(() => {
-                                // everything is okay, resolve the info
-                                resolve({
-                                    file_location: file_location,
-                                    msgInfo: msgInfo,
-                                    userInfo, userInfo,
-                                    query: query
-                                })
-                            })
-                            .catch(rejectEdit);
+                        this.editMessage("\u{1F4BE} Uploading... 3/4", {
+                            chat_id: resolveResults.msgInfo.chat_id,
+                            message_id: resolveResults.msgInfo.message_id
+                        }).then(resultMessage => {
+                            // store message
+                            resolveResults.resultMessage = resultMessage;
+
+                            // everything is okay, resolve the info
+                            resolve(resolveResults)
+                        }).catch(rejectEdit);
                     })
                 })
                 .catch(reject);
@@ -101,7 +130,8 @@ module.exports = class UploadStart extends HelperInterface {
 
                     resolve({
                         userInfo: userInfo,
-                        storeKey: storeKey
+                        storeKey: storeKey,
+                        query: query
                     });
                 })
                 .catch(reject);
@@ -114,10 +144,10 @@ module.exports = class UploadStart extends HelperInterface {
      * @param storeKey
      * @returns {Promise}
      */
-    checkCache(storeKey) {
+    checkCache(resolveResults) {
         return new Promise((resolve, reject) => {
             // fetch from cache
-            this._app._Cache.get(storeKey, (error, msgInfo) => {
+            this._app._Cache.get(resolveResults.storeKey, (error, msgInfo) => {
                 if (error) {
                     return reject(error);
                 }
@@ -126,7 +156,9 @@ module.exports = class UploadStart extends HelperInterface {
                         "Try forwarding the file to UploadBro again so he can detect it more easily.", true);
                 }
                 // resolve the retrieved message info
-                resolve(msgInfo);
+                resolveResults.msgInfo = msgInfo;
+
+                resolve(resolveResults);
             });
         })
     }
@@ -137,13 +169,20 @@ module.exports = class UploadStart extends HelperInterface {
      * @param msgInfo
      * @returns {Promise}
      */
-    downloadTelegram(msgInfo) {
+    downloadTelegram(resolveResults) {
         return new Promise((resolve, reject) => {
             // download the file from telegram
-            this.downloadFile(msgInfo.file_id, msgInfo.chat_id, msgInfo.file_name)
+            this.downloadFile(
+                resolveResults.msgInfo.file_id,
+                resolveResults.msgInfo.chat_id,
+                resolveResults.msgInfo.file_name
+            )
             // resolve new file location
                 .then((file_location) => {
-                    resolve(file_location);
+                    // store file location
+                    resolveResults.file_location = file_location;
+                    // resolve the new location
+                    resolve(resolveResults);
                 })
                 .catch(err => {
                     // download failed
@@ -151,8 +190,8 @@ module.exports = class UploadStart extends HelperInterface {
 
                     // error result message
                     this.editMessageError({
-                        chat_id: msgInfo.chat_id,
-                        message_id: msgInfo.message_id
+                        chat_id: resolveResults.msgInfo.chat_id,
+                        message_id: resolveResults.msgInfo.message_id
                     });
                 });
         });
