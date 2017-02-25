@@ -4527,6 +4527,10 @@ react-tap-event-plugin@^2.0.1:
   dependencies:
     fbjs "^0.8.6"
 
+react-trend@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-trend/-/react-trend-1.1.2.tgz#42c47a403aecd0c74ce635cd51abf85d3b8d6244"
+
 react@^15.3.0, react@^15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
