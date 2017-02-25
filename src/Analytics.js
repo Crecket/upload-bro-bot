@@ -15,10 +15,10 @@ module.exports = class Analytics {
     trackCommand(msg, options) {
         const data = Object.assign(
             this.defaultMsg,
+            options,
             {
                 type: 'message'
-            },
-            options
+            }
         );
         this.save(data);
     }
@@ -32,10 +32,10 @@ module.exports = class Analytics {
     trackQuery(query, options) {
         const data = Object.assign(
             this.defaultMsg,
+            options,
             {
                 type: 'query'
-            },
-            options
+            }
         );
         this.save(data);
     }
@@ -50,11 +50,11 @@ module.exports = class Analytics {
     trackFile(fileType, msg, options) {
         const data = Object.assign(
             this.defaultMsg,
+            options,
             {
                 type: 'file',
                 fileType: fileType
-            },
-            options
+            }
         );
         this.save(data);
     }
@@ -72,10 +72,14 @@ module.exports = class Analytics {
             });
     }
 
+    /**
+     * default values we'll always want to use
+     *
+     * @returns {{time: Date}}
+     */
     get defaultMsg() {
         return {
             time: new Date()
         };
-        this.save(data);
     }
 }

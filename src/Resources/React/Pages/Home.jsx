@@ -19,10 +19,30 @@ const styles = {
 class Home extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {};
+        this.state = {
+            testData: new Array(10).fill(0)
+        };
     };
 
+    componentDidMount() {
+        setInterval(() => {
+            this.addItem(this.getRandomInt(1, 100));
+        }, 500);
+    }
+
+    getRandomInt = (min, max) => {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    addItem = (val) => {
+        let newList = this.state.testData.concat([]);
+        newList.shift();
+        newList.push(val);
+        this.setState({testData: newList});
+    }
+
     render() {
+        console.log(this.state.testData);
         var homeDiv = (
             <div style={styles.notLoggedIn}>
                 You're not logged in yet. <br/>
@@ -48,15 +68,12 @@ class Home extends React.Component {
                     />
 
                     <Trend
-                        smooth
-                        autoDraw
-                        autoDrawDuration={1500}
-                        autoDrawEasing="ease-out"
-                        data={[0, 1]}
+                        smooth autoDraw
+                        data={this.state.testData}
                         gradient={['#42b3f4']}
                         radius={1.1}
-                        strokeWidth={5}
-                        strokeLinecap={'butt'}
+                        strokeWidth={3}
+                        strokeLinecap={'round'}
                     />
                 </div>
             );
