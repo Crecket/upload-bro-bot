@@ -4,7 +4,7 @@ import FlatButton from "material-ui/FlatButton";
 import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
 import IntroductionScreen from "../Components/IntroductionScreen";
 import NavLink from "../Helpers/NavLink";
-import Trend from 'react-trend';
+// import Trend from 'react-trend';
 
 const styles = {
     wrapper: {
@@ -25,21 +25,21 @@ class Home extends React.Component {
     };
 
     componentDidMount() {
-        setInterval(() => {
-            this.addItem(this.getRandomInt(1, 100));
-        }, 500);
+        // setInterval(() => {
+        //     this.addItem(this.getRandomInt(1, 100));
+        // }, 500);
     }
 
-    getRandomInt = (min, max) => {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    addItem = (val) => {
-        let newList = this.state.testData.concat([]);
-        newList.shift();
-        newList.push(val);
-        this.setState({testData: newList});
-    }
+    // getRandomInt = (min, max) => {
+    //     return Math.floor(Math.random() * (max - min + 1)) + min;
+    // }
+    //
+    // addItem = (val) => {
+    //     let newList = this.state.testData.concat([]);
+    //     newList.shift();
+    //     newList.push(val);
+    //     this.setState({testData: newList});
+    // }
 
     render() {
         console.log(this.state.testData);
@@ -67,14 +67,14 @@ class Home extends React.Component {
                         provider_sites_info={this.props.sites}
                     />
 
-                    <Trend
-                        smooth autoDraw
-                        data={this.state.testData}
-                        gradient={['#42b3f4']}
-                        radius={1.1}
-                        strokeWidth={3}
-                        strokeLinecap={'round'}
-                    />
+                    {/*<Trend*/}
+                    {/*smooth autoDraw*/}
+                    {/*data={this.state.testData}*/}
+                    {/*gradient={['#42b3f4']}*/}
+                    {/*radius={2}*/}
+                    {/*strokeWidth={3}*/}
+                    {/*strokeLinecap={'round'}*/}
+                    {/*/>*/}
                 </div>
             );
         }
