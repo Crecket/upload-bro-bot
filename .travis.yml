@@ -1,0 +1,6 @@
+language: node_js
+node_js:
+  - "6.1.x"
+cache: yarn
+before_install:
+  - openssl aes-256-cbc -K $encrypted_638fac788039_key -iv $encrypted_638fac788039_iv -in .env.enc -out .env -d

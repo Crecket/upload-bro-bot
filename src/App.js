@@ -47,9 +47,9 @@ module.exports = class App {
         // Create a new blackjack bot
         this._TelegramBot = new TelegramBot(token, {polling: true});
 
-        // create a queue object
+        // create a queue object and analytics helper
         this._Queue = new QueueObj(1);
-        this._Analytics = new AnalyticsObj(1);
+        this._Analytics = new AnalyticsObj();
 
         // user helper object
         this._UserHelper = new UserHelperObj(this);

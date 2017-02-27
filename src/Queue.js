@@ -40,14 +40,15 @@ module.exports = class Queue {
                     type: type,
                     key: key
                 }
-                // add the resolve to the queue
-                this.queue.push(newQueueItem);
 
                 console.log('Enqueued item: ', newQueueItem);
 
                 // check if a spot is already available
                 if (this.available()) {
                     this._start(newQueueItem);
+                } else {
+                    // add the item to the queue
+                    this.queue.push(newQueueItem);
                 }
             });
         });
@@ -85,6 +86,9 @@ module.exports = class Queue {
     finish(key) {
         // check if item exists
         if (this.active[key]) {
+
+            console.log('Finished item: ', key);
+
             // remove the active item
             delete this.active[key];
             return true;

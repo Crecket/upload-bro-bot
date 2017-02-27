@@ -33,39 +33,39 @@ module.exports = class UploadStart extends HelperInterface {
                     // check the cache
                     return this.checkCache(resolveResults)
                 })
-                // // show initial status
-                // .then(resolveResults => {
-                //     // show status
-                //     return new Promise((resolveEdit, rejectEdit) => {
-                //         // set initial message status
-                //         this.editMessage("\u{1F50E} Checking queue status... 1/4", {
-                //             chat_id: resolveResults.msgInfo.chat_id,
-                //             message_id: resolveResults.msgInfo.message_id
-                //         }).then(resultMessage => {
-                //             // store message
-                //             resolveResults.resultMessage = resultMessage;
-                //             // resolve results
-                //             resolveEdit(resolveResults);
-                //         }).catch(rejectEdit);
-                //     });
-                // })
-                // // check queue status
-                // .then(resolveResults => {
-                //     // return Promise.resolve();
-                //     return new Promise((finish, failed) => {
-                //         // enqueue this attempt
-                //         this._app._Queue.enqueue('upload')
-                //             .then(finished => {
-                //                 console.log('Finished: ', finished);
-                //                 // save queueKey
-                //                 resolveResults.queueKey = finished.key;
-                //
-                //                 // resolve the resolveResults, queue item is ready to go
-                //                 finish(resolveResults);
-                //             })
-                //             .catch(failed);
-                //     });
-                // })
+                // show initial status
+                .then(resolveResults => {
+                    // show status
+                    return new Promise((resolveEdit, rejectEdit) => {
+                        // set initial message status
+                        this.editMessage("\u{1F50E} Checking queue status... 1/4", {
+                            chat_id: resolveResults.msgInfo.chat_id,
+                            message_id: resolveResults.msgInfo.message_id
+                        }).then(resultMessage => {
+                            // store message
+                            resolveResults.resultMessage = resultMessage;
+                            // resolve results
+                            resolveEdit(resolveResults);
+                        }).catch(rejectEdit);
+                    });
+                })
+                // check queue status
+                .then(resolveResults => {
+                    // return Promise.resolve();
+                    return new Promise((finish, failed) => {
+                        // enqueue this attempt
+                        this._app._Queue.enqueue('upload')
+                            .then(finished => {
+                                console.log('Finished: ', finished);
+                                // save queueKey
+                                resolveResults.queueKey = finished.key;
+
+                                // resolve the resolveResults, queue item is ready to go
+                                finish(resolveResults);
+                            })
+                            .catch(failed);
+                    });
+                })
                 // show initial status
                 .then(resolveResults => {
                     // show status
