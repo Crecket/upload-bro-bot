@@ -4,6 +4,7 @@ const requireFix = require('app-root-path').require;
 const express = require('express');
 const http = require('http');
 const https = require('https');
+const renderToString = require('react-dom/server').renderToString;
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -11,8 +12,8 @@ const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const TelegramStrategy = require('passport-telegram').Strategy;
 const refresh = require('passport-oauth2-refresh');
-const mongo_express = require('mongo-express/lib/middleware');
 const ouch = require('ouch');
+const helmet = require('helmet');
 
 // util helper
 const Logger = require('./Logger');
@@ -24,9 +25,6 @@ const DropboxRoutes = require('./Sites/Dropbox/Routes');
 const TelegramRoutes = require('./Routes/TelegramRoutes');
 const GeneralRoutes = require('./Routes/GeneralRoutes');
 const ApiRoutes = require('./Routes/ApiRoutes');
-
-// get the config
-const mongo_express_config = requireFix('mongo_express_config.js');
 
 // useSsl helper
 const useSsl = process.env.EXPRESS_USE_SSL === "true";
@@ -40,8 +38,16 @@ module.exports = function (uploadApp) {
         let httpsOptions = {
             // ca: [''],
             cert: fs.readFileSync(process.env.EXPRESS_SSL_CERT),
-            key: fs.readFileSync(process.env.EXPRESS_SSL_KEY)
+            key: fs.readFileSync(process.env.EXPRESS_SSL_KEY),
+            ciphers: ["ECDHE-RSA-AES256-SHA384", "DHE-RSA-AES256-SHA384", "ECDHE-RSA-AES256-SHA256", "DHE-RSA-AES256-SHA256", "ECDHE-RSA-AES128-SHA256", "DHE-RSA-AES128-SHA256", "HIGH", "!aNULL", "!eNULL", "!EXPORT", "!DES", "!RC4", "!MD5", "!PSK", "!SRP", "!CAMELLIA"].join(':'),
+            honorCipherOrder: true,
+            requestCert: false
         };
+        // add CA if we have one
+        if (process.env.EXPRESS_SSL_CA) {
+            httpsOptions.ca = fs.readFileSync(process.env.EXPRESS_SSL_CA);
+        }
+        // create server with these settings
         var httpsServer = https.createServer(httpsOptions, app);
     }
 
@@ -139,7 +145,11 @@ module.exports = function (uploadApp) {
         secret: process.env.EXPRESS_SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: {secure: false},
+        cookie: {
+            secure: true,
+            httpOnly: true,
+            domain: process.env.WEBSITE_DOMAIN
+        },
         store: new MongoStore({
             db: db,
             autoRemove: 'native'
@@ -148,10 +158,8 @@ module.exports = function (uploadApp) {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    if (process.env.MONGODB_EXPRESS_ENABLE === "true") {
-        // mongodb express helper
-        app.use('/mongo_express', mongo_express(mongo_express_config))
-    }
+    // security headers
+    app.use(helmet());
 
     // serve static files
     app.use(express.static(__dirname + '/../public'));
@@ -167,15 +175,17 @@ module.exports = function (uploadApp) {
     ImgurRoutes(app, passport, uploadApp);
 
     // Debug errors
-    app.use(function (err, req, res, next) {
-        (new ouch()).pushHandler(
-            new ouch.handlers.PrettyPageHandler()
-        ).handleException(err, req, res,
-            function () {
-                console.log('Error handled');
-            }
-        );
-    });
+    if (process.env.DEBUG === "true") {
+        app.use(function (err, req, res, next) {
+            (new ouch()).pushHandler(
+                new ouch.handlers.PrettyPageHandler()
+            ).handleException(err, req, res,
+                function () {
+                    console.log('Error handled');
+                }
+            );
+        });
+    }
 
     // start listening http
     httpServer.listen(process.env.EXPRESS_PORT, function () {

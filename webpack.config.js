@@ -1,10 +1,12 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-// var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'public/assets');
 var SRC_DIR = path.resolve(__dirname, 'src/Resources');
+
+// env variable check
+var DEV = process.env.NODE_ENV !== "production";
 
 var config = {
     entry: {
@@ -24,15 +26,6 @@ var config = {
         ]
     },
     plugins: [
-        // new CopyWebpackPlugin([
-        //     {
-        //         from: SRC_DIR + "/Libraries/VanillaTilt",
-        //         to: BUILD_DIR + '/js/vanilla-tilt',
-        //         flatten: true
-        //     },
-        // ], {
-        //     copyUnmodified: false
-        // }),
         new webpack.NoErrorsPlugin(),
         new ExtractTextPlugin("[name].css", {
             allChunks: true
@@ -40,6 +33,7 @@ var config = {
         new webpack.DefinePlugin({
             "PRODUCTION_MODE": process.env.NODE_ENV === "production" ? true : false,
             "DEVELOPMENT_MODE": process.env.NODE_ENV === "production" ? false : true,
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         }),
     ],
     devtool: "source-map",
@@ -75,6 +69,15 @@ var config = {
             }
         ]
     }
+}
+
+if (!DEV) {
+    // In production mode add the uglify plugin
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        compress: {
+            warnings: false
+        }
+    }))
 }
 
 module.exports = config;

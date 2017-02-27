@@ -24,6 +24,7 @@ let EventHandlersObj = requireFix('/src/Handlers/EventHandler');
 let InlineQueryHandlerObj = requireFix('/src/Handlers/InlineQueryHandler');
 let UserHelperObj = requireFix('/src/UserHelper');
 let QueueObj = requireFix('/src/Queue');
+let AnalyticsObj = requireFix('/src/Analytics');
 
 // commands
 let HelpCommandObj = requireFix('/src/Commands/Help');
@@ -41,31 +42,24 @@ let ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
 
 // event handlers
 
-module.exports = class DropboxApp {
+module.exports = class App {
     constructor(token) {
         // Create a new blackjack bot
         this._TelegramBot = new TelegramBot(token, {polling: true});
 
         // create a queue object
         this._Queue = new QueueObj(1);
-
-        // Create new command handler
-        this._CommandHandler = new CommandHandler(this);
-
-        // Create new site handler
-        this._SiteHandler = new SiteHandler(this);
-
-        // Create new site handler
-        this._QueryHandler = new QueryHandler(this);
-
-        // create event listeners handlers
-        this._EventHandler = new EventHandlersObj(this);
-
-        // create event listeners handlers
-        this._InlineQueryHandler = new InlineQueryHandlerObj(this);
+        this._Analytics = new AnalyticsObj(1);
 
         // user helper object
         this._UserHelper = new UserHelperObj(this);
+
+        // Create new command handler
+        this._CommandHandler = new CommandHandler(this);
+        this._SiteHandler = new SiteHandler(this);
+        this._QueryHandler = new QueryHandler(this);
+        this._EventHandler = new EventHandlersObj(this);
+        this._InlineQueryHandler = new InlineQueryHandlerObj(this);
 
         // connect to mongodb
         this.connectDb()

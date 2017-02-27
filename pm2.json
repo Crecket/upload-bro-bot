@@ -1,0 +1,20 @@
+{
+  "apps": [
+    {
+      "name": "upload-bro-bot",
+      "script": "app.js",
+//      "args": [],
+//      "watch": true,
+//      "node_args": "--harmony",
+//      "merge_logs": true,
+//      "cwd": "/this/is/a/path/to/start/script",
+      "env": {
+        "NODE_ENV": "production",
+        "BLUEBIRD_WARNINGS": "0"
+      },
+      "env_development": {
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}
