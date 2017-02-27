@@ -31,8 +31,8 @@ var config = {
             allChunks: true
         }),
         new webpack.DefinePlugin({
-            "PRODUCTION_MODE": process.env.NODE_ENV === "production" ? true : false,
-            "DEVELOPMENT_MODE": process.env.NODE_ENV === "production" ? false : true,
+            "PRODUCTION_MODE": JSON.stringify(process.env.NODE_ENV === "production" ? true : false),
+            "DEVELOPMENT_MODE": JSON.stringify(process.env.NODE_ENV === "production" ? false : true),
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         }),
         new webpack.optimize.CommonsChunkPlugin({
