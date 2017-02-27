@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+const winston = require('winston');
+
 
 module.exports = class Queue {
     constructor(limit = 10) {
@@ -13,7 +15,7 @@ module.exports = class Queue {
                     // there is room, get the first item
                     const firstItem = this.queue.shift();
 
-                    console.log('Starting item: ', firstItem);
+                    winston.debug('Starting item: ', firstItem);
 
                     // start this queue item
                     this._start(firstItem);
@@ -41,7 +43,7 @@ module.exports = class Queue {
                     key: key
                 }
 
-                console.log('Enqueued item: ', newQueueItem);
+                winston.debug('Enqueued item: ', newQueueItem);
 
                 // check if a spot is already available
                 if (this.available()) {
@@ -61,7 +63,7 @@ module.exports = class Queue {
      * @returns {boolean}
      */
     _start(queueItem) {
-        console.log(queueItem);
+        winston.debug(queueItem);
 
         // check if queue item exists
         if (queueItem) {
@@ -87,7 +89,7 @@ module.exports = class Queue {
         // check if item exists
         if (this.active[key]) {
 
-            console.log('Finished item: ', key);
+            winston.debug('Finished item: ', key);
 
             // remove the active item
             delete this.active[key];

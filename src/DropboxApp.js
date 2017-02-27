@@ -1,12 +1,12 @@
-var TelegramBot = require('node-telegram-bot-api');
-var MongoClient = require('mongodb').MongoClient;
-var fs = require('fs');
-var path = require('path');
+const TelegramBot = require('node-telegram-bot-api');
+const MongoClient = require('mongodb').MongoClient;
+const fs = require('fs');
+const path = require('path');
 
-var CommandHandler = require('./CommandHandler');
-var Logger = require('./Logger');
-var Utils = require('./Utils');
-var Express = require('./Express');
+const CommandHandler = require('./CommandHandler');
+const Logger = require('./Logger');
+const Utils = require('./Utils');
+const Express = require('./Express');
 
 module.exports = class DropboxApp {
     constructor(token) {

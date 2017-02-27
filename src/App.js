@@ -1,44 +1,44 @@
 "use strict";
 
-let TelegramBot = require('node-telegram-bot-api');
-let MongoClient = require('mongodb').MongoClient;
-let fs = require('fs');
-let del = require('del');
-let path = require('path');
-let Cacheman = require('cacheman');
-let MongoDbEngine = require('cacheman-mongo');
-let requireFix = require('app-root-path').require;
+const TelegramBot = require('node-telegram-bot-api');
+const MongoClient = require('mongodb').MongoClient;
+const fs = require('fs');
+const del = require('del');
+const path = require('path');
+const Cacheman = require('cacheman');
+const MongoDbEngine = require('cacheman-mongo');
+const requireFix = require('app-root-path').require;
+const winston = require('winston');
 
 // utilities
-let Logger = requireFix('/src/Logger');
 let Utils = requireFix('/src/Utils');
 
 // express server
 let Express = requireFix('/src/Express');
 
 // handlers and other helpers
-let CommandHandler = requireFix('/src/Handlers/CommandHandler');
-let SiteHandler = requireFix('/src/Handlers/SiteHandler');
-let QueryHandler = requireFix('/src/Handlers/QueryHandler');
-let EventHandlersObj = requireFix('/src/Handlers/EventHandler');
-let InlineQueryHandlerObj = requireFix('/src/Handlers/InlineQueryHandler');
-let UserHelperObj = requireFix('/src/UserHelper');
-let QueueObj = requireFix('/src/Queue');
-let AnalyticsObj = requireFix('/src/Analytics');
+const CommandHandler = requireFix('/src/Handlers/CommandHandler');
+const SiteHandler = requireFix('/src/Handlers/SiteHandler');
+const QueryHandler = requireFix('/src/Handlers/QueryHandler');
+const EventHandlersObj = requireFix('/src/Handlers/EventHandler');
+const InlineQueryHandlerObj = requireFix('/src/Handlers/InlineQueryHandler');
+const UserHelperObj = requireFix('/src/UserHelper');
+const QueueObj = requireFix('/src/Queue');
+const AnalyticsObj = requireFix('/src/Analytics');
 
 // commands
-let HelpCommandObj = requireFix('/src/Commands/Help');
-let StartCommandObj = requireFix('/src/Commands/Start');
-let LoginCommandObj = requireFix('/src/Commands/Login');
+const HelpCommandObj = requireFix('/src/Commands/Help');
+const StartCommandObj = requireFix('/src/Commands/Start');
+const LoginCommandObj = requireFix('/src/Commands/Login');
 
 // sites
-let DropboxSiteObj = requireFix('/src/Sites/Dropbox');
-let GoogleSiteObj = requireFix('/src/Sites/Google');
-let ImgurSiteObj = requireFix('/src/Sites/Imgur');
+const DropboxSiteObj = requireFix('/src/Sites/Dropbox');
+const GoogleSiteObj = requireFix('/src/Sites/Google');
+const ImgurSiteObj = requireFix('/src/Sites/Imgur');
 
 // queries
-let RefreshSitesObj = requireFix('/src/Queries/RefreshSites');
-let ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
+const RefreshSitesObj = requireFix('/src/Queries/RefreshSites');
+const ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
 
 // event handlers
 
@@ -88,7 +88,7 @@ module.exports = class App {
             .then(() => {
                 return new Promise((resolve, reject) => {
                     del(['downloads/**', '!downloads', '!downloads/.gitkeep']).then(paths => {
-                        console.log('Cleared downloads folder:\n', paths.join('\n'));
+                        winston.debug('Cleared downloads folder:\n', paths.join('\n'));
                         resolve();
                     });
                 })
@@ -96,13 +96,13 @@ module.exports = class App {
             // finish setup
             .then(() => {
                 // finished loading everything
-                console.log("Loaded the following commands:");
+                winston.info("Loaded the following commands:");
                 console.log(this._CommandHandler.info);
 
                 // start express listener
                 Express(this);
             })
-            .catch(Logger.error);
+            .catch(winston.error);
 
     }
 
@@ -116,7 +116,7 @@ module.exports = class App {
             // attempt to connect to mongoserver
             MongoClient.connect(process.env.MONGODB_URL)
                 .then((db) => {
-                    Logger.log("Connected to " + process.env.MONGODB_URL);
+                    winston.info("Connected to " + process.env.MONGODB_URL);
                     resolve(db);
                 })
                 .catch(reject);
@@ -129,14 +129,12 @@ module.exports = class App {
      * @returns {Promise.<T>}
      */
     loadWebsites() {
-        Logger.overwrite('Loading websites');
-
         // Register the websites
         this._SiteHandler.register(new DropboxSiteObj(this));
         this._SiteHandler.register(new ImgurSiteObj(this));
         this._SiteHandler.register(new GoogleSiteObj(this));
 
-        Logger.overwrite('Loaded ' + this._SiteHandler.siteCount + " sites      \n");
+        winston.info('Loaded ' + this._SiteHandler.siteCount + " sites");
 
         return Promise.resolve();
     }
@@ -147,14 +145,12 @@ module.exports = class App {
      * @returns {Promise.<T>}
      */
     loadCommands() {
-        Logger.overwrite('Loading global commands');
-
         // Add the global commands
         this._CommandHandler.register(new HelpCommandObj(this));
         this._CommandHandler.register(new StartCommandObj(this));
         this._CommandHandler.register(new LoginCommandObj(this));
 
-        Logger.overwrite('Loaded ' + this._CommandHandler.commandCount + " commands            \n");
+        winston.info('Loaded ' + this._CommandHandler.commandCount + " commands");
 
         // not used for now
         return Promise.resolve();
@@ -165,13 +161,11 @@ module.exports = class App {
      * @returns {Promise.<T>}
      */
     loadQueries() {
-        Logger.overwrite('Loading queries');
-
         // Add the query handlers
         this._QueryHandler.register(new RefreshSitesObj(this));
         this._QueryHandler.register(new ScanChatQueryObj(this));
 
-        Logger.overwrite('Loaded ' + this._QueryHandler.queryCount + " queries            \n");
+        winston.info('Loaded ' + this._QueryHandler.queryCount + " queries");
 
         // not used for now
         return Promise.resolve();
@@ -188,10 +182,10 @@ module.exports = class App {
     answerCallbackQuery(id, text = "", alert = false, options = {}) {
         return this._TelegramBot.answerCallbackQuery(id, text, alert, options)
             .then((result) => {
-                Logger.log("Responded to query " + id);
+                winston.info("Responded to query " + id);
             })
             .catch(() => {
-                Logger.log("Failed to respond to query " + id);
+                winston.info("Failed to respond to query " + id);
             });
     }
 
@@ -220,10 +214,10 @@ module.exports = class App {
         });
 
         this._TelegramBot.on('group_chat_created', (msg) => {
-            // console.log('group_chat_created', msg);
+            // winston.debug('group_chat_created', msg);
         });
         this._TelegramBot.on('message', (msg) => {
-            // console.log('message', msg);
+            // winston.debug('message', msg);
         });
 
         // callback query listener

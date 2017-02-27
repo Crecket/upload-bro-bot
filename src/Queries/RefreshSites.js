@@ -1,7 +1,7 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-var HelperInterface = require(path.join(__dirname, '../HelperInterface'));
+const HelperInterface = require(path.join(__dirname, '../HelperInterface'));
 
 module.exports = class MySites extends HelperInterface {
     constructor(app) {

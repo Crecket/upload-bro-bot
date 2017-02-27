@@ -1,9 +1,9 @@
-var fs = require('fs');
-var path = require('path');
-var appRoot = require('app-root-path');
-var requireFix = appRoot.require;
+const fs = require('fs');
+const path = require('path');
+const appRoot = require('app-root-path');
+const requireFix = appRoot.require;
 
-var HelperInterface = requireFix('/src/HelperInterface');
+const HelperInterface = requireFix('/src/HelperInterface');
 
 module.exports = class UploadFinish extends HelperInterface {
     constructor(app) {

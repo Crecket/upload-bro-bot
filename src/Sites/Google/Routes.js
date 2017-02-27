@@ -1,9 +1,10 @@
-var fs = require('fs');
-var path = require('path');
-var mime = require('mime');
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime');
+const winston = require('winston');
 
-var GoogleHelperObj = require('./Helper');
-var UserHelperObj = require('../../UserHelper.js');
+const GoogleHelperObj = require('./Helper');
+const UserHelperObj = require('../../UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;
@@ -36,7 +37,7 @@ module.exports = (app, passport, uploadApp) => {
                         // redirect to it
                         response.redirect(url);
                     })
-                    .catch(console.error);
+                    .catch(winston.error);
             }
 
             // check if we already have data for google
@@ -145,7 +146,7 @@ module.exports = (app, passport, uploadApp) => {
                             });
                     });
                 })
-                .catch(console.error);
+                .catch(winston.error);
 
         }
     });

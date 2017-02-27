@@ -1,14 +1,14 @@
-var fs = require('fs');
-var path = require('path');
-var path = require('path');
-var mime = require('mime');
-var appRoot = require('app-root-path');
-var requireFix = appRoot.require;
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime');
+const winston = require('winston');
+const appRoot = require('app-root-path');
+const requireFix = appRoot.require;
 
-var HelperInterface = requireFix('/src/HelperInterface');
-var Utils = requireFix('/src/Utils');
+const HelperInterface = requireFix('/src/HelperInterface');
+const Utils = requireFix('/src/Utils');
 
-var GoogleHelperObj = requireFix('/src/Sites/Google/Helper');
+const GoogleHelperObj = requireFix('/src/Sites/Google/Helper');
 
 module.exports = class SearchQuery extends HelperInterface {
     constructor(app) {
@@ -52,7 +52,7 @@ module.exports = class SearchQuery extends HelperInterface {
                     match, // file name to search for
                     {}
                 ).then((file_results) => {
-                    console.log(file_results);
+                    winston.debug(file_results);
                     var resultList = [];
                     file_results.map((file, key) => {
 
@@ -82,8 +82,8 @@ module.exports = class SearchQuery extends HelperInterface {
                         cacheTime: 1
                     })
 
-                }).catch(err => console.log(err));
-            }).catch(err => console.log(err));
+                }).catch(err => winston.error(err));
+            }).catch(err => winston.error(err));
         });
     }
 

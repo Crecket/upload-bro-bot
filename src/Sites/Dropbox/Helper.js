@@ -1,4 +1,4 @@
-var Dropbox = require('dropbox');
+const Dropbox = require('dropbox');
 
 module.exports = class DropboxHelper {
     constructor(app) {

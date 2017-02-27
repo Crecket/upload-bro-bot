@@ -8,6 +8,6 @@ export default {
     error: (DEVELOPMENT_MODE) ? console.error.bind(window.console) : ()=> {
     },
     // always show info
-    info: (true || DEVELOPMENT_MODE) ? console.info.bind(window.console) : ()=> {
+    info: (DEVELOPMENT_MODE) ? console.info.bind(window.console) : ()=> {
     },
 };

@@ -1,10 +1,6 @@
-var Logger = require('../Logger');
-
 module.exports = class SiteInteface {
     constructor(app) {
         this._app = app;
-
-        this._logger = Logger;
     }
 
     handle() {

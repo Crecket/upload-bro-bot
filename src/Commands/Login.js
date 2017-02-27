@@ -36,7 +36,7 @@ module.exports = class Login extends HelperInterface {
         }).then((res) => {
             // console.log(res);
         }).catch((err) => {
-            console.log(err);
+            winston.error(err);
         });
     }
 

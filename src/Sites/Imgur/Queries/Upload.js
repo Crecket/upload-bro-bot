@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const winston = require('winston');
 const appRoot = require('app-root-path');
 const requireFix = appRoot.require;
 

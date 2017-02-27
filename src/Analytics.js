@@ -1,3 +1,5 @@
+const winston = require('winston');
+
 module.exports = class Analytics {
     constructor(app, collection_name = 'analytics') {
         this._app = app;
@@ -68,7 +70,7 @@ module.exports = class Analytics {
         this._app._Db
             .collection(this.collection_name)
             .insertOne(data, (err, res) => {
-                if (err) console.log(err);
+                if (err) winston.error(err);
             });
     }
 

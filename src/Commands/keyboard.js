@@ -1,4 +1,4 @@
-// example code
+const winston = require('winston');
 
 // send the message
 super.sendMessage(msg.chat.id, message, {
@@ -20,9 +20,8 @@ super.sendMessage(msg.chat.id, message, {
     }
 })
     .then((res) => {
-        console.log(res);
+        winston.info(res);
     })
     .catch((err) => {
-
-        console.log(err);
+        winston.error(err);
     });

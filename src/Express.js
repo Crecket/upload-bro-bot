@@ -13,9 +13,8 @@ const refresh = require('passport-oauth2-refresh');
 const ouch = require('ouch');
 const helmet = require('helmet');
 const compression = require('compression');
-
-// util helper
-const Logger = require('./Logger');
+const csurf = require('csurf');
+const winston = require('winston');
 
 // general routes
 const GoogleRoutes = require('./Sites/Google/Routes');
@@ -187,7 +186,7 @@ module.exports = function (uploadApp) {
                 new ouch.handlers.PrettyPageHandler()
             ).handleException(err, req, res,
                 function () {
-                    console.log('Error handled');
+                    winston.error('Error handled');
                 }
             );
         });
@@ -198,10 +197,10 @@ module.exports = function (uploadApp) {
         // start https
         if (useSsl) {
             httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
-                console.log('Express listening on ' + process.env.EXPRESS_HTTPS_PORT + " and " + process.env.EXPRESS_PORT)
+                winston.info('Express listening on ' + process.env.EXPRESS_HTTPS_PORT + " and " + process.env.EXPRESS_PORT)
             });
         } else {
-            console.log('Express listening on ' + process.env.EXPRESS_PORT)
+            winston.info('Express listening on ' + process.env.EXPRESS_PORT)
         }
     });
 };

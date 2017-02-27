@@ -1,5 +1,6 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
+const winston = require('winston');
 
 var HelperInterface = require(path.join(__dirname, '/../HelperInterface'));
 
@@ -20,11 +21,11 @@ module.exports = class ScanChat extends HelperInterface {
         return new Promise((resolve, reject) => {
             this._app._TelegramBot.getUpdates().bind(this)
                 .then((res) => {
-                    console.log(res);
+                    winston.info(res);
                     resolve(query.id);
                 })
                 .catch((err) => {
-                    console.error('getUpdates error', err);
+                    winston.error('getUpdates error', err);
                     reject(query.id);
                 });
         })

@@ -1,9 +1,10 @@
-var fs = require('fs');
-var path = require('path');
-var mime = require('mime');
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime');
+const winston = require('winston');
 
-var ImgurHelperObj = require('./Helper');
-var UserHelperObj = require('../../UserHelper.js');
+const ImgurHelperObj = require('./Helper');
+const UserHelperObj = require('../../UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {
     let db = uploadApp._Db;
@@ -54,7 +55,7 @@ module.exports = (app, passport, uploadApp) => {
                                             response.redirect('/');
                                         })
                                         .catch((err) => {
-                                            console.error(err);
+                                            winston.error(err);
                                             response.redirect('/');
                                         });
                                 } else {
@@ -63,7 +64,7 @@ module.exports = (app, passport, uploadApp) => {
 
                             })
                             .catch((err) => {
-                                console.error(err);
+                                winston.error(err);
                                 response.redirect('/');
                             });
                     }

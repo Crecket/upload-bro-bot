@@ -1,16 +1,14 @@
-var Logger = require('./../Logger');
-var mime = require('mime');
-var path = require('path');
-var requireFix = require('app-root-path').require;
-var HelperInterface = requireFix('src/HelperInterface');
-var filesize = require('filesize');
+const mime = require('mime');
+const path = require('path');
+const requireFix = require('app-root-path').require;
+const HelperInterface = requireFix('src/HelperInterface');
+const filesize = require('filesize');
+const winston = require('winston');
 
 module.exports = class EventHandlers extends HelperInterface {
     constructor(app) {
         super(app);
         this._app = app;
-
-        this._logger = Logger;
     }
 
     /**
@@ -32,24 +30,25 @@ module.exports = class EventHandlers extends HelperInterface {
                 .then((message = "") => {
                     return this._app.answerCallbackQuery(query.id, message)
                         .then((res) => {
-                            // console.log(res);
+                            winston.debug(res);
                         })
-                        .catch(err => console.log(err));
+                        .catch(err => winston.error(err));
                 })
                 .catch((error) => {
-                    console.log(error);
+                    winston.error(error);
+
                     return this._app.answerCallbackQuery(query.id, "It looks like something went wrong.")
                         .then((res) => {
-                            // console.log(res);
+                            winston.debug(res);
                         })
-                        .catch(err => console.log(err));
+                        .catch(err => winston.error(err));
                 })
         } else {
             this._app.answerCallbackQuery(query.id, "We couldn't find this command.")
                 .then((res) => {
-                    // console.log(res);
+                    winston.debug(res);
                 })
-                .catch(err => console.log(err));
+                .catch(err => winston.error(err));
         }
     }
 
@@ -101,7 +100,7 @@ module.exports = class EventHandlers extends HelperInterface {
 
         } else {
             // invalid file type
-            console.log(file);
+            winston.debug(file);
             return;
         }
         // get the file extension
@@ -118,7 +117,7 @@ module.exports = class EventHandlers extends HelperInterface {
                 parse_mode: "HTML",
                 disable_notification: true
             }).then((resulting_message) => {
-            }).catch(console.error);
+            }).catch(winston.error);
             return;
         }
 
@@ -164,7 +163,7 @@ module.exports = class EventHandlers extends HelperInterface {
 
                                     })
                             })
-                            .catch(console.error);
+                            .catch(winston.error);
                     } else {
                         // warn the user that we don't have any providers for them yet
                         var message = "Your account is registered in our system but you haven't connected " +
@@ -174,13 +173,13 @@ module.exports = class EventHandlers extends HelperInterface {
                             disable_notification: true
                         }).then((resulting_message) => {
                             // don't care
-                        }).catch(console.error);
+                        }).catch(winston.error);
                     }
 
                 } else {
                     // nothing to do, this user isn't registered
                 }
-            }).catch(console.error);
+            }).catch(winston.error);
 
     }
 
@@ -222,9 +221,9 @@ module.exports = class EventHandlers extends HelperInterface {
                             options
                         ).then((result) => {
                             // success
-                        }).catch(err => console.log(err));
+                        }).catch(err => winston.error(err));
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => winston.error(err));
             }
         });
     }

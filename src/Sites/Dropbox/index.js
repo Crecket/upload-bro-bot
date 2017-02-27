@@ -1,11 +1,11 @@
-var fs = require('fs');
-var path = require('path');
-var appRoot = require('app-root-path');
-var requireFix = appRoot.require;
+const fs = require('fs');
+const path = require('path');
+const appRoot = require('app-root-path');
+const requireFix = appRoot.require;
 
-var SiteInteface = require(path.join(__dirname, '../SiteInterface.js'));
+const SiteInteface = require(path.join(__dirname, '../SiteInterface.js'));
 
-var UploadObj = requireFix('/src/Sites/Dropbox/Queries/Upload');
+const UploadObj = requireFix('/src/Sites/Dropbox/Queries/Upload');
 
 module.exports = class Dropbox extends SiteInteface {
     constructor(app) {

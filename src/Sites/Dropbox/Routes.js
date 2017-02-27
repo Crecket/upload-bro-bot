@@ -1,9 +1,10 @@
-var fs = require('fs');
-var path = require('path');
-var mime = require('mime');
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime');
+const winston = require('winston');
 
-var DropboxHelperObj = require('./Helper');
-var UserHelperObj = require('../../UserHelper.js');
+const DropboxHelperObj = require('./Helper');
+const UserHelperObj = require('../../UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;
@@ -64,7 +65,7 @@ module.exports = (app, passport, uploadApp) => {
                     response.json(true);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    winston.error(err);
                     response.status(500).json({error: err});
                 });
         }

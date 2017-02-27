@@ -3,8 +3,8 @@ const path = require('path');
 const appRoot = require('app-root-path');
 const requireFix = appRoot.require;
 
-var HelperInterface = requireFix('/src/HelperInterface');
-var Utils = requireFix('/src/Utils');
+const HelperInterface = requireFix('/src/HelperInterface');
+const Utils = requireFix('/src/Utils');
 
 const UploadStartObj = requireFix('/src/Queries/Generic/UploadStart');
 const UploadFinishObj = requireFix('/src/Queries/Generic/UploadFinish');

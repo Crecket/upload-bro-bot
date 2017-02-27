@@ -1,5 +1,6 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
+const winston = require('winston');
 
 var HelperInterface = require(path.join(__dirname, '/../HelperInterface'));
 
@@ -33,13 +34,8 @@ module.exports = class Keyboard extends HelperInterface {
                     parse_mode: "HTML"
                 }).then((res) => {
                     // console.log(res);
-                }).catch((err) => {
-                    console.log(err);
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+                }).catch(winston.error);
+            }).catch(winston.error);
     }
 
     /**
@@ -54,7 +50,7 @@ module.exports = class Keyboard extends HelperInterface {
      * Returns a string with the <command> - <description>
      * @returns {string}
      */
-    get info(){
+    get info() {
         return "start - Show the starting information";
     }
 

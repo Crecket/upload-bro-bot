@@ -1,16 +1,12 @@
 var fs = require('fs');
 var path = require('path');
 var appRoot = require('app-root-path');
-var requireFix = appRoot.require;
 
-var Logger = require('./Logger');
 var Utils = require('./Utils');
 
 module.exports = class HelperInterface {
     constructor(app) {
         this._app = app;
-
-        this._logger = Logger;
     }
 
     /**

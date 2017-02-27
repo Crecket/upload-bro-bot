@@ -1,8 +1,8 @@
-var fs = require('fs');
-var mime = require('mime');
-var path = require('path');
-var google = require('googleapis');
-var OAuth2 = google.auth.OAuth2;
+const fs = require('fs');
+const mime = require('mime');
+const path = require('path');
+const google = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
 
 // https://developers.google.com/apis-explorer/#search/drive/
 // https://developers.google.com/drive/v3/web/about-sdk
@@ -103,12 +103,12 @@ module.exports = class GoogleHelper {
                     // load the files
                     drive.files.list(options, (err, res) => {
                         if (err) {
-                            console.log(err);
-                            console.log('');
-                            console.log(err.arguments);
-                            console.log('');
-                            console.log(err.message);
-                            console.log('');
+                            // console.log(err);
+                            // console.log('');
+                            // console.log(err.arguments);
+                            // console.log('');
+                            // console.log(err.message);
+                            // console.log('');
                             reject(err);
                         } else {
                             resolve(res.files);

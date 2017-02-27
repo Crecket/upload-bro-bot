@@ -1,9 +1,10 @@
-var fs = require('fs');
-var path = require('path');
-var appRoot = require('app-root-path');
-var requireFix = appRoot.require;
+const fs = require('fs');
+const path = require('path');
+const appRoot = require('app-root-path');
+const requireFix = appRoot.require;
+const winston = require('winston');
 
-var HelperInterface = requireFix('/src/HelperInterface');
+const HelperInterface = requireFix('/src/HelperInterface');
 
 module.exports = class UploadStart extends HelperInterface {
     constructor(app) {
@@ -56,7 +57,6 @@ module.exports = class UploadStart extends HelperInterface {
                         // enqueue this attempt
                         this._app._Queue.enqueue('upload')
                             .then(finished => {
-                                console.log('Finished: ', finished);
                                 // save queueKey
                                 resolveResults.queueKey = finished.key;
 

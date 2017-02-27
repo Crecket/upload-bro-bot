@@ -1,10 +1,10 @@
-let fs = require('fs');
-let path = require('path');
-let appRoot = require('app-root-path');
-let requireFix = appRoot.require;
+const fs = require('fs');
+const path = require('path');
+const appRoot = require('app-root-path');
+const requireFix = appRoot.require;
 
-let HelperInterface = requireFix('/src/HelperInterface');
-let Utils = requireFix('/src/Utils');
+const HelperInterface = requireFix('/src/HelperInterface');
+const Utils = requireFix('/src/Utils');
 
 const UploadStartObj = requireFix('/src/Queries/Generic/UploadStart');
 const UploadFinishObj = requireFix('/src/Queries/Generic/UploadFinish');
