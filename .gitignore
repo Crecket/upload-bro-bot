@@ -8,3 +8,4 @@ node_modules
 
 # ignore app compiled files
 public/assets/app.*
+/public/assets/commons.*

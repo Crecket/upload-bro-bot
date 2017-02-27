@@ -35,6 +35,14 @@ var config = {
             "DEVELOPMENT_MODE": process.env.NODE_ENV === "production" ? false : true,
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         }),
+        new webpack.optimize.CommonsChunkPlugin({
+            // (the commons chunk name)
+            name: "commons",
+            // (the filename of the commons chunk)
+            filename: "commons.js",
+            // (Modules must be shared between 3 entries)
+            minChunks: 2
+        })
     ],
     devtool: "source-map",
     module: {
@@ -71,13 +79,20 @@ var config = {
     }
 }
 
+// production only plugins
 if (!DEV) {
-    // In production mode add the uglify plugin
+    // dedupe duplicate files
+    config.plugins.push(new webpack.optimize.DedupePlugin());
+
+    // dedupe duplicate files
+    config.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
+
+    // uglify plugin
     config.plugins.push(new webpack.optimize.UglifyJsPlugin({
         compress: {
             warnings: false
         }
-    }))
+    }));
 }
 
 module.exports = config;
