@@ -1,10 +1,8 @@
 const path = require('path');
 const fs = require('fs');
-const requireFix = require('app-root-path').require;
 const express = require('express');
 const http = require('http');
 const https = require('https');
-const renderToString = require('react-dom/server').renderToString;
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -14,6 +12,7 @@ const TelegramStrategy = require('passport-telegram').Strategy;
 const refresh = require('passport-oauth2-refresh');
 const ouch = require('ouch');
 const helmet = require('helmet');
+const compression = require('compression');
 
 // util helper
 const Logger = require('./Logger');
@@ -137,9 +136,15 @@ module.exports = function (uploadApp) {
     app.set('cache', true);
     app.set('view cache', 'cache');
 
+    // parsers
     app.use(cookieParser());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
+
+    // gzip optimization
+    app.use(compression());
+
+    // session handler
     app.use(session({
         name: "SESS_ID",
         secret: process.env.EXPRESS_SESSION_SECRET,
@@ -164,11 +169,12 @@ module.exports = function (uploadApp) {
     // serve static files
     app.use(express.static(__dirname + '/../public'));
 
+    // Default routes
     TelegramRoutes(app, passport, uploadApp);
     GeneralRoutes(app, passport, uploadApp);
     ApiRoutes(app, passport, uploadApp);
 
-    // specific sites
+    // specific provider routes
     // TODO make this loading automatic
     GoogleRoutes(app, passport, uploadApp);
     DropboxRoutes(app, passport, uploadApp);
