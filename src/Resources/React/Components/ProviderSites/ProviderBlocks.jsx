@@ -20,7 +20,7 @@ const styles = {
 import ProviderBlock from './ProviderBLock';
 
 // actions
-import {openModal, closeModal} from "../../actions/modalActions";
+import {openModal, closeModal} from "../../actions/modalActions.js";
 
 // connect to redux
 @connect((store) => {

@@ -19,9 +19,9 @@ const ThemesList = {
 };
 
 // actions
-import {openModal, closeModal} from "../actions/modalActions";
-import {userUpdate, userLogout} from "../actions/user";
-import {siteUpdate} from "../actions/sites";
+import {openModal, closeModal} from "../actions/modalActions.js";
+import {userUpdate, userLogout} from "../actions/user.js";
+import {siteUpdate} from "../actions/sites.js";
 
 // connect to redux
 @connect((store) => {
