@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
+    "test": "node ./node_modules/mocha/bin/mocha",
     "dev": "cross-env NODE_ENV=development webpack -d --watch --progress --colors",
     "build": "cross-env NODE_ENV=production webpack --progress --colors",
     "start": "cross-env BLUEBIRD_WARNINGS=0 nodemon app.js",
