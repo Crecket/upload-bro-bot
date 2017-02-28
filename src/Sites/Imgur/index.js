@@ -1,11 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const appRoot = require('app-root-path');
-const requireFix = appRoot.require;
 
-const SiteInteface = requireFix('/src/Sites/SiteInterface.js');
+const SiteInteface = rootRequire('src/Sites/SiteInterface.js');
 
-const UploadObj = requireFix('/src/Sites/Imgur/Queries/Upload');
+const UploadObj = rootRequire('src/Sites/Imgur/Queries/Upload');
 
 module.exports = class Imgur extends SiteInteface {
     constructor(app) {

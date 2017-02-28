@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const HelperInterface = require(path.join(__dirname, '../HelperInterface'));
+const HelperInterface = rootRequire('src/HelperInterface');
 
 module.exports = class MySites extends HelperInterface {
     constructor(app) {

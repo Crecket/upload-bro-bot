@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const winston = require('winston');
 
-var HelperInterface = require(path.join(__dirname, '/../HelperInterface'));
+var HelperInterface = rootRequire('src/HelperInterface');
 
 module.exports = class ScanChat extends HelperInterface {
     constructor(app) {

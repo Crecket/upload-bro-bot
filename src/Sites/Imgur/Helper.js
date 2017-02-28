@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
+const winston = require('winston');
 
 module.exports = class ImgurHelper {
     constructor(app) {
@@ -79,7 +80,7 @@ module.exports = class ImgurHelper {
                             .then((json) => resolve(json.data))
                             .catch(reject);
                     });
-                })
+                }).catch(reject);
         });
     }
 
@@ -110,7 +111,10 @@ module.exports = class ImgurHelper {
                 client_id: process.env.IMGUR_CLIENT_ID,
                 client_secret: process.env.IMGUR_CLIENT_SECRET,
                 grant_type: 'authorization_code'
-            }).then(resolve).catch(reject);
+            }).then(resolve).catch(err =>{
+                reject(err);
+                winston.error(err);
+            });
         });
     }
 
@@ -135,7 +139,10 @@ module.exports = class ImgurHelper {
                 resolve(Object.assign(resultData, {
                     expiry_date: (new Date()).getTime() + resultData.expires_in
                 }));
-            }).catch(reject);
+            }).catch(err =>{
+                reject(err);
+                winston.error(err);
+            });
         });
     }
 

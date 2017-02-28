@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const winston = require('winston');
 
-
 module.exports = class Queue {
     constructor(limit = 10) {
         this.limit = limit;

@@ -1,14 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const appRoot = require('app-root-path');
-const requireFix = appRoot.require;
 
-const HelperInterface = requireFix('/src/HelperInterface');
-const Utils = requireFix('/src/Utils');
+const HelperInterface = rootRequire('src/HelperInterface');
+const Utils = rootRequire('src/Utils');
 
-const UploadStartObj = requireFix('/src/Queries/Generic/UploadStart');
-const UploadFinishObj = requireFix('/src/Queries/Generic/UploadFinish');
-const GoogleHelperObj = requireFix('/src/Sites/Google/Helper');
+const UploadStartObj = rootRequire('src/Queries/Generic/UploadStart');
+const UploadFinishObj = rootRequire('src/Queries/Generic/UploadFinish');
+const GoogleHelperObj = rootRequire('src/Sites/Google/Helper');
 
 module.exports = class Upload extends HelperInterface {
 

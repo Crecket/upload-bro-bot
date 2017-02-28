@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 
-var HelperInterface = require(path.join(__dirname, '/../HelperInterface'));
+var HelperInterface = rootRequire('src/HelperInterface');
 
 module.exports = class Login extends HelperInterface {
     constructor(app) {

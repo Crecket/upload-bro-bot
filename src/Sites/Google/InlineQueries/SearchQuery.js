@@ -2,13 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
 const winston = require('winston');
-const appRoot = require('app-root-path');
-const requireFix = appRoot.require;
 
-const HelperInterface = requireFix('/src/HelperInterface');
-const Utils = requireFix('/src/Utils');
+const HelperInterface = rootRequire('src/HelperInterface');
+const Utils = rootRequire('src/Utils');
 
-const GoogleHelperObj = requireFix('/src/Sites/Google/Helper');
+const GoogleHelperObj = rootRequire('src/Sites/Google/Helper');
 
 module.exports = class SearchQuery extends HelperInterface {
     constructor(app) {

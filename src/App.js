@@ -7,38 +7,37 @@ const del = require('del');
 const path = require('path');
 const Cacheman = require('cacheman');
 const MongoDbEngine = require('cacheman-mongo');
-const requireFix = require('app-root-path').require;
 const winston = require('winston');
 
 // utilities
-let Utils = requireFix('/src/Utils');
+let Utils = rootRequire('src/Utils');
 
 // express server
-let Express = requireFix('/src/Express');
+let Express = rootRequire('src/Express');
 
 // handlers and other helpers
-const CommandHandler = requireFix('/src/Handlers/CommandHandler');
-const SiteHandler = requireFix('/src/Handlers/SiteHandler');
-const QueryHandler = requireFix('/src/Handlers/QueryHandler');
-const EventHandlersObj = requireFix('/src/Handlers/EventHandler');
-const InlineQueryHandlerObj = requireFix('/src/Handlers/InlineQueryHandler');
-const UserHelperObj = requireFix('/src/UserHelper');
-const QueueObj = requireFix('/src/Queue');
-const AnalyticsObj = requireFix('/src/Analytics');
+const CommandHandler = rootRequire('src/Handlers/CommandHandler');
+const SiteHandler = rootRequire('src/Handlers/SiteHandler');
+const QueryHandler = rootRequire('src/Handlers/QueryHandler');
+const EventHandlersObj = rootRequire('src/Handlers/EventHandler');
+const InlineQueryHandlerObj = rootRequire('src/Handlers/InlineQueryHandler');
+const UserHelperObj = rootRequire('src/UserHelper');
+const QueueObj = rootRequire('src/Queue');
+const AnalyticsObj = rootRequire('src/Analytics');
 
 // commands
-const HelpCommandObj = requireFix('/src/Commands/Help');
-const StartCommandObj = requireFix('/src/Commands/Start');
-const LoginCommandObj = requireFix('/src/Commands/Login');
+const HelpCommandObj = rootRequire('src/Commands/Help');
+const StartCommandObj = rootRequire('src/Commands/Start');
+const LoginCommandObj = rootRequire('src/Commands/Login');
 
 // sites
-const DropboxSiteObj = requireFix('/src/Sites/Dropbox');
-const GoogleSiteObj = requireFix('/src/Sites/Google');
-const ImgurSiteObj = requireFix('/src/Sites/Imgur');
+const DropboxSiteObj = rootRequire('src/Sites/Dropbox');
+const GoogleSiteObj = rootRequire('src/Sites/Google');
+const ImgurSiteObj = rootRequire('src/Sites/Imgur');
 
 // queries
-const RefreshSitesObj = requireFix('/src/Queries/RefreshSites');
-const ScanChatQueryObj = requireFix('/src/Queries/ScanChat');
+const RefreshSitesObj = rootRequire('src/Queries/RefreshSites');
+const ScanChatQueryObj = rootRequire('src/Queries/ScanChat');
 
 // event handlers
 
@@ -214,10 +213,10 @@ module.exports = class App {
         });
 
         this._TelegramBot.on('group_chat_created', (msg) => {
-            // winston.debug('group_chat_created', msg);
+            winston.debug('group_chat_created', msg);
         });
         this._TelegramBot.on('message', (msg) => {
-            // winston.debug('message', msg);
+            winston.debug('message', msg);
         });
 
         // callback query listener
@@ -231,6 +230,5 @@ module.exports = class App {
         });
 
         return Promise.resolve();
-
     }
 }

@@ -4,7 +4,7 @@ const mime = require('mime');
 const winston = require('winston');
 
 const DropboxHelperObj = require('./Helper');
-const UserHelperObj = require('../../UserHelper.js');
+const UserHelperObj = require(__base + 'src/UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;

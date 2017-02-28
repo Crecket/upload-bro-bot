@@ -1,11 +1,9 @@
 var fs = require('fs');
 var path = require('path');
-var appRoot = require('app-root-path');
-var requireFix = appRoot.require;
 
-var SiteInteface = requireFix('/src/Sites/SiteInterface.js');
-var UploadObj = require(path.join(__dirname, 'Queries/Upload'));
-var SearchQueryObj = require(path.join(__dirname, 'InlineQueries/SearchQuery'));
+var SiteInteface = require(__base + 'src/Sites/SiteInterface.js');
+var UploadObj = require('./Queries/Upload');
+var SearchQueryObj = require('./InlineQueries/SearchQuery');
 
 module.exports = class Google extends SiteInteface {
     constructor(app) {

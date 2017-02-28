@@ -4,7 +4,7 @@ const mime = require('mime');
 const winston = require('winston');
 
 const ImgurHelperObj = require('./Helper');
-const UserHelperObj = require('../../UserHelper.js');
+const UserHelperObj = rootRequire('src/UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {
     let db = uploadApp._Db;

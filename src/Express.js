@@ -13,6 +13,7 @@ const refresh = require('passport-oauth2-refresh');
 const ouch = require('ouch');
 const helmet = require('helmet');
 const compression = require('compression');
+const responseTime = require('response-time');
 const csurf = require('csurf');
 const winston = require('winston');
 
@@ -142,6 +143,11 @@ module.exports = function (uploadApp) {
 
     // gzip optimization
     app.use(compression());
+
+    // add response time header
+    if (process.env.DEBUG) {
+        app.use(responseTime());
+    }
 
     // session handler
     app.use(session({

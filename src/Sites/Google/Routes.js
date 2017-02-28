@@ -4,7 +4,7 @@ const mime = require('mime');
 const winston = require('winston');
 
 const GoogleHelperObj = require('./Helper');
-const UserHelperObj = require('../../UserHelper.js');
+const UserHelperObj = rootRequire('src/UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;

@@ -1,8 +1,7 @@
 var fs = require('fs');
 var path = require('path');
-var appRoot = require('app-root-path');
 
-var Utils = require('./Utils');
+var Utils = rootRequire('src/Utils');
 
 module.exports = class HelperInterface {
     constructor(app) {
@@ -34,7 +33,7 @@ module.exports = class HelperInterface {
         return new Promise((resolve, reject) => {
 
             // target installation directory
-            var directory = appRoot + "/downloads";
+            var directory = __base + "/downloads";
 
             // assert the lower folder exists
             Utils.ensureFolderExists(directory, '0744').then(() => {
@@ -47,7 +46,7 @@ module.exports = class HelperInterface {
                         return resolve(finalPath);
                     }
                     // set the target path
-                    var targetName = appRoot + "/downloads/" + file_name;
+                    var targetName = __base + "/downloads/" + file_name;
                     // rename the file
                     fs.rename(finalPath, targetName, (err) => {
                         if (err) {

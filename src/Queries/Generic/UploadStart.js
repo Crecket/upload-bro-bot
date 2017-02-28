@@ -1,10 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const appRoot = require('app-root-path');
-const requireFix = appRoot.require;
 const winston = require('winston');
 
-const HelperInterface = requireFix('/src/HelperInterface');
+const HelperInterface = rootRequire('src/HelperInterface');
 
 module.exports = class UploadStart extends HelperInterface {
     constructor(app) {

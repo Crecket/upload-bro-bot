@@ -1,14 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const appRoot = require('app-root-path');
-const requireFix = appRoot.require;
 
-const HelperInterface = requireFix('/src/HelperInterface');
-const Utils = requireFix('/src/Utils');
+const HelperInterface = require(__base + 'src/HelperInterface');
+const Utils = require(__base + 'src/Utils');
 
-const UploadStartObj = requireFix('/src/Queries/Generic/UploadStart');
-const UploadFinishObj = requireFix('/src/Queries/Generic/UploadFinish');
-const DropboxHelperObj = requireFix('/src/Sites/Dropbox/Helper');
+const UploadStartObj = require(__base + 'src/Queries/Generic/UploadStart');
+const UploadFinishObj = require(__base + 'src/Queries/Generic/UploadFinish');
+const DropboxHelperObj = require(__base + 'src/Sites/Dropbox/Helper');
 
 module.exports = class Upload extends HelperInterface {
     constructor(app) {
