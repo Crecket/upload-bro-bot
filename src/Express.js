@@ -186,7 +186,7 @@ module.exports = function (uploadApp) {
     ImgurRoutes(app, passport, uploadApp);
 
     // Debug errors
-    if (process.env.DEBUG === "true") {
+    if (process.env.DEBUG === true) {
         app.use(function (err, req, res, next) {
             (new ouch()).pushHandler(
                 new ouch.handlers.PrettyPageHandler()

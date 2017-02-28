@@ -15,85 +15,60 @@ module.exports = (app, passport, uploadApp) => {
     app.get('/login/google', (request, response) => {
         if (!request.user) {
             // not logged in
-            response.redirect('/');
-        } else {
-            var urlOptions = {
-                access_type: 'offline',
-                approval_prompt: 'force',
-                scope: [
-                    'https://www.googleapis.com/auth/userinfo.profile',
-                    'https://www.googleapis.com/auth/drive',
-                    // 'https://www.googleapis.com/auth/drive.appfolder',
-                    // 'https://www.googleapis.com/auth/drive.file'
-                ]
-            };
-            // redirect to the auth url
-            let redirectToUrl = () => {
-                // create the url
-                GoogleHelper.createOauthClient()
-                    .then(authclient => {
-                        let url = authclient.generateAuthUrl(urlOptions);
+            return response.redirect('/');
+        }
+        var urlOptions = {
+            access_type: 'offline',
+            approval_prompt: 'force',
+            scope: [
+                'https://www.googleapis.com/auth/userinfo.profile',
+                'https://www.googleapis.com/auth/drive',
+                // 'https://www.googleapis.com/auth/drive.appfolder',
+                // 'https://www.googleapis.com/auth/drive.file'
+            ]
+        };
 
-                        // redirect to it
-                        response.redirect(url);
-                    })
-                    .catch(winston.error);
-            }
+        // redirect to the auth url helper func
+        let redirectToUrl = () => {
+            // create the url
+            GoogleHelper.createOauthClient()
+                .then(authclient => {
+                    let url = authclient.generateAuthUrl(urlOptions);
 
-            // check if we already have data for google
-            if (request.user.provider_sites.google) {
+                    // redirect to it
+                    response.redirect(url);
+                })
+                .catch(err =>{
+                    winston.error(err);
+                    // redirect to home, something went terribly wrong
+                    response.redirect('/');
+                });
+        }
 
-                // check if we have a refresh token
-                if (request.user.provider_sites.google.refresh_token) {
+        // check if we already have data for google
+        if (request.user.provider_sites.google) {
 
-                    // get current user
-                    var userInfo = request.user;
-                    var userGoogleTokens = userInfo.provider_sites.google;
+            // check if we have a refresh token
+            if (request.user.provider_sites.google.refresh_token) {
 
-                    // create a new client
-                    var client = GoogleHelper.createOauthClient(userGoogleTokens);
-
-                    // check if token is still valid
-                    if (!GoogleHelper.isExpired(client)) {
-                        // access token is still valid so we don't need to do this
+                // create a new client
+                GoogleHelper.createOauthClient(request.user)
+                    .then(valid => {
                         response.redirect('/');
-                        return;
-                    } else {
-
-                        // get a new access token
-                        GoogleHelper.getAccessToken(client)
-                            .then((token_result) => {
-
-                                if (token_result.newTokens) {
-                                    // store the new tokens
-                                    request.user.provider_sites.google = token_result.newTokens;
-
-                                    // update the database
-                                    UserHelper.updateUserTokens(request.user)
-                                        .then((success) => {
-                                            response.redirect('/');
-                                        })
-                                        .catch((err) => {
-                                            // failed to update tokens
-                                            redirectToUrl();
-                                        });
-                                } else {
-                                    // failed to get new tokens
-                                    redirectToUrl();
-                                }
-                            })
-                            .catch((err) => {
-                                // failed to get new access token using refresh token
-                                redirectToUrl();
-                            });
-                    }
-                }
+                    })
+                    .then(err => {
+                        // something went wrong or tokens are invalid
+                        redirectToUrl();
+                    })
             } else {
                 // no google provider
                 redirectToUrl();
             }
-
+        } else {
+            // no google provider
+            redirectToUrl();
         }
+
     });
 
     // handles the oauth callback
@@ -142,12 +117,16 @@ module.exports = (app, passport, uploadApp) => {
                                 response.redirect(resultRoute);
                             })
                             .catch((err) => {
+                                winston.error(err);
                                 response.redirect(resultRoute);
                             });
                     });
                 })
-                .catch(winston.error);
-
+                .catch(err => {
+                    // log and redirect
+                    winston.error(err);
+                    response.redirect(resultRoute);
+                });
         }
     });
 

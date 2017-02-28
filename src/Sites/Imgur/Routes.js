@@ -27,59 +27,22 @@ module.exports = (app, passport, uploadApp) => {
                 if (request.user.provider_sites.imgur.refresh_token) {
                     redirectToUrl = false;
 
-                    // get current user
-                    var userInfo = request.user;
-                    var userGoogleTokens = userInfo.provider_sites.google;
-
-                    // create a new client
-                    var client = GoogleHelper.createOauthClient(userGoogleTokens);
-
-                    // check if token is still valid
-                    if (!GoogleHelper.isExpired(client)) {
-                        // access token is still valid so we don't need to do this
-                        response.redirect('/');
-                        return;
-                    } else {
-
-                        // get a new access token
-                        GoogleHelper.getAccessToken(client)
-                            .then((token_result) => {
-
-                                if (token_result.newTokens) {
-                                    // store the new tokens
-                                    request.user.provider_sites.google = token_result.newTokens;
-
-                                    // update the database
-                                    UserHelper.updateUserTokens(request.user)
-                                        .then((success) => {
-                                            response.redirect('/');
-                                        })
-                                        .catch((err) => {
-                                            winston.error(err);
-                                            response.redirect('/');
-                                        });
-                                } else {
-                                    response.redirect('/');
-                                }
-
-                            })
-                            .catch((err) => {
-                                winston.error(err);
-                                response.redirect('/');
-                            });
-                    }
-
-                    // token is expired but we have a refresh token so no approval prompt required
-                    urlOptions.approval_prompt = null;
+                    // validate tokens
+                    ImgurHelper.createOauthClient(request.user)
+                        .then(valid => {
+                            // no need to login
+                            response.redirect('/');
+                        })
+                        .catch(err => {
+                            // invalid token or something went wrong
+                            response.redirect(ImgurHelper.getAuthorizationUrl('code'));
+                        })
                 }
             }
 
             if (redirectToUrl) {
-                // create the url
-                var url = ImgurHelper.getAuthorizationUrl('code');
-
-                // redirect to it
-                response.redirect(url);
+                // redirect to imgur login url
+                response.redirect(ImgurHelper.getAuthorizationUrl('code'));
             }
         }
     });

@@ -16,11 +16,7 @@ module.exports = class UserHelper {
             // update provider sites
             usersCollection.updateOne({_id: user._id}, {
                 $set: {provider_sites: user.provider_sites}
-            }).then((result) => {
-                resolve(result);
-            }).catch((err) => {
-                reject(err);
-            });
+            }).then(resolve).catch(reject);
         })
     }
 
@@ -36,9 +32,7 @@ module.exports = class UserHelper {
 
             // update provider sites
             usersCollection.findOne({_id: user_id})
-                .then((result) => {
-                    resolve(result);
-                }).catch(reject);
+                .then(resolve).catch(reject);
         })
     }
 

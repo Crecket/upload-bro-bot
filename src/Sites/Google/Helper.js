@@ -33,6 +33,7 @@ module.exports = class GoogleHelper {
                 // nothing more to do
                 resolve(oauthclient);
             }
+
             // seperate correct tokens
             const tokens = userInfo.provider_sites.google;
 
