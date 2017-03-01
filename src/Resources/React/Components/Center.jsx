@@ -1,0 +1,7 @@
+// alignContent: 'center',
+//     alignItems: 'center',
+//     boxSizing: 'border-box',
+//     display: 'flex',
+//     flexDirection: 'row',
+//     flexWrap: 'nowrap',
+//     justifyContent: 'center',

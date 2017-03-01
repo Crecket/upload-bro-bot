@@ -10,7 +10,7 @@ class PaperHelper extends React.Component {
 
     render() {
         // let bgColor = this.props.bg ? this.props.bg : this.props.muiTheme.custom.appBackgroundColor;
-        let bgColor = '#FFFFFF';
+        let bgColor = this.props.bg ? this.props.bg : '#FFFFFF';
         return (
             <Paper style={{backgroundColor: bgColor}}
                    {...this.props}>

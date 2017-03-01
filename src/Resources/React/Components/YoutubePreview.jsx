@@ -1,10 +1,12 @@
 import React from 'react';
-import PaperHelper from "../Components/PaperHelper";
 import YouTube from 'react-youtube';
+import PaperHelper from "../Components/PaperHelper";
+import TitleBar from "../Components/TitleBar";
 
 const styles = {
     wrapper: {
-        padding: 10
+        padding: 10,
+        marginTop: 30
     }
 }
 
@@ -24,8 +26,10 @@ export default class YoutubePreview extends React.Component {
     render() {
         return (
             <div>
-                <h1>Quick preview</h1>
                 <PaperHelper style={styles.wrapper}>
+                    <TitleBar>
+                        Quick preview
+                    </TitleBar>
                     <YouTube
                         videoId="FsN-6xlfoz4"
                         opts={opts}
