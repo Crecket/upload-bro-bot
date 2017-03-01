@@ -62,18 +62,13 @@ var config = {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract(
                     "style-loader",
-                    "css-loader?sourceMap",
-                    "csso-loader?sourceMap"
+                    "css-loader",
+                    "csso-loader"
                 )
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract(
-                    "style-loader",
-                    "css-loader?sourceMap",
-                    "sass-loader?sourceMap",
-                    "csso-loader?sourceMap"
-                )
+                loader: ExtractTextPlugin.extract("style-loader", "css!sass", "csso-loader")
             }
         ]
     }

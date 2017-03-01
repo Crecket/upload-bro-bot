@@ -1,3 +1,13 @@
+$primary-color-dark: #303F9F;
+$primary-color: #3F51B5;
+$primary-color-light: #C5CAE9;
+$primary-color-text: #FFFFFF;
+$accent-color: #448AFF;
+$primary-text-color: #212121;
+$secondary-text-color: #757575;
+$divider-color: #BDBDBD;
+$background-color: #374046;
+
 html,
 body {
   font-family: Roboto, sans-serif;
@@ -16,6 +26,7 @@ body {
   flex-direction: column;
   box-sizing: border-box;
   font-weight: 400;
+  background-color: $background-color;
 }
 
 .wrap {
@@ -33,6 +44,25 @@ body {
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
+}
+
+.fluidMedia {
+  position: relative;
+  padding-bottom: 56.25%; /* proportion value to aspect ratio 16:9 (9 / 16 = 0.5625 or 56.25%) */
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+a {
+  color: #fff;
 }
 
 .box-row {

@@ -13,8 +13,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomDark from '../Themes/CustomDark';
 import CustomLight from '../Themes/CustomLight';
+import CustomBlue from '../Themes/CustomBlue';
 const ThemesList = {
     "CustomDark": getMuiTheme(CustomDark),
+    "CustomBlue": getMuiTheme(CustomBlue),
     "CustomLight": getMuiTheme(CustomLight)
 };
 
@@ -44,7 +46,7 @@ class Main extends React.Component {
             connected: false,
 
             // theme options
-            muiTheme: 'CustomLight',
+            muiTheme: 'CustomBlue',
         };
 
     };
@@ -118,7 +120,8 @@ class Main extends React.Component {
                 <div className={"container-fluid " + this.state.muiTheme}>
                     <div className={"row center-xs"}>
                         <div className="col-xs-12 col-md-10 col-lg-8">
-                            <div className="box">
+                            <div className="box"
+                                 style={{backgroundColor: ThemesList[this.state.muiTheme].palette.backgroundColor}}>
                                 <Dialog
                                     title={this.props.modalTitle}
                                     actions={[

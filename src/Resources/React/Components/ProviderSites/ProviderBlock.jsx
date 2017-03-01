@@ -41,7 +41,6 @@ export default class ProviderBlock extends React.Component {
                 Add {this.props.siteInfo.name}
             </RaisedButton>
         );
-        let ImgUrl = "/login/" + this.props.siteInfo.key;
 
         if (this.props.providerSite) {
             // user is logged into this site
@@ -54,7 +53,6 @@ export default class ProviderBlock extends React.Component {
                     Remove {Utils.ucfirst(this.props.siteInfo.name)}
                 </RaisedButton>
             );
-            ImgUrl = "/remove/" + this.props.siteInfo.key;
         }
         return (
             <div style={styles.container}>
@@ -63,11 +61,8 @@ export default class ProviderBlock extends React.Component {
                     href={this.props.siteInfo.url} target="_blank">
                     <LinkIcon />
                 </FloatingActionButton>
-
-                <a href={ImgUrl} target="_blank">
-                    <img style={styles.img}
-                         src={this.props.siteInfo.logoUrl}/>
-                </a>
+                <img style={styles.img}
+                     src={this.props.siteInfo.logoUrl}/>
                 <br/>
                 {BlockBtn}
             </div>

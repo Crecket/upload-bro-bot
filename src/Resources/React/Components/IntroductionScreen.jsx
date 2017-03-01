@@ -8,7 +8,7 @@ export default class IntroductionScreen extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            open: false
+            open: true
         };
     };
 

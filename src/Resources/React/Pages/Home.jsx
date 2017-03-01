@@ -1,55 +1,67 @@
 import React from "react";
 import FlatButton from "material-ui/FlatButton";
+import Paper from "material-ui/Paper";
+import ExitToAppIcon from 'material-ui/svg-icons/action/exit-to-app';
 
 import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
 import IntroductionScreen from "../Components/IntroductionScreen";
-import NavLink from "../Helpers/NavLink";
-// import Trend from 'react-trend';
 
 const styles = {
     wrapper: {
         padding: 30,
+        minHeight: 300,
         // color: 'white'
+    },
+    centerBox: {
+        minHeight: 200,
+        alignContent: 'center',
+        alignItems: 'center',
+        boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'center'
     },
     notLoggedIn: {
         textAlign: 'center'
     }
 }
 
-class Home extends React.Component {
+export default class Home extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            testData: new Array(10).fill(0)
-        };
+        this.state = {};
     };
 
-    componentDidMount() {
-        // setInterval(() => {
-        //     this.addItem(this.getRandomInt(1, 100));
-        // }, 500);
-    }
-
-    // getRandomInt = (min, max) => {
-    //     return Math.floor(Math.random() * (max - min + 1)) + min;
-    // }
-    //
-    // addItem = (val) => {
-    //     let newList = this.state.testData.concat([]);
-    //     newList.shift();
-    //     newList.push(val);
-    //     this.setState({testData: newList});
-    // }
-
     render() {
-        console.log(this.state.testData);
         var homeDiv = (
             <div style={styles.notLoggedIn}>
                 You're not logged in yet. <br/>
-                <FlatButton
-                    secondary={true}
-                    label="Login with Telegram"
-                    href="/login/telegram"/>
+
+                <br/>
+                <br/>
+
+                <div className="row center-xs">
+                    <div className="col-xs-12 col-sm-6 col-md-4">
+                        <Paper className="box" style={styles.centerBox}>
+                            <FlatButton
+                                secondary={true}
+                                label="Login with Telegram"
+                                href="/login/telegram"/>
+                            <br/>
+                            <br/>
+                            <ExitToAppIcon/>
+                        </Paper>
+                    </div>
+                    <div className="col-xs-12 col-sm-6 col-md-4">
+                        <Paper className="box" style={styles.centerBox}>
+                            <FlatButton
+                                secondary={true}
+                                label="Login with Telegram"
+                                href="/login/telegram"/>
+                        </Paper>
+                    </div>
+                </div>
             </div>
         );
         if (this.props.user_info) {
@@ -67,14 +79,6 @@ class Home extends React.Component {
                         provider_sites_info={this.props.sites}
                     />
 
-                    {/*<Trend*/}
-                    {/*smooth autoDraw*/}
-                    {/*data={this.state.testData}*/}
-                    {/*gradient={['#42b3f4']}*/}
-                    {/*radius={2}*/}
-                    {/*strokeWidth={3}*/}
-                    {/*strokeLinecap={'round'}*/}
-                    {/*/>*/}
                 </div>
             );
         }
@@ -87,5 +91,3 @@ class Home extends React.Component {
         );
     };
 }
-
-export default Home;
