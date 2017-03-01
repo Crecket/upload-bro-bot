@@ -10,14 +10,8 @@
     "start": "cross-env NODE_ENV=development nodemon app.js",
     "pm2": "pm2 start pm2.json"
   },
-  "eslintConfig": {
-    "env": {
-      "node": true,
-      "es6": true
-    }
-  },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=7.0.0"
   },
   "author": "",
   "license": "ISC",
