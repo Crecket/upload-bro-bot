@@ -1,13 +1,10 @@
-import React from "react";
+import React from 'react';
+import PaperHelper from "../Components/PaperHelper";
 import YouTube from 'react-youtube';
-import Dialog from 'material-ui/Dialog';
 
 const styles = {
-    dialog: {
-        content: {
-            width: '100%',
-            maxWidth: 'none',
-        }
+    wrapper: {
+        padding: 10
     }
 }
 
@@ -21,26 +18,20 @@ const opts = {
 export default class YoutubePreview extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {
-            open: false
-        };
+        this.state = {};
     };
 
     render() {
         return (
-            <Dialog
-                contentStyle={styles.dialog.content}
-                className="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2"
-                title="Dialog With Actions"
-                modal={true} open={true}
-            >
-                <div className="fluidMedia">
+            <div>
+                <h1>Quick preview</h1>
+                <PaperHelper style={styles.wrapper}>
                     <YouTube
                         videoId="FsN-6xlfoz4"
                         opts={opts}
                     />
-                </div>
-            </Dialog>
+                </PaperHelper>
+            </div>
         );
     };
 }

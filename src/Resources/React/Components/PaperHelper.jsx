@@ -9,13 +9,15 @@ class PaperHelper extends React.Component {
     };
 
     render() {
-        let bgColor = this.props.bg ? this.props.bg : this.props.muiTheme.custom.appBackgroundColor;
+        // let bgColor = this.props.bg ? this.props.bg : this.props.muiTheme.custom.appBackgroundColor;
+        let bgColor = '#FFFFFF';
         return (
-            <Paper style={{backgroundColor: bgColor}} className={this.props.className}>
+            <Paper style={{backgroundColor: bgColor}}
+                   {...this.props}>
                 {this.props.children}
             </Paper>
         );
     };
 }
 
-export default muiThemeable()(PaperHelper);
+export default PaperHelper;
