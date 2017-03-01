@@ -2,7 +2,7 @@ import React from 'react';
 
 const styles = {
     h1: {
-        color: '#fff'
+        color: 'rgb(48, 63, 159)'
     }
 }
 
@@ -15,7 +15,7 @@ class TitleBar extends React.Component {
     render() {
         return (
             <div class="col-xs-12">
-                <h1 style={{color: 'rgb(48, 63, 159)'}} {...this.props}>
+                <h1 style={styles.h1} {...this.props}>
                     {this.props.children}
                 </h1>
             </div>

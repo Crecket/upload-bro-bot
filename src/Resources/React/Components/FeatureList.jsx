@@ -1,4 +1,5 @@
 import React from 'react';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 import CloudUploadIcon from 'material-ui/svg-icons/file/cloud-upload';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import GroupIcon from 'material-ui/svg-icons/social/group';
@@ -15,39 +16,13 @@ const styles = {
         padding: 5,
         textAlign: 'center',
     },
+    icon: {
+        height: 60,
+        width: 60
+    }
 };
 
-const featureList = [
-    {
-        icon: <CloudUploadIcon/>,
-        title: "Instant upload",
-        description: "Upload shared files from the chat directly to services such as " +
-        "Google Drive, Dropbox and Imgur"
-    },
-    {
-        icon: <SearchIcon/>,
-        title: "Share files",
-        description: (
-            <div>
-                Search and share files directly in Telegram.
-                <br/>
-                <strong>@uploadbro_bot google file.pdf</strong>
-            </div>
-        )
-    },
-    {
-        icon: <GroupIcon/>,
-        title: "Works in Groups",
-        description: "Add UploadBro to a group chat or message him directly to use his features."
-    },
-    {
-        icon: <ScreenShareIcon/>,
-        title: "All platforms",
-        description: "UploadBro works on all supported Telegram platforms."
-    }
-];
-
-export default class FeatureList extends React.Component {
+class FeatureList extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
@@ -60,11 +35,9 @@ export default class FeatureList extends React.Component {
                     <div className="row">
 
                         <div className="col-xs-12 col-sm-4 col-md-3">
-                            <div className="box">
-                                <Center>
-                                    {icon}
-                                </Center>
-                            </div>
+                            <Center>
+                                {icon}
+                            </Center>
                         </div>
 
                         <div className="col-xs-12 col-sm-8 col-md-9">
@@ -81,6 +54,43 @@ export default class FeatureList extends React.Component {
     }
 
     render() {
+        // icon helper
+        const iconStyle = Object.assign(styles.icon, {
+            color: this.props.muiTheme.palette.primary2Color
+        })
+
+        // list of features
+        const featureList = [
+            {
+                icon: <CloudUploadIcon style={iconStyle}/>,
+                title: "Instant upload",
+                description: "Upload shared files from the chat directly to services such as " +
+                "Google Drive, Dropbox and Imgur"
+            },
+            {
+                icon: <SearchIcon style={iconStyle}/>,
+                title: "Share files",
+                description: (
+                    <div>
+                        Search and share files directly in Telegram.
+                        <br/>
+                        <strong>@uploadbro_bot google file.pdf</strong>
+                    </div>
+                )
+            },
+            {
+                icon: <GroupIcon style={iconStyle}/>,
+                title: "Works in Groups",
+                description: "Add UploadBro to a group chat or message him directly to use his features."
+            },
+            {
+                icon: <ScreenShareIcon style={iconStyle}/>,
+                title: "All platforms",
+                description: "UploadBro works on all supported Telegram platforms."
+            }
+        ];
+
+
         const featureComponents = featureList.map((value, key) => {
             return this.renderFeature(key, value.icon, value.title, value.description);
         });
@@ -88,12 +98,18 @@ export default class FeatureList extends React.Component {
         return (
             <div style={{padding: 0}}>
                 <div className="row center-xs">
-                    <TitleBar>
-                        Features
-                    </TitleBar>
+                    <div className="col-xs-12">
+                        <PaperHelper className="box" style={styles.box}>
+                            <TitleBar>
+                                Features
+                            </TitleBar>
+                        </PaperHelper>
+                    </div>
                     {featureComponents}
                 </div>
             </div>
         );
     };
 }
+
+export default muiThemeable()(FeatureList);
