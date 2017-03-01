@@ -3,18 +3,22 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import CloudUploadIcon from 'material-ui/svg-icons/file/cloud-upload';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import GroupIcon from 'material-ui/svg-icons/social/group';
-import ScreenShareIcon from 'material-ui/svg-icons/communication/screen-share';
+import ShareIcon from 'material-ui/svg-icons/social/share';
+import DesktopWindowsIcon from 'material-ui/svg-icons/hardware/desktop-windows';
 
 import PaperHelper from './PaperHelper';
 import TitleBar from "./TitleBar";
 import Center from './Center';
 
 const styles = {
+    wrapper: {
+        marginTop: 30
+    },
     box: {
         margin: 'auto',
-        marginTop: '10px',
+        marginTop: 10,
         padding: 5,
-        textAlign: 'center',
+        textAlign: 'center'
     },
     icon: {
         height: 60,
@@ -34,13 +38,13 @@ class FeatureList extends React.Component {
                 <PaperHelper className="box" style={styles.box}>
                     <div className="row">
 
-                        <div className="col-xs-12 col-sm-4 col-md-3">
+                        <div className="col-xs-12 col-sm-4">
                             <Center>
                                 {icon}
                             </Center>
                         </div>
 
-                        <div className="col-xs-12 col-sm-8 col-md-9">
+                        <div className="col-xs-12 col-sm-8">
                             <div className="box">
                                 <h3>{title}</h3>
                                 {description}
@@ -64,29 +68,22 @@ class FeatureList extends React.Component {
             {
                 icon: <CloudUploadIcon style={iconStyle}/>,
                 title: "Instant upload",
-                description: "Upload shared files from the chat directly to services such as " +
-                "Google Drive, Dropbox and Imgur"
+                description: "Upload shared files from the chat directly to services."
             },
             {
                 icon: <SearchIcon style={iconStyle}/>,
                 title: "Share files",
-                description: (
-                    <div>
-                        Search and share files directly in Telegram.
-                        <br/>
-                        <strong>@uploadbro_bot google file.pdf</strong>
-                    </div>
-                )
+                description: "Search for files and share them in Telegram."
             },
             {
                 icon: <GroupIcon style={iconStyle}/>,
-                title: "Works in Groups",
-                description: "Add UploadBro to a group chat or message him directly to use his features."
+                title: "Works in groups",
+                description: "Just add him to a group to use all of his features."
             },
             {
-                icon: <ScreenShareIcon style={iconStyle}/>,
+                icon: <DesktopWindowsIcon style={iconStyle}/>,
                 title: "All platforms",
-                description: "UploadBro works on all supported Telegram platforms."
+                description: "UploadBro supports all Telegram platforms."
             }
         ];
 
@@ -96,10 +93,10 @@ class FeatureList extends React.Component {
         });
 
         return (
-            <div style={{padding: 0}}>
+            <div style={styles.wrapper}>
                 <div className="row center-xs">
                     <div className="col-xs-12">
-                        <PaperHelper className="box" style={styles.box}>
+                        <PaperHelper className="box">
                             <TitleBar>
                                 Features
                             </TitleBar>

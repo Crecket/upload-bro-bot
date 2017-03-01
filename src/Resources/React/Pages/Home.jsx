@@ -4,6 +4,7 @@ import PaperHelper from "../Components/PaperHelper";
 
 import FeatureList from "../Components/FeatureList";
 import YoutubePreview from "../Components/YoutubePreview";
+import SiteList from "../Components/SiteList";
 import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
 // import IntroductionScreen from "../Components/IntroductionScreen";
 
@@ -22,6 +23,8 @@ const styles = {
         minHeight: 200
     },
     loggedIn: {
+        paddingTop: 10,
+        paddingBottom: 10,
         textAlign: 'center'
     }
 }
@@ -34,24 +37,37 @@ export default class Home extends React.Component {
 
     render() {
         let homeDiv = (
-            <PaperHelper style={Object.assign(styles.notLoggedIn, styles.centerBox)}>
-                <RaisedButton
-                    primary={true}
-                    label="Login with Telegram"
-                    href="/login/telegram"/>
-            </PaperHelper>
+            <div>
+                <PaperHelper style={Object.assign(styles.notLoggedIn, styles.centerBox)}>
+                    <RaisedButton
+                        primary={true}
+                        label="Login with Telegram"
+                        href="/login/telegram"/>
+                </PaperHelper>
+
+                <FeatureList/>
+                <SiteList sites={this.props.sites}/>
+                <YoutubePreview/>
+            </div>
         );
         if (this.props.user_info) {
             homeDiv = (
-                <PaperHelper style={styles.loggedIn}>
-                    You're logged in as:<br/>
-                    {this.props.user_info.username}<br/>
-                    {this.props.user_info.first_name} {this.props.user_info.last_name}
-                    <ProviderBlocks
-                        provider_sites={this.props.user_info.provider_sites}
-                        provider_sites_info={this.props.sites}
-                    />
-                </PaperHelper>
+                <div>
+                    <PaperHelper style={styles.loggedIn}>
+                        You're logged in as:<br/>
+                        {this.props.user_info.username}<br/>
+                        {this.props.user_info.first_name} {this.props.user_info.last_name}
+                        <br/>
+                        <ProviderBlocks
+                            provider_sites={this.props.user_info.provider_sites}
+                            provider_sites_info={this.props.sites}
+                        />
+                    </PaperHelper>
+
+                    <PaperHelper style={styles.loggedIn}>
+                        https://telegram.me/uploadbro_bot
+                    </PaperHelper>
+                </div>
             );
         }
 
@@ -59,8 +75,6 @@ export default class Home extends React.Component {
         return (
             <div>
                 {homeDiv}
-                <FeatureList/>
-                <YoutubePreview/>
             </div>
         );
     };

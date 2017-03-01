@@ -5,7 +5,6 @@ import TitleBar from "../Components/TitleBar";
 
 const styles = {
     wrapper: {
-        padding: 10,
         marginTop: 30
     }
 }
@@ -25,15 +24,16 @@ export default class YoutubePreview extends React.Component {
 
     render() {
         return (
-            <div>
-                <PaperHelper style={styles.wrapper}>
+            <div style={styles.wrapper}>
+                <PaperHelper>
                     <TitleBar>
                         Quick preview
                     </TitleBar>
-                    <YouTube
-                        videoId="FsN-6xlfoz4"
-                        opts={opts}
-                    />
+                    <div className="fluidMedia">
+                        <YouTube
+                            videoId="FsN-6xlfoz4"
+                            opts={opts}/>
+                    </div>
                 </PaperHelper>
             </div>
         );
