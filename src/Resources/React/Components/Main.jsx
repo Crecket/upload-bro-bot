@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from "react-redux";
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import {Tabs, Tab} from 'material-ui/Tabs';
 
 // custom components
 import Logger from '../Helpers/Logger';
@@ -37,7 +36,7 @@ import {siteUpdate} from "../actions/sites.js";
         modalOpen: store.modal.modalOpen,
     };
 })
-class Main extends React.Component {
+export default class Main extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -108,10 +107,10 @@ class Main extends React.Component {
             (child) => React.cloneElement(child, {
                 user_info: this.props.user_info,
                 sites: this.props.sites,
+                theme: ThemesList[this.state.muiTheme],
                 updateUser: this.updateUser,
-                handleClose: this.handleClose,
-                handleModalOpen: this.handleModalOpen,
-                handleModalClose: this.handleModalClose
+                openModalHelper: this.openModalHelper,
+                closeModalHelper: this.closeModalHelper
             })
         );
 
@@ -121,7 +120,7 @@ class Main extends React.Component {
                     <div className={"row center-xs"}>
                         <div className="col-xs-12 col-md-10 col-lg-8">
                             <div className="box"
-                                 style={{backgroundColor: ThemesList[this.state.muiTheme].palette.backgroundColor}}>
+                                   style={{paddingBottom: 30}}>
                                 <Dialog
                                     title={this.props.modalTitle}
                                     actions={[
@@ -155,5 +154,3 @@ class Main extends React.Component {
         )
     };
 }
-
-export default Main;

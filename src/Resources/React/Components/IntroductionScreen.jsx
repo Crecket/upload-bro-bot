@@ -32,21 +32,21 @@ export default class IntroductionScreen extends React.Component {
                 autoplay={false}
             >
                 <Slide
-                    media={<img src="//www.icons101.com/icon_png/size_256/id_79394/youtube.png"/>}
+                    media={<img src="/assets/img/imgur.png"/>}
                     mediaBackgroundStyle={{backgroundColor: red400}}
                     contentStyle={{backgroundColor: red600}}
                     title="This is a very cool feature"
                     subtitle="Just using this will blow your mind."
                 />
                 <Slide
-                    media={<img src="//www.icons101.com/icon_png/size_256/id_80975/GoogleInbox.png"/>}
+                    media={<img src="/assets/img/imgur.png"/>}
                     mediaBackgroundStyle={{backgroundColor: blue400}}
                     contentStyle={{backgroundColor: blue600}}
                     title="Ever wanted to be popular?"
                     subtitle="Well just mix two colors and your are good to go!"
                 />
                 <Slide
-                    media={<img src="//www.icons101.com/icon_png/size_256/id_76704/Google_Settings.png"/>}
+                    media={<img src="/assets/img/imgur.png"/>}
                     mediaBackgroundStyle={{backgroundColor: green400}}
                     contentStyle={{backgroundColor: green600}}
                     title="May the force be with you"

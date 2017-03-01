@@ -7,7 +7,7 @@
     "test": "node ./node_modules/mocha/bin/mocha",
     "dev": "cross-env NODE_ENV=development webpack -d --watch --progress --colors",
     "build": "cross-env NODE_ENV=production webpack --progress --colors",
-    "start": "cross-env BLUEBIRD_WARNINGS=0 nodemon app.js",
+    "start": "cross-env NODE_ENV=development nodemon app.js",
     "pm2": "pm2 start pm2.json"
   },
   "eslintConfig": {
