@@ -36,9 +36,21 @@ module.exports = (app, passport, uploadApp) => {
     });
 
     // logout page
-    app.get('/logout', function (req, res) {
-        req.logout();
-        res.redirect('/');
+    app.get('/logout', (request, response) => {
+        request.logout();
+        response.redirect('/');
     });
+
+    // returns oembed information
+    app.get('/oembed', (req, res) => {
+        res.json({
+            "provider_url": "https://uploadbro.com",
+            "type": "rich",
+            "version": "1.0",
+            "width": 600,
+            "height": 600,
+            "html": "<iframe width=\"100%\" height=\"200\" frameborder=\"no\" src=\"https://uploadbro.com\"></iframe>"
+        });
+    })
 
 }

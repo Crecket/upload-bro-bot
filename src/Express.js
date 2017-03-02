@@ -1,8 +1,11 @@
-const path = require('path');
 const fs = require('fs');
-const express = require('express');
+const path = require('path');
 const http = require('http');
 const https = require('https');
+const winston = require('winston');
+
+// express libs
+const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -15,7 +18,6 @@ const helmet = require('helmet');
 const compression = require('compression');
 const responseTime = require('response-time');
 const csurf = require('csurf');
-const winston = require('winston');
 
 // general routes
 const GoogleRoutes = require('./Sites/Google/Routes');
@@ -151,7 +153,7 @@ module.exports = function (uploadApp) {
 
     // session handler
     app.use(session({
-        name: "SESS_ID",
+        name: "BRO_ID",
         secret: process.env.EXPRESS_SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
@@ -171,8 +173,31 @@ module.exports = function (uploadApp) {
     // security headers
     app.use(helmet());
 
-    // serve static files
-    app.use(express.static(__dirname + '/../public'));
+    // values we want to cache certain levels for
+    const cacheDuration = {
+        HIGH: 60 * 60 * 24 * 7,
+        MEDIUM: 60 * 60 * 24 * 1,
+        LOW: 60 * 60,
+        NONE: 0
+    };
+
+    const fileTypes = {};
+
+    // check if we need to set cache handlers
+    if (false && process.env.DEBUG) {
+        // serve static files
+        app.use(express.static(__dirname + '/../public'));
+    } else {
+        // enable strong etags
+        app.enable('etag');
+
+        // serve static files with cache headers
+        app.use(express.static(__dirname + '/../public', {
+            setHeaders: (response, path, stat) => {
+                response.header('Cache-Control', 'public, max-age=' + cacheDuration.MEDIUM);
+            }
+        }));
+    }
 
     // Default routes
     TelegramRoutes(app, passport, uploadApp);
