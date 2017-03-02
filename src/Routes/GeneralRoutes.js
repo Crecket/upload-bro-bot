@@ -3,6 +3,7 @@ module.exports = (app, passport, uploadApp) => {
 
     // routes
     app.get(['/', '/remove/:type', '/new/:type'], (req, res) => {
+        res.set('X-Frame-Options', 'ALLOW-FROM oembed.frdnspnzr.de');
         res.render('index', {});
     })
 
@@ -43,6 +44,8 @@ module.exports = (app, passport, uploadApp) => {
 
     // returns oembed information
     app.get('/oembed', (req, res) => {
+        res.set('X-Frame-Options', 'ALLOW-FROM oembed.frdnspnzr.de');
+
         res.json({
             "provider_url": "https://uploadbro.com",
             "type": "rich",
