@@ -3,7 +3,7 @@ module.exports = (app, passport, uploadApp) => {
 
     // routes
     app.get(['/', '/remove/:type', '/new/:type'], (req, res) => {
-        res.set('X-Frame-Options', 'ALLOW-FROM oembed.frdnspnzr.de');
+        res.set('X-Frame-Options', 'ALLOW-FROM-ALL');
         res.render('index', {});
     })
 
@@ -41,19 +41,4 @@ module.exports = (app, passport, uploadApp) => {
         request.logout();
         response.redirect('/');
     });
-
-    // returns oembed information
-    app.get('/oembed', (req, res) => {
-        res.set('X-Frame-Options', 'ALLOW-FROM oembed.frdnspnzr.de');
-
-        res.json({
-            "provider_url": "https://uploadbro.com",
-            "type": "rich",
-            "version": "1.0",
-            "width": 600,
-            "height": 600,
-            "html": "<iframe width=\"100%\" height=\"200\" frameborder=\"no\" src=\"https://uploadbro.com\"></iframe>"
-        });
-    })
-
 }
