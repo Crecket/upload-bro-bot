@@ -30,6 +30,7 @@ import {siteUpdate} from "../Actions/sites.js";
         sites: store.sites.sites,
 
         user_info: store.user.user_info,
+        initialCheck: store.user.initialCheck,
 
         modalText: store.modal.message,
         modalTitle: store.modal.title,
@@ -105,6 +106,7 @@ export default class Main extends React.Component {
         const mainBody = React.Children.map(
             this.props.children,
             (child) => React.cloneElement(child, {
+                initialCheck: this.props.initialCheck,
                 user_info: this.props.user_info,
                 sites: this.props.sites,
                 theme: ThemesList[this.state.muiTheme],

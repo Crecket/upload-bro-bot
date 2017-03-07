@@ -20,7 +20,7 @@ let config = {
         path: BUILD_DIR,
         filename: '[name].js',
         publicPath: '/assets/dist/',
-        chunkFilename: "[name].js"
+        chunkFilename: "[id].js"
     },
     resolve: {
         extensions: ['.jsx', '.scss', '.js', '.json', '.css'],  // along the way, subsequent file(s) to be consumed by webpack

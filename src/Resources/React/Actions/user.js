@@ -15,10 +15,16 @@ export function userUpdate() {
         axios.post('/get_user')
             .then(response => response.data)
             .then(json => {
+                // update user info and stop loading state
                 dispatch(userSetInfo(json));
                 dispatch(userNotLoading());
+                dispatch(userInitialCHeck());
             })
-            .catch(console.error);
+            .catch((err) => {
+                // finish initial check
+                dispatch(userInitialCHeck());
+                console.error(err);
+            });
     }
 }
 
@@ -37,5 +43,13 @@ export function userLoading() {
 
 export function userNotLoading() {
     return {type: 'USER_IS_NOT_LOADING'};
+}
+
+export function userInitialCHeck() {
+    return dispatch => {
+        // setTimeout(() =>{
+            dispatch({type: 'USER_INITIAL_CHECK'});
+        // }, 2000);
+    }
 }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import RaisedButton from "material-ui/RaisedButton";
+import CircularProgress from 'material-ui/CircularProgress';
 import PaperHelper from "../Components/PaperHelper";
 
 import FeatureList from "../Components/FeatureList";
@@ -36,21 +37,16 @@ export default class Home extends React.Component {
     };
 
     render() {
+        // default state
         let homeDiv = (
-            <div>
-                <PaperHelper style={Object.assign(styles.notLoggedIn, styles.centerBox)}>
-                    <RaisedButton
-                        primary={true}
-                        label="Login with Telegram"
-                        href="/login/telegram"/>
-                </PaperHelper>
-
-                <FeatureList/>
-                <SiteList sites={this.props.sites}/>
-                <YoutubePreview/>
-            </div>
+            <PaperHelper style={styles.loggedIn}>
+                <h1>Loading</h1>
+                <CircularProgress size={80} thickness={5}/>
+            </PaperHelper>
         );
-        if (this.props.user_info) {
+
+        // user is logged in
+        if (this.props.initialCheck === true && this.props.user_info) {
             homeDiv = (
                 <div>
                     <PaperHelper style={styles.loggedIn}>
@@ -67,6 +63,22 @@ export default class Home extends React.Component {
                     <PaperHelper style={styles.loggedIn}>
                         https://telegram.me/uploadbro_bot
                     </PaperHelper>
+                </div>
+            );
+        } else if (this.props.userInitialCheck === true) {
+            // not logged in and initial check is done
+            homeDiv = (
+                <div>
+                    <PaperHelper style={Object.assign(styles.notLoggedIn, styles.centerBox)}>
+                        <RaisedButton
+                            primary={true}
+                            label="Login with Telegram"
+                            href="/login/telegram"/>
+                    </PaperHelper>
+
+                    <FeatureList/>
+                    <SiteList sites={this.props.sites}/>
+                    <YoutubePreview/>
                 </div>
             );
         }

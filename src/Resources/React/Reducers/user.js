@@ -1,6 +1,7 @@
 export default function reducer(state = {
     user_info: false,
-    loading: false
+    loading: false,
+    initialCheck: false
 }, action) {
     switch (action.type) {
         case "USER_SET_INFO":
@@ -22,6 +23,11 @@ export default function reducer(state = {
             return {
                 ...state,
                 loading: false
+            }
+        case "USER_INITIAL_CHECK":
+            return {
+                ...state,
+                initialCheck: true
             }
     }
     return state;
