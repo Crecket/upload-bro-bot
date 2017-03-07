@@ -99,7 +99,7 @@ module.exports = function (uploadApp) {
                 }
 
                 // site fallback
-                profile.provider_sites = (!!user) ? user.provider_sites : {};
+                profile.provider_sites = (user) ? user.provider_sites : {};
 
                 // insert new user
                 usersCollection.updateOne({
@@ -181,12 +181,21 @@ module.exports = function (uploadApp) {
         NONE: 0
     };
 
-    const fileTypes = {};
-
-    // check if we need to set cache handlers
-    if (false && process.env.DEBUG) {
+    // check if we need to set cache handlers and pretty error handlers
+    if (process.env.DEBUG) {
         // serve static files
         app.use(express.static(__dirname + '/../public'));
+
+        // enable pretty error logs
+        app.use(function (err, req, res, next) {
+            (new ouch()).pushHandler(
+                new ouch.handlers.PrettyPageHandler()
+            ).handleException(err, req, res,
+                function () {
+                    winston.error('Error handled');
+                }
+            );
+        });
     } else {
         // enable strong etags
         app.enable('etag');
@@ -214,19 +223,6 @@ module.exports = function (uploadApp) {
     app.use('*', (req, res, next) => {
         res.render('index.twig');
     })
-
-    // Debug errors
-    if (process.env.DEBUG === true) {
-        app.use(function (err, req, res, next) {
-            (new ouch()).pushHandler(
-                new ouch.handlers.PrettyPageHandler()
-            ).handleException(err, req, res,
-                function () {
-                    winston.error('Error handled');
-                }
-            );
-        });
-    }
 
     // start listening http
     httpServer.listen(process.env.EXPRESS_PORT, function () {

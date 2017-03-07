@@ -113,7 +113,7 @@ module.exports = class ImgurHelper {
                 grant_type: 'authorization_code'
             }).then(resolve).catch(err =>{
                 reject(err);
-                console.log(err);
+                winston.error(err);
             });
         });
     }
@@ -141,7 +141,7 @@ module.exports = class ImgurHelper {
                 }));
             }).catch(err =>{
                 reject(err);
-                console.log(err.response);
+                winston.error(err.response);
             });
         });
     }
