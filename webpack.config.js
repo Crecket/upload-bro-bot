@@ -19,15 +19,18 @@ var config = {
         chunkFilename: "[id].js"
     },
     resolve: {
-        extensions: ['', '.jsx', '.scss', '.js', '.json', '.css'],  // along the way, subsequent file(s) to be consumed by webpack
-        modulesDirectories: [
+        extensions: ['.jsx', '.scss', '.js', '.json', '.css'],  // along the way, subsequent file(s) to be consumed by webpack
+        modules: [
             'node_modules',
-            path.resolve(__dirname, './node_modules')
+            path.resolve(__dirname, './node_modules'),
+            path.resolve(__dirname, './src'),
         ]
     },
     plugins: [
-        new webpack.NoErrorsPlugin(),
-        new ExtractTextPlugin("[name].css", {
+        new webpack.NoEmitOnErrorsPlugin(),
+        new ExtractTextPlugin({
+            filename: "[name].css",
+            disable: false,
             allChunks: true
         }),
         new webpack.DefinePlugin({
@@ -46,29 +49,31 @@ var config = {
     ],
     devtool: "source-map",
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.jsx?$/,
-                loader: 'babel-loader',
+                use: [{
+                    loader: 'babel-loader',
+                    options:{
+                        plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy']
+                    }
+                }],
                 include: SRC_DIR,
-                exclude: /node_modules/,
-                query: {
-                    plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
-                }
-            }, {
-                test: /\.json$/,
-                loader: 'json-loader'
-            }, {
+                exclude: /node_modules/
+            },
+            {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract(
-                    "style-loader",
-                    "css-loader",
-                    "csso-loader"
-                )
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css!sass", "csso-loader")
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader!sass-loader"
+                })
             }
         ]
     }
@@ -76,14 +81,10 @@ var config = {
 
 // production only plugins
 if (!DEV) {
-    // dedupe duplicate files
-    config.plugins.push(new webpack.optimize.DedupePlugin());
-
-    // dedupe duplicate files
-    config.plugins.push(new webpack.optimize.OccurrenceOrderPlugin(true));
-
     // uglify plugin
     config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true,
+        minimize: true,
         compress: {
             warnings: false
         }
