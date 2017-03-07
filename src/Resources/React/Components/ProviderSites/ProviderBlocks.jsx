@@ -17,10 +17,10 @@ const styles = {
     }
 }
 
-import ProviderBlock from './ProviderBLock';
+import ProviderBlock from './ProviderBLock.jsx';
 
 // actions
-import {openModal, closeModal} from "../../actions/modalActions.js";
+import {openModal, closeModal} from "../../Actions/modalActions.js";
 
 // connect to redux
 @connect((store) => {
