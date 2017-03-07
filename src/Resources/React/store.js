@@ -13,6 +13,5 @@ if (process.env.DEBUG === "true") {
     middleware = applyMiddleware(promise(), thunk, logger())
 }
 
-
 //return the store
 export default createStore(reducer, middleware)
