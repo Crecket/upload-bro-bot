@@ -85,6 +85,34 @@ module.exports = class ImgurHelper {
     }
 
     /**
+     * Get image list for the user
+     *
+     * @param userInfo
+     * @returns {Promise}
+     */
+    imageList(userInfo) {
+        return new Promise((resolve, reject) => {
+            // create a new ouath client
+            this.createOauthClient(userInfo)
+                .then(imgurClient => {
+                    let accessToken = userInfo.provider_sites.imgur.access_token;
+                    let accountUsername = userInfo.provider_sites.imgur.account_username;
+                    let requestUrl = process.env.IMGUR_API_URL + "account/" + accountUsername + "/images";
+
+                    // do the request
+                    axios({
+                        url: requestUrl,
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken
+                        }
+                    })
+                        .then((json) => resolve(json.data.data))
+                        .catch(reject);
+                }).catch(reject);
+        });
+    }
+
+    /**
      * Returns the url to be used in authorization request
      *
      * @param tokens - token/code/pin
@@ -111,7 +139,7 @@ module.exports = class ImgurHelper {
                 client_id: process.env.IMGUR_CLIENT_ID,
                 client_secret: process.env.IMGUR_CLIENT_SECRET,
                 grant_type: 'authorization_code'
-            }).then(resolve).catch(err =>{
+            }).then(resolve).catch(err => {
                 reject(err);
                 winston.error(err);
             });
@@ -139,7 +167,7 @@ module.exports = class ImgurHelper {
                 resolve(Object.assign(resultData, {
                     expiry_date: (new Date()).getTime() + resultData.expires_in
                 }));
-            }).catch(err =>{
+            }).catch(err => {
                 reject(err);
                 winston.error(err.response);
             });

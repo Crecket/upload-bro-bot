@@ -12,7 +12,7 @@ module.exports = class InlineQueryHandler {
      */
     register(obj) {
         // store the query
-        this._inlineQueries[obj.event] = obj;
+        this._inlineQueries[obj.name] = obj;
     }
 
     /**

@@ -4,6 +4,7 @@ const path = require('path');
 const SiteInteface = rootRequire('src/Sites/SiteInterface.js');
 
 const UploadObj = rootRequire('src/Sites/Imgur/Queries/Upload');
+const SearchQueryObj = rootRequire('src/Sites/Imgur/InlineQueries/SearchQuery');
 
 module.exports = class Imgur extends SiteInteface {
     constructor(app) {
@@ -18,6 +19,9 @@ module.exports = class Imgur extends SiteInteface {
     register() {
         // register commands
         this._app._QueryHandler.register(new UploadObj(this._app));
+
+        // register inline queries
+        this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
 
         return Promise.resolve();
     }

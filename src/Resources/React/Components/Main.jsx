@@ -120,7 +120,7 @@ export default class Main extends React.Component {
             <MuiThemeProvider muiTheme={ThemesList[this.state.muiTheme]}>
                 <div className={"container-fluid " + this.state.muiTheme}>
                     <div className={"row center-xs"}>
-                        <div className="col-xs-12 col-md-10 col-lg-8">
+                        <div className="col-xs-12 col-md-12 col-lg-10">
                             <div className="box"
                                    style={{paddingBottom: 30}}>
                                 <Dialog
