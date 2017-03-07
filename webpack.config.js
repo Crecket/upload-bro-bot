@@ -11,14 +11,14 @@ const SRC_DIR = path.resolve(__dirname, 'src/Resources');
 // env variable check
 const DEV = process.env.NODE_ENV !== "production";
 
-if (DEV) {
-    // clear old files
-    del(['public/assets/dist/**', '!public/assets/dist', '!public/assets/dist/.gitkeep']).then(paths => {
+// clear old files
+del(['public/assets/dist/**', '!public/assets/dist', '!public/assets/dist/.gitkeep']).then(paths => {
+    if (DEV) {
         console.log("\n");
         console.log('Cleared dist folder:\n', paths.join('\n'));
         console.log("\n");
-    });
-}
+    }
+});
 
 let config = {
     entry: {
@@ -32,7 +32,7 @@ let config = {
         chunkFilename: "[chunkhash].js"
     },
     resolve: {
-        extensions: ['.jsx', '.scss', '.js', '.json', '.css'],  // along the way, subsequent file(s) to be consumed by webpack
+        extensions: ['.jsx', '.scss', '.js', '.json', '.css'],
         modules: [
             'node_modules',
             path.resolve(__dirname, './node_modules'),
@@ -60,7 +60,7 @@ let config = {
             minChunks: 2
         })
     ],
-    devtool: "source-map",
+    devtool: DEV ? "source-map" : false,
     module: {
         rules: [
             {
