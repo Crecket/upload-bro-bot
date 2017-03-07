@@ -11,6 +11,11 @@
     "node/exports-style": [
       "error",
       "module.exports"
-    ]
+    ],
+    "no-unused-vars": 0
+  },
+  "globals": {
+    "rootRequire": true,
+    "__base": true
   }
 }

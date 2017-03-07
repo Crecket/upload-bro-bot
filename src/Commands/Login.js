@@ -1,7 +1,8 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
+const winston = require('winston');
 
-var HelperInterface = rootRequire('src/HelperInterface');
+const HelperInterface = rootRequire('src/HelperInterface');
 
 module.exports = class Login extends HelperInterface {
     constructor(app) {

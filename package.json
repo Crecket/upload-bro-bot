@@ -8,6 +8,9 @@
     "dev": "cross-env NODE_ENV=development webpack --debug --watch --progress --colors",
     "build": "cross-env NODE_ENV=production webpack --progress --colors",
     "start": "cross-env NODE_ENV=development nodemon app.js",
+    "lint": "npm run lint-server",
+    "lint-client": "",
+    "lint-server": "eslint --config .eslintrc.json src/",
     "pm2": "pm2 start pm2.json"
   },
   "engines": {

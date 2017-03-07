@@ -95,7 +95,7 @@ module.exports = class App {
             .then(() => {
                 // finished loading everything
                 winston.info("Loaded the following commands:");
-                console.log(this._CommandHandler.info);
+                winston.info(this._CommandHandler.info);
 
                 // start express listener
                 Express(this);
