@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "node ./node_modules/mocha/bin/mocha",
-    "dev": "cross-env NODE_ENV=development webpack -d --watch --progress --colors",
+    "dev": "cross-env NODE_ENV=development webpack --debug --save --watch --progress --colors",
     "build": "cross-env NODE_ENV=production webpack --progress --colors",
     "start": "cross-env NODE_ENV=development nodemon app.js",
     "pm2": "pm2 start pm2.json"
@@ -73,7 +73,6 @@
     "node-sass": "^4.3.0",
     "nodemon": "^1.11.0",
     "react": "^15.4.2",
-    "react-youtube": "^7.3.0",
     "react-dom": "^15.4.2",
     "react-materialui-notifications": "^0.4.1",
     "react-redux": "^5.0.2",
@@ -81,12 +80,13 @@
     "react-swipeable-views": "^0.10.7",
     "react-tap-event-plugin": "^2.0.1",
     "react-trend": "^1.1.2",
+    "react-youtube": "^7.3.0",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-promise-middleware": "^4.2.0",
     "redux-thunk": "^2.1.0",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.14.0"
+    "webpack": "^2.2.1"
   }
 }
