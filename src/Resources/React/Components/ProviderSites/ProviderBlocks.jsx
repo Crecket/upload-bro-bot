@@ -17,7 +17,7 @@ const styles = {
     }
 }
 
-import ProviderBlock from './ProviderBLock.jsx';
+import ProviderBlock from './ProviderBlock.jsx';
 
 // actions
 import {openModal, closeModal} from "../../Actions/modalActions.js";
