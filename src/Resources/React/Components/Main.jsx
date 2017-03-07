@@ -101,8 +101,6 @@ export default class Main extends React.Component {
 
     render() {
 
-        console.log(this.props.children);
-
         // get the children pages and give them some default props
         const mainBody = React.Children.map(
             this.props.children,
