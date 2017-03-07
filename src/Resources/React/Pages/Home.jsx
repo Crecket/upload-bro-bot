@@ -46,7 +46,7 @@ export default class Home extends React.Component {
         );
 
         // user is logged in
-        if (this.props.initialCheck === true && this.props.user_info) {
+        if (this.props.user_info) {
             homeDiv = (
                 <div>
                     <PaperHelper style={styles.loggedIn}>
@@ -65,7 +65,7 @@ export default class Home extends React.Component {
                     </PaperHelper>
                 </div>
             );
-        } else if (this.props.userInitialCheck === true) {
+        } else if (this.props.initialCheck === true) {
             // not logged in and initial check is done
             homeDiv = (
                 <div>

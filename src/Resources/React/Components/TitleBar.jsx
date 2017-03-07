@@ -14,7 +14,7 @@ class TitleBar extends React.Component {
 
     render() {
         return (
-            <div class="row center-xs">
+            <div className="row center-xs">
                 <h1 style={styles.h1} {...this.props}>
                     {this.props.children}
                 </h1>
