@@ -7,5 +7,5 @@ node_modules
 !/downloads/.gitkeep
 
 # ignore app compiled files
-public/assets/app.*
-/public/assets/commons.*
+public/assets/dist/*
+!public/assets/dist/.gitkeep

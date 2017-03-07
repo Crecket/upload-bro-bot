@@ -101,8 +101,10 @@ export default class Main extends React.Component {
 
     render() {
 
+        console.log(this.props.children);
+
         // get the children pages and give them some default props
-        var mainBody = React.Children.map(
+        const mainBody = React.Children.map(
             this.props.children,
             (child) => React.cloneElement(child, {
                 user_info: this.props.user_info,

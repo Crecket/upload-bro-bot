@@ -210,6 +210,11 @@ module.exports = function (uploadApp) {
     DropboxRoutes(app, passport, uploadApp);
     ImgurRoutes(app, passport, uploadApp);
 
+    // fall back route
+    app.use('*', (req, res, next) => {
+        res.render('index.twig');
+    })
+
     // Debug errors
     if (process.env.DEBUG === true) {
         app.use(function (err, req, res, next) {

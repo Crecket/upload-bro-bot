@@ -1,22 +1,26 @@
+"use strict";
+
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-var BUILD_DIR = path.resolve(__dirname, 'public/assets');
-var SRC_DIR = path.resolve(__dirname, 'src/Resources');
+const BUILD_DIR = path.resolve(__dirname, 'public/assets/dist');
+const SRC_DIR = path.resolve(__dirname, 'src/Resources');
 
 // env variable check
-var DEV = process.env.NODE_ENV !== "production";
+const DEV = process.env.NODE_ENV !== "production";
 
-var config = {
+let config = {
     entry: {
         // react app js
-        "app": SRC_DIR + '/React/react-app.jsx',
+        app: SRC_DIR + '/React/react-app.jsx',
+        libs: ['react', 'react-dom', 'react-router']
     },
     output: {
         path: BUILD_DIR,
         filename: '[name].js',
-        chunkFilename: "[id].js"
+        publicPath: '/assets/dist/',
+        chunkFilename: "[name].js"
     },
     resolve: {
         extensions: ['.jsx', '.scss', '.js', '.json', '.css'],  // along the way, subsequent file(s) to be consumed by webpack
@@ -54,7 +58,7 @@ var config = {
                 test: /\.jsx?$/,
                 use: [{
                     loader: 'babel-loader',
-                    options:{
+                    options: {
                         plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy']
                     }
                 }],
