@@ -3,6 +3,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const del = require('del');
 
 const BUILD_DIR = path.resolve(__dirname, 'public/assets/dist');
 const SRC_DIR = path.resolve(__dirname, 'src/Resources');
@@ -10,17 +11,25 @@ const SRC_DIR = path.resolve(__dirname, 'src/Resources');
 // env variable check
 const DEV = process.env.NODE_ENV !== "production";
 
+if (DEV) {
+    // clear old files
+    del(['public/assets/dist/**', '!public/assets/dist', '!public/assets/dist/.gitkeep']).then(paths => {
+        console.log("\n");
+        console.log('Cleared dist folder:\n', paths.join('\n'));
+        console.log("\n");
+    });
+}
+
 let config = {
     entry: {
         // react app js
-        app: SRC_DIR + '/React/react-app.jsx',
-        libs: ['react', 'react-dom', 'react-router']
+        app: SRC_DIR + '/React/react-app.jsx'
     },
     output: {
         path: BUILD_DIR,
         filename: '[name].js',
         publicPath: '/assets/dist/',
-        chunkFilename: "[id].js"
+        chunkFilename: "[chunkhash].js"
     },
     resolve: {
         extensions: ['.jsx', '.scss', '.js', '.json', '.css'],  // along the way, subsequent file(s) to be consumed by webpack
@@ -59,11 +68,15 @@ let config = {
                 use: [{
                     loader: 'babel-loader',
                     options: {
-                        plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy']
+                        plugins: [
+                            'react-html-attrs',
+                            'transform-class-properties',
+                            'transform-react-inline-elements',
+                            'transform-react-constant-elements',
+                            'transform-decorators-legacy'
+                        ]
                     }
-                }],
-                include: SRC_DIR,
-                exclude: /node_modules/
+                }]
             },
             {
                 test: /\.css$/,
