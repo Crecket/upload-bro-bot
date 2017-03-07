@@ -11,7 +11,7 @@ cache:
 #  - sleep 5
 script:
   - npm run test
-  - npm run build
   - npm run lint-server
+  - npm run build
 #services:
 #  - mongodb
