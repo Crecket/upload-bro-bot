@@ -173,6 +173,13 @@ module.exports = function (uploadApp) {
     // security headers
     app.use(helmet());
 
+    // csurf for csrf values and a simple helper middleware
+    app.use(csurf({cookie: true}));
+    app.use((request, response, next) => {
+        response.locals.csrftoken = request.csrfToken();
+        next();
+    });
+
     // values we want to cache certain levels for
     const cacheDuration = {
         HIGH: 60 * 60 * 24 * 7,
@@ -191,8 +198,9 @@ module.exports = function (uploadApp) {
             (new ouch()).pushHandler(
                 new ouch.handlers.PrettyPageHandler()
             ).handleException(err, req, res,
-                function () {
+                () => {
                     winston.error('Error handled');
+                    winston.error(err);
                 }
             );
         });

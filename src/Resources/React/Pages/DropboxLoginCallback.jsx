@@ -50,8 +50,13 @@ class DropboxLoginCallback extends React.Component {
     }
 
     sendTokens = () => {
-        // send our hashtag data
-        axios.post("/login/dropbox/callback", Utils.getHashParams())
+        // send our hashtag data along with csrf
+        const data = Object.assign(Utils.getHashParams(), {
+            _csrf: csrfToken
+        });
+
+        // send the post request
+        axios.post("/login/dropbox/callback", data)
             .then((result) => {
                 this.setState({
                     loading: false

@@ -12,7 +12,7 @@ export function userSetInfo(user_info) {
 export function userUpdate() {
     return dispatch => {
         dispatch(userLoading());
-        axios.post('/get_user')
+        axios.post('/get_user', {_csrf: csrfToken})
             .then(response => response.data)
             .then(json => {
                 // update user info and stop loading state
@@ -48,7 +48,7 @@ export function userNotLoading() {
 export function userInitialCHeck() {
     return dispatch => {
         // setTimeout(() =>{
-            dispatch({type: 'USER_INITIAL_CHECK'});
+        dispatch({type: 'USER_INITIAL_CHECK'});
         // }, 2000);
     }
 }
