@@ -144,12 +144,17 @@ module.exports = class UploadStart extends HelperInterface {
      */
     checkCache(resolveResults) {
         return new Promise((resolve, reject) => {
+
             // fetch from cache
             this._app._Cache.get(resolveResults.storeKey, (error, msgInfo) => {
                 if (error) {
                     return reject(error);
                 }
                 if (!msgInfo) {
+                    winston.debug('Check cache results');
+                    winston.debug(resolveResults);
+                    winston.debug(msgInfo);
+
                     return reject("We couldn't find a file connected to this message. " +
                         "Try forwarding the file to UploadBro again so he can detect it more easily.", true);
                 }
