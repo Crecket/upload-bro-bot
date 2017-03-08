@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
-const winston = require('winston');
+const winston = rootRequire('src/Helpers/Winston.js');
 
 const DropboxHelperObj = require('./Helper');
 const UserHelperObj = require(__base + 'src/UserHelper.js');

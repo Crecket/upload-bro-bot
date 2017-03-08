@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const winston = require('winston');
+const winston = rootRequire('src/Helpers/Winston.js');
 
 var HelperInterface = rootRequire('src/HelperInterface');
 

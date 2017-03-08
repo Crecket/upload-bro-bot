@@ -1,6 +1,7 @@
-var fs = require('fs');
-var path = require('path');
-var mime = require('mime');
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime');
+const winston = rootRequire('src/Helpers/Winston.js');
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;

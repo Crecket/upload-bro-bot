@@ -1,4 +1,4 @@
-const winston = require('winston');
+const winston = rootRequire('src/Helpers/Winston.js');
 
 module.exports = class Analytics {
     constructor(app, collection_name = 'analytics') {

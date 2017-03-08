@@ -2,6 +2,7 @@ const fs = require('fs');
 const mime = require('mime');
 const path = require('path');
 const google = require('googleapis');
+const winston = rootRequire('src/Helpers/Winston.js');
 const OAuth2 = google.auth.OAuth2;
 
 // https://developers.google.com/apis-explorer/#search/drive/

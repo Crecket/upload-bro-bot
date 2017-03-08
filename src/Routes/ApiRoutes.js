@@ -1,3 +1,5 @@
+const winston = rootRequire('src/Helpers/Winston.js');
+
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;
 
