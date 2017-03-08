@@ -16,12 +16,14 @@ module.exports = class Analytics {
      * @param options
      */
     track(msg, type = 'message', options = {}) {
-        winston.debug(msg);
+        console.log(msg);
         const data = Object.assign(
             this.defaultMsg,
             options,
             {
                 msgId: msg.id,
+                from: msg.from.username,
+                chatType: msg.message.type,
                 type: type
             }
         );
@@ -41,6 +43,8 @@ module.exports = class Analytics {
             options,
             {
                 msgId: msg.id,
+                from: msg.from.username,
+                chatType: msg.chat.type,
                 type: 'file',
                 fileType: fileType
             }

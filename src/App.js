@@ -47,7 +47,7 @@ module.exports = class App {
 
         // create a queue object and analytics helper
         this._Queue = new QueueObj(1);
-        this._Analytics = new AnalyticsObj();
+        this._Analytics = new AnalyticsObj(this);
 
         // user helper object
         this._UserHelper = new UserHelperObj(this);

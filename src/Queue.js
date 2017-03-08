@@ -14,7 +14,7 @@ module.exports = class Queue {
                     // there is room, get the first item
                     const firstItem = this.queue.shift();
 
-                    winston.debug('Starting item: ', firstItem);
+                    // winston.debug('Starting item: ', firstItem);
 
                     // start this queue item
                     this._start(firstItem);
@@ -42,7 +42,7 @@ module.exports = class Queue {
                     key: key
                 }
 
-                winston.debug('Enqueued item: ', newQueueItem);
+                // winston.debug('Enqueued item: ', newQueueItem);
 
                 // check if a spot is already available
                 if (this.available()) {
@@ -62,7 +62,7 @@ module.exports = class Queue {
      * @returns {boolean}
      */
     _start(queueItem) {
-        winston.debug(queueItem);
+        // winston.debug(queueItem);
 
         // check if queue item exists
         if (queueItem) {
@@ -87,8 +87,7 @@ module.exports = class Queue {
     finish(key) {
         // check if item exists
         if (this.active[key]) {
-
-            winston.debug('Finished item: ', key);
+            // winston.debug('Finished item: ', key);
 
             // remove the active item
             delete this.active[key];
@@ -103,7 +102,7 @@ module.exports = class Queue {
      * @returns {boolean}
      */
     available() {
-        return Object.keys(this.active).length <= this.limit;
+        return Object.keys(this.active).length < this.limit;
     }
 
     /**
