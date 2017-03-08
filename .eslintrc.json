@@ -1,7 +1,6 @@
 {
   "plugins": [
-    "node",
-    "react"
+    "node"
   ],
   "extends": [
     "eslint:recommended",

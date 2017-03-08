@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
-const winston = rootRequire('src/Helpers/Winston.js');
+const winston = rootRequire('src/Helpers/Logger.js');
 
 const GoogleHelperObj = require('./Helper');
 const UserHelperObj = rootRequire('src/UserHelper.js');

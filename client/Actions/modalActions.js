@@ -1,4 +1,3 @@
-
 export function openModal(message, title) {
     return {
         type: 'MODAL_OPEN',

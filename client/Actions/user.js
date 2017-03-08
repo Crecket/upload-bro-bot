@@ -1,4 +1,5 @@
 const axios = require('axios');
+const Logger = require('../Helpers/Logger');
 
 export function userSetInfo(user_info) {
     return {
@@ -23,7 +24,7 @@ export function userUpdate() {
             .catch((err) => {
                 // finish initial check
                 dispatch(userInitialCHeck());
-                console.error(err);
+                Logger.error(err);
             });
     }
 }
@@ -32,7 +33,7 @@ export function userLogout() {
     // logout and forget
     axios.get('/logout').then(() => {
         // logged out
-    }).catch(console.error);
+    }).catch(Logger.error);
     // send user logout event
     return {type: 'USER_LOGOUT'};
 }

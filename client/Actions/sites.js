@@ -1,4 +1,5 @@
 const axios = require('axios');
+const Logger = require('../Helpers/Logger');
 
 export function setSites(site_list) {
     return {
@@ -10,16 +11,14 @@ export function setSites(site_list) {
 }
 export function siteUpdate() {
     return dispatch => {
-
         dispatch(siteLoading());
-
         axios.get('/get_providers')
             .then(response => response.data)
             .then(json => {
                 dispatch(setSites(json));
                 dispatch(siteNotLoading());
             })
-            .catch(console.error);
+            .catch(Logger.error);
     }
 }
 

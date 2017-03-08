@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const winston = rootRequire('src/Helpers/Winston.js');
+const winston = rootRequire('src/Helpers/Logger.js');
 
 module.exports = class ImgurHelper {
     constructor(app) {
