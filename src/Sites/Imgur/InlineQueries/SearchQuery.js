@@ -85,7 +85,7 @@ module.exports = class SearchQuery extends HelperInterface {
      * @returns {RegExp}
      */
     get match() {
-        return /imgur(.+)$/;
+        return /imgur(.*)$/;
     }
 
     /**
