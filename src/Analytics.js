@@ -9,34 +9,20 @@ module.exports = class Analytics {
     }
 
     /**
-     * track everything else
+     * generic track command
      *
      * @param msg
+     * @param type
      * @param options
      */
-    trackCommand(msg, options) {
+    track(msg, type = 'message', options = {}) {
+        console.log(msg);
         const data = Object.assign(
             this.defaultMsg,
             options,
             {
-                type: 'message'
-            }
-        );
-        this.save(data);
-    }
-
-    /**
-     * track a inline/callback query
-     *
-     * @param query
-     * @param options
-     */
-    trackQuery(query, options) {
-        const data = Object.assign(
-            this.defaultMsg,
-            options,
-            {
-                type: 'query'
+                msgId: msg.id,
+                type: type
             }
         );
         this.save(data);
@@ -45,15 +31,16 @@ module.exports = class Analytics {
     /**
      * basic file msg track handler
      *
-     * @param fileType
      * @param msg
+     * @param fileType
      * @param options
      */
-    trackFile(fileType, msg, options) {
+    trackFile(msg, fileType, options = {}) {
         const data = Object.assign(
             this.defaultMsg,
             options,
             {
+                msgId: msg.id,
                 type: 'file',
                 fileType: fileType
             }

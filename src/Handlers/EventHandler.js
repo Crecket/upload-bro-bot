@@ -63,6 +63,9 @@ module.exports = class EventHandlers extends HelperInterface {
     messageFileListener(msg, type) {
         var file = false;
 
+        // track the file request
+        this._app._Analytics.trackFile(msg, type);
+
         // get file info
         if (type === "photo") {
             // get the highest quality picture

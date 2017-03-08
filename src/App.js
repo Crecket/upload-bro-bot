@@ -212,19 +212,27 @@ module.exports = class App {
         });
 
         this._TelegramBot.on('group_chat_created', (msg) => {
+            // track event
+            // this._Analytics.track('group_chat_created');
             winston.debug('group_chat_created', msg);
         });
         this._TelegramBot.on('message', (msg) => {
+            // track event
+            // this._Analytics.track('message');
             winston.debug('message', msg);
         });
 
         // callback query listener
         this._TelegramBot.on('callback_query', (msg) => {
+            // track event
+            this._Analytics.track(msg, 'callback_query');
             fn._EventHandler.callbackQuery(msg);
         });
 
         // inline query search event
         this._TelegramBot.on('inline_query', (msg) => {
+            // track event
+            this._Analytics.track(msg, 'inline_query');
             fn._EventHandler.inlineQuery(msg);
         });
 
