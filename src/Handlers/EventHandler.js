@@ -27,6 +27,8 @@ module.exports = class EventHandlers extends HelperInterface {
             // start the handle request with this query
             selectedQuery.handle(query)
                 .then((message = "") => {
+
+                    // answer the query with the results
                     return this._app.answerCallbackQuery(query.id, message)
                         .then((res) => {
                             winston.debug(res);
@@ -36,6 +38,7 @@ module.exports = class EventHandlers extends HelperInterface {
                 .catch((error) => {
                     winston.error(error);
 
+                    // answer the query with the error
                     return this._app.answerCallbackQuery(query.id, "It looks like something went wrong.")
                         .then((res) => {
                             winston.debug(res);
@@ -43,6 +46,7 @@ module.exports = class EventHandlers extends HelperInterface {
                         .catch(err => winston.error(err));
                 })
         } else {
+            // answer the query taht we couldn't find the command
             this._app.answerCallbackQuery(query.id, "We couldn't find this command.")
                 .then((res) => {
                     winston.debug(res);
@@ -160,9 +164,7 @@ module.exports = class EventHandlers extends HelperInterface {
                                         file_id: file.file_id
                                     }, 60 * 60 * 24 * 30, // store for 1 month
                                     (err, result_cache) => {
-                                        winston.debug('Store cache');
-                                        winston.debug(result_cache);
-                                        winston.error(err);
+                                        if (err) winston.error(err);
                                     })
                             })
                             .catch(winston.error);

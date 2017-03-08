@@ -37,7 +37,7 @@ module.exports = class Upload extends HelperInterface {
 
             // generic start upload event
             this.UploadStart
-                .handle(query)
+                .handle(query, 'imgur')
                 // upload to dropbox
                 .then(resolveResults => this.uploadImgur(resolveResults))
                 // generic finish upload event

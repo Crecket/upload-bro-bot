@@ -33,7 +33,7 @@ module.exports = class Upload extends HelperInterface {
 
             // generic start upload event
             this.UploadStart
-                .handle(query)
+                .handle(query, 'dropbox')
                 // get file contents
                 .then(resolveResults => this.getContents(resolveResults))
                 // upload to dropbox

@@ -15,9 +15,10 @@ module.exports = class UploadStart extends HelperInterface {
      * The generic start steps that most upload queries will do
      *
      * @param query
+     * @param type - the provider type
      * @returns {Promise}
      */
-    handle(query) {
+    handle(query,type) {
 
         // console.log(query);
         return new Promise((resolve, reject) => {
@@ -25,7 +26,7 @@ module.exports = class UploadStart extends HelperInterface {
             let userInfo
 
             // get information about this query user
-            this.getUserInfo(query)
+            this.getUserInfo(query, type)
                 .then(resolveResults => {
                     userInfo = resolveResults.userInfo;
 
@@ -107,9 +108,10 @@ module.exports = class UploadStart extends HelperInterface {
      * Get user info for a given query
      *
      * @param query
+     * @param type
      * @returns {Promise}
      */
-    getUserInfo(query) {
+    getUserInfo(query, type) {
         return new Promise((resolve, reject) => {
             // first get user info
             this._app._UserHelper.getUser(query.from.id)
@@ -118,7 +120,7 @@ module.exports = class UploadStart extends HelperInterface {
                         return resolve("It looks like you're not registered in our system.");
                     }
 
-                    if (!userInfo.provider_sites.dropbox) {
+                    if (!userInfo.provider_sites[type]) {
                         return resolve("This service not connected to your account");
                     }
 
@@ -151,10 +153,6 @@ module.exports = class UploadStart extends HelperInterface {
                     return reject(error);
                 }
                 if (!msgInfo) {
-                    winston.debug('Check cache results');
-                    winston.debug(resolveResults);
-                    winston.debug(msgInfo);
-
                     return reject("We couldn't find a file connected to this message. " +
                         "Try forwarding the file to UploadBro again so he can detect it more easily.", true);
                 }
