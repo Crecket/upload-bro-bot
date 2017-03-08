@@ -6,7 +6,7 @@ const del = require('del');
 const path = require('path');
 const Cacheman = require('cacheman');
 const MongoDbEngine = require('cacheman-mongo');
-const winston = rootRequire('src/Helpers/Logger.js');
+const winston = rootRequire('src/Helpers/Winston.js');
 
 // utilities
 let Utils = rootRequire('src/Utils');

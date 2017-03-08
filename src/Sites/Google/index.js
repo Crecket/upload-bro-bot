@@ -1,6 +1,6 @@
 var fs = require('fs');
 var path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+const winston = rootRequire('src/Helpers/Winston.js');
 
 var SiteInteface = require(__base + 'src/Sites/SiteInterface.js');
 var UploadObj = require('./Queries/Upload');

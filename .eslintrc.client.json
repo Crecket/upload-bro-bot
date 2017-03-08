@@ -9,15 +9,19 @@
     "es6": true
   },
   "extends": [
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
   "rules": {
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     "node/exports-style": [
       "error",
       "module.exports"
     ],
     "no-unused-vars": 2,
-    "no-undef": 2
+    "no-undef": 2,
+    "node/no-unsupported-features": 0
   },
   "globals": {
     "DEVELOPMENT_MODE": true,
@@ -25,7 +29,10 @@
   },
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": 2017
+    "ecmaVersion": 2017,
+    "ecmaFeatures": {
+      "jsx": true
+    }
   }
 }
 
