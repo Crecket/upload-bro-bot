@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 // disable/enable based on enviroment and debug settings
-const productionMode = process.env.DEBUG || process.env.NODE_ENV !== "production";
+const DEV = process.env.DEBUG || process.env.NODE_ENV !== "production";
 
 // polyfill to not handle log requests
 const polyfill = () => {
@@ -9,9 +9,9 @@ const polyfill = () => {
 
 // the logger object
 const logger = {
-    debug: productionMode ? console.debug : polyfill,
-    log: productionMode ? console.log : polyfill,
-    info: productionMode ? console.info : polyfill,
+    debug: DEV ? console.debug : polyfill,
+    log: DEV ? console.log : polyfill,
+    info: DEV ? console.info : polyfill,
     error: console.error
 }
 
