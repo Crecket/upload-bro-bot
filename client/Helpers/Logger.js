@@ -1,10 +1,18 @@
-const winston = require('winston');
+/* eslint-disable no-console */
 
-// set level based on debug mode or node enviroment
-if (process.env.DEBUG || process.env.NODE_ENV !== "production") {
-    winston.level = "error";
-} else {
-    winston.level = "debug";
+// disable/enable based on enviroment and debug settings
+const productionMode = process.env.DEBUG || process.env.NODE_ENV !== "production";
+
+// polyfill to not handle log requests
+const polyfill = () => {
+};
+
+// the logger object
+const logger = {
+    debug: productionMode ? console.debug : polyfill,
+    log: productionMode ? console.log : polyfill,
+    info: productionMode ? console.info : polyfill,
+    error: console.error
 }
 
-module.exports = winston;
+module.exports = logger;
