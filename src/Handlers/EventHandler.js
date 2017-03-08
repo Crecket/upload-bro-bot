@@ -148,8 +148,9 @@ module.exports = class EventHandlers extends HelperInterface {
                             })
                             .then((resulting_message) => {
                                 // setup the key to store the file
-                                var storeKey = "upload_" + resulting_message.chat.id +
+                                let storeKey = "upload_" + resulting_message.chat.id +
                                     "-" + resulting_message.message_id;
+
                                 // store the file
                                 this._app._Cache.set(storeKey, {
                                         chat_id: resulting_message.chat.id,
@@ -159,7 +160,9 @@ module.exports = class EventHandlers extends HelperInterface {
                                         file_id: file.file_id
                                     }, 60 * 60 * 24 * 30, // store for 1 month
                                     (err, result_cache) => {
-
+                                        winston.debug('Store cache');
+                                        winston.debug(result_cache);
+                                        winston.error(err);
                                     })
                             })
                             .catch(winston.error);
