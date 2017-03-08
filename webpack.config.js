@@ -5,8 +5,8 @@ const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const del = require('del');
 
+const SRC_DIR = path.resolve(__dirname, 'client');
 const BUILD_DIR = path.resolve(__dirname, 'public/assets/dist');
-const SRC_DIR = path.resolve(__dirname, 'src/Resources');
 
 // env variable check
 const DEV = process.env.NODE_ENV !== "production";
@@ -23,7 +23,7 @@ del(['public/assets/dist/**', '!public/assets/dist', '!public/assets/dist/.gitke
 let config = {
     entry: {
         // react app js
-        app: SRC_DIR + '/React/react-app.jsx'
+        app: SRC_DIR + '/react-app.jsx'
     },
     output: {
         path: BUILD_DIR,

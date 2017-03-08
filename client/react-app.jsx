@@ -7,13 +7,13 @@ import {Router, browserHistory} from 'react-router'
 // main app
 import Logger from './Helpers/Logger.js';
 import Routes from './Routes';
-import store from "./store";
+import store from "./Store";
 
 // injection, required for materialze tap events
 injectTapEventPlugin();
 
-require("../../../node_modules/flexboxgrid/dist/flexboxgrid.css");
-require("../scss/index.scss");
+require("../node_modules/flexboxgrid/dist/flexboxgrid.css");
+require("./Scss/index.scss");
 
 // render the react app
 ReactDOM.render(

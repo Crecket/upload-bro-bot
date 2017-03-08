@@ -1,7 +1,7 @@
 {
   "plugins": [
     "node",
-    "babel"
+    "react"
   ],
   "extends": [
     "eslint:recommended",

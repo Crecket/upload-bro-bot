@@ -32,7 +32,7 @@ const styles = {
     },
 };
 
-import {lookupHighscores, selectChampion} from "../actions/highscoreActions";
+import {lookupHighscores, selectChampion} from "../Actions/highscoreActions";
 
 // connect to redux
 @connect((store) => {
