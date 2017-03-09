@@ -16,7 +16,6 @@ module.exports = class Analytics {
      * @param options
      */
     track(msg, type = 'message', options = {}) {
-        console.log(msg);
         const data = Object.assign(
             this.defaultMsg,
             options,
