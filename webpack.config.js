@@ -1,9 +1,9 @@
 "use strict";
 
-const webpack = require('webpack');
-const path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const del = require('del');
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const SRC_DIR = path.resolve(__dirname, 'client');
 const BUILD_DIR = path.resolve(__dirname, 'public/assets/dist');
@@ -29,7 +29,7 @@ let config = {
         path: BUILD_DIR,
         filename: '[name].js',
         publicPath: '/assets/dist/',
-        chunkFilename: "[chunkhash].js"
+        chunkFilename: "[name].[hash].js"
     },
     resolve: {
         extensions: ['.jsx', '.scss', '.js', '.json', '.css'],
