@@ -16,6 +16,7 @@ module.exports = class Analytics {
      * @param options
      */
     track(msg, type = 'message', options = {}) {
+        winston.debug(msg);
         const data = Object.assign(
             this.defaultMsg,
             options,
@@ -37,6 +38,7 @@ module.exports = class Analytics {
      * @param options
      */
     trackFile(msg, fileType, options = {}) {
+        winston.debug(msg);
         const data = Object.assign(
             this.defaultMsg,
             options,
