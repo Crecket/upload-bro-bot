@@ -10,3 +10,4 @@ node_modules
 # ignore app compiled files
 public/assets/dist/*
 !public/assets/dist/.gitkeep
+/public/service-worker.*

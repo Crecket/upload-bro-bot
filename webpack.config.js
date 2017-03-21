@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const SRC_DIR = path.resolve(__dirname, 'client');
-const BUILD_DIR = path.resolve(__dirname, 'public/assets/dist');
+const BUILD_DIR = path.resolve(__dirname, 'public');
 
 // env variable check
 const DEV = process.env.NODE_ENV !== "production";
@@ -22,14 +22,16 @@ del(['public/assets/dist/**', '!public/assets/dist', '!public/assets/dist/.gitke
 
 let config = {
     entry: {
-        // react app js
-        app: SRC_DIR + '/react-app.jsx'
+        // React app
+        "assets/dist/app": SRC_DIR + '/react-app.jsx',
+        // Service worker
+        "service-worker": SRC_DIR + '/service-worker.js'
     },
     output: {
         path: BUILD_DIR,
         filename: '[name].js',
         publicPath: '/assets/dist/',
-        chunkFilename: "[name].[hash].js"
+        chunkFilename: "/assets/dist/[name].[hash].js"
     },
     resolve: {
         extensions: ['.jsx', '.scss', '.js', '.json', '.css'],
@@ -42,7 +44,7 @@ let config = {
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
         new ExtractTextPlugin({
-            filename: "[name].css",
+            filename: "assets/dist/[name].css",
             disable: false,
             allChunks: true
         }),
@@ -55,7 +57,7 @@ let config = {
             // (the commons chunk name)
             name: "commons",
             // (the filename of the commons chunk)
-            filename: "commons.js",
+            filename: "assets/dist/commons.js",
             // (Modules must be shared between 3 entries)
             minChunks: 2
         })
