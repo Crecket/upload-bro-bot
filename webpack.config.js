@@ -1,65 +1,74 @@
 "use strict";
 
-const del = require('del');
-const path = require('path');
-const webpack = require('webpack');
+const del = require("del");
+const path = require("path");
+const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const OfflinePlugin = require("offline-plugin");
 
-const SRC_DIR = path.resolve(__dirname, 'client');
-const BUILD_DIR = path.resolve(__dirname, 'public');
+// src and build dirs
+const SRC_DIR = path.resolve(__dirname, "client");
+const BUILD_DIR = path.resolve(__dirname, "public");
+const OUTPUT_DIR = "assets/dist/";
 
 // env variable check
 const DEV = process.env.NODE_ENV !== "production";
 
 // clear old files
-del(['public/assets/dist/**', '!public/assets/dist', '!public/assets/dist/.gitkeep']).then(paths => {
+del([
+    "public/assets/dist/**",
+    "public/*.*.js",
+    "public/*.*.map",
+    "!public/assets/dist",
+    "!public/assets/dist/.gitkeep"
+]).then(paths => {
     if (DEV) {
-        console.log("\n");
-        console.log('Cleared dist folder:\n', paths.join('\n'));
-        console.log("\n");
+        console.log("Cleared dist folder:\n");
+        console.log(paths.join("\n"));
     }
 });
 
 let config = {
     entry: {
         // React app
-        "assets/dist/app": SRC_DIR + '/react-app.jsx',
-        // Service worker
-        "service-worker": SRC_DIR + '/service-worker.js'
+        "app": SRC_DIR + "/react-app.jsx"
     },
     output: {
         path: BUILD_DIR,
-        filename: '[name].js',
-        publicPath: '/assets/dist/',
-        chunkFilename: "/assets/dist/[name].[hash].js"
+        filename: OUTPUT_DIR + "[name].js",
+        publicPath: "/",
+        chunkFilename: OUTPUT_DIR + "[name].[hash].js"
     },
     resolve: {
-        extensions: ['.jsx', '.scss', '.js', '.json', '.css'],
+        extensions: [".jsx", ".scss", ".js", ".json", ".css"],
         modules: [
-            'node_modules',
-            path.resolve(__dirname, './node_modules'),
-            path.resolve(__dirname, './src'),
+            "node_modules",
+            path.resolve(__dirname, "./node_modules"),
+            path.resolve(__dirname, "./src"),
         ]
     },
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
         new ExtractTextPlugin({
-            filename: "assets/dist/[name].css",
+            filename: OUTPUT_DIR + "[name].css",
             disable: false,
             allChunks: true
+        }),
+        new OfflinePlugin({
+            publicPath: "/"
         }),
         new webpack.DefinePlugin({
             "PRODUCTION_MODE": JSON.stringify(process.env.NODE_ENV === "production" ? true : false),
             "DEVELOPMENT_MODE": JSON.stringify(process.env.NODE_ENV === "production" ? false : true),
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development")
         }),
         new webpack.optimize.CommonsChunkPlugin({
             // (the commons chunk name)
             name: "commons",
             // (the filename of the commons chunk)
-            filename: "assets/dist/commons.js",
+            filename: OUTPUT_DIR + "commons.js",
             // (Modules must be shared between 3 entries)
-            minChunks: 2
+            minChunks: 2,
         })
     ],
     devtool: DEV ? "source-map" : false,
@@ -68,14 +77,14 @@ let config = {
             {
                 test: /\.jsx?$/,
                 use: [{
-                    loader: 'babel-loader',
+                    loader: "babel-loader",
                     options: {
                         plugins: [
-                            'react-html-attrs',
-                            'transform-class-properties',
-                            'transform-react-inline-elements',
-                            'transform-react-constant-elements',
-                            'transform-decorators-legacy'
+                            "react-html-attrs",
+                            "transform-class-properties",
+                            "transform-react-inline-elements",
+                            "transform-react-constant-elements",
+                            "transform-decorators-legacy"
                         ]
                     }
                 }]
