@@ -1,40 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="theme-color" content="#142F4C">
-    <meta name="msapplication-navbutton-color" content="#142F4C">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#142F4C">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>UploadBroBot</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+{% extends 'bootstrap.twig' %}
+
+{% block css %}
+    {{ parent() }}
     <link href="/assets/dist/app.css" rel="stylesheet">
-    <link rel="icon" href="/favicon.ico">
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+{% endblock %}
 
-        ga('create', 'UA-73547861-4', 'auto');
-        ga('send', 'pageview');
-    </script>
-</head>
-<link rel="alternative" type="application/json+oembed" data-dynamic="true"
-      href="https://uploadbro.com/oembed?url=https://uploadbro.com&format=json"/>
-<body>
-<div id="app"/>
+{% block content %}
+    <noscript>
+        <h1 style="text-align:center;">UploadBro requires javascript to run propperly :(</h1>
+    </noscript>
+    <div id="app"/>
+{% endblock %}
 
-<script>var csrfToken = '{{ csrftoken }}';</script>
-<script src="/assets/dist/commons.js"></script>{#<script src="/assets/dist/libs.js"></script>#}
-<script src="/assets/dist/app.js"></script>
-</body>
-</html>
+{% block js %}
+    {{ parent() }}
+    <script>var csrfToken = '{{ csrftoken }}';</script>
+    <script src="/assets/dist/commons.js"></script>{#<script src="/assets/dist/libs.js"></script>#}
+    <script src="/assets/dist/app.js"></script>
+{% endblock %}

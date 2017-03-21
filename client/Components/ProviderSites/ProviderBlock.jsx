@@ -35,9 +35,8 @@ export default class ProviderBlock extends React.Component {
     render() {
         let BlockBtn = (
             <RaisedButton
-                secondary={true}
-                href={"/login/" + this.props.siteInfo.key}
-                style={styles.button}>
+                secondary={true} style={styles.button}
+                href={"/login/" + this.props.siteInfo.key}>
                 Add {this.props.siteInfo.name}
             </RaisedButton>
         );
@@ -58,10 +57,10 @@ export default class ProviderBlock extends React.Component {
             <div style={styles.container}>
                 <FloatingActionButton
                     mini={true} style={styles.floatingBtn}
-                    href={this.props.siteInfo.url} target="_blank">
+                    href={this.props.siteInfo.url} rel="noopener" target="_blank">
                     <LinkIcon />
                 </FloatingActionButton>
-                <img style={styles.img}
+                <img style={styles.img} alt={Utils.ucfirst(this.props.siteInfo.name) + " logo"}
                      src={this.props.siteInfo.logoUrl}/>
                 <br/>
                 {BlockBtn}
