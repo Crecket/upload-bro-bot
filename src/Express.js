@@ -174,9 +174,10 @@ module.exports = function (uploadApp) {
     app.use(helmet());
 
     // csurf for csrf values and a simple helper middleware
-    app.use(csurf({cookie: true}));
+    // app.use(csurf({cookie: true}));
     app.use((request, response, next) => {
-        response.locals.csrftoken = request.csrfToken();
+        // response.locals.csrftoken = request.csrfToken();
+        response.locals.csrftoken = 'disabled';
         next();
     });
 
