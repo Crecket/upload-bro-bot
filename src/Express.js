@@ -232,6 +232,14 @@ module.exports = function (uploadApp) {
         res.render('index.twig');
     })
 
+    // error handler
+    app.use(function (err, req, res, next) {
+        if (err.code !== 'EBADCSRFTOKEN') return next(err)
+
+        // handle CSRF token errors here
+        res.status(403).json('Invalid CSRF');
+    })
+
     // start listening http
     httpServer.listen(process.env.EXPRESS_PORT, function () {
         // start https
