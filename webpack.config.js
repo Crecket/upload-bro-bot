@@ -55,7 +55,13 @@ let config = {
             allChunks: true
         }),
         new OfflinePlugin({
-            publicPath: "/"
+            publicPath: "/",
+            version: (offlineplugin) => {
+                return "v" + (new Date()).getTime();
+            },
+            externals: [
+                "/"
+            ]
         }),
         new webpack.DefinePlugin({
             "PRODUCTION_MODE": JSON.stringify(process.env.NODE_ENV === "production" ? true : false),
@@ -114,7 +120,8 @@ if (!DEV) {
         sourceMap: true,
         minimize: true,
         compress: {
-            warnings: false
+            warnings: false,
+            drop_console: true
         }
     }));
 }
