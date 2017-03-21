@@ -47,6 +47,7 @@
     "passport-oauth2-refresh": "^1.0.0",
     "passport-telegram": "^1.0.0",
     "response-time": "^2.3.2",
+    "spdy": "^3.4.4",
     "twig": "^0.10.3",
     "winston": "^2.3.1"
   },

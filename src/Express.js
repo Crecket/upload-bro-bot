@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
-const https = require('https');
+const spdy = require('spdy');
 const winston = rootRequire('src/Helpers/Winston.js');
 
 // express libs
@@ -49,7 +49,7 @@ module.exports = function (uploadApp) {
             httpsOptions.ca = fs.readFileSync(process.env.EXPRESS_SSL_CA);
         }
         // create server with these settings
-        var httpsServer = https.createServer(httpsOptions, app);
+        var httpsServer = spdy.createServer(httpsOptions, app);
     }
 
     let httpServer = http.createServer(app);
