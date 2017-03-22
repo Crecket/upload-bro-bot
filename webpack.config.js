@@ -5,7 +5,9 @@ const del = require("del");
 const path = require("path");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const OfflinePlugin = require("offline-plugin");
+
+// split the offline plugin config
+const OfflinePlugin = require("./configs/webpack/OfflinePlugin");
 
 // src and build dirs
 const SRC_DIR = path.resolve(__dirname, "client");
@@ -25,9 +27,9 @@ del([
     "!public/assets/dist/.gitkeep"
 ]).then(paths => {
     if (DEV) {
-        console.log("Cleared dist folder:\n");
-        console.log(paths.join("\n"));
-        process.stdout.write("\n");
+        // console.log("Cleared dist folder:\n");
+        // console.log(paths.join("\n"));
+        // process.stdout.write("\n");
     }
 });
 
@@ -57,49 +59,7 @@ let config = {
             disable: false,
             allChunks: true
         }),
-        new OfflinePlugin({
-            publicPath: "/",
-            autoUpdate: true,
-            externals: [
-                '/',
-                '/remove/dropbox',
-                '/remove/imgur',
-                // '/login/telegram',
-                // '/login/*',
-                // '*.jpg',
-                // '*.png',
-            ],
-            excludes: [
-                "/login/**",
-                "/login/telegram",
-            ],
-            // caches: {
-            //     main: [':rest:'],
-            //     additional: [':externals:']
-            // },
-            // ServiceWorker: {
-            //     navigateFallbackURL: "/"
-            // },
-            // AppCache: {
-            //     FALLBACK: {
-            //         // "/": "/",
-            //         "/new": "/",
-            //         "/remove": "/",
-            //         "/login/dropbox/callback": "/",
-            //     }
-            // },
-            // cacheMaps: [
-            //     {
-            //         match: function (url) {
-            //             if (url.origin !== location.origin) return;
-            //             if (url.pathname.indexOf('/api/') === 0) return;
-            //             return new URL('/', location);
-            //         },
-            //         to: "/",
-            //         requestTypes: ["navigate"]
-            //     }
-            // ],
-        }),
+        OfflinePlugin,
         new webpack.DefinePlugin({
             "PRODUCTION_MODE": JSON.stringify(process.env.NODE_ENV === "production" ? true : false),
             "DEVELOPMENT_MODE": JSON.stringify(process.env.NODE_ENV === "production" ? false : true),

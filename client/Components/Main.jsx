@@ -21,8 +21,8 @@ const ThemesList = {
 
 // actions
 import {openModal, closeModal} from "../Actions/modalActions.js";
-import {userUpdate, userLogout} from "../Actions/user.js";
-import {siteUpdate} from "../Actions/sites.js";
+import {userUpdate, userLogout, userLoadLocalstorage} from "../Actions/user.js";
+import {siteUpdate, siteLoadLocalstorage} from "../Actions/sites.js";
 
 // connect to redux
 @connect((store) => {
@@ -52,6 +52,10 @@ export default class Main extends React.Component {
     };
 
     componentDidMount() {
+        // initial localstorage check
+        this.props.dispatch(userLoadLocalstorage());
+        this.props.dispatch(siteLoadLocalstorage());
+
         // update user status
         this.updateUser();
 
@@ -101,7 +105,6 @@ export default class Main extends React.Component {
     };
 
     render() {
-
         // get the children pages and give them some default props
         const mainBody = React.Children.map(
             this.props.children,
@@ -122,7 +125,7 @@ export default class Main extends React.Component {
                     <div className={"row center-xs"}>
                         <div className="col-xs-12 col-md-12 col-lg-10">
                             <div className="box"
-                                   style={{paddingBottom: 30}}>
+                                 style={{paddingBottom: 30}}>
                                 <Dialog
                                     title={this.props.modalTitle}
                                     actions={[

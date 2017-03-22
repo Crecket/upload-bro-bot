@@ -38,12 +38,7 @@ export default class Home extends React.Component {
 
     render() {
         // default state
-        let homeDiv = (
-            <PaperHelper style={styles.loggedIn}>
-                <h1>Loading</h1>
-                <CircularProgress size={80} thickness={5}/>
-            </PaperHelper>
-        );
+        let homeDiv;
 
         // user is logged in
         if (this.props.user_info) {
@@ -67,7 +62,7 @@ export default class Home extends React.Component {
                     </PaperHelper>
                 </div>
             );
-        } else if (this.props.initialCheck === true) {
+        } else {
             // not logged in and initial check is done
             homeDiv = (
                 <div>
@@ -84,6 +79,14 @@ export default class Home extends React.Component {
                 </div>
             );
         }
+        // else {
+        //     homeDiv = (
+        //         <PaperHelper style={styles.loggedIn}>
+        //             <h1>Loading</h1>
+        //             <CircularProgress size={80} thickness={5}/>
+        //         </PaperHelper>
+        //     );
+        // }
 
         // backgroundColor: this.props.theme.custom.appBackgroundColor
         return (

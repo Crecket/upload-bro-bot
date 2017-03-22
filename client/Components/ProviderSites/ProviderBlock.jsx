@@ -9,7 +9,7 @@ import NavLink from '../../Helpers/NavLink';
 
 const styles = {
     img: {
-        maxHeight: 120,
+        height: 120,
         zIndex: 5
     },
     container: {

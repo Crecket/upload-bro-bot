@@ -1,8 +1,10 @@
-export default function reducer(state = {
-    user_info: false,
-    loading: false,
-    initialCheck: false
-}, action) {
+const store = require('store');
+
+export default (state = {
+                user_info: store.get('user_info') || false,
+                loading: false,
+                initialCheck: false
+            }, action) => {
     switch (action.type) {
         case "USER_SET_INFO":
             return {

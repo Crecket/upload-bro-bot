@@ -1,7 +1,12 @@
 const axios = require('axios');
 const Logger = require('../Helpers/Logger');
+const store = require('store');
 
 export function userSetInfo(user_info) {
+    // update local storage
+    store.set('user_info', user_info);
+
+    // return the action
     return {
         type: 'USER_SET_INFO',
         payload: {
@@ -13,7 +18,7 @@ export function userSetInfo(user_info) {
 export function userUpdate() {
     return dispatch => {
         dispatch(userLoading());
-        axios.post('/get_user', {_csrf: csrfToken})
+        axios.post('/api/get_user', {_csrf: csrfToken})
             .then(response => response.data)
             .then(json => {
                 // update user info and stop loading state
@@ -29,10 +34,15 @@ export function userUpdate() {
     }
 }
 
+export function userLoadLocalstorage() {
+    userSetInfo(store.get('user_info') || false);
+    return {type: 'USER_LOAD_LOCALSTORAGE'};
+}
+
 export function userLogout() {
-    // logout and forget
     axios.get('/logout').then(() => {
-        // logged out
+        // remove local storage
+        store.remove('user_info');
     }).catch(Logger.error);
     // send user logout event
     return {type: 'USER_LOGOUT'};
@@ -47,10 +57,6 @@ export function userNotLoading() {
 }
 
 export function userInitialCHeck() {
-    return dispatch => {
-        // setTimeout(() =>{
-        dispatch({type: 'USER_INITIAL_CHECK'});
-        // }, 2000);
-    }
+    return {type: 'USER_INITIAL_CHECK'};
 }
 

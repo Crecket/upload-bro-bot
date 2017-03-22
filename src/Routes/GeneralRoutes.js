@@ -10,7 +10,7 @@ module.exports = (app, passport, uploadApp) => {
     })
 
     // fetch user info from api
-    app.post('/get_user', (req, res) => {
+    app.post('/api/get_user', (req, res) => {
         let user_info = (req.user) ? req.user : false;
 
         // delete telepass access token
