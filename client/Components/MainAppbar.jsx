@@ -1,10 +1,9 @@
 import React  from 'react';
-
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
-import CloudUpload from 'material-ui/svg-icons/file/cloud-upload';
 import ExitToAppIcon from 'material-ui/svg-icons/action/exit-to-app';
+import browserHistory from 'react-router/lib/browserHistory';
 
 const styles = {
     appbar: {
@@ -24,19 +23,26 @@ class MainAppbar extends React.Component {
         this.state = {};
     };
 
+    goHome = (e) => {
+        console.log(e);
+        browserHistory.push('/');
+    }
+
     render() {
         var TopRightBtn = (
-            <FlatButton secondary={true}
-                        label="Login"
-                        labelPosition="before"
-                        icon={<ExitToAppIcon/>}
-                        href="/login/telegram"/>
+            <FlatButton
+                secondary={true}
+                label="Login"
+                labelPosition="before"
+                icon={<ExitToAppIcon/>}
+                href="/login/telegram"/>
         );
         if (this.props.user_info) {
             TopRightBtn = (
-                <FlatButton label="Logout"
-                            labelPosition="before"
-                            onClick={this.props.logoutUser}/>
+                <FlatButton
+                    label="Logout"
+                    labelPosition="before"
+                    onClick={this.props.logoutUser}/>
             )
         }
 
@@ -44,7 +50,9 @@ class MainAppbar extends React.Component {
             <AppBar
                 title="UploadBroBot"
                 style={styles.appbar}
-                iconElementLeft={<IconButton><CloudUpload /></IconButton>}
+                iconElementLeft={<IconButton onClick={this.goHome}>
+                    <img src="/favicon-32x32.png"/>
+                </IconButton>}
                 iconElementRight={TopRightBtn}
             />
         );
