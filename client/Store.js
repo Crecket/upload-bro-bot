@@ -8,7 +8,7 @@ import reducer from "./Reducers/index.js";
 
 // create the middleware for this store
 let middleware;
-if (process.env.DEBUG === "true") {
+if (process.env.DEBUG === true) {
     // create middleware with logger
     middleware = applyMiddleware(promise(), thunk, logger())
 } else {

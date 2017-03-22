@@ -33,7 +33,6 @@
     "dropbox": "^2.5.0",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
-    "extract-text-webpack-plugin": "^2.1.0",
     "filesize": "^3.4.1",
     "google-auth-library": "^0.10.0",
     "googleapis": "^16.1.0",
@@ -48,7 +47,6 @@
     "passport-telegram": "^1.0.0",
     "response-time": "^2.3.2",
     "spdy": "^3.4.4",
-    "store": "^2.0.4",
     "twig": "^0.10.3",
     "winston": "^2.3.1"
   },
@@ -71,6 +69,7 @@
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-node": "^4.0.1",
     "eslint-plugin-react": "^6.10.0",
+    "extract-text-webpack-plugin": "^2.1.0",
     "flexboxgrid": "^6.3.1",
     "html-webpack-plugin": "^2.26.0",
     "material-auto-rotating-carousel": "^1.2.0",
@@ -99,6 +98,7 @@
     "redux-promise-middleware": "^4.2.0",
     "redux-thunk": "^2.1.0",
     "sass-loader": "^4.1.1",
+    "store": "^2.0.4",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1"
   }

@@ -21,7 +21,8 @@
     ],
     "no-unused-vars": 2,
     "no-undef": 2,
-    "node/no-unsupported-features": 0
+    "node/no-unsupported-features": 0,
+    "node/no-unpublished-require": 0
   },
   "globals": {
     "DEVELOPMENT_MODE": true,

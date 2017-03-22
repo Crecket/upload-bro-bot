@@ -22,7 +22,9 @@ export function siteUpdate() {
                 dispatch(setSites(json));
                 dispatch(siteNotLoading());
             })
-            .catch(Logger.error);
+            .catch(err => {
+                Logger.error(err);
+            });
     }
 }
 

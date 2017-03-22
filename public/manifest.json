@@ -1,19 +1,34 @@
 {
-	"name": "UploadBroBot",
-	"short_name": "UploadBro",
-	"icons": [
-		{
-			"src": "\/android-chrome-192x192.png",
-			"sizes": "192x192",
-			"type": "image\/png"
-		},
-		{
-			"src": "\/android-chrome-512x512.png",
-			"sizes": "512x512",
-			"type": "image\/png"
-		}
-	],
-	"background_color": "#303f9f",
-	"theme_color": "#303f9f",
-	"display": "standalone"
+  "lang": "en",
+  "scope": "/",
+  "name": "UploadBroBot",
+  "short_name": "UploadBro",
+  "display": "browser",
+  "start_url": "/",
+  "background_color": "#374046",
+  "theme_color": "#303f9f",
+  "orientation": "any",
+  "related_applications": [],
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/assets/img/logo-32.png",
+      "sizes": "32x32",
+      "type": "image\/png"
+    },
+    {
+      "src": "/assets/img/logo-64.png",
+      "sizes": "64x64",
+      "type": "image\/png"
+    },
+    {
+      "src": "/assets/img/logo-485.png",
+      "sizes": "485x485",
+      "type": "image\/png"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32"
+    }
+  ]
 }
