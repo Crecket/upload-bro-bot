@@ -76,7 +76,13 @@ module.exports = class Google extends SiteInteface {
      *
      * @returns {string}
      */
-    get logoUrl() {
+    logoUrl(type = "png") {
+        switch(type){
+            case "png":
+                return "/assets/img/google.png";
+            case "svg":
+                return "/assets/img/google.svg";
+        }
         return "/assets/img/google.png";
     }
 

@@ -70,7 +70,9 @@ module.exports = class SiteHandler {
                 description: this._sites[siteKey].description,
                 key: this._sites[siteKey].key,
                 url: this._sites[siteKey].url,
-                logoUrl: this._sites[siteKey].logoUrl
+                logoUrl: this._sites[siteKey].logoUrl(),
+                logoUrlSvg: this._sites[siteKey].logoUrl("svg"),
+                supportedExtensions: this._sites[siteKey].supportedExtensions
             }
         });
     }
@@ -83,13 +85,14 @@ module.exports = class SiteHandler {
      */
     getSiteBasic(siteKey) {
         return !this._sites[siteKey] ? false : {
-                name: this._sites[siteKey].name,
-                title: this._sites[siteKey].title,
-                description: this._sites[siteKey].description,
-                key: this._sites[siteKey].key,
-                url: this._sites[siteKey].url,
-                logoUrl: this._sites[siteKey].logoUrl,
-                supportedExtensions: this._sites[siteKey].supportedExtensions
-            };
+            name: this._sites[siteKey].name,
+            title: this._sites[siteKey].title,
+            description: this._sites[siteKey].description,
+            key: this._sites[siteKey].key,
+            url: this._sites[siteKey].url,
+            logoUrl: this._sites[siteKey].logoUrl(),
+            logoUrlSvg: this._sites[siteKey].logoUrl("svg"),
+            supportedExtensions: this._sites[siteKey].supportedExtensions
+        };
     }
 }

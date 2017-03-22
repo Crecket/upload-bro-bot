@@ -21,6 +21,7 @@ module.exports = new OfflinePlugin({
     ],
     excludes: [
         "/api/**",
+        "/new/**",
         "/login/**",
         "/login/telegram",
     ],

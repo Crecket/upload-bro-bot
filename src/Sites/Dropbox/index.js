@@ -73,7 +73,13 @@ module.exports = class Dropbox extends SiteInteface {
      *
      * @returns {string}
      */
-    get logoUrl() {
+    logoUrl(type = "png") {
+        switch(type){
+            case "png":
+                return "/assets/img/dropbox.png";
+            case "svg":
+                return "/assets/img/dropbox.svg";
+        }
         return "/assets/img/dropbox.png";
     }
 
