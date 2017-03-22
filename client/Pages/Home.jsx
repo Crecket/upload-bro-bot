@@ -61,7 +61,9 @@ export default class Home extends React.Component {
                     </PaperHelper>
 
                     <PaperHelper style={styles.loggedIn}>
-                        https://telegram.me/uploadbro_bot
+                        <RaisedButton href="https://telegram.me/uploadbro_bot" rel="noopener" primary={true}>
+                            Open UploadBro
+                        </RaisedButton>
                     </PaperHelper>
                 </div>
             );

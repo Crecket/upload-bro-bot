@@ -1,4 +1,5 @@
 "use strict";
+/* eslint-disable */
 
 const del = require("del");
 const path = require("path");
@@ -16,6 +17,7 @@ const DEV = process.env.NODE_ENV !== "production";
 
 // clear old files
 del([
+    "public/sw.js",
     "public/assets/dist/**",
     "public/*.*.js",
     "public/*.*.map",
@@ -25,6 +27,7 @@ del([
     if (DEV) {
         console.log("Cleared dist folder:\n");
         console.log(paths.join("\n"));
+        process.stdout.write("\n");
     }
 });
 
@@ -56,12 +59,46 @@ let config = {
         }),
         new OfflinePlugin({
             publicPath: "/",
-            version: (offlineplugin) => {
-                return "v" + (new Date()).getTime();
-            },
+            autoUpdate: true,
             externals: [
-                "/"
-            ]
+                '/',
+                '/remove/dropbox',
+                '/remove/imgur',
+                // '/login/telegram',
+                // '/login/*',
+                // '*.jpg',
+                // '*.png',
+            ],
+            excludes: [
+                "/login/**",
+                "/login/telegram",
+            ],
+            // caches: {
+            //     main: [':rest:'],
+            //     additional: [':externals:']
+            // },
+            // ServiceWorker: {
+            //     navigateFallbackURL: "/"
+            // },
+            // AppCache: {
+            //     FALLBACK: {
+            //         // "/": "/",
+            //         "/new": "/",
+            //         "/remove": "/",
+            //         "/login/dropbox/callback": "/",
+            //     }
+            // },
+            // cacheMaps: [
+            //     {
+            //         match: function (url) {
+            //             if (url.origin !== location.origin) return;
+            //             if (url.pathname.indexOf('/api/') === 0) return;
+            //             return new URL('/', location);
+            //         },
+            //         to: "/",
+            //         requestTypes: ["navigate"]
+            //     }
+            // ],
         }),
         new webpack.DefinePlugin({
             "PRODUCTION_MODE": JSON.stringify(process.env.NODE_ENV === "production" ? true : false),
