@@ -21,6 +21,8 @@ const DEV = process.env.NODE_ENV !== "production";
 del([
     "public/sw.js",
     "public/assets/dist/**",
+    "public/appcache/**",
+    "public/appcache",
     "public/*.*.js",
     "public/*.*.map",
     "!public/assets/dist",

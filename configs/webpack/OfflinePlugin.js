@@ -4,7 +4,11 @@ module.exports = new OfflinePlugin({
     publicPath: "/",
     autoUpdate: true,
     externals: [
-        '/'
+        '/',
+        '/assets/img/**.png',
+        '/assets/img/google.png',
+        '/assets/img/dropbox.png',
+        '/assets/img/imgur.png',
     ],
     excludes: [
         "/api/**",
