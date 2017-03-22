@@ -24,7 +24,6 @@ class MainAppbar extends React.Component {
     };
 
     goHome = (e) => {
-        console.log(e);
         browserHistory.push('/');
     }
 
