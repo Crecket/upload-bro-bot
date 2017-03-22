@@ -70,8 +70,10 @@ module.exports = class SiteHandler {
                 description: this._sites[siteKey].description,
                 key: this._sites[siteKey].key,
                 url: this._sites[siteKey].url,
-                logoUrl: this._sites[siteKey].logoUrl(),
-                logoUrlSvg: this._sites[siteKey].logoUrl("svg"),
+                logos: {
+                    "png": this._sites[siteKey].logoUrl("png"),
+                    "svg": this._sites[siteKey].logoUrl("svg"),
+                },
                 supportedExtensions: this._sites[siteKey].supportedExtensions
             }
         });
@@ -90,8 +92,10 @@ module.exports = class SiteHandler {
             description: this._sites[siteKey].description,
             key: this._sites[siteKey].key,
             url: this._sites[siteKey].url,
-            logoUrl: this._sites[siteKey].logoUrl(),
-            logoUrlSvg: this._sites[siteKey].logoUrl("svg"),
+            logos: {
+                "png": this._sites[siteKey].logoUrl("png"),
+                "svg": this._sites[siteKey].logoUrl("svg"),
+            },
             supportedExtensions: this._sites[siteKey].supportedExtensions
         };
     }

@@ -16,8 +16,7 @@ const styles = {
         textAlign: 'center'
     },
     logo: {
-        maxHeight: 90,
-        maxWidth: 90
+        height: 90
     }
 };
 
@@ -35,7 +34,7 @@ class SiteList extends React.Component {
 
                         <div className="col-xs-12 col-sm-4">
                             <Center>
-                                <img style={styles.logo} src={site.logoUrl}/>
+                                <img style={styles.logo} src={site.logos['svg']}/>
                             </Center>
                         </div>
 

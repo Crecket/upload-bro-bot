@@ -61,7 +61,7 @@ export default class ProviderBlock extends React.Component {
                     <LinkIcon />
                 </FloatingActionButton>
                 <img style={styles.img} alt={Utils.ucfirst(this.props.siteInfo.name) + " logo"}
-                     src={this.props.siteInfo.logoUrlSvg}/>
+                     src={this.props.siteInfo.logos['svg']}/>
                 <br/>
                 {BlockBtn}
             </div>

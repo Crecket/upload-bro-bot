@@ -18,8 +18,6 @@ const styles = {
     }
 };
 
-// TODO clickable icon/title to home
-
 class MainAppbar extends React.Component {
     constructor(props, context) {
         super(props, context);
