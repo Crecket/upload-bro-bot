@@ -5,8 +5,6 @@ import injectTapEventPlugin  from 'react-tap-event-plugin';
 import {Router, browserHistory} from 'react-router'
 
 // Register service worker
-// import * as OfflinePluginRuntime from 'offline-plugin/runtime';
-// OfflinePluginRuntime.install();
 require('./Helpers/ServiceWorkerRegistration');
 
 // main app
