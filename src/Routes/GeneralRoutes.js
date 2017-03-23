@@ -4,7 +4,7 @@ module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;
 
     // routes
-    app.get(['/', '/remove/:type', '/new/:type'], (req, res) => {
+    app.get(['/', 'index.html', '/remove/:type', '/new/:type'], (req, res) => {
         res.set('X-Frame-Options', 'ALLOW-FROM-ALL');
         res.render('index', {});
     })
