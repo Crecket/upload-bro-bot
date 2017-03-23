@@ -19,7 +19,7 @@ module.exports = new SWPrecacheWebpackPlugin({
     // enviroment modifiers
     minify: !DEBUG,
     forceDelete: !DEBUG,
-    verbose: DEBUG,
+    // verbose: DEBUG,
     // ignore .map files
     // staticFileGlobsIgnorePatterns: [/\.map$/],
     // max file size

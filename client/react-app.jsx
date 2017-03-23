@@ -9,8 +9,8 @@ require('./Helpers/ServiceWorkerRegistration');
 
 // main app
 import Logger from './Helpers/Logger.js';
-import Routes from './Routes';
-import store from "./Store";
+import routes from './Routes';
+import Store from "./Store";
 
 // injection, required for materialze tap events
 injectTapEventPlugin();
@@ -20,8 +20,8 @@ require("./Scss/index.scss");
 
 // render the react app
 ReactDOM.render(
-    <Provider store={store}>
-        <Router routes={Routes} history={browserHistory}/>
+    <Provider store={Store}>
+        <Router routes={routes} history={browserHistory}/>
     </Provider>,
     document.getElementById('app')
 );
