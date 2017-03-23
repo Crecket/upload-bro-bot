@@ -8,7 +8,7 @@ const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 // split the swprecache config
-const SwPrecachePlugin = require("./configs/webpack/SwPrecachePlugin");
+const SwPrecachePlugin = require("./configs/SwPrecachePlugin");
 
 // src and build dirs
 const SRC_DIR = path.resolve(__dirname, "client");
@@ -40,6 +40,8 @@ let config = {
     entry: {
         // promise polyfill
         "babel-polyfill":"babel-polyfill",
+        // Service worker files
+        "swcustom": SRC_DIR + "/ServiceWorkerCustom.js",
         // React app
         "app": SRC_DIR + "/react-app.jsx"
     },

@@ -5,7 +5,7 @@ import injectTapEventPlugin  from 'react-tap-event-plugin';
 import {Router, browserHistory} from 'react-router'
 
 // Register service worker
-require('./Helpers/ServiceWorkerRegistration');
+require('./ServiceWorkers/ServiceWorkerRegistration');
 
 // main app
 import Logger from './Helpers/Logger.js';
