@@ -8,12 +8,5 @@
     ],
     "react",
     "stage-0"
-  ],
-  "env": {
-    "production": {
-      "presets": [
-        "react-optimize"
-      ]
-    }
-  }
+  ]
 }
