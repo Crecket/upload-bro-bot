@@ -38,6 +38,8 @@ del([
 
 let config = {
     entry: {
+        // promise polyfill
+        "babel-polyfill":"babel-polyfill",
         // React app
         "app": SRC_DIR + "/react-app.jsx"
     },
@@ -70,6 +72,9 @@ let config = {
             "process.env.DEBUG": JSON.stringify(DEV),
             "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development")
         }),
+        // new webpack.ProvidePlugin({
+        //     Promise: "bluebird"
+        // }),
         new webpack.optimize.CommonsChunkPlugin({
             // (the commons chunk name)
             name: "commons",

@@ -1,3 +1,5 @@
+// require('es6-promise').polyfill();
+import "babel-polyfill";
 const axios = require('axios');
 const Logger = require('../Helpers/Logger');
 const store = require('store');
