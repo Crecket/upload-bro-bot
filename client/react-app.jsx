@@ -4,9 +4,10 @@ import {Provider} from "react-redux";
 import injectTapEventPlugin  from 'react-tap-event-plugin';
 import {Router, browserHistory} from 'react-router'
 
-// Register offline worker
-import * as OfflinePluginRuntime from 'offline-plugin/runtime';
-OfflinePluginRuntime.install();
+// Register service worker
+// import * as OfflinePluginRuntime from 'offline-plugin/runtime';
+// OfflinePluginRuntime.install();
+require('./Helpers/ServiceWorkerRegistration');
 
 // main app
 import Logger from './Helpers/Logger.js';

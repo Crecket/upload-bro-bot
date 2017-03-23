@@ -1,5 +1,6 @@
 "use strict";
 /* eslint-disable */
+require('dotenv').config();
 
 const del = require("del");
 const path = require("path");
@@ -8,6 +9,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 // split the offline plugin config
 const OfflinePlugin = require("./configs/webpack/OfflinePlugin");
+const SwPrecachePlugin = require("./configs/webpack/SwPrecachePlugin");
 
 // src and build dirs
 const SRC_DIR = path.resolve(__dirname, "client");
@@ -43,8 +45,8 @@ let config = {
     output: {
         path: BUILD_DIR,
         filename: OUTPUT_DIR + "[name].js",
-        publicPath: "/",
-        chunkFilename: OUTPUT_DIR + "[name].[hash].js"
+        publicPath: process.env.WEBSITE_URL + "/",
+        chunkFilename: OUTPUT_DIR + "[name].[hash].chunk.js"
     },
     resolve: {
         extensions: [".jsx", ".scss", ".js", ".json", ".css"],
@@ -61,7 +63,8 @@ let config = {
             disable: false,
             allChunks: true
         }),
-        OfflinePlugin,
+        // OfflinePlugin,
+        SwPrecachePlugin,
         new webpack.DefinePlugin({
             "PRODUCTION_MODE": JSON.stringify(!DEV),
             "DEVELOPMENT_MODE": JSON.stringify(DEV),
