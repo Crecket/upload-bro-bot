@@ -42,7 +42,7 @@ module.exports = new SWPrecacheWebpackPlugin({
     importScripts: [
         // push notifications
         // '/assets/dist/swcustom.js',
-        // '/assets/js/PushNotifications.js',
+        '/assets/js/PushNotifications.js',
     ],
     // remove the public folder structure
     stripPrefix: path.join(__dirname, '../public').replace(/\\/g, "/"),

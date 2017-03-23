@@ -41,7 +41,7 @@ let config = {
         // promise polyfill
         "babel-polyfill":"babel-polyfill",
         // Service worker files
-        // "swcustom": SRC_DIR + "/ServiceWorkerCustom.js",
+        "swcustom": SRC_DIR + "/ServiceWorkerCustom.js",
         // React app
         "app": SRC_DIR + "/react-app.jsx"
     },

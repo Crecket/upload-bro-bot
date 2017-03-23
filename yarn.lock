@@ -3013,8 +3013,8 @@ hide-powered-by@1.0.0:
   resolved "https://registry.yarnpkg.com/hide-powered-by/-/hide-powered-by-1.0.0.tgz#4a85ad65881f62857fc70af7174a1184dccce32b"
 
 history@^3.0.0:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/history/-/history-3.2.1.tgz#71c7497f4e6090363d19a6713bb52a1bfcdd99aa"
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/history/-/history-3.3.0.tgz#fcedcce8f12975371545d735461033579a6dae9c"
   dependencies:
     invariant "^2.2.1"
     loose-envify "^1.2.0"
@@ -5135,7 +5135,7 @@ react-router-transition@^0.0.6:
   dependencies:
     react-motion "^0.4.2"
 
-react-router@^3.0.1:
+react-router@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-3.0.2.tgz#5a19156678810e01d81901f9c0fef63284b8a514"
   dependencies:
