@@ -52,8 +52,8 @@ class SiteList extends React.Component {
     }
 
     render() {
-        const siteComponents = this.props.sites.map((site, key) => {
-            return this.renderFeature(key, site);
+        const siteComponents = Object.keys(this.props.sites).map((key) => {
+            return this.renderFeature(key, this.props.sites[key]);
         });
 
         return (

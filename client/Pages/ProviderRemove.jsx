@@ -8,6 +8,7 @@ import {red500, red800, green800} from 'material-ui/styles/colors';
 import {browserHistory}  from 'react-router';
 
 import Utils from '../Helpers/Utils';
+import Logger from '../Helpers/Logger';
 import NavLink from '../Helpers/NavLink';
 import axios from 'axios';
 
@@ -72,7 +73,7 @@ class ProviderRemove extends React.Component {
                 }, 2000);
             })
             .catch((error) => {
-                console.error(error);
+                Logger.error(error);
                 this.setState({
                     error: true
                 });
@@ -86,6 +87,15 @@ class ProviderRemove extends React.Component {
     render() {
         let providerType = Utils.ucfirst(this.props.params.type);
 
+        // security check
+        if (!this.props.sites[this.props.params.type]) {
+            return (
+                <div>
+                    Loading
+                </div>
+            );
+        }
+
         let removeDiv = (
             <div className="row around-xs">
                 <div className="col-xs-12">
@@ -94,7 +104,7 @@ class ProviderRemove extends React.Component {
                 </div>
 
                 <div className="col-xs-12">
-                    <img src={"/assets/img/" + this.props.params.type + ".png"}
+                    <img src={this.props.sites[this.props.params.type].logos['svg']}
                          style={styles.img}/>
                 </div>
 

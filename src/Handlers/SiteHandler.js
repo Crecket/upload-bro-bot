@@ -60,11 +60,12 @@ module.exports = class SiteHandler {
     /**
      * returns a info list of all enabled websites
      *
-     * @returns {Array}
+     * @returns {Object}
      */
     get siteList() {
-        return Object.keys(this._sites).map(siteKey => {
-            return {
+        let sites = {};
+        Object.keys(this._sites).map(siteKey => {
+            sites[siteKey] = {
                 name: this._sites[siteKey].name,
                 title: this._sites[siteKey].title,
                 description: this._sites[siteKey].description,
@@ -75,8 +76,9 @@ module.exports = class SiteHandler {
                     "svg": this._sites[siteKey].logoUrl("svg"),
                 },
                 supportedExtensions: this._sites[siteKey].supportedExtensions
-            }
+            };
         });
+        return sites;
     }
 
     /**

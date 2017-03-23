@@ -15,15 +15,12 @@ module.exports = new OfflinePlugin({
         '/assets/img/google.svg',
         '/assets/img/imgur.svg',
         '/assets/img/dropbox.svg',
-        '/assets/img/google.png',
-        '/assets/img/imgur.png',
-        '/assets/img/dropbox.png',
-        // icons/logos
-        '/**/*.png',
-        '/**/*.ico',
-        '/**/*.jpg',
-        '/**/*.svg',
-        '/**/*.css',
+        // icons/logos - these don't work yet
+        // '/**/*.png',
+        // '/**/*.ico',
+        // '/**/*.jpg',
+        // '/**/*.svg',
+        // '/**/*.css',
         // external files
         'https://fonts.googleapis.com/css?family=Roboto:300,400,500',
     ],
