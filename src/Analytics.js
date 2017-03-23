@@ -22,7 +22,7 @@ module.exports = class Analytics {
             {
                 msgId: msg.id,
                 from: msg.from.username,
-                chatType: msg.message.type,
+                chatType: msg.message ? msg.message.type : 'no-chat',
                 type: type
             }
         );

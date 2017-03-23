@@ -68,22 +68,22 @@ class FeatureList extends React.Component {
             {
                 icon: <CloudUploadIcon style={iconStyle}/>,
                 title: "Instant upload",
-                description: "Upload shared files from the chat directly to services."
+                description: "Upload files from the chat directly to other services."
             },
             {
                 icon: <SearchIcon style={iconStyle}/>,
                 title: "Share files",
-                description: "Search for files and share them in Telegram."
+                description: "Search for files and share them directly in Telegram."
             },
             {
                 icon: <GroupIcon style={iconStyle}/>,
                 title: "Works in groups",
-                description: "Just add him to a group to use all of his features."
+                description: "Just right click the file and forward it to UploadBro."
             },
             {
                 icon: <DesktopWindowsIcon style={iconStyle}/>,
                 title: "All platforms",
-                description: "UploadBro supports all Telegram platforms."
+                description: "UploadBro supports all Telegram's platforms."
             }
         ];
 

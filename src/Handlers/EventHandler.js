@@ -31,7 +31,7 @@ module.exports = class EventHandlers extends HelperInterface {
                     // answer the query with the results
                     return this._app.answerCallbackQuery(query.id, message)
                         .then((res) => {
-                            winston.debug(res);
+                            // winston.debug(res);
                         })
                         .catch(err => winston.error(err));
                 })
@@ -41,7 +41,7 @@ module.exports = class EventHandlers extends HelperInterface {
                     // answer the query with the error
                     return this._app.answerCallbackQuery(query.id, "It looks like something went wrong.")
                         .then((res) => {
-                            winston.debug(res);
+                            // winston.debug(res);
                         })
                         .catch(err => winston.error(err));
                 })
@@ -49,7 +49,7 @@ module.exports = class EventHandlers extends HelperInterface {
             // answer the query taht we couldn't find the command
             this._app.answerCallbackQuery(query.id, "We couldn't find this command.")
                 .then((res) => {
-                    winston.debug(res);
+                    // winston.debug(res);
                 })
                 .catch(err => winston.error(err));
         }
@@ -168,7 +168,7 @@ module.exports = class EventHandlers extends HelperInterface {
                                     }, 60 * 60 * 24 * 30, // store for 1 month
                                     (err, result_cache) => {
                                         if (err) winston.error(err);
-                                    })
+                                    });
                             })
                             .catch(winston.error);
                     } else {
@@ -216,9 +216,9 @@ module.exports = class EventHandlers extends HelperInterface {
                 // query matches this inline query
                 queryTemp.handle(inline_query, matches[1])
                     .then((inline_results = [], options = {
-                        cache_time: 300,
-                        is_personal: true
-                    }) => {
+                               cache_time: 300,
+                               is_personal: true
+                           }) => {
                         // enforce this option
                         options.is_personal = true;
 

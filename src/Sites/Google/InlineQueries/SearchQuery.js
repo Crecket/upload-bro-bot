@@ -50,7 +50,7 @@ module.exports = class SearchQuery extends HelperInterface {
                     match, // file name to search for
                     {}
                 ).then((file_results) => {
-                    winston.debug(file_results);
+                    // winston.debug(file_results);
                     var resultList = [];
                     file_results.map((file, key) => {
 

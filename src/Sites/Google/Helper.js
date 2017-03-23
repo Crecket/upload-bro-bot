@@ -105,12 +105,6 @@ module.exports = class GoogleHelper {
                     // load the files
                     drive.files.list(options, (err, res) => {
                         if (err) {
-                            // console.log(err);
-                            // console.log('');
-                            // console.log(err.arguments);
-                            // console.log('');
-                            // console.log(err.message);
-                            // console.log('');
                             reject(err);
                         } else {
                             resolve(res.files);
@@ -126,17 +120,19 @@ module.exports = class GoogleHelper {
      *
      * @param userInfo
      * @param filePath
+     * @param fileName
+     * @param parent_folder_id
      * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
      *
      * @see https://developers.google.com/drive/v3/web/manage-uploads
      */
-    uploadFile(userInfo, filePath, fileName = false) {
+    uploadFile(userInfo, filePath, fileName = false, parent_folder_id = false) {
         return new Promise((resolve, reject) => {
             // create a new ouath client
             this.createOauthClient(userInfo)
                 .then(authclient => {
                     // drive object
-                    var drive = google.drive({version: 'v3', auth: authclient});
+                    let drive = google.drive({version: 'v3', auth: authclient});
 
                     // get the contents
                     fs.readFile(filePath, {}, (err, data) => {
@@ -151,12 +147,21 @@ module.exports = class GoogleHelper {
                         // what file name to use
                         var uploadFileName = fileName ? fileName : path.basename(filePath);
 
+                        // file resources
+                        let fileResource = {
+                            name: uploadFileName,
+                            mimeType: mimeType
+                        };
+
+                        //check if a parent folder id was given
+                        if (parent_folder_id) {
+                            fileResource.parents = [];
+                            fileResource.parents.push(parent_folder_id);
+                        }
+
                         // create the file
                         drive.files.create({
-                            resource: {
-                                name: uploadFileName,
-                                mimeType: mimeType
-                            },
+                            resource: fileResource,
                             media: {
                                 mimeType: mimeType,
                                 body: data
@@ -164,6 +169,62 @@ module.exports = class GoogleHelper {
                         }, (err, result) => {
                             resolve(result);
                         });
+                    });
+                })
+        });
+    }
+
+    /**
+     * Asserts that a uploadbro folder exists and returns the ID
+     *
+     * @param userInfo
+     * @returns {Promise}
+     *
+     * @see https://developers.google.com/drive/v3/web/folder
+     */
+    assertUploadFolder(userInfo) {
+        return new Promise((resolve, reject) => {
+            // check if the folder exists with the name uploadbro
+            this.searchFile(userInfo, 'UploadBro', {
+                q: "name = 'UploadBro' and trashed = false and mimeType = 'application/vnd.google-apps.folder'"
+            })
+                .then(file_info => {
+                    // should only return 1 result
+                    if (file_info.length === 0) {
+                        // no results so we need to create it
+                        this.createFolder(userInfo, 'UploadBro')
+                            .then(resolve)
+                            .catch(reject);
+                    } else if (file_info.length === 1) {
+                        // return the folrder id
+                        resolve(file_info[0]['id']);
+                    } else {
+                        reject('Failed to reliably fetch the UploadBro folder');
+                    }
+                })
+                .catch(reject);
+        });
+    }
+
+    createFolder(userInfo, folder_name) {
+        return new Promise((resolve, reject) => {
+            // create a new ouath client
+            this.createOauthClient(userInfo)
+                .then(authclient => {
+                    // drive object
+                    let drive = google.drive({version: 'v3', auth: authclient});
+
+                    // create the file
+                    drive.files.create({
+                        resource: {
+                            'name': 'UploadBro',
+                            'mimeType': 'application/vnd.google-apps.folder'
+                        },
+                        fields: 'id'
+                    }, (err, file) => {
+                        if (err) return reject(err);
+                        // resolve the file id
+                        resolve(file.id);
                     });
                 })
         });

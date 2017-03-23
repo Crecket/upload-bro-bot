@@ -35,7 +35,7 @@ module.exports = class Upload extends HelperInterface {
             // generic start upload event
             this.UploadStart
                 .handle(query, 'google')
-                // upload to dropbox
+                // upload to google
                 .then(resolveResults => this.uploadGoogle(resolveResults))
                 // generic finish upload event
                 .then(resolveResults => this.UploadFinish.handle(resolveResults))
@@ -59,27 +59,43 @@ module.exports = class Upload extends HelperInterface {
      */
     uploadGoogle(resolveResults) {
         return new Promise((resolve, reject) => {
-            // upload to google
-            this._GoogleHelper.uploadFile(
-                resolveResults.userInfo,
-                resolveResults.file_location,
-                path.basename(resolveResults.file_location)
-            ).then((upload_result) => {
-                // add new upload location
-                resolveResults.upload_result = upload_result;
+            // make sure we have a uploadbro folder
+            this._GoogleHelper.assertUploadFolder(resolveResults.userInfo)
+                .then(folder_id => {
 
-                // resolve the results
-                resolve(resolveResults);
-            }).catch(err => {
-                // dropbox upload failed
-                reject(err);
+                    // upload the file to google folder
+                    this._GoogleHelper.uploadFile(
+                        resolveResults.userInfo,
+                        resolveResults.file_location,
+                        path.basename(resolveResults.file_location),
+                        folder_id
+                    ).then((upload_result) => {
+                        // add new upload location
+                        resolveResults.upload_result = upload_result;
 
-                // error result message
-                this.editMessageError({
-                    chat_id: resolveResults.msgInfo.chat_id,
-                    message_id: resolveResults.msgInfo.message_id
+                        // resolve the results
+                        resolve(resolveResults);
+                    }).catch(err => {
+                        // google upload failed
+                        reject(err);
+
+                        // error result message
+                        this.editMessageError({
+                            chat_id: resolveResults.msgInfo.chat_id,
+                            message_id: resolveResults.msgInfo.message_id
+                        });
+                    });
+                })
+                .catch(err => {
+                    // google folder creation failed
+                    reject(err);
+
+                    // error result message
+                    this.editMessageError({
+                        chat_id: resolveResults.msgInfo.chat_id,
+                        message_id: resolveResults.msgInfo.message_id
+                    });
                 });
-            });
         })
     }
 
