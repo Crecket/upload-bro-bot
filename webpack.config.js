@@ -7,8 +7,7 @@ const path = require("path");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-// split the offline plugin config
-const OfflinePlugin = require("./configs/webpack/OfflinePlugin");
+// split the swprecache config
 const SwPrecachePlugin = require("./configs/webpack/SwPrecachePlugin");
 
 // src and build dirs
