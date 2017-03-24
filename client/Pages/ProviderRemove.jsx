@@ -14,7 +14,7 @@ import axios from 'axios';
 
 const styles = {
     img: {
-        maxHeight: 120,
+        height: 120,
         padding: 20
     },
     button: {

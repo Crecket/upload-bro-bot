@@ -6,30 +6,30 @@
   "author": "Gregory Goijaerts",
   "theme_color": "#142F4C",
   "background_color": "#142F4C",
-  "display": "standalone",
+  "display": "fullscreen",
   "dir": "ltr",
   "lang": "en-US",
   "orientation": "portrait-primary",
   "scope": "/",
   "icons": [
     {
-      "src": "/favicon-16x16.png",
+      "src": "/favicon-16x16.png?v=4",
       "sizes": "16x16",
       "type": "image/png"
     },
     {
-      "src": "/favicon-32x32.png",
+      "src": "/favicon-32x32.png?v4",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/android-chrome-192x192.png?v=4",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-384x384.png",
-      "sizes": "384x384",
+      "src": "/android-chrome-512x512.png?v=4",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],

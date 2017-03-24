@@ -2,13 +2,13 @@
 /* eslint-disable */
 require('dotenv').config();
 
-const del = require("del");
+// dependencies
 const path = require("path");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-// split the swprecache config
-const SwPrecachePlugin = require("./configs/SwPrecachePlugin");
+// custom extension
+const CustomPlugin = require("./webpack/CustomPlugin");
 
 // src and build dirs
 const SRC_DIR = path.resolve(__dirname, "client");
@@ -18,30 +18,10 @@ const OUTPUT_DIR = "assets/dist/";
 // env variable check
 const DEV = process.env.NODE_ENV !== "production";
 
-// clear old files
-del([
-    "public/sw.js",
-    "public/assets/dist/**",
-    "public/appcache/**",
-    "public/appcache",
-    "public/*.*.js",
-    "public/*.*.map",
-    "!public/assets/dist",
-    "!public/assets/dist/.gitkeep"
-]).then(paths => {
-    if (DEV) {
-        // console.log("Cleared dist folder:\n");
-        // console.log(paths.join("\n"));
-        // process.stdout.write("\n");
-    }
-});
-
 let config = {
     entry: {
         // promise polyfill
-        "babel-polyfill":"babel-polyfill",
-        // Service worker files
-        "swcustom": SRC_DIR + "/ServiceWorkerCustom.js",
+        "babel-polyfill": "babel-polyfill",
         // React app
         "app": SRC_DIR + "/react-app.jsx"
     },
@@ -49,7 +29,7 @@ let config = {
         path: BUILD_DIR,
         filename: OUTPUT_DIR + "[name].js",
         publicPath: process.env.WEBSITE_URL + "/",
-        chunkFilename: OUTPUT_DIR + "[name].[hash].chunk.js"
+        chunkFilename: OUTPUT_DIR + "[name]-[hash]-chunk.js"
     },
     resolve: {
         extensions: [".jsx", ".scss", ".js", ".json", ".css"],
@@ -60,23 +40,24 @@ let config = {
         ]
     },
     plugins: [
+        // stop emit if we get errors
         new webpack.NoEmitOnErrorsPlugin(),
+        //extract any css files
         new ExtractTextPlugin({
             filename: OUTPUT_DIR + "[name].css",
             disable: false,
             allChunks: true
         }),
-        // OfflinePlugin,
-        SwPrecachePlugin,
+        // custom plugin
+        new CustomPlugin(),
+        // SwPrecachePlugin,
         new webpack.DefinePlugin({
             "PRODUCTION_MODE": JSON.stringify(!DEV),
             "DEVELOPMENT_MODE": JSON.stringify(DEV),
             "process.env.DEBUG": JSON.stringify(DEV),
             "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development")
         }),
-        // new webpack.ProvidePlugin({
-        //     Promise: "bluebird"
-        // }),
+        // split up common code into commons file
         new webpack.optimize.CommonsChunkPlugin({
             // (the commons chunk name)
             name: "commons",

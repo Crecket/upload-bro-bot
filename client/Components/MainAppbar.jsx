@@ -3,7 +3,7 @@ import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import ExitToAppIcon from 'material-ui/svg-icons/action/exit-to-app';
-import browserHistory from 'react-router/lib/browserHistory';
+import NavLink from "../Helpers/NavLink";
 
 const styles = {
     appbar: {
@@ -22,10 +22,6 @@ class MainAppbar extends React.Component {
         super(props, context);
         this.state = {};
     };
-
-    goHome = (e) => {
-        browserHistory.push('/');
-    }
 
     render() {
         var TopRightBtn = (
@@ -49,7 +45,7 @@ class MainAppbar extends React.Component {
             <AppBar
                 title="UploadBroBot"
                 style={styles.appbar}
-                iconElementLeft={<IconButton onClick={this.goHome}>
+                iconElementLeft={<IconButton containerElement={<NavLink to="/"/>}>
                     <img src="/favicon-32x32.png"/>
                 </IconButton>}
                 iconElementRight={TopRightBtn}
