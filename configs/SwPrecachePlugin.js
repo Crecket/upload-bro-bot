@@ -1,5 +1,6 @@
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const Logger = require('../client/Helpers/Logger.js');
+const glob = require('glob');
 const path = require('path');
 
 // debug mode
@@ -9,7 +10,7 @@ const DEBUG = process.env.NODE_ENV !== "production";
 const ROOT_FOLDER = path.join(__dirname, '../').replace(/\\/g, "/");
 
 // view files used in the index page
-const INDEX_VIEWS = [ROOT_FOLDER + 'src/Resources/Views/bootstrap.twig', ROOT_FOLDER + 'src/Resources/Views/index.twig'];
+const INDEX_VIEWS = glob.sync(ROOT_FOLDER + "/src/Resources/Views/**/*");
 
 // module.exports = new SWPrecacheWebpackPlugin();
 module.exports = new SWPrecacheWebpackPlugin({
@@ -22,16 +23,11 @@ module.exports = new SWPrecacheWebpackPlugin({
     // ignore .map files
     // staticFileGlobsIgnorePatterns: [/\.map$/],
     // max file size
-    maximumFileSizeToCacheInBytes: 4194304,
     mergeStaticsConfig: true,
     // dynamic handlers which happen at run time
     runtimeCaching: [
-        {handler: 'networkOnly', urlPattern: /\/api\/$/,},
-        {handler: 'cacheFirst', urlPattern: /[.]json$/,},
-        {handler: 'cacheFirst', urlPattern: /[.]mp3$/,},
-        {handler: 'cacheFirst', urlPattern: /[.]jpg$/,},
-        {handler: 'cacheFirst', urlPattern: /[.]png$/,},
-        {handler: 'cacheFirst', urlPattern: /[.]svg$/,}
+        {handler: 'networkOnly', urlPattern: /\/api/},
+        {handler: 'cacheFirst', urlPattern: /[.]?(png|jpg|svg|gif|jpeg|woff|woff2|ttf|eot|html|json)/},
     ],
     logger: Logger.log,
     // automatically verify the / route for changes
@@ -60,12 +56,8 @@ module.exports = new SWPrecacheWebpackPlugin({
         '/public/assets/img/imgur.svg',
         '/public/assets/img/dropbox.svg',
         // other assets
-        '/public/assets/img/*.ico',
-        '/public/assets/img/*.jpg',
-        '/public/assets/img/*.png',
-        '/public/assets/img/*.svg',
-        '/public/assets/css/*.css',
-        '/public/assets/js/*.js',
+        '/public/assets/img/**',
+        // '/public/assets/js/*.js',
         // external files
         'https://fonts.googleapis.com/css?family=Roboto:300,400,500',
     ],
