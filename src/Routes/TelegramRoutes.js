@@ -22,7 +22,7 @@ module.exports = (app, passport, uploadApp) => {
 
     // login urls and callback
     app.get('/login/telegram', (req, res, next) => {
-        return res.json(1);
+        // return res.json(1);
         if (req.user) {
             // already logged in
             res.redirect('/');
