@@ -1,5 +1,3 @@
-// require('es6-promise').polyfill();
-import "babel-polyfill";
 const axios = require('axios');
 const Logger = require('../Helpers/Logger');
 const store = require('store');
@@ -15,6 +13,7 @@ export function setSites(site_list) {
         }
     };
 }
+
 export function siteUpdate() {
     return dispatch => {
         dispatch(siteLoading());

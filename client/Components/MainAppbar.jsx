@@ -25,12 +25,13 @@ class MainAppbar extends React.Component {
 
     render() {
         var TopRightBtn = (
-            <FlatButton
-                secondary={true}
-                label="Login"
-                labelPosition="before"
-                icon={<ExitToAppIcon/>}
-                href="/login/telegram"/>
+            <form action="/login/telegram" method="POST">
+                <FlatButton
+                    labelPosition="before"
+                    type="submit"
+                    label="Login"
+                    icon={<ExitToAppIcon/>}/>
+            </form>
         );
         if (this.props.user_info) {
             TopRightBtn = (

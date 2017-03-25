@@ -7,36 +7,69 @@ const PUBLIC_DIR = 'public';
 const VIEW_DIR = 'src/Resources/Views';
 const WEBPACK_DIST_DIR = PUBLIC_DIR + '/assets/dist';
 
+// debug mode?
+let DEBUG = false;
+
+// global variable to store the emitted files
+let afterEmitFiles = [];
+
+// delete all the dist files
+const deleteBuildFiles = (callback) => {
+    del([
+        "public/assets/dist/**/*",
+        "!public/assets/dist",
+        "!public/assets/dist/.gitkeep"
+    ]).then((paths) => {
+        if (DEBUG) {
+            console.log('Removed the following files');
+            console.log(paths.join("\n"));
+        }
+        if (callback) callback();
+    }).catch(console.log);
+}
+
 // export the plugin
 module.exports = class SwPrecache {
+    constructor(options = {}) {
+        DEBUG = options.debug ? options.debug : false;
+    }
+
     apply(compiler) {
-        // register events
-        compiler.plugin('compile', this.compile);
+        // run event to clear old files
+        // compiler.plugin('run', this.run);
+
+        // after emit to fetch the new file locations
+        compiler.plugin('after-emit', this.afterEmit);
+
+        // done event to create a new updated service worker
         compiler.plugin('done', this.done);
+
+        // remove the files onces
+        deleteBuildFiles();
     }
 
-    compile(params) {
-        // delete old files before compile
-        del([
-            "public/sw.js",
-            "public/assets/dist/**",
-            "public/appcache/**",
-            "public/appcache",
-            "public/*.*.js",
-            "public/*.*.map",
-            "!public/assets/dist",
-            "!public/assets/dist/.gitkeep"
-        ]).then(paths => {
-            // log?
-        }).catch(err => {
-            console.log(err);
+    afterEmit(compilation, callback) {
+        // reset the after emit list
+        afterEmitFiles = [];
+
+        // Explore each chunk (build output):
+        compilation.chunks.forEach(function (chunk) {
+            // Explore each module within the chunk (built inputs):
+            chunk.files.forEach(function (file) {
+                // push this file to the list
+                afterEmitFiles.push(PUBLIC_DIR + "/" + file);
+            });
         });
+
+        callback();
     }
 
-    done(stats) {
-        // create a new service worker when done
-        console.log(stats.assets);
+    run(Compiler, callback) {
+        deleteBuildFiles(callback);
+    }
 
+    // compilation has finished
+    done(stats) {
         // default static files
         let staticFiles = [
             'https://fonts.googleapis.com/css?family=Roboto:300,400,500',
@@ -51,10 +84,8 @@ module.exports = class SwPrecache {
             glob.sync(PUBLIC_DIR + '/**/*.{png,svg,jpg,gif,ico}')
         );
 
-        // all files in the dist folder
-        staticFiles = staticFiles.concat(
-            glob.sync(WEBPACK_DIST_DIR + '/!(*.*.map)')
-        );
+        // merge the afterEmitFiles list and remove duplicates
+        staticFiles = [...new Set(staticFiles.concat(afterEmitFiles))];
 
         // write the precache file
         swPrecache.write(PUBLIC_DIR + '/sw.js', {

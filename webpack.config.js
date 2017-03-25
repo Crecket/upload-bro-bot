@@ -20,8 +20,6 @@ const DEV = process.env.NODE_ENV !== "production";
 
 let config = {
     entry: {
-        // promise polyfill
-        "babel-polyfill": "babel-polyfill",
         // React app
         "app": SRC_DIR + "/react-app.jsx"
     },
@@ -49,7 +47,9 @@ let config = {
             allChunks: true
         }),
         // custom plugin
-        new CustomPlugin(),
+        new CustomPlugin({
+            debug: DEV
+        }),
         // SwPrecachePlugin,
         new webpack.DefinePlugin({
             "PRODUCTION_MODE": JSON.stringify(!DEV),
