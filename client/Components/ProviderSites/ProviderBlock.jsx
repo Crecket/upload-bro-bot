@@ -63,6 +63,7 @@ export default class ProviderBlock extends React.Component {
                 <img style={styles.img} alt={Utils.ucfirst(this.props.siteInfo.name) + " logo"}
                      src={this.props.siteInfo.logos['svg']}/>
                 <br/>
+                <br/>
                 {BlockBtn}
             </div>
         );

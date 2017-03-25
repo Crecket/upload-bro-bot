@@ -1,6 +1,5 @@
 import React from "react";
 import RaisedButton from "material-ui/RaisedButton";
-import CircularProgress from 'material-ui/CircularProgress';
 import PaperHelper from "../Components/PaperHelper";
 
 import FeatureList from "../Components/FeatureList";
@@ -58,8 +57,11 @@ export default class Home extends React.Component {
 
                     <PaperHelper style={styles.loggedIn}>
                         <RaisedButton href="https://telegram.me/uploadbro_bot"
-                                      rel="noopener" primary={true} target="_blank">
-                            Open UploadBro
+                                      className="col-xs-12 col-sm-4 col-sm-offset-4"
+                                      rel="noopener" primary={true} target="_blank"
+                                      icon={<img src="/favicon-16x16.png" />}
+                        >
+                            Start UploadBro
                         </RaisedButton>
                     </PaperHelper>
                 </div>
@@ -81,16 +83,7 @@ export default class Home extends React.Component {
                 </div>
             );
         }
-        // else {
-        //     homeDiv = (
-        //         <PaperHelper style={styles.loggedIn}>
-        //             <h1>Loading</h1>
-        //             <CircularProgress size={80} thickness={5}/>
-        //         </PaperHelper>
-        //     );
-        // }
 
-        // backgroundColor: this.props.theme.custom.appBackgroundColor
         return (
             <div>
                 {homeDiv}

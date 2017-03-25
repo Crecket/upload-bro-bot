@@ -47,7 +47,7 @@ class MainAppbar extends React.Component {
                 title="UploadBroBot"
                 style={styles.appbar}
                 iconElementLeft={<IconButton containerElement={<NavLink to="/"/>}>
-                    <img src="/favicon-32x32.png"/>
+                    <img src="/favicon-32x32.png" alt="App bar logo"/>
                 </IconButton>}
                 iconElementRight={TopRightBtn}
             />
