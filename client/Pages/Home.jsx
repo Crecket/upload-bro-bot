@@ -7,6 +7,7 @@ import FeatureList from "../Components/FeatureList";
 import YoutubePreview from "../Components/YoutubePreview";
 import SiteList from "../Components/SiteList";
 import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
+import ManualLoginPost from "../Helpers/ManualLoginPost";
 // import IntroductionScreen from "../Components/IntroductionScreen";
 
 const styles = {
@@ -69,9 +70,9 @@ export default class Home extends React.Component {
                 <div>
                     <PaperHelper style={Object.assign(styles.notLoggedIn, styles.centerBox)}>
                         <RaisedButton
+                            onClick={ManualLoginPost}
                             primary={true}
-                            label="Login with Telegram"
-                            href="/login/telegram"/>
+                            label="Login with Telegram"/>
                     </PaperHelper>
 
                     <FeatureList/>

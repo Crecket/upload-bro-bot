@@ -19,17 +19,8 @@ module.exports = (app, passport, uploadApp) => {
             TelegramMiddleware(req, res, next);
         }
     });
-
-    // login urls and callback
     app.get('/login/telegram', (req, res, next) => {
-        // return res.json(1);
-        if (req.user) {
-            // already logged in
-            res.redirect('/');
-        } else {
-            // send to telegram login middleware
-            TelegramMiddleware(req, res, next);
-        }
+        res.redirect('/');
     });
 
     app.get('/login/telegram/callback', passport.authenticate('telegram', {

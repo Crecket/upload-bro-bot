@@ -12,6 +12,7 @@ const styles = {
     box: {
         margin: 'auto',
         marginTop: 10,
+        minHeight: 145,
         padding: 5,
         textAlign: 'center'
     },

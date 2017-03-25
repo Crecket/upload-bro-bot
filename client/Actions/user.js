@@ -39,12 +39,15 @@ export function userLoadLocalstorage() {
 }
 
 export function userLogout() {
-    axios.get('/logout').then(() => {
-        // remove local storage
-        store.remove('user_info');
-    }).catch(Logger.error);
-    // send user logout event
-    return {type: 'USER_LOGOUT'};
+    return dispatch => {
+        axios.get('/logout').then(() => {
+            // remove local storage
+            store.remove('user_info');
+
+            // send user logout event
+            dispatch({type: 'USER_LOGOUT'});
+        }).catch(Logger.error);
+    }
 }
 
 export function userLoading() {

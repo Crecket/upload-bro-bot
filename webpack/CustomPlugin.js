@@ -87,20 +87,21 @@ module.exports = class SwPrecache {
         // merge the afterEmitFiles list and remove duplicates
         staticFiles = [...new Set(staticFiles.concat(afterEmitFiles))];
 
+        // generate a list of all the server-side views
+        const ServerViews = glob.sync('src/Resources/Views/**/*.twig')
+
         // write the precache file
         swPrecache.write(PUBLIC_DIR + '/sw.js', {
             staticFileGlobs: staticFiles,
             stripPrefix: PUBLIC_DIR,
             dynamicUrlToDependencies: {
-                '/': [
-                    VIEW_DIR + '/index.twig',
-                    VIEW_DIR + '/bootstrap.twig'
-                ],
+                '/': ServerViews
             },
+            navigateFallback: '/',
             runtimeCaching: [
                 {
                     urlPattern: /\/api/,
-                    handler: 'networkFirst'
+                    handler: 'networkOnly'
                 }, {
                     urlPattern: /[.]?(js|css|json|html|map)/,
                     handler: 'networkFirst'
@@ -109,9 +110,8 @@ module.exports = class SwPrecache {
                     handler: 'cacheFirst'
                 }
             ]
-        }, (res) => {
-            // finished writing file
-
+        }, () => {
+            // finished writing service worker
         });
 
     }

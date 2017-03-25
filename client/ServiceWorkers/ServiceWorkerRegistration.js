@@ -7,9 +7,9 @@ if ('serviceWorker' in navigator) {
                 switch (installingWorker.state) {
                     case 'installed':
                         if (navigator.serviceWorker.controller) {
-                            Logger.log('New or updated content is available.');
+                            Logger.debug('New or updated content is available.');
                         } else {
-                            Logger.log('Content is now available offline!');
+                            Logger.debug('Content is now available offline!');
                         }
                         break;
                     case 'redundant':

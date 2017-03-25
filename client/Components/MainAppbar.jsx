@@ -3,7 +3,9 @@ import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import ExitToAppIcon from 'material-ui/svg-icons/action/exit-to-app';
+
 import NavLink from "../Helpers/NavLink";
+import ManualLoginPost from "../Helpers/ManualLoginPost";
 
 const styles = {
     appbar: {
@@ -25,13 +27,11 @@ class MainAppbar extends React.Component {
 
     render() {
         var TopRightBtn = (
-            <form action="/login/telegram" method="POST">
-                <FlatButton
-                    labelPosition="before"
-                    type="submit"
-                    label="Login"
-                    icon={<ExitToAppIcon/>}/>
-            </form>
+            <FlatButton
+                onClick={ManualLoginPost}
+                labelPosition="before"
+                label="Login"
+                icon={<ExitToAppIcon/>}/>
         );
         if (this.props.user_info) {
             TopRightBtn = (
