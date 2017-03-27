@@ -1,7 +1,7 @@
 const mime = require('mime');
 const path = require('path');
 const filesize = require('filesize');
-const winston = rootRequire('src/Helpers/Winston.js');
+const winston = rootRequire('src/Helpers/Logger.js');
 const HelperInterface = rootRequire('src/HelperInterface');
 
 module.exports = class EventHandlers extends HelperInterface {

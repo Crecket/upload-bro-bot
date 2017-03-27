@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const spdy = require('spdy');
-const winston = rootRequire('src/Helpers/Winston.js');
+const winston = rootRequire('src/Helpers/Logger.js');
 
 // express libs
 const express = require('express');

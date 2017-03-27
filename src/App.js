@@ -6,7 +6,7 @@ const del = require('del');
 const path = require('path');
 const Cacheman = require('cacheman');
 const MongoDbEngine = require('cacheman-mongo');
-const winston = rootRequire('src/Helpers/Winston.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 
 // utilities
 let Utils = rootRequire('src/Utils');
@@ -86,21 +86,23 @@ module.exports = class App {
             .then(() => {
                 return new Promise((resolve, reject) => {
                     del(['downloads/**', '!downloads', '!downloads/.gitkeep']).then(paths => {
-                        winston.debug('Cleared downloads folder:\n', paths.join('\n'));
+                        Logger.debug('Cleared downloads folder:\n', paths.join('\n'));
                         resolve();
                     });
                 })
             })
+            .catch(console.error)
             // finish setup
             .then(() => {
                 // finished loading everything
-                winston.info("Loaded the following commands:");
-                winston.info(this._CommandHandler.info);
+                Logger.info("Loaded the following commands:");
+                Logger.info(this._CommandHandler.info);
 
                 // start express listener
                 Express(this);
             })
-            .catch(winston.error);
+            .catch(Logger.error)
+            .catch(console.error);
 
     }
 
@@ -114,7 +116,7 @@ module.exports = class App {
             // attempt to connect to mongoserver
             MongoClient.connect(process.env.MONGODB_URL)
                 .then((db) => {
-                    winston.info("Connected to " + process.env.MONGODB_URL);
+                    Logger.info("Connected to " + process.env.MONGODB_URL);
                     resolve(db);
                 })
                 .catch(reject);
@@ -132,7 +134,7 @@ module.exports = class App {
         this._SiteHandler.register(new ImgurSiteObj(this));
         this._SiteHandler.register(new GoogleSiteObj(this));
 
-        winston.info('Loaded ' + this._SiteHandler.siteCount + " sites");
+        Logger.info('Loaded ' + this._SiteHandler.siteCount + " sites");
 
         return Promise.resolve();
     }
@@ -148,7 +150,7 @@ module.exports = class App {
         this._CommandHandler.register(new StartCommandObj(this));
         this._CommandHandler.register(new LoginCommandObj(this));
 
-        winston.info('Loaded ' + this._CommandHandler.commandCount + " commands");
+        Logger.info('Loaded ' + this._CommandHandler.commandCount + " commands");
 
         // not used for now
         return Promise.resolve();
@@ -163,7 +165,7 @@ module.exports = class App {
         this._QueryHandler.register(new RefreshSitesObj(this));
         this._QueryHandler.register(new ScanChatQueryObj(this));
 
-        winston.info('Loaded ' + this._QueryHandler.queryCount + " queries");
+        Logger.info('Loaded ' + this._QueryHandler.queryCount + " queries");
 
         // not used for now
         return Promise.resolve();
@@ -180,10 +182,10 @@ module.exports = class App {
     answerCallbackQuery(id, text = "", alert = false, options = {}) {
         return this._TelegramBot.answerCallbackQuery(id, text, alert, options)
             .then((result) => {
-                winston.info("Responded to query " + id);
+                Logger.info("Responded to query " + id);
             })
             .catch(() => {
-                winston.info("Failed to respond to query " + id);
+                Logger.info("Failed to respond to query " + id);
             });
     }
 
@@ -214,12 +216,12 @@ module.exports = class App {
         this._TelegramBot.on('group_chat_created', (msg) => {
             // track event
             // this._Analytics.track('group_chat_created');
-            winston.debug('group_chat_created', msg);
+            Logger.debug('group_chat_created', msg);
         });
         this._TelegramBot.on('message', (msg) => {
             // track event
             // this._Analytics.track('message');
-            winston.debug('message', msg);
+            Logger.debug('message', msg);
         });
 
         // callback query listener

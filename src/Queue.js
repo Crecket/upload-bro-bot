@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const winston = rootRequire('src/Helpers/Winston.js');
+const winston = rootRequire('src/Helpers/Logger.js');
 
 module.exports = class Queue {
     constructor(limit = 10) {

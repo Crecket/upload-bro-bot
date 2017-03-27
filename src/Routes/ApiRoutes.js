@@ -1,4 +1,4 @@
-const winston = rootRequire('src/Helpers/Winston.js');
+const winston = rootRequire('src/Helpers/Logger.js');
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;
