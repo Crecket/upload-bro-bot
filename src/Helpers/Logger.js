@@ -1,13 +1,12 @@
 const pino = require('pino');
 
-// check mode
+// disable/enable based on enviroment and debug settings
 const DEV = process.env.DEBUG || process.env.NODE_ENV !== "production";
 
 // export the logger
 module.exports = pino({
-    prettyPrint: {
+    prettyPrint: DEV ? {
         levelFirst: true
-    },
-    level: DEV ? "trace" : "info",
-    timestamp: false
+    } : false,
+    level: DEV ? "trace" : "info"
 });
