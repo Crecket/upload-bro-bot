@@ -1,5 +1,5 @@
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const Logger = require('../client/Helpers/Logger.js');
+const Logger = require('../src/Helpers/Logger.js');
 const glob = require('glob');
 const path = require('path');
 
@@ -36,9 +36,7 @@ module.exports = new SWPrecacheWebpackPlugin({
     },
     // our custom scripts
     importScripts: [
-        // push notifications
-        // '/assets/dist/swcustom.js',
-        '/assets/js/PushNotifications.js',
+        // '/assets/js/PushNotifications.js',
     ],
     // remove the public folder structure
     stripPrefix: path.join(__dirname, '../public').replace(/\\/g, "/"),
@@ -57,7 +55,6 @@ module.exports = new SWPrecacheWebpackPlugin({
         '/public/assets/img/dropbox.svg',
         // other assets
         '/public/assets/img/**',
-        // '/public/assets/js/*.js',
         // external files
         'https://fonts.googleapis.com/css?family=Roboto:300,400,500',
     ],
