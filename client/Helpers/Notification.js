@@ -1,4 +1,4 @@
-const Logger = require('./Logger');
+// const Logger = require('./Logger');
 
 module.exports = (title, message, options = {}) => {
     return new Promise((resolve, reject) => {

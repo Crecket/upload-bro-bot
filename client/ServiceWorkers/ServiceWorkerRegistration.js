@@ -12,7 +12,7 @@ if ('serviceWorker' in navigator) {
             installingWorker.onstatechange = function () {
                 // check the state change type
                 switch (installingWorker.state) {
-                    case 'installed':
+                    case 'installed': {
                         let messageContents = "";
                         // differentiate between a new worker and first install
                         if (navigator.serviceWorker.controller) {
@@ -27,7 +27,7 @@ if ('serviceWorker' in navigator) {
                             Notification('ServiceWorkerChanged', messageContents + " Click to reload the page.")
                                 .then(tempNotification => {
                                     // Wait for onclick event
-                                    tempNotification.onclick = (event) => {
+                                    tempNotification.onclick = () => {
                                         // close the notification
                                         tempNotification.close();
                                         // reload the page
@@ -36,9 +36,11 @@ if ('serviceWorker' in navigator) {
                                 });
                         }
                         break;
-                    case 'redundant':
+                    }
+                    case 'redundant': {
                         Logger.error('The installing service worker became redundant.');
                         break;
+                    }
                 }
             };
         };
