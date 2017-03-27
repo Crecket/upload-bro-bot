@@ -1,20 +1,29 @@
 import React from 'react';
 import {connect} from "react-redux";
-import Dialog from 'material-ui/Dialog';
+// import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 // custom components
-// import Logger from '../Helpers/Logger';
-import MainAppbar from './MainAppbar';
+import ComponentLoader from './Sub/ComponentLoader';
+
+// load the required components
+const MainAppbar = ComponentLoader(
+    () => import('./MainAppbar'), () => require.resolveWeak('./MainAppbar'));
+const DrawerDebugger = ComponentLoader(
+    () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
+const Dialog = ComponentLoader(
+    () => import('material-ui/Dialog'), () => require.resolveWeak('material-ui/Dialog'));
 
 // Themes
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomBlue from '../Themes/CustomBlue';
 import CustomDark from '../Themes/CustomDark';
+import Purple from '../Themes/Purple';
 const ThemesList = {
     "CustomBlue": getMuiTheme(CustomBlue),
     "CustomDark": getMuiTheme(CustomDark),
+    "Purple": getMuiTheme(Purple),
 };
 
 // actions
@@ -46,7 +55,6 @@ export default class Main extends React.Component {
             // theme options
             muiTheme: 'CustomDark',
         };
-
     };
 
     componentDidMount() {
@@ -143,6 +151,8 @@ export default class Main extends React.Component {
                                 >
                                     {this.props.modalText}
                                 </Dialog>
+
+                                <DrawerDebugger theme={ThemesList[this.state.muiTheme]}/>
 
                                 <MainAppbar
                                     setTheme={this.setTheme}

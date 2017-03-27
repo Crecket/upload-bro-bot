@@ -15,4 +15,7 @@ public/assets/dist/*
 /public/service-worker.*
 /public/sw.js
 /public/appcache/
+
+# generated files from npm errors and webpack analyzer
 /npm-debug.log
+/webpack.report.html

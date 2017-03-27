@@ -100,6 +100,10 @@ module.exports = class SwPrecache {
             navigateFallback: '/',
             runtimeCaching: [
                 {
+                    urlPattern: /\/login\/telegram/,
+                    handler: 'networkOnly'
+                },
+                {
                     urlPattern: /\/api/,
                     handler: 'networkOnly'
                 }, {

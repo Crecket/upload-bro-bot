@@ -6,6 +6,7 @@ require('dotenv').config();
 const path = require("path");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // custom extension
 const CustomPlugin = require("./webpack/CustomPlugin");
@@ -50,6 +51,15 @@ let config = {
         new CustomPlugin({
             debug: DEV
         }),
+        // webpack analyzer
+        new BundleAnalyzerPlugin({
+            openAnalyzer: false,
+            // create a server for the watcher or a static file for production enviroments
+            analyzerMode: 'static',
+            // analyzerMode: DEV ? 'server' : 'static',
+            // output outside of the public folder
+            reportFilename: '../webpack.report.html',
+        }),
         // SwPrecachePlugin,
         new webpack.DefinePlugin({
             "PRODUCTION_MODE": JSON.stringify(!DEV),
@@ -64,7 +74,10 @@ let config = {
             // (the filename of the commons chunk)
             filename: OUTPUT_DIR + "commons.js",
             // (Modules must be shared between 3 entries)
-            minChunks: 2,
+            minChunks: 3,
+            // select all children
+            // children: true,
+            // async:true,
         })
     ],
     devtool: DEV ? "source-map" : false,
@@ -103,8 +116,9 @@ let config = {
     }
 }
 
-// production only plugins
 if (!DEV) {
+    // production only plugins
+
     // uglify plugin
     config.plugins.push(new webpack.optimize.UglifyJsPlugin({
         sourceMap: true,
@@ -114,6 +128,9 @@ if (!DEV) {
             drop_console: true
         }
     }));
+} else {
+    // development only plugins
+
 }
 
 module.exports = config;
