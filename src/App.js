@@ -96,7 +96,6 @@ module.exports = class App {
                 // finished loading everything
                 Logger.info("Loaded the following commands:");
                 Logger.info(this._CommandHandler.info);
-
                 // start express listener
                 Express(this);
             })
