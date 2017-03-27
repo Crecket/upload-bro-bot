@@ -28,7 +28,7 @@ let config = {
         path: BUILD_DIR,
         filename: OUTPUT_DIR + "[name].js",
         publicPath: process.env.WEBSITE_URL + "/",
-        chunkFilename: OUTPUT_DIR + "[name]-[hash]-chunk.js"
+        chunkFilename: OUTPUT_DIR + "[chunkhash].bundle.js"
     },
     resolve: {
         extensions: [".jsx", ".scss", ".js", ".json", ".css"],

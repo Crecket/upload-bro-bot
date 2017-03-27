@@ -1,7 +1,5 @@
 import React from 'react';
 import {connect} from "react-redux";
-// import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 
 // custom components
 import ComponentLoader from './Sub/ComponentLoader';
@@ -13,6 +11,8 @@ const DrawerDebugger = ComponentLoader(
     () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
 const Dialog = ComponentLoader(
     () => import('material-ui/Dialog'), () => require.resolveWeak('material-ui/Dialog'));
+const FlatButton = ComponentLoader(
+    () => import('material-ui/FlatButton'), () => require.resolveWeak('material-ui/FlatButton'));
 
 // Themes
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -49,9 +49,6 @@ export default class Main extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            // server connection status
-            connected: false,
-
             // theme options
             muiTheme: 'CustomDark',
         };
