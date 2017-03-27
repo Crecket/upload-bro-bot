@@ -58,7 +58,7 @@ let config = {
             analyzerMode: 'static',
             // analyzerMode: DEV ? 'server' : 'static',
             // output outside of the public folder
-            reportFilename: '../webpack.report.html',
+            reportFilename: '../webpack.report.html'
         }),
         // SwPrecachePlugin,
         new webpack.DefinePlugin({

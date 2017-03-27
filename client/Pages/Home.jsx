@@ -1,14 +1,28 @@
 import React from "react";
-// import RaisedButton from "material-ui/RaisedButton";
 
-import PaperHelper from "../Components/Sub/PaperHelper";
-import RaisedButton from "../Components/Sub/RaisedButton";
-import FeatureList from "../Components/FeatureList";
-import YoutubePreview from "../Components/YoutubePreview";
-import SiteList from "../Components/SiteList";
-import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
-import ManualLoginPost from "../Helpers/ManualLoginPost";
-// import IntroductionScreen from "../Components/IntroductionScreen";
+// custom components
+import ManualLoginPost from '../Helpers/ManualLoginPost';
+import ComponentLoader from '../Components/Sub/ComponentLoader';
+
+// async components
+const PaperHelper = ComponentLoader(
+    () => import('../Components/Sub/PaperHelper'),
+    () => require.resolveWeak('../Components/Sub/PaperHelper'));
+const RaisedButton = ComponentLoader(
+    () => import('../Components/Sub/RaisedButton'),
+    () => require.resolveWeak('../Components/Sub/RaisedButton'));
+const FeatureList = ComponentLoader(
+    () => import('../Components/FeatureList'),
+    () => require.resolveWeak('../Components/FeatureList'));
+const YoutubePreview = ComponentLoader(
+    () => import('../Components/YoutubePreview'),
+    () => require.resolveWeak('../Components/YoutubePreview'));
+const SiteList = ComponentLoader(
+    () => import('../Components/SiteList'),
+    () => require.resolveWeak('../Components/SiteList'));
+const ProviderBlocks = ComponentLoader(
+    () => import('../Components/ProviderSites/ProviderBlocks'),
+    () => require.resolveWeak('../Components/ProviderSites/ProviderBlocks'));
 
 const styles = {
     centerBox: {
