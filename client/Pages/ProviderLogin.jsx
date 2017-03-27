@@ -8,7 +8,7 @@ import {red500, red800, green800} from 'material-ui/styles/colors';
 import {browserHistory}  from 'react-router';
 
 import Utils from '../Helpers/Utils';
-import NavLink from '../Helpers/NavLink';
+import NavLink from '../Components/Sub/NavLink';
 import axios from 'axios';
 
 const styles = {

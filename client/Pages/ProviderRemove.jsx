@@ -9,7 +9,7 @@ import {browserHistory}  from 'react-router';
 
 import Utils from '../Helpers/Utils';
 import Logger from '../Helpers/Logger';
-import NavLink from '../Helpers/NavLink';
+import NavLink from '../Components/Sub/NavLink';
 import axios from 'axios';
 
 const styles = {

@@ -1,9 +1,9 @@
 import React from 'react';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 
-import PaperHelper from './PaperHelper';
-import TitleBar from "./TitleBar";
-import Center from './Center';
+import PaperHelper from './Sub/PaperHelper';
+import TitleBar from "./Sub/TitleBar";
+import Center from './Sub/Center';
 
 const styles = {
     wrapper: {

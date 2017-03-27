@@ -4,19 +4,17 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 // custom components
-import Logger from '../Helpers/Logger';
+// import Logger from '../Helpers/Logger';
 import MainAppbar from './MainAppbar';
 
 // Themes
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import CustomDark from '../Themes/CustomDark';
-import CustomLight from '../Themes/CustomLight';
 import CustomBlue from '../Themes/CustomBlue';
+import CustomDarkAlt from '../Themes/CustomDarkAlt';
 const ThemesList = {
-    "CustomDark": getMuiTheme(CustomDark),
     "CustomBlue": getMuiTheme(CustomBlue),
-    "CustomLight": getMuiTheme(CustomLight)
+    "CustomDarkAlt": getMuiTheme(CustomDarkAlt),
 };
 
 // actions
@@ -61,18 +59,19 @@ export default class Main extends React.Component {
 
         // fetch site data
         this.siteUpdate();
+
+        window.setThemeTest = this.setTheme;
     };
 
     // =========== Static data =============
 
     // change the theme
-    setTheme = (setValue) => {
-        if (setValue) {
-            if (typeof ThemesList[setValue] !== "undefined") {
-                this.setState({muiTheme: setValue});
-                return true;
-            }
+    setTheme = (setValue = "CustomBlue") => {
+        if (typeof ThemesList[setValue] !== "undefined") {
+            this.setState({muiTheme: setValue});
+            return true;
         }
+
         // no custom value given or value does not exist, just toggle between dark and light
         if (this.state.muiTheme === "CustomDark") {
             this.setState({muiTheme: "CustomLight"});
@@ -121,7 +120,7 @@ export default class Main extends React.Component {
 
         return (
             <MuiThemeProvider muiTheme={ThemesList[this.state.muiTheme]}>
-                <div className={"container-fluid " + this.state.muiTheme}>
+                <div className={"container-fluid react-root " + this.state.muiTheme}>
                     <div className={"row center-xs"}>
                         <div className="col-xs-12 col-md-12 col-lg-10">
                             <div className="box"

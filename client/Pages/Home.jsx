@@ -1,7 +1,8 @@
 import React from "react";
-import RaisedButton from "material-ui/RaisedButton";
-import PaperHelper from "../Components/PaperHelper";
+// import RaisedButton from "material-ui/RaisedButton";
 
+import PaperHelper from "../Components/Sub/PaperHelper";
+import RaisedButton from "../Components/Sub/RaisedButton";
 import FeatureList from "../Components/FeatureList";
 import YoutubePreview from "../Components/YoutubePreview";
 import SiteList from "../Components/SiteList";
@@ -56,12 +57,14 @@ export default class Home extends React.Component {
                     </PaperHelper>
 
                     <PaperHelper style={styles.loggedIn}>
-                        <RaisedButton href="https://telegram.me/uploadbro_bot"
-                                      rel="noopener" primary={true} target="_blank"
-                                      icon={<img src="/favicon-16x16.png" />}
-                        >
-                            Start UploadBro
-                        </RaisedButton>
+                        <div className="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                            <RaisedButton href="https://telegram.me/uploadbro_bot"
+                                          style={{width: '100%'}}
+                                          rel="noopener" target="_blank" labelColor="#fff"
+                                          icon={<img src="/favicon-32x32.png"/>}
+                                          label="Get started"
+                            />
+                        </div>
                     </PaperHelper>
                 </div>
             );

@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import ExitToAppIcon from 'material-ui/svg-icons/action/exit-to-app';
 
-import NavLink from "../Helpers/NavLink";
+import NavLink from "./Sub/NavLink";
 import ManualLoginPost from "../Helpers/ManualLoginPost";
 
 const styles = {

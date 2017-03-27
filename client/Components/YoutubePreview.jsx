@@ -1,7 +1,7 @@
 import React from 'react';
 import YouTube from 'react-youtube';
-import PaperHelper from "./PaperHelper";
-import TitleBar from "./TitleBar";
+import PaperHelper from "./Sub/PaperHelper";
+import TitleBar from "./Sub/TitleBar";
 
 const styles = {
     wrapper: {

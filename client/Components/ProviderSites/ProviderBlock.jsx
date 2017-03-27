@@ -5,7 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {blue500, lightGreenA200} from 'material-ui/styles/colors'
 
 import Utils from '../../Helpers/Utils';
-import NavLink from '../../Helpers/NavLink';
+import NavLink from '../Sub/NavLink';
 
 const styles = {
     img: {
@@ -33,13 +33,7 @@ export default class ProviderBlock extends React.Component {
     };
 
     render() {
-        let BlockBtn = (
-            <RaisedButton
-                secondary={true} style={styles.button}
-                href={"/login/" + this.props.siteInfo.key}>
-                Add {this.props.siteInfo.name}
-            </RaisedButton>
-        );
+        let BlockBtn;
 
         if (this.props.providerSite) {
             // user is logged into this site
@@ -50,6 +44,14 @@ export default class ProviderBlock extends React.Component {
                         to={"/remove/" + this.props.siteInfo.key}/>}
                     style={styles.button}>
                     Remove {Utils.ucfirst(this.props.siteInfo.name)}
+                </RaisedButton>
+            );
+        } else {
+            BlockBtn = (
+                <RaisedButton
+                    secondary={true} style={styles.button}
+                    href={"/login/" + this.props.siteInfo.key}>
+                    Add {this.props.siteInfo.name}
                 </RaisedButton>
             );
         }

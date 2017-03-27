@@ -6,9 +6,9 @@ import GroupIcon from 'material-ui/svg-icons/social/group';
 import ShareIcon from 'material-ui/svg-icons/social/share';
 import DesktopWindowsIcon from 'material-ui/svg-icons/hardware/desktop-windows';
 
-import PaperHelper from './PaperHelper';
-import TitleBar from "./TitleBar";
-import Center from './Center';
+import PaperHelper from './Sub/PaperHelper';
+import TitleBar from "./Sub/TitleBar";
+import Center from './Sub/Center';
 
 const styles = {
     wrapper: {

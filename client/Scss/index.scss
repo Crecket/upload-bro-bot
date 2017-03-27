@@ -20,7 +20,7 @@ html {
   height: 100%;
 }
 
-body {
+.react-root {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -61,18 +61,18 @@ body {
   }
 }
 
+// default
 a {
-  color: #fff;
+  color: #ffffff !important;
+}
+
+.defaultBtn {
+  a, span {
+    color: #08318d !important;
+  }
 }
 
 .box-row {
   margin-bottom: 1rem;
 }
 
-.word-break {
-  word-break: break-all;
-}
-
-.monospace {
-  font-family: monospace !important;
-}
