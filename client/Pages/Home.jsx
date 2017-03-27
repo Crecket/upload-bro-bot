@@ -54,9 +54,7 @@ export default class Home extends React.Component {
                             provider_sites={this.props.user_info.provider_sites}
                             provider_sites_info={this.props.sites}
                         />
-                    </PaperHelper>
-
-                    <PaperHelper style={styles.loggedIn}>
+                        <br/>
                         <div className="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
                             <RaisedButton href="https://telegram.me/uploadbro_bot"
                                           style={{width: '100%'}}

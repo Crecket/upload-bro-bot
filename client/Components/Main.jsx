@@ -11,10 +11,10 @@ import MainAppbar from './MainAppbar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomBlue from '../Themes/CustomBlue';
-import CustomDarkAlt from '../Themes/CustomDarkAlt';
+import CustomDark from '../Themes/CustomDark';
 const ThemesList = {
     "CustomBlue": getMuiTheme(CustomBlue),
-    "CustomDarkAlt": getMuiTheme(CustomDarkAlt),
+    "CustomDark": getMuiTheme(CustomDark),
 };
 
 // actions
@@ -44,7 +44,7 @@ export default class Main extends React.Component {
             connected: false,
 
             // theme options
-            muiTheme: 'CustomBlue',
+            muiTheme: 'CustomDark',
         };
 
     };
@@ -66,17 +66,17 @@ export default class Main extends React.Component {
     // =========== Static data =============
 
     // change the theme
-    setTheme = (setValue = "CustomBlue") => {
-        if (typeof ThemesList[setValue] !== "undefined") {
-            this.setState({muiTheme: setValue});
+    setTheme = (theme = false) => {
+        if (theme && typeof ThemesList[theme] !== "undefined") {
+            this.setState({muiTheme: theme});
             return true;
         }
 
         // no custom value given or value does not exist, just toggle between dark and light
-        if (this.state.muiTheme === "CustomDark") {
-            this.setState({muiTheme: "CustomLight"});
-        } else {
+        if (this.state.muiTheme === "CustomBlue") {
             this.setState({muiTheme: "CustomDark"});
+        } else {
+            this.setState({muiTheme: "CustomBlue"});
         }
     };
 
@@ -120,7 +120,9 @@ export default class Main extends React.Component {
 
         return (
             <MuiThemeProvider muiTheme={ThemesList[this.state.muiTheme]}>
-                <div className={"container-fluid react-root " + this.state.muiTheme}>
+                <div className={"container-fluid react-root " + this.state.muiTheme} style={{
+                    backgroundColor: ThemesList[this.state.muiTheme].rawTheme.palette.appBackgroundColor
+                }}>
                     <div className={"row center-xs"}>
                         <div className="col-xs-12 col-md-12 col-lg-10">
                             <div className="box"

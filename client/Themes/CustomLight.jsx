@@ -25,5 +25,6 @@ export default {
         pickerHeaderColor: cyan500,
         clockCircleColor: fade(darkBlack, 0.07),
         shadowColor: fullBlack,
+        appBackgroundColor: '#ffffff',
     },
 };

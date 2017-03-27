@@ -1,46 +1,29 @@
 import {
-    cyan700,
-    grey50, grey500, cyan600, grey900,
-    pinkA100, pinkA200, pinkA400,
-    blue500,
-    white, fullWhite,
-    darkBlack, fullBlack,
+    fullWhite,
+    grey600,
+    indigo500, indigo700, indigo900
 } from 'material-ui/styles/colors';
 import {fade} from 'material-ui/utils/colorManipulator';
+import spacing from 'material-ui/styles/spacing';
 
-const CustomTheme = {
-    spacing: {
-        iconSize: 24,
-        desktopGutter: 24,
-        desktopGutterMore: 32,
-        desktopGutterLess: 16,
-        desktopGutterMini: 8,
-        desktopKeylineIncrement: 64,
-        desktopDropDownMenuItemHeight: 32,
-        desktopDropDownMenuFontSize: 15,
-        desktopDrawerMenuItemHeight: 48,
-        desktopSubheaderHeight: 48,
-        desktopToolbarHeight: 56,
-    },
+export default {
+    spacing: spacing,
     fontFamily: 'Roboto, sans-serif',
     palette: {
-        primary1Color: '#272c30',
-        primary2Color: cyan600,
-        primary3Color: grey500,
-        accent1Color: pinkA200,
-        accent2Color: pinkA400,
-        accent3Color: pinkA100,
-        textColor: fullWhite,
-        textColorHover: blue500,
-        alternateTextColor: grey50,
-        canvasColor: '#303030',
-        borderColor: (0, fade)(fullWhite, 0.3),
-        disabledColor: (0, fade)(fullWhite, 0.3),
-        pickerHeaderColor: (0, fade)(fullWhite, 0.12),
-        clockCircleColor: (0, fade)(fullWhite, 0.12),
-        shadowColor: fullBlack,
-    },
-    bodyBackground: '#30363c',
+        primary1Color: '#303F9F',
+        primary2Color: '#3F51B5',
+        primary3Color: '#C5CAE9',
+        accent1Color: '#448AFF',
+        accent2Color: '#3c7be2',
+        accent3Color: '#325eb8',
+        textColor: '#ffffff',
+        secondaryTextColor: fade(fullWhite, 0.7),
+        alternateTextColor: fullWhite,
+        canvasColor: '#353535',
+        borderColor: fade(fullWhite, 0.3),
+        disabledColor: fade(fullWhite, 0.3),
+        pickerHeaderColor: fade(fullWhite, 0.12),
+        clockCircleColor: fade(fullWhite, 0.12),
+        appBackgroundColor: '#142F4C',
+    }
 };
-
-export default CustomTheme;
