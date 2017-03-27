@@ -91,7 +91,6 @@ module.exports = class App {
                     });
                 })
             })
-            .catch(console.error)
             // finish setup
             .then(() => {
                 // finished loading everything
@@ -101,8 +100,7 @@ module.exports = class App {
                 // start express listener
                 Express(this);
             })
-            .catch(Logger.error)
-            .catch(console.error);
+            .catch(Logger.error);
 
     }
 
