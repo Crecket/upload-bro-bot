@@ -22,7 +22,10 @@ const DEV = process.env.NODE_ENV !== "production";
 let config = {
     entry: {
         // React app
-        "app": SRC_DIR + "/react-app.jsx"
+        "app": [
+            "babel-polyfill", // promise polyfill
+            SRC_DIR + "/react-app.jsx" // actual app
+        ]
     },
     output: {
         path: BUILD_DIR,
