@@ -30,4 +30,9 @@ module.exports = (app, passport, uploadApp) => {
         }
     );
 
+    // logout page
+    app.post('/logout', (request, response) => {
+        request.logout();
+        response.redirect('/');
+    });
 }

@@ -98,12 +98,16 @@ module.exports = class SwPrecache {
                 '/': ServerViews
             },
             navigateFallback: '/',
+            navigateFallbackWhitelist: [
+                // /\/login\/((?!(telegram))\w)*\/callback/,
+                /\/remove\/.+/,
+                /\/new\/.+/,
+            ],
             runtimeCaching: [
                 {
-                    urlPattern: /\/login\/telegram/,
-                    handler: 'networkOnly'
-                },
-                {
+                    urlPattern: /\/login\/telegram.+/,
+                    handler: 'networkFirst'
+                }, {
                     urlPattern: /\/api/,
                     handler: 'networkOnly'
                 }, {

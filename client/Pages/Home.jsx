@@ -1,7 +1,7 @@
 import React from "react";
 
 // custom components
-import ManualLoginPost from '../Helpers/ManualLoginPost';
+import ManualPost from '../Helpers/ManualPost';
 import ComponentLoader from '../Components/Sub/ComponentLoader';
 
 // async components
@@ -86,7 +86,7 @@ export default class Home extends React.Component {
                 <div>
                     <PaperHelper style={Object.assign(styles.notLoggedIn, styles.centerBox)}>
                         <RaisedButton
-                            onClick={ManualLoginPost}
+                            onClick={ManualPost('/login/telegram')}
                             primary={true}
                             label="Login with Telegram"/>
                     </PaperHelper>

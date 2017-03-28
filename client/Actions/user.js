@@ -40,7 +40,7 @@ export function userLoadLocalstorage() {
 
 export function userLogout() {
     return dispatch => {
-        axios.get('/logout').then(() => {
+        axios.post('/logout').then(() => {
             // remove local storage
             store.remove('user_info');
 

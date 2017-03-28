@@ -5,7 +5,7 @@ import IconButton from 'material-ui/IconButton';
 import ExitToAppIcon from 'material-ui/svg-icons/action/exit-to-app';
 
 import NavLink from "./Sub/NavLink";
-import ManualLoginPost from "../Helpers/ManualLoginPost";
+import ManualPost from "../Helpers/ManualPost";
 
 const styles = {
     appbar: {
@@ -28,7 +28,7 @@ class MainAppbar extends React.Component {
     render() {
         var TopRightBtn = (
             <FlatButton
-                onClick={ManualLoginPost}
+                onClick={ManualPost("/login/telegram")}
                 labelPosition="before"
                 label="Login"
                 icon={<ExitToAppIcon/>}/>
