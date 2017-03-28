@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
 
 // custom components
 import ComponentLoader from './Sub/ComponentLoader';
@@ -9,10 +11,10 @@ const MainAppbar = ComponentLoader(
     () => import('./MainAppbar'), () => require.resolveWeak('./MainAppbar'));
 // const DrawerDebugger = ComponentLoader(
 //     () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
-const Dialog = ComponentLoader(
-    () => import('material-ui/Dialog'), () => require.resolveWeak('material-ui/Dialog'));
-const FlatButton = ComponentLoader(
-    () => import('material-ui/FlatButton'), () => require.resolveWeak('material-ui/FlatButton'));
+// const Dialog = ComponentLoader(
+//     () => import('material-ui/Dialog'), () => require.resolveWeak('material-ui/Dialog'));
+// const FlatButton = ComponentLoader(
+//     () => import('material-ui/FlatButton'), () => require.resolveWeak('material-ui/FlatButton'));
 
 // Themes
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

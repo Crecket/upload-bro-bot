@@ -1,10 +1,12 @@
 import React from 'react';
+import Logger from '../../Helpers/Logger';
 
 export default ({isLoading, pastDelay, error}) => {
     if (isLoading && pastDelay) {
-        return <p>Loading...</p>;
+        return null;
     } else if (error && !isLoading) {
-        return <p>Error!</p>;
+        Logger.error('Failed to load', error);
+        return null;
     } else {
         return null;
     }

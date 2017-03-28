@@ -8,7 +8,7 @@ export default (importCb, webpackRequireWeakId = false) => {
         return Loadable({
             loader: importCb,
             LoadingComponent: LoadingComponent,
-            delay: 200,
+            delay: 300,
             webpackRequireWeakId: webpackRequireWeakId,
         });
     }
@@ -17,6 +17,6 @@ export default (importCb, webpackRequireWeakId = false) => {
     return Loadable({
         loader: importCb,
         LoadingComponent: LoadingComponent,
-        delay: 200
+        delay: 300
     });
 };

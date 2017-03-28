@@ -3,14 +3,10 @@ import React from "react";
 // custom components
 import ManualPost from '../Helpers/ManualPost';
 import ComponentLoader from '../Components/Sub/ComponentLoader';
+import PaperHelper from '../Components/Sub/PaperHelper';
+import RaisedButton from '../Components/Sub/RaisedButton';
 
 // async components
-const PaperHelper = ComponentLoader(
-    () => import('../Components/Sub/PaperHelper'),
-    () => require.resolveWeak('../Components/Sub/PaperHelper'));
-const RaisedButton = ComponentLoader(
-    () => import('../Components/Sub/RaisedButton'),
-    () => require.resolveWeak('../Components/Sub/RaisedButton'));
 const FeatureList = ComponentLoader(
     () => import('../Components/FeatureList'),
     () => require.resolveWeak('../Components/FeatureList'));
