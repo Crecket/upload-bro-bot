@@ -16,7 +16,7 @@ class DrawerDebugger extends React.Component {
 
     componentDidMount() {
         if (!process.env.DEBUG)return null;
-        
+
         window.drawerDebugger = process.env.DEBUG ? this.toggleDrawer : () => {
         };
         Logger.debug(this.props.theme);
