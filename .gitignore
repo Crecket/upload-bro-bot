@@ -18,4 +18,5 @@ public/assets/dist/*
 
 # generated files from npm errors and webpack analyzer
 /npm-debug.log
+/npm-debug.log.*
 /webpack.report.html
