@@ -2,6 +2,9 @@ import React from 'react';
 import {Provider} from "react-redux";
 import {Router, browserHistory} from 'react-router'
 
+require("../node_modules/flexboxgrid/dist/flexboxgrid.css");
+require("./Scss/index.scss");
+
 // main app
 import routes from './Routes';
 import Store from "./Store";
