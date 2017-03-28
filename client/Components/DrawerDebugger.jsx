@@ -15,9 +15,11 @@ class DrawerDebugger extends React.Component {
     };
 
     componentDidMount() {
+        if (!process.env.DEBUG)return null;
+        
         window.drawerDebugger = process.env.DEBUG ? this.toggleDrawer : () => {
         };
-        Logger.debug(this.props.theme)
+        Logger.debug(this.props.theme);
     }
 
     toggleDrawer = () => {
@@ -25,6 +27,8 @@ class DrawerDebugger extends React.Component {
     }
 
     render() {
+        if (!process.env.DEBUG)return null;
+
         return (
             <Drawer open={this.state.open}>
                 <AppBar title="AppBar" onClick={this.toggleDrawer}/>

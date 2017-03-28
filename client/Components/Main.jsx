@@ -11,8 +11,8 @@ const MainAppbar = ComponentLoader(
     () => import('./MainAppbar'), () => require.resolveWeak('./MainAppbar'));
 
 // only allow this in debug enviroment, else return null
-const DrawerDebugger = process.env.DEBUG ? ComponentLoader(
-    () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger')) : null;
+const DrawerDebugger = ComponentLoader(
+    () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
 
 // Themes
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
