@@ -9,12 +9,10 @@ import ComponentLoader from './Sub/ComponentLoader';
 // load the required components
 const MainAppbar = ComponentLoader(
     () => import('./MainAppbar'), () => require.resolveWeak('./MainAppbar'));
-// const DrawerDebugger = ComponentLoader(
-//     () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
-// const Dialog = ComponentLoader(
-//     () => import('material-ui/Dialog'), () => require.resolveWeak('material-ui/Dialog'));
-// const FlatButton = ComponentLoader(
-//     () => import('material-ui/FlatButton'), () => require.resolveWeak('material-ui/FlatButton'));
+
+// only allow this in debug enviroment, else return null
+const DrawerDebugger = process.env.DEBUG ? ComponentLoader(
+    () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger')) : null;
 
 // Themes
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -151,7 +149,7 @@ export default class Main extends React.Component {
                                     {this.props.modalText}
                                 </Dialog>
 
-                                {/*<DrawerDebugger theme={ThemesList[this.state.muiTheme]}/>*/}
+                                <DrawerDebugger theme={ThemesList[this.state.muiTheme]}/>
 
                                 <MainAppbar
                                     setTheme={this.setTheme}

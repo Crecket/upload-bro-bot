@@ -1,15 +1,15 @@
 import React from "react";
 import Paper from "material-ui/Paper";
-import CircularProgress from 'material-ui/CircularProgress';
-import RaisedButton from 'material-ui/RaisedButton';
+// import CircularProgress from 'material-ui/CircularProgress';
+// import RaisedButton from 'material-ui/RaisedButton';
 import Check from 'material-ui/svg-icons/navigation/check';
 import Error from 'material-ui/svg-icons/alert/error';
-import {red500, red800, green800} from 'material-ui/styles/colors';
+import {red500, green800} from 'material-ui/styles/colors';
 import {browserHistory}  from 'react-router';
 
 import Utils from '../Helpers/Utils';
-import NavLink from '../Components/Sub/NavLink';
-import axios from 'axios';
+// import NavLink from '../Components/Sub/NavLink';
+// import axios from 'axios';
 
 const styles = {
     img: {

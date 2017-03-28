@@ -1,14 +1,12 @@
 import React from 'react';
 
-class Home extends React.Component {
+class NotFound extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
     };
 
     render() {
-
-
         return (
             <div style={{textAlign: 'center', marginTop: 40}}>
                 <h1>Page Not Found</h1>
@@ -17,4 +15,4 @@ class Home extends React.Component {
     };
 }
 
-export default Home;
+export default NotFound;

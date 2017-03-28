@@ -1,16 +1,14 @@
 import React from 'react';
 import ReactDOM  from 'react-dom';
-import {Provider} from "react-redux";
 import injectTapEventPlugin  from 'react-tap-event-plugin';
-import {Router, browserHistory} from 'react-router'
 
 // Register service worker
 require('./ServiceWorkers/ServiceWorkerRegistration');
 
 // main app
-import Logger from './Helpers/Logger.js';
-import routes from './Routes';
-import Store from "./Store";
+import ComponentLoader from './Components/Sub/ComponentLoader';
+import Logger from './Helpers/Logger';
+// import App from './App';
 
 // injection, required for materialze tap events
 injectTapEventPlugin();
@@ -18,11 +16,14 @@ injectTapEventPlugin();
 require("../node_modules/flexboxgrid/dist/flexboxgrid.css");
 require("./Scss/index.scss");
 
+// async load the main App
+const App = ComponentLoader(
+    () => import('./App'),
+    () => require.resolveWeak('./App'));
+
 // render the react app
 ReactDOM.render(
-    <Provider store={Store}>
-        <Router routes={routes} history={browserHistory}/>
-    </Provider>,
+    <App/>,
     document.getElementById('app')
 );
 

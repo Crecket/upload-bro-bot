@@ -59,7 +59,6 @@ let config = {
             openAnalyzer: false,
             // create a server for the watcher or a static file for production enviroments
             analyzerMode: 'static',
-            // analyzerMode: DEV ? 'server' : 'static',
             // output outside of the public folder
             reportFilename: '../webpack.report.html'
         }),
@@ -76,11 +75,8 @@ let config = {
             name: "commons",
             // (the filename of the commons chunk)
             filename: OUTPUT_DIR + "commons.js",
-            // (Modules must be shared between 3 entries)
-            minChunks: 3,
-            // select all children
-            // children: true,
-            // async:true,
+            // minimum shared locations before being added
+            minChunks: 2
         })
     ],
     devtool: DEV ? "source-map" : false,
