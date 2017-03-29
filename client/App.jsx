@@ -1,12 +1,11 @@
 import React from 'react';
 import {Provider} from "react-redux";
-import {Router, browserHistory} from 'react-router'
 
 require("../node_modules/flexboxgrid/dist/flexboxgrid.css");
 require("./Scss/index.scss");
 
 // main app
-import routes from './Routes';
+import Router from './Router';
 import Store from "./Store";
 
 class App extends React.Component {
@@ -18,7 +17,7 @@ class App extends React.Component {
     render() {
         return (
             <Provider store={Store}>
-                <Router routes={routes} history={browserHistory}/>
+                <Router/>
             </Provider>
         );
     };

@@ -2,17 +2,40 @@ import React from 'react';
 import {connect} from "react-redux";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
+// import {RouteTransition} from 'react-router-transition';
 
 // custom components
 import ComponentLoader from './Sub/ComponentLoader';
 
-// load the required components
+// only allow this in debug enviroment, else return null
+// const MainAppbar = ComponentLoader(
+//     () => import('./MainAppbar'), () => require.resolveWeak('./MainAppbar'));
+
 const MainAppbar = ComponentLoader(
-    () => import('./MainAppbar'), () => require.resolveWeak('./MainAppbar'));
+    () => {
+        return new Promise((resolve, reject) => {
+            require.ensure([], (require) => {
+                resolve(require('./MainAppbar'));
+            });
+        }).catch(console.log);
+    },
+    () => require.resolveWeak('./MainAppbar')
+);
 
 // only allow this in debug enviroment, else return null
+// const DrawerDebugger = ComponentLoader(
+//     () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
+
 const DrawerDebugger = ComponentLoader(
-    () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
+    () => {
+        return new Promise((resolve, reject) => {
+            require.ensure([], (require) => {
+                resolve(require('./DrawerDebugger'));
+            })
+        }).catch(console.log);
+    },
+    () => require.resolveWeak('./DrawerDebugger')
+);
 
 // Themes
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -20,10 +43,11 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomBlue from '../Themes/CustomBlue';
 import CustomDark from '../Themes/CustomDark';
 import Purple from '../Themes/Purple';
+const navigatorHelper = (typeof navigator !== "undefined" && navigator.userAgent) ? navigator.userAgent : "";
 const ThemesList = {
-    "CustomBlue": getMuiTheme(CustomBlue),
-    "CustomDark": getMuiTheme(CustomDark),
-    "Purple": getMuiTheme(Purple),
+    "CustomBlue": getMuiTheme(CustomBlue, {userAgent: navigatorHelper}),
+    "CustomDark": getMuiTheme(CustomDark, {userAgent: navigatorHelper}),
+    "Purple": getMuiTheme(Purple, {userAgent: navigatorHelper}),
 };
 
 // actions
@@ -131,7 +155,7 @@ export default class Main extends React.Component {
                     <div className={"row center-xs"}>
                         <div className="col-xs-12 col-md-12 col-lg-10">
                             <div className="box"
-                                 style={{paddingBottom: 30}}>
+                                 style={{paddingBottom: 30, position: 'relative'}}>
                                 <Dialog
                                     title={this.props.modalTitle}
                                     actions={[
@@ -158,6 +182,18 @@ export default class Main extends React.Component {
                                     logoutUser={this.logoutUser}
                                 />
 
+                                {/*<RouteTransition*/}
+                                {/*pathname={this.props.location.pathname}*/}
+                                {/*runOnMount={false}*/}
+                                {/*atEnter={{opacity: 0}}*/}
+                                {/*atLeave={{opacity: 2}}*/}
+                                {/*atActive={{opacity: 1}}*/}
+                                {/*mapStyles={styles => {*/}
+                                {/*if (styles.opacity > 1) {*/}
+                                {/*return {display: 'none'}*/}
+                                {/*}*/}
+                                {/*return {opacity: styles.opacity, display: 'block'}*/}
+                                {/*}}></RouteTransition>*/}
                                 {mainBody}
                             </div>
                         </div>

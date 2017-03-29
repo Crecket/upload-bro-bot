@@ -1,7 +1,4 @@
-const winston = rootRequire('src/Helpers/Logger.js');
-
 module.exports = (app, passport, uploadApp) => {
-    var db = uploadApp._Db;
 
     // routes
     app.get(['/', '/remove/:type', '/new/:type'], (req, res) => {
@@ -12,16 +9,13 @@ module.exports = (app, passport, uploadApp) => {
     // fetch user info from api
     app.post('/api/get_user', (req, res) => {
         let user_info = (req.user) ? req.user : false;
-
-        // delete telepass access token
-        // delete user_info.access_token;
-        // delete provider tokens
-        // Object.keys(user_info.provider_sites).map(key =>{
-        //     delete user_info.provider_sites[key].id_token;
-        //     delete user_info.provider_sites[key].access_token;
-        //     delete user_info.provider_sites[key].refresh_token;
-        // })
-
+        if (user_info) {
+            Object.keys(user_info.provider_sites).map(key => {
+                delete user_info.provider_sites[key].id_token;
+                delete user_info.provider_sites[key].access_token;
+                delete user_info.provider_sites[key].refresh_token;
+            })
+        }
         res.json(user_info);
     });
 

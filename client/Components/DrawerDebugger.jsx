@@ -10,7 +10,7 @@ class DrawerDebugger extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            open: true
+            open: false
         };
     };
 

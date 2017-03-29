@@ -41,6 +41,8 @@ let config = {
             path.resolve(__dirname, "./src"),
         ]
     },
+    // devtool for source maps
+    devtool: DEV ? "cheap-eval-source-map" : "nosources-source-map",
     plugins: [
         // stop emit if we get errors
         new webpack.NoEmitOnErrorsPlugin(),
@@ -79,7 +81,6 @@ let config = {
             minChunks: 2
         })
     ],
-    devtool: DEV ? "source-map" : false,
     module: {
         rules: [
             {
@@ -122,6 +123,7 @@ if (!DEV) {
     config.plugins.push(new webpack.optimize.UglifyJsPlugin({
         sourceMap: true,
         minimize: true,
+        comments: false,
         compress: {
             warnings: false,
             drop_console: true
@@ -129,7 +131,6 @@ if (!DEV) {
     }));
 } else {
     // development only plugins
-
 }
 
 module.exports = config;

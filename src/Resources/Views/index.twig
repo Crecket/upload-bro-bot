@@ -6,10 +6,45 @@
 {% endblock %}
 
 {% block content %}
-    <noscript>
-        <h1 style="text-align:center;">UploadBro requires javascript to run propperly :(</h1>
-    </noscript>
-    <div id="app"></div>
+
+    <noscript><h1 style="text-align:center;">UploadBro requires javascript to run propperly :(</h1></noscript>
+    <div id="app">{{ appPreRender|raw|default }}</div>
+    {#{% if appPreRender|default %}#}
+        {#<div id="app">{{ appPreRender|raw }}</div>#}
+    {#{% else %}#}
+        {#<div id="app">#}
+            {#<div data-reactroot="" class="container-fluid react-root CustomDark"#}
+                 {#style="background-color: rgb(20, 47, 76);">#}
+                {#<div class="row center-xs">#}
+                    {#<div class="col-xs-12 col-md-12 col-lg-10">#}
+                        {#<div class="box" style="padding-bottom: 30px; position: relative;"><!-- react-empty: 7 -->#}
+                            {#<div style="color: rgb(255, 255, 255); background-color: rgb(48, 63, 159); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; box-sizing: border-box; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px; border-radius: 0px; position: relative; z-index: 1100; width: 100%; display: flex; padding-left: 24px; padding-right: 24px;">#}
+                                {#<div style="margin-top: 8px; margin-right: 8px; margin-left: -16px;">#}
+                                    {#<a href="/"#}
+                                       {#tabindex="0"#}
+                                       {#class="active"#}
+                                       {#style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer; text-decoration: none; margin: 0px; padding: 12px; outline: none; font-size: 0px; font-weight: inherit; position: relative; z-index: 1; overflow: visible; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; width: 48px; height: 48px; background: none;">#}
+                                        {#<div><img src="/favicon-32x32.png" alt="App bar logo"#}
+                                                  {#style="fill: rgb(255, 255, 255); color: rgb(255, 255, 255);"></div>#}
+                                    {#</a></div>#}
+                                {#<h1 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0px; padding-top: 0px; letter-spacing: 0px; font-size: 24px; font-weight: 400; color: rgb(255, 255, 255); height: 64px; line-height: 64px; flex: 1 1 0%;">#}
+                                    {#UploadBroBot</h1>#}
+                                {#<div style="margin-top: 8px; margin-right: -16px; margin-left: auto;">#}
+                                    {#<button tabindex="0" type="button"#}
+                                            {#style="border: 10px; box-sizing: border-box; display: inline-block; font-family: Roboto, sans-serif; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); cursor: pointer; text-decoration: none; margin: 7px 0px 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; position: relative; z-index: 1; height: 36px; line-height: 36px; min-width: 88px; color: rgb(255, 255, 255); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; border-radius: 2px; user-select: none; overflow: hidden; background-color: rgba(0, 0, 0, 0); text-align: center;">#}
+                                        {#<div>#}
+                                            {#<span style="position: relative; padding-left: 16px; padding-right: 16px; vertical-align: middle; letter-spacing: 0px; text-transform: uppercase; font-weight: 500; font-size: 14px;">Logout</span>#}
+                                        {#</div>#}
+                                    {#</button>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#{% endif %}#}
+
 {% endblock %}
 
 {% block js %}
