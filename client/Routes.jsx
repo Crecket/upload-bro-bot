@@ -7,7 +7,7 @@ let errorLoading = (err) => {
     Logger.error('Dynamic page loading failed', err);
 }
 
-const routes = {
+export default {
     path: '',
     component: Main,
     childRoutes: [
@@ -78,24 +78,3 @@ const routes = {
         },
     ]
 };
-
-// export the routes
-export default routes;
-
-
-// export default (
-//     <Route path="/" component={Main}>
-//         {/* default route */}
-//         <IndexRoute component={Home}/>
-//
-//         {/* Routes*/}
-//         <Route path='/new/:type' component={ProviderLogin}/>
-//         <Route path='/remove/:type' component={ProviderRemove}/>
-//         <Route path='/login/dropbox/callback' component={DropboxLoginCallback}/>
-//
-//         {/* fall back route, if no others are found show 404*/}
-//         <Route path='*' component={NotFound}/>
-//     </Route>
-// );
-
-
