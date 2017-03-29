@@ -10,31 +10,27 @@ import ComponentLoader from './Sub/ComponentLoader';
 // only allow this in debug enviroment, else return null
 // const MainAppbar = ComponentLoader(
 //     () => import('./MainAppbar'), () => require.resolveWeak('./MainAppbar'));
+// only allow this in debug enviroment, else return null
+// const DrawerDebugger = ComponentLoader(
+//     () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
 
 const MainAppbar = ComponentLoader(
     () => {
         return new Promise((resolve, reject) => {
             require.ensure([], (require) => {
-                resolve(require('./MainAppbar'));
+                resolve(require('./MainAppbar').default);
             });
         }).catch(console.log);
-    },
-    () => require.resolveWeak('./MainAppbar')
+    }
 );
-
-// only allow this in debug enviroment, else return null
-// const DrawerDebugger = ComponentLoader(
-//     () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
-
 const DrawerDebugger = ComponentLoader(
     () => {
         return new Promise((resolve, reject) => {
             require.ensure([], (require) => {
-                resolve(require('./DrawerDebugger'));
+                resolve(require('./DrawerDebugger').default);
             })
         }).catch(console.log);
-    },
-    () => require.resolveWeak('./DrawerDebugger')
+    }
 );
 
 // Themes

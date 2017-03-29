@@ -10,11 +10,13 @@ import reducer from "./Reducers/index.js";
 let middleware;
 if (process.env.DEBUG === true) {
     // create middleware with logger
-    middleware = applyMiddleware(promise(), thunk, logger())
+    middleware = applyMiddleware(promise(), thunk
+        // , logger()
+    );
 } else {
     // default middleware
-    middleware = applyMiddleware(promise(), thunk)
+    middleware = applyMiddleware(promise(), thunk);
 }
 
 //return the store
-export default createStore(reducer, middleware)
+export default createStore(reducer, middleware);

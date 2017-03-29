@@ -24,8 +24,10 @@ let config = {
         // React app
         "app": [
             "babel-polyfill", // promise polyfill
+            SRC_DIR + "/css-app.js",
             SRC_DIR + "/react-app.jsx" // actual app
-        ]
+        ],
+        "sw-register": SRC_DIR + "/ServiceWorkers/ServiceWorkerRegistration.js",
     },
     output: {
         path: BUILD_DIR,
@@ -42,7 +44,7 @@ let config = {
         ]
     },
     // devtool for source maps
-    devtool: DEV ? "cheap-eval-source-map" : "nosources-source-map",
+    devtool: DEV ? "source-map" : "nosources-source-map",
     plugins: [
         // stop emit if we get errors
         new webpack.NoEmitOnErrorsPlugin(),

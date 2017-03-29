@@ -9,6 +9,8 @@
   ],
   "watch": [
     "src/*",
+    "client/Router.jsx",
+    "client/Store.jsx",
     "app.js"
   ],
   "ext": "js json twig",

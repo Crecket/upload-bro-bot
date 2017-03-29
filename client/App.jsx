@@ -1,8 +1,12 @@
 import React from 'react';
 import {Provider} from "react-redux";
+import injectTapEventPlugin  from 'react-tap-event-plugin';
 
-require("../node_modules/flexboxgrid/dist/flexboxgrid.css");
-require("./Scss/index.scss");
+// injection, required for materialze tap events
+injectTapEventPlugin();
+
+// Register service worker
+// require('./ServiceWorkers/ServiceWorkerRegistration');
 
 // main app
 import Router from './Router';

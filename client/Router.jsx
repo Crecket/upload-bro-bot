@@ -1,13 +1,7 @@
 import React from 'react';
 import {Router, browserHistory} from 'react-router'
 
-import Logger from './Helpers/Logger';
 import Main from './Components/Main';
-
-// error handler for async loading
-let errorLoading = (err) => {
-    Logger.error('Dynamic page loading failed', err);
-}
 
 const routeList = {
     path: '',
@@ -16,41 +10,43 @@ const routeList = {
         {
             path: '/',
             getComponent(nextState, cb) {
+                // import('./Pages/Home.jsx').then(component => {cb(null, component)});
                 require.ensure([], (require) => {
-                    cb(require("./Pages/Home.jsx"));
+                    let Component = require("./Pages/Home.jsx").default;
+                    cb(null, props => <Component {...props}/>);
                 })
             }
         },
         {
             path: '/new/:type',
             getComponent(nextState, cb) {
-                require.ensure([], (require) => {
-                    cb(require("./Pages/ProviderLogin.jsx"));
-                })
+                // import('./Pages/Home.jsx').then(component => {cb(null, component)});
+                let Component = require("./Pages/ProviderLogin.jsx").default;
+                cb(null, props => <Component {...props}/>);
             }
         },
         {
             path: '/remove/:type',
             getComponent(nextState, cb) {
-                require.ensure([], (require) => {
-                    cb(require("./Pages/ProviderRemove.jsx"));
-                })
+                // import('./Pages/Home.jsx').then(component => {cb(null, component)});
+                let Component = require("./Pages/ProviderRemove.jsx").default;
+                cb(null, props => <Component {...props}/>);
             }
         },
         {
             path: '/login/dropbox/callback',
             getComponent(nextState, cb) {
-                require.ensure([], (require) => {
-                    cb(require("./Pages/DropboxLoginCallback.jsx"));
-                })
+                // import('./Pages/Home.jsx').then(component => {cb(null, component)});
+                let Component = require("./Pages/DropboxLoginCallback.jsx").default;
+                cb(null, props => <Component {...props}/>);
             }
         },
         {
             path: '/*',
             getComponent(nextState, cb) {
-                require.ensure([], (require) => {
-                    cb(require("./Pages/NotFound.jsx"));
-                })
+                // import('./Pages/Home.jsx').then(component => {cb(null, component)});
+                let Component = require("./Pages/NotFound.jsx").default;
+                cb(null, props => <Component {...props}/>);
             }
         },
     ]
