@@ -55,6 +55,14 @@ export default class ProviderBlock extends React.Component {
                 </RaisedButton>
             );
         }
+
+        let svgLogo = null;
+        if (this.props.siteInfo && this.props.siteInfo.logos) {
+            svgLogo = <img style={styles.img}
+                           alt={Utils.ucfirst(this.props.siteInfo.name) + " logo"}
+                           src={this.props.siteInfo.logos['svg']}/>;
+        }
+
         return (
             <div style={styles.container}>
                 <FloatingActionButton
@@ -62,8 +70,7 @@ export default class ProviderBlock extends React.Component {
                     href={this.props.siteInfo.url} rel="noopener" target="_blank">
                     <LinkIcon />
                 </FloatingActionButton>
-                <img style={styles.img} alt={Utils.ucfirst(this.props.siteInfo.name) + " logo"}
-                     src={this.props.siteInfo.logos['svg']}/>
+                {svgLogo}
                 <br/>
                 <br/>
                 {BlockBtn}
