@@ -5,7 +5,7 @@ const createElement = require('react').createElement;
 const renderToString = require('react-dom/server').renderToString;
 const {match, RouterContext} = require('react-router');
 
-const Router = require('../../client/Router.jsx');
+const Router = require('../../client/Router.jsx').default;
 const configureStore = require('../../client/Store.js');
 const Provider = require('react-redux').Provider;
 
@@ -14,7 +14,7 @@ module.exports = (app, passport, uploadApp) => {
     // routes
     app.get('/pre-render', (req, res) => {
         console.log(Router);
-        match({Router, location: req.url}, (err, redirect, renderProps) => {
+        match({routes: Router, location: req.url}, (err, redirect, renderProps) => {
             console.log(err, redirect, renderProps);
             if (err) {
                 return res.status(500).end();

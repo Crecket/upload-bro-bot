@@ -26,7 +26,7 @@ const DropboxRoutes = require('./Sites/Dropbox/Routes');
 const TelegramRoutes = require('./Routes/TelegramRoutes');
 const GeneralRoutes = require('./Routes/GeneralRoutes');
 const ApiRoutes = require('./Routes/ApiRoutes');
-const PreRenderRoutes = require('./Routes/PreRender');
+const PreRenderRoutes = require('./Routes/PreRenderRoutes');
 
 // useSsl helper
 const useSsl = process.env.EXPRESS_USE_SSL === "true";
