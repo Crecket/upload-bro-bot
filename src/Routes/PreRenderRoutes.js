@@ -6,9 +6,9 @@ const Logger = require('../Helpers/Logger');
 // static libraries
 const fs = require('fs');
 const createElement = require('react').createElement;
-const createFactory = require('react').createFactory;
 const renderToString = require('react-dom/server').renderToString;
-const {match, RouterContext} = require('react-router');
+const match = require('react-router').match;
+const RouterContext = require('react-router').RouterContext;
 const Provider = require('react-redux').Provider;
 
 
@@ -17,15 +17,9 @@ module.exports = (app, passport, uploadApp) => {
     // routes
     app.get('/pre-render', (req, res) => {
         // require the app
-        const App = require('../../client/App.jsx');
-        // create a factory which we can parse to the createElement function
-        const AppFactory = createFactory(App);
+        const App = require('../../client/App.jsx').AppJsx;
         // attempt to generate the html
-        const preRenderedHtml = renderToString(createElement(
-            'div',
-            {},
-            App
-        ));
+        const preRenderedHtml = renderToString(App);
         //render the view using the preRenderedHtml from react
         res.render('index', {
             appPreRender: preRenderedHtml
@@ -35,7 +29,7 @@ module.exports = (app, passport, uploadApp) => {
     // routes
     app.get('/pre-render-router', (req, res) => {
         // fetch the router, store and a redux provider
-        const Router = require('../../client/Router.jsx').default;
+        const Router = require('../../client/Router.jsx').RouterJsx;
         const configureStore = require('../../client/Store.jsx');
 
         match({routes: Router, location: req.url}, (err, redirect, renderProps) => {

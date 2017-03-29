@@ -52,7 +52,7 @@ const routeList = {
     ]
 };
 
-export default class Routes extends React.Component {
+export default class CustomRouter extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
@@ -61,6 +61,6 @@ export default class Routes extends React.Component {
     render() {
         return <Router routes={routeList} history={browserHistory}/>;
     };
-}
+};
 
-
+export let RouterJsx = <Router/>;

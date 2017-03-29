@@ -11,7 +11,8 @@
       "error",
       "module.exports"
     ],
-    "no-unused-vars": 0
+    "no-unused-vars": 0,
+    "node/no-unpublished-require": 0
   },
   "globals": {
     "rootRequire": true,

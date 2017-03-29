@@ -5,9 +5,6 @@ import injectTapEventPlugin  from 'react-tap-event-plugin';
 // injection, required for materialze tap events
 injectTapEventPlugin();
 
-// Register service worker
-// require('./ServiceWorkers/ServiceWorkerRegistration');
-
 // main app
 import Router from './Router';
 import Store from "./Store";
@@ -28,3 +25,4 @@ class App extends React.Component {
 }
 
 export default App;
+export let AppJsx = <App/>;

@@ -38,7 +38,6 @@ class DrawerDebugger extends React.Component {
                     floatingLabelText="Fixed Floating Label Text"
                     floatingLabelFixed={true}
                 /><br />
-
             </Drawer>
         );
     };
