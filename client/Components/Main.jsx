@@ -5,35 +5,14 @@ import FlatButton from "material-ui/FlatButton";
 // import {RouteTransition} from 'react-router-transition';
 
 // custom components
-import MainAppbar from './MainAppbar';
-// import ComponentLoader from './Sub/ComponentLoader';
-// import DrawerDebugger from './DrawerDebugger';
+import ComponentLoader from './Sub/ComponentLoader'
 
 // only allow this in debug enviroment, else return null
-// const MainAppbar = ComponentLoader(
-//     () => import('./MainAppbar'), () => require.resolveWeak('./MainAppbar'));
+const MainAppbar = ComponentLoader(
+    () => import('./MainAppbar'), () => require.resolveWeak('./MainAppbar'));
 // only allow this in debug enviroment, else return null
-// const DrawerDebugger = ComponentLoader(
-//     () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
-
-// const MainAppbar = ComponentLoader(
-//     () => {
-//         return new Promise((resolve, reject) => {
-//             require.ensure([], (require) => {
-//                 resolve(require('./MainAppbar').default);
-//             });
-//         }).catch(console.log);
-//     }
-// );
-// const DrawerDebugger = ComponentLoader(
-//     () => {
-//         return new Promise((resolve, reject) => {
-//             require.ensure([], (require) => {
-//                 resolve(require('./DrawerDebugger').default);
-//             })
-//         }).catch(console.log);
-//     }
-// );
+const DrawerDebugger = ComponentLoader(
+    () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
 
 // Themes
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

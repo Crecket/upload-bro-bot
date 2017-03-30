@@ -1,4 +1,3 @@
-const PreRender = require('../PreRender');
 const Logger = require('../Helpers/Logger');
 
 module.exports = (app, passport, uploadApp) => {
@@ -6,14 +5,7 @@ module.exports = (app, passport, uploadApp) => {
     // routes
     app.get(['/', '/dashboard', '/remove/:type', '/new/:type'], (req, res) => {
         res.set('X-Frame-Options', 'ALLOW-FROM-ALL');
-
-        PreRender(uploadApp, req.user || false)
-            .then(preRenderedHtml => {
-                res.render('index', {
-                    appPreRender: preRenderedHtml
-                });
-            })
-            .catch(Logger.error);
+        res.render('index');
     });
 
     // fetch user info from api

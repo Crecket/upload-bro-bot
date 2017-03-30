@@ -3,27 +3,14 @@ import React from "react";
 // custom components
 import PaperHelper from '../Components/Sub/PaperHelper';
 import RaisedButton from '../Components/Sub/RaisedButton';
-
-// sync components for testing
-import ProviderBlocks from '../Components/ProviderSites/ProviderBlocks';
+import ComponentLoader from '../Components/Sub/ComponentLoader';
 import ForceLogin from '../Helpers/ForceLogin';
 
 // async components
-if (process.env.WEBPACK_MODE) {
-    // const ProviderBlocks = ComponentLoader(
-    //     () => import('../Components/ProviderSites/ProviderBlocks'),
-    //     () => require.resolveWeak('../Components/ProviderSites/ProviderBlocks'));
+const ProviderBlocks = ComponentLoader(
+    () => import('../Components/ProviderSites/ProviderBlocks'),
+    () => require.resolveWeak('../Components/ProviderSites/ProviderBlocks'));
 
-    // const ProviderBlocks = ComponentLoader(
-    //     () => {
-    //         return new Promise((resolve, reject) => {
-    //             require.ensure([], (require) => {
-    //                 resolve(require('../Components/ProviderSites/ProviderBlocks').default);
-    //             })
-    //         }).catch(console.log);
-    //     }
-    // );
-}
 
 const styles = {
     loggedIn: {

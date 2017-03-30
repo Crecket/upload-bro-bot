@@ -12,43 +12,37 @@ const Routes = {
         {
             path: '/',
             getComponent(nextState, cb) {
-                require.ensure([], (require) => cb(null, require('./Pages/Home')));
-                // import('./Pages/Home.jsx').then(component => cb(null, component.default));
+                import('./Pages/Home.jsx').then(component => cb(null, component.default));
             }
         },
         {
             path: '/dashboard',
             getComponent(nextState, cb) {
-                require.ensure([], (require) => cb(null, require('./Pages/Dashboard')));
-                // import('./Pages/Dashboard.jsx').then(component => cb(null, component.default));
+                import('./Pages/Dashboard.jsx').then(component => cb(null, component.default));
             }
         },
         {
             path: '/new/:type',
             getComponent(nextState, cb) {
-                require.ensure([], (require) => cb(null, require('./Pages/ProviderLogin')));
-                // import('./Pages/ProviderLogin.jsx').then(component => cb(null, component.default));
+                import('./Pages/ProviderLogin.jsx').then(component => cb(null, component.default));
             }
         },
         {
             path: '/remove/:type',
             getComponent(nextState, cb) {
-                require.ensure([], (require) => cb(null, require('./Pages/ProviderRemove')));
-                // import('./Pages/ProviderRemove.jsx').then(component => cb(null, component.default));
+                import('./Pages/ProviderRemove.jsx').then(component => cb(null, component.default));
             }
         },
         {
             path: '/login/dropbox/callback',
             getComponent(nextState, cb) {
-                require.ensure([], (require) => cb(null, require('./Pages/DropboxLoginCallback')));
-                // import('./Pages/DropboxLoginCallback.jsx').then(component => cb(null, component.default));
+                import('./Pages/DropboxLoginCallback.jsx').then(component => cb(null, component.default));
             }
         },
         {
             path: '/*',
             getComponent(nextState, cb) {
-                require.ensure([], (require) => cb(null, require('./Pages/NotFound')));
-                // import('./Pages/NotFound.jsx').then(component => cb(null, component.default));
+                import('./Pages/NotFound.jsx').then(component => cb(null, component.default));
             }
         },
     ]
@@ -66,5 +60,3 @@ export default class CustomRouter extends React.Component {
                        history={browserHistory}/>;
     };
 };
-
-export let routes = Routes;

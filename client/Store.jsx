@@ -18,5 +18,3 @@ if (process.env.DEBUG === true) {
 
 //return the store
 export default createStore(reducer, middleware);
-export let middlewareExport = middleware;
-export let reducerExport = reducer;
