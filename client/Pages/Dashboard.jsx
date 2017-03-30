@@ -1,5 +1,5 @@
 import React from "react";
-import Perf from 'react-addons-perf';
+// import Perf from 'react-addons-perf';
 
 // custom components
 import PaperHelper from '../Components/Sub/PaperHelper';
@@ -28,19 +28,21 @@ export default class Dashboard extends React.Component {
         this.state = {};
     };
 
+    componentWillMount() {
+        // Logger.debug('start');
+        // Perf.start();
+    }
+
     componentDidMount() {
         ForceLogin(this.props, true);
-        Logger.debug('pre-timeout');
-        setTimeout(() => {
-            Perf.start();
-            Logger.debug('start');
-            setTimeout(() => {
-                Perf.stop();
-                const measurements = Perf.getLastMeasurements();
-                Perf.printWasted(measurements);
-                Logger.debug('print');
-            }, 3000);
-        }, 2000);
+        // Logger.debug('pre-timeout');
+        // setTimeout(() => {
+        //     Logger.debug('stop');
+        //     Perf.stop();
+        //     const measurements = Perf.getLastMeasurements();
+        //     Logger.debug('print');
+        //     Perf.printWasted(measurements);
+        // }, 2000);
     }
 
     componentDidUpdate() {
