@@ -5,9 +5,9 @@ import FlatButton from "material-ui/FlatButton";
 // import {RouteTransition} from 'react-router-transition';
 
 // custom components
-import ComponentLoader from './Sub/ComponentLoader';
+// import ComponentLoader from './Sub/ComponentLoader';
 import MainAppbar from './MainAppbar';
-import DrawerDebugger from './DrawerDebugger';
+// import DrawerDebugger from './DrawerDebugger';
 
 // only allow this in debug enviroment, else return null
 // const MainAppbar = ComponentLoader(
@@ -41,7 +41,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import CustomBlue from '../Themes/CustomBlue';
 import CustomDark from '../Themes/CustomDark';
 import Purple from '../Themes/Purple';
-const navigatorHelper = (typeof navigator !== "undefined" && navigator.userAgent) ? navigator.userAgent : "";
+
+// navigator fallback for server-side rendering
+const navigatorHelper = (typeof navigator !== "undefined" && navigator.userAgent) ? navigator.userAgent : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
 const ThemesList = {
     "CustomBlue": getMuiTheme(CustomBlue, {userAgent: navigatorHelper}),
     "CustomDark": getMuiTheme(CustomDark, {userAgent: navigatorHelper}),
@@ -171,7 +173,7 @@ export default class Main extends React.Component {
                                     {this.props.modalText}
                                 </Dialog>
 
-                                <DrawerDebugger theme={ThemesList[this.state.muiTheme]}/>
+                                {/*<DrawerDebugger theme={ThemesList[this.state.muiTheme]}/>*/}
 
                                 <MainAppbar
                                     setTheme={this.setTheme}

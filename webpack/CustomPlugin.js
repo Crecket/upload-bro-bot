@@ -4,6 +4,8 @@ const swPrecache = require('sw-precache');
 
 // folder constants
 const PUBLIC_DIR = 'public';
+const SRC_DIR = 'src';
+const CLIENT_DIR = 'client';
 const VIEW_DIR = 'src/Resources/Views';
 const WEBPACK_DIST_DIR = PUBLIC_DIR + '/assets/dist';
 
@@ -83,7 +85,6 @@ module.exports = class SwPrecache {
         staticFiles = staticFiles.concat(
             glob.sync(PUBLIC_DIR + '/**/*.{png,svg,jpg,gif,ico}')
         );
-
         // merge the afterEmitFiles list and remove duplicates
         staticFiles = [...new Set(staticFiles.concat(afterEmitFiles))];
 
@@ -95,8 +96,14 @@ module.exports = class SwPrecache {
             staticFileGlobs: staticFiles,
             stripPrefix: PUBLIC_DIR,
             dynamicUrlToDependencies: {
-                '/': ServerViews,
-                '/pre-render-router-sw': ServerViews.concat(['src/Routes/PreRenderRoutes.js','src/PreRender.js'])
+                '/': ServerViews.concat([
+                    SRC_DIR + "/PreRender.js",
+                    CLIENT_DIR + "/Pages/Dashboard.jsx"
+                ]),
+                '/dashboard': ServerViews.concat([
+                    SRC_DIR + "/PreRender.js",
+                    CLIENT_DIR + "/Pages/Dashboard.jsx"
+                ])
             },
             navigateFallback: '/',
             navigateFallbackWhitelist: [
@@ -108,7 +115,7 @@ module.exports = class SwPrecache {
                 {
                     urlPattern: /\/login\/telegram.+/,
                     handler: 'networkFirst'
-                },                {
+                }, {
                     urlPattern: /\/pre-render-router-sw/,
                     handler: 'cacheFirst'
                 }, {

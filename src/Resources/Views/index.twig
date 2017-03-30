@@ -2,18 +2,21 @@
 
 {% block css %}
     {{ parent() }}
-    <link href="/assets/dist/app.css" rel="stylesheet">
+    <link href="/assets/dist/css-app.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
     <noscript><h1 style="text-align:center;">UploadBro requires javascript to run propperly :(</h1></noscript>
+
     <div id="app">{{ appPreRender|raw|default }}</div>
+    {#<div id="app"><!-- react-empty: 1 --></div>#}
+
 {% endblock %}
 
 {% block js %}
     {{ parent() }}
     <script>var csrfToken = '{{ csrftoken }}';</script>
-    {#<script src="/assets/dist/commons.js"></script>#}
-    {#<script async defer src="/assets/dist/sw-register.js"></script>#}
-    {#<script src="/assets/dist/app.js"></script>#}
+    <script src="/assets/dist/commons.js"></script>
+    <script async defer src="/assets/dist/sw-register.js"></script>
+    <script src="/assets/dist/app.js"></script>
 {% endblock %}

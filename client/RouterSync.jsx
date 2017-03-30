@@ -1,11 +1,7 @@
 import React from 'react';
-import {Router, createMemoryHistory,browserHistory} from 'react-router'
+import {Router, browserHistory} from 'react-router'
 
-// hackfix for server-side test
-import injectTapEventPlugin  from 'react-tap-event-plugin';
-injectTapEventPlugin();
-
-// wrapper component
+// main wrapper
 import Main from './Components/Main';
 
 // pages
@@ -16,8 +12,8 @@ import ProviderRemove from './Pages/ProviderRemove';
 import DropboxLoginCallback from './Pages/DropboxLoginCallback';
 import NotFound from './Pages/NotFound';
 
-// route list
-const RouteList = {
+// list of routes
+const Routes = {
     path: '',
     component: Main,
     childRoutes: [
@@ -30,7 +26,7 @@ const RouteList = {
     ]
 };
 
-// router component
+// router react component
 export default class CustomRouter extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -38,9 +34,9 @@ export default class CustomRouter extends React.Component {
     };
 
     render() {
-        return <Router routes={RouteList}
-                       history={createMemoryHistory('/')}/>;
+        return <Router routes={Routes}
+                       history={browserHistory}/>;
     };
 };
 
-export const Routes = RouteList;
+export let routes = Routes;

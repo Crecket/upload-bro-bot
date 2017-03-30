@@ -26,7 +26,6 @@ const DropboxRoutes = require('./Sites/Dropbox/Routes');
 const TelegramRoutes = require('./Routes/TelegramRoutes');
 const GeneralRoutes = require('./Routes/GeneralRoutes');
 const ApiRoutes = require('./Routes/ApiRoutes');
-const PreRenderRoutes = require('./Routes/PreRenderRoutes');
 
 // useSsl helper
 const useSsl = process.env.EXPRESS_USE_SSL === "true";
@@ -222,7 +221,6 @@ module.exports = function (uploadApp) {
     TelegramRoutes(app, passport, uploadApp);
     GeneralRoutes(app, passport, uploadApp);
     ApiRoutes(app, passport, uploadApp);
-    PreRenderRoutes(app, passport, uploadApp);
 
     // specific provider routes
     // TODO make this loading automatic

@@ -24,9 +24,11 @@ let config = {
         // React app
         "app": [
             "babel-polyfill", // promise polyfill
-            SRC_DIR + "/css-app.js",
             SRC_DIR + "/react-app.jsx" // actual app
         ],
+        // App css code
+        "css-app": SRC_DIR + "/css-app.js",
+        // Service worker registration
         "sw-register": SRC_DIR + "/ServiceWorkers/ServiceWorkerRegistration.js",
     },
     output: {

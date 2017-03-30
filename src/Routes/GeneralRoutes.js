@@ -1,10 +1,20 @@
+const PreRender = require('../PreRender');
+const Logger = require('../Helpers/Logger');
+
 module.exports = (app, passport, uploadApp) => {
 
     // routes
     app.get(['/', '/remove/:type', '/new/:type'], (req, res) => {
         res.set('X-Frame-Options', 'ALLOW-FROM-ALL');
-        res.render('index', {});
-    })
+
+        PreRender(uploadApp, req.user || false)
+            .then(preRenderedHtml => {
+                res.render('index', {
+                    appPreRender: preRenderedHtml
+                });
+            })
+            .catch(Logger.error);
+    });
 
     // fetch user info from api
     app.post('/api/get_user', (req, res) => {
