@@ -1,6 +1,10 @@
 import React from 'react';
 import {Router, createMemoryHistory} from 'react-router'
 
+// injection, required for materialze tap events
+import injectTapEventPlugin  from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
 // wrapper component
 import Main from './Components/Main';
 

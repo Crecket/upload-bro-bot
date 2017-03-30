@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Logger = require('./Helpers/Logger');
+const React = require('react');
 
 // static libraries
 const renderToString = require('react-router-server').renderToString;
