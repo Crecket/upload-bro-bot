@@ -1,9 +1,5 @@
 import React from 'react';
-import {Router, createMemoryHistory,browserHistory} from 'react-router'
-
-// hackfix for server-side test
-import injectTapEventPlugin  from 'react-tap-event-plugin';
-injectTapEventPlugin();
+import {Router, createMemoryHistory} from 'react-router'
 
 // wrapper component
 import Main from './Components/Main';

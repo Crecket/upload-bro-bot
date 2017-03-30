@@ -116,9 +116,6 @@ module.exports = class SwPrecache {
                     urlPattern: /\/login\/telegram.+/,
                     handler: 'networkFirst'
                 }, {
-                    urlPattern: /\/pre-render-router-sw/,
-                    handler: 'cacheFirst'
-                }, {
                     urlPattern: /\/api/,
                     handler: 'networkOnly'
                 }, {

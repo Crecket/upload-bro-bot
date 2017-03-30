@@ -25,24 +25,24 @@ const levelLabels = {
 }
 
 // export the logger
-module.exports = pino({
-    prettyPrint: DEV ? {
-        levelFirst: true,
-        formatter: (msg) => {
-            // get chalk output bassed on level
-            const outputLabel = levelColors[msg.level](levelLabels[msg.level]);
-            // combine and return
-            return `${outputLabel} ${msg.msg}`;
-        }
-    } : false,
-    level: DEV ? "trace" : "info"
-});
+// module.exports = pino({
+//     prettyPrint: DEV ? {
+//         levelFirst: true,
+//         formatter: (msg) => {
+//             // get chalk output bassed on level
+//             const outputLabel = levelColors[msg.level](levelLabels[msg.level]);
+//             // combine and return
+//             return `${outputLabel} ${msg.msg}`;
+//         }
+//     } : false,
+//     level: DEV ? "trace" : "info"
+// });
 
-// module.exports = {
-//     log: console.log,
-//     error: console.error,
-//     warn: console.log,
-//     fatal: console.error,
-//     debug: console.log,
-//     info: console.log,
-// };
+module.exports = {
+    log: console.log,
+    error: console.error,
+    warn: console.log,
+    fatal: console.error,
+    debug: console.log,
+    info: console.log,
+};

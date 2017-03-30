@@ -2,23 +2,15 @@
 require('babel-register');
 const Logger = require('./Helpers/Logger');
 
-// static libraries
-const createElement = require('react').createElement;
-const renderToString = require('react-dom/server').renderToString;
+// route matcher for react router
 const match = require('react-router').match;
-const Provider = require('react-redux').Provider;
-const createStore = require('redux').createStore;
 
 // routers for server side
-const RouterServer = require('../client/RouterServer.jsx').default;
 const Routes = require('../client/RouterServer.jsx').Routes;
 
-// redux store/provider
-const Store = require('../client/Store.jsx').default;
-// extra imports so we can create the store oursel
-const middlewareExport = require('../client/Store.jsx').middlewareExport;
-const reducerExport = require('../client/Store.jsx').reducerExport;
-const storeInitialState = Store.getState();
+// alternate way to render the strings
+// const renderToString = require('react-router-server').renderToString;
+const renderToString = require('./PreRenderToString').default;
 
 module.exports = (uploadApp, user = false) => {
     return new Promise((resolve, reject) => {
@@ -29,37 +21,12 @@ module.exports = (uploadApp, user = false) => {
                 Logger.error(err);
                 reject(err);
             } else if (renderProps) {
-
-                // initialState modifications
-                let modifiedState = Object.assign({}, storeInitialState, {
-                    sites: Object.assign({}, storeInitialState.sites, {
-                        sites: uploadApp._SiteHandler.siteList,
-                        loading: false
-                    }),
-                    user: Object.assign({}, storeInitialState.user, {
-                        user_info: user
-                    })
-                });
-                // Logger.debug(modifiedState);
-
-                // create a router
-                const routerElement = createElement(
-                    RouterServer,
-                    renderProps
-                );
-
-                // create a provider
-                const providerElement = createElement(
-                    Provider,
-                    {store: createStore(reducerExport, modifiedState, middlewareExport)},
-                    routerElement
-                );
-
                 // we got props, try to render them
-                const preRenderedHtml = renderToString(providerElement);
-
-                // resolve the html
-                resolve(preRenderedHtml);
+                renderToString(renderProps, uploadApp, user)
+                    .then(({html}) => {
+                        // resolve the html
+                        resolve(html);
+                    }).catch(Logger.error);
             } else {
                 // nothing found, return 404
                 Logger.error('Create prerenderedhtml returned 404');

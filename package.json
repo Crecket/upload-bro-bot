@@ -49,6 +49,7 @@
     "passport-oauth2-refresh": "^1.0.0",
     "passport-telegram": "^1.0.0",
     "pino": "^4.2.2",
+    "react-router-server": "^4.0.0",
     "response-time": "^2.3.2",
     "spdy": "^3.4.4",
     "twig": "^0.10.3"

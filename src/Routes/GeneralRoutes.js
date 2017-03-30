@@ -4,7 +4,7 @@ const Logger = require('../Helpers/Logger');
 module.exports = (app, passport, uploadApp) => {
 
     // routes
-    app.get(['/', '/remove/:type', '/new/:type'], (req, res) => {
+    app.get(['/', '/dashboard', '/remove/:type', '/new/:type'], (req, res) => {
         res.set('X-Frame-Options', 'ALLOW-FROM-ALL');
 
         PreRender(uploadApp, req.user || false)
