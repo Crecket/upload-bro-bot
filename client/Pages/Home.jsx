@@ -6,19 +6,64 @@ import ComponentLoader from '../Components/Sub/ComponentLoader';
 import PaperHelper from '../Components/Sub/PaperHelper';
 import RaisedButton from '../Components/Sub/RaisedButton';
 
+// sync components for testing
+import FeatureList from '../Components/FeatureList';
+import YoutubePreview from '../Components/YoutubePreview';
+import SiteList from '../Components/SiteList';
+import ProviderBlocks from '../Components/ProviderSites/ProviderBlocks';
+
 // async components
-const FeatureList = ComponentLoader(
-    () => import('../Components/FeatureList'),
-    () => require.resolveWeak('../Components/FeatureList'));
-const YoutubePreview = ComponentLoader(
-    () => import('../Components/YoutubePreview'),
-    () => require.resolveWeak('../Components/YoutubePreview'));
-const SiteList = ComponentLoader(
-    () => import('../Components/SiteList'),
-    () => require.resolveWeak('../Components/SiteList'));
-const ProviderBlocks = ComponentLoader(
-    () => import('../Components/ProviderSites/ProviderBlocks'),
-    () => require.resolveWeak('../Components/ProviderSites/ProviderBlocks'));
+if (process.env.WEBPACK_MODE) {
+    // const FeatureList = ComponentLoader(
+    //     () => import('../Components/FeatureList'),
+    //     () => require.resolveWeak('../Components/FeatureList'));
+    // const YoutubePreview = ComponentLoader(
+    //     () => import('../Components/YoutubePreview'),
+    //     () => require.resolveWeak('../Components/YoutubePreview'));
+    // const SiteList = ComponentLoader(
+    //     () => import('../Components/SiteList'),
+    //     () => require.resolveWeak('../Components/SiteList'));
+    // const ProviderBlocks = ComponentLoader(
+    //     () => import('../Components/ProviderSites/ProviderBlocks'),
+    //     () => require.resolveWeak('../Components/ProviderSites/ProviderBlocks'));
+
+    // const FeatureList = ComponentLoader(
+    //     () => {
+    //         return new Promise((resolve, reject) => {
+    //             require.ensure([], (require) => {
+    //                 resolve(require('../Components/FeatureList').default);
+    //             })
+    //         }).catch(console.log);
+    //     }
+    // );
+    // const YoutubePreview = ComponentLoader(
+    //     () => {
+    //         return new Promise((resolve, reject) => {
+    //             require.ensure([], (require) => {
+    //                 resolve(require('../Components/YoutubePreview').default);
+    //             })
+    //         }).catch(console.log);
+    //     }
+    // );
+    // const SiteList = ComponentLoader(
+    //     () => {
+    //         return new Promise((resolve, reject) => {
+    //             require.ensure([], (require) => {
+    //                 resolve(require('../Components/SiteList').default);
+    //             })
+    //         }).catch(console.log);
+    //     }
+    // );
+    // const ProviderBlocks = ComponentLoader(
+    //     () => {
+    //         return new Promise((resolve, reject) => {
+    //             require.ensure([], (require) => {
+    //                 resolve(require('../Components/ProviderSites/ProviderBlocks').default);
+    //             })
+    //         }).catch(console.log);
+    //     }
+    // );
+}
 
 const styles = {
     centerBox: {
@@ -101,3 +146,5 @@ export default class Home extends React.Component {
         );
     };
 }
+
+export let HomeJsx = <Home/>;

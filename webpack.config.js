@@ -71,7 +71,8 @@ let config = {
             "PRODUCTION_MODE": JSON.stringify(!DEV),
             "DEVELOPMENT_MODE": JSON.stringify(DEV),
             "process.env.DEBUG": JSON.stringify(DEV),
-            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development")
+            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
+            "process.env.WEBPACK_MODE": JSON.stringify(true)
         }),
         // split up common code into commons file
         new webpack.optimize.CommonsChunkPlugin({

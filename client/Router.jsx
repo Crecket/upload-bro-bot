@@ -1,57 +1,58 @@
 import React from 'react';
 import {Router, browserHistory} from 'react-router'
 
+// main wrapper
 import Main from './Components/Main';
 
-const routeList = {
+// list of routes
+const Routes = {
     path: '',
     component: Main,
     childRoutes: [
         {
             path: '/',
             getComponent(nextState, cb) {
-                // import('./Pages/Home.jsx').then(component => {cb(null, component)});
-                require.ensure([], (require) => {
-                    let Component = require("./Pages/Home.jsx").default;
-                    cb(null, props => <Component {...props}/>);
-                })
+                import('./Pages/Home.jsx').then(component => {
+                    cb(null, component.default)
+                });
             }
         },
         {
             path: '/new/:type',
             getComponent(nextState, cb) {
-                // import('./Pages/Home.jsx').then(component => {cb(null, component)});
-                let Component = require("./Pages/ProviderLogin.jsx").default;
-                cb(null, props => <Component {...props}/>);
+                import('./Pages/ProviderLogin.jsx').then(component => {
+                    cb(null, component.default)
+                });
             }
         },
         {
             path: '/remove/:type',
             getComponent(nextState, cb) {
-                // import('./Pages/Home.jsx').then(component => {cb(null, component)});
-                let Component = require("./Pages/ProviderRemove.jsx").default;
-                cb(null, props => <Component {...props}/>);
+                import('./Pages/ProviderRemove.jsx').then(component => {
+                    cb(null, component.default)
+                });
             }
         },
         {
             path: '/login/dropbox/callback',
             getComponent(nextState, cb) {
-                // import('./Pages/Home.jsx').then(component => {cb(null, component)});
-                let Component = require("./Pages/DropboxLoginCallback.jsx").default;
-                cb(null, props => <Component {...props}/>);
+                import('./Pages/DropboxLoginCallback.jsx').then(component => {
+                    cb(null, component.default)
+                });
             }
         },
         {
             path: '/*',
             getComponent(nextState, cb) {
-                // import('./Pages/Home.jsx').then(component => {cb(null, component)});
-                let Component = require("./Pages/NotFound.jsx").default;
-                cb(null, props => <Component {...props}/>);
+                import('./Pages/NotFound.jsx').then(component => {
+                    cb(null, component.default)
+                });
             }
         },
     ]
 };
 
+// router react component
 export default class CustomRouter extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -59,8 +60,9 @@ export default class CustomRouter extends React.Component {
     };
 
     render() {
-        return <Router routes={routeList} history={browserHistory}/>;
+        return <Router routes={Routes}
+                       history={browserHistory}/>;
     };
 };
 
-export let RouterJsx = <Router/>;
+export let routes = Routes;

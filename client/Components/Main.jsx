@@ -6,6 +6,8 @@ import FlatButton from "material-ui/FlatButton";
 
 // custom components
 import ComponentLoader from './Sub/ComponentLoader';
+import MainAppbar from './MainAppbar';
+import DrawerDebugger from './DrawerDebugger';
 
 // only allow this in debug enviroment, else return null
 // const MainAppbar = ComponentLoader(
@@ -14,24 +16,24 @@ import ComponentLoader from './Sub/ComponentLoader';
 // const DrawerDebugger = ComponentLoader(
 //     () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
 
-const MainAppbar = ComponentLoader(
-    () => {
-        return new Promise((resolve, reject) => {
-            require.ensure([], (require) => {
-                resolve(require('./MainAppbar').default);
-            });
-        }).catch(console.log);
-    }
-);
-const DrawerDebugger = ComponentLoader(
-    () => {
-        return new Promise((resolve, reject) => {
-            require.ensure([], (require) => {
-                resolve(require('./DrawerDebugger').default);
-            })
-        }).catch(console.log);
-    }
-);
+// const MainAppbar = ComponentLoader(
+//     () => {
+//         return new Promise((resolve, reject) => {
+//             require.ensure([], (require) => {
+//                 resolve(require('./MainAppbar').default);
+//             });
+//         }).catch(console.log);
+//     }
+// );
+// const DrawerDebugger = ComponentLoader(
+//     () => {
+//         return new Promise((resolve, reject) => {
+//             require.ensure([], (require) => {
+//                 resolve(require('./DrawerDebugger').default);
+//             })
+//         }).catch(console.log);
+//     }
+// );
 
 // Themes
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

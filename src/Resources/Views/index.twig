@@ -13,9 +13,7 @@
 {% block js %}
     {{ parent() }}
     <script>var csrfToken = '{{ csrftoken }}';</script>
-    {% if appPreRender|default %}{% else %}
-        <script async defer src="/assets/dist/sw-register.js"></script>
-        <script src="/assets/dist/commons.js"></script>
-        <script src="/assets/dist/app.js"></script>
-    {% endif %}
+    {#<script src="/assets/dist/commons.js"></script>#}
+    {#<script async defer src="/assets/dist/sw-register.js"></script>#}
+    {#<script src="/assets/dist/app.js"></script>#}
 {% endblock %}

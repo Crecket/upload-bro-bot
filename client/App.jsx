@@ -9,7 +9,7 @@ injectTapEventPlugin();
 import Router from './Router';
 import Store from "./Store";
 
-class App extends React.Component {
+export default class App extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
@@ -23,6 +23,3 @@ class App extends React.Component {
         );
     };
 }
-
-export default App;
-export let AppJsx = <App/>;

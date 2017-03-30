@@ -95,7 +95,8 @@ module.exports = class SwPrecache {
             staticFileGlobs: staticFiles,
             stripPrefix: PUBLIC_DIR,
             dynamicUrlToDependencies: {
-                '/': ServerViews
+                '/': ServerViews,
+                '/pre-render-router-sw': ServerViews.concat(['src/Routes/PreRenderRoutes.js','src/PreRender.js'])
             },
             navigateFallback: '/',
             navigateFallbackWhitelist: [
@@ -107,6 +108,9 @@ module.exports = class SwPrecache {
                 {
                     urlPattern: /\/login\/telegram.+/,
                     handler: 'networkFirst'
+                },                {
+                    urlPattern: /\/pre-render-router-sw/,
+                    handler: 'cacheFirst'
                 }, {
                     urlPattern: /\/api/,
                     handler: 'networkOnly'
