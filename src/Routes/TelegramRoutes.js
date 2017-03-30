@@ -13,7 +13,7 @@ module.exports = (app, passport, uploadApp) => {
     app.post('/login/telegram', (req, res, next) => {
         if (req.user) {
             // already logged in
-            res.redirect('/');
+            res.redirect('/dashboard');
         } else {
             // send to telegram login middleware
             TelegramMiddleware(req, res, next);
@@ -26,7 +26,8 @@ module.exports = (app, passport, uploadApp) => {
     app.get('/login/telegram/callback', passport.authenticate('telegram', {
             session: true
         }), (req, res) => {
-            res.redirect('/');
+            // redirect to user dashboard
+            res.redirect('/dashboard');
         }
     );
 

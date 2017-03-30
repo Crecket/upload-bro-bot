@@ -5,8 +5,8 @@ import FlatButton from "material-ui/FlatButton";
 // import {RouteTransition} from 'react-router-transition';
 
 // custom components
-// import ComponentLoader from './Sub/ComponentLoader';
 import MainAppbar from './MainAppbar';
+// import ComponentLoader from './Sub/ComponentLoader';
 // import DrawerDebugger from './DrawerDebugger';
 
 // only allow this in debug enviroment, else return null

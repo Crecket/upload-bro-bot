@@ -6,6 +6,7 @@ import RaisedButton from '../Components/Sub/RaisedButton';
 
 // sync components for testing
 import ProviderBlocks from '../Components/ProviderSites/ProviderBlocks';
+import ForceLogin from '../Helpers/ForceLogin';
 
 // async components
 if (process.env.WEBPACK_MODE) {
@@ -38,8 +39,15 @@ export default class Dashboard extends React.Component {
         this.state = {};
     };
 
-    render() {
+    componentDidMount() {
+        ForceLogin(this.props, true);
+    }
 
+    componentDidUpdate() {
+        ForceLogin(this.props, true);
+    }
+
+    render() {
         return (
             <div>
                 <PaperHelper style={styles.loggedIn}>

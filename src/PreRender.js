@@ -10,8 +10,8 @@ const Provider = require('react-redux').Provider;
 const createStore = require('redux').createStore;
 
 // routers for server side
-const RouterServer = require('../client/RouterServer').default;
-const Routes = require('../client/RouterServer').Routes;
+const RouterServer = require('../client/RouterServer.jsx').default;
+const Routes = require('../client/RouterServer.jsx').Routes;
 
 // redux store/provider
 const Store = require('../client/Store.jsx').default;
@@ -22,8 +22,8 @@ const storeInitialState = Store.getState();
 
 module.exports = (uploadApp, user = false) => {
     return new Promise((resolve, reject) => {
-        // match the routers
-        match({routes: Routes, location: user ? '/' : '/dashbaord'}, (err, redirect, renderProps) => {
+        // match the routers based on logged in state
+        match({routes: Routes, location: user ? '/' : '/dashboard'}, (err, redirect, renderProps) => {
             if (err) {
                 // Error during render
                 Logger.error(err);

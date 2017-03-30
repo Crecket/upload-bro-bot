@@ -2,14 +2,15 @@ import React from "react";
 
 // custom components
 import ManualPost from '../Helpers/ManualPost';
-// import ComponentLoader from '../Components/Sub/ComponentLoader';
 import PaperHelper from '../Components/Sub/PaperHelper';
 import RaisedButton from '../Components/Sub/RaisedButton';
+// import ComponentLoader from '../Components/Sub/ComponentLoader';
 
 // sync components for testing
 import FeatureList from '../Components/FeatureList';
 import YoutubePreview from '../Components/YoutubePreview';
 import SiteList from '../Components/SiteList';
+import ForceLogin from '../Helpers/ForceLogin';
 
 // async components
 if (process.env.WEBPACK_MODE) {
@@ -73,6 +74,14 @@ export default class Home extends React.Component {
         super(props, context);
         this.state = {};
     };
+
+    componentDidMount() {
+        ForceLogin(this.props, false);
+    }
+
+    componentDidUpdate() {
+        ForceLogin(this.props, false);
+    }
 
     render() {
         return (
