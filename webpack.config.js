@@ -7,6 +7,7 @@ const path = require("path");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const Visualizer = require('webpack-visualizer-plugin');
 
 // custom extension
 const CustomPlugin = require("./webpack/CustomPlugin");
@@ -46,7 +47,7 @@ let config = {
         ]
     },
     // devtool for source maps
-    devtool: DEV ? "source-map" : "nosources-source-map",
+    devtool: DEV ? "source-map" : "cheap-module-source-ma",
     plugins: [
         // stop emit if we get errors
         new webpack.NoEmitOnErrorsPlugin(),
@@ -66,7 +67,17 @@ let config = {
             // create a server for the watcher or a static file for production enviroments
             analyzerMode: 'static',
             // output outside of the public folder
-            reportFilename: '../webpack.report.html'
+            reportFilename: '../webpack.report.html',
+            /**
+             * stats file for analyzer - use with:
+             * @see https://alexkuz.github.io/stellar-webpack/
+             * @see https://alexkuz.github.io/webpack-chart/
+             */
+            generateStatsFile: true,
+            statsFilename: '../webpack.stats.json'
+        }),
+        new Visualizer({
+            filename: '../webpack.stats.html'
         }),
         // SwPrecachePlugin,
         new webpack.DefinePlugin({
@@ -95,6 +106,14 @@ let config = {
                     options: {
                         plugins: [
                             "react-html-attrs",
+                            [
+                                "transform-runtime",
+                                {
+                                    helpers: false,
+                                    polyfill: false,
+                                    regenerator: true,
+                                }
+                            ],
                             "transform-class-properties",
                             "transform-react-inline-elements",
                             "transform-react-constant-elements",

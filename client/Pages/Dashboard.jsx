@@ -1,10 +1,12 @@
 import React from "react";
+import Perf from 'react-addons-perf';
 
 // custom components
 import PaperHelper from '../Components/Sub/PaperHelper';
 import RaisedButton from '../Components/Sub/RaisedButton';
 import ComponentLoader from '../Components/Sub/ComponentLoader';
 import ForceLogin from '../Helpers/ForceLogin';
+import Logger from '../Helpers/Logger';
 
 // async components
 const ProviderBlocks = ComponentLoader(
@@ -28,6 +30,17 @@ export default class Dashboard extends React.Component {
 
     componentDidMount() {
         ForceLogin(this.props, true);
+        Logger.debug('pre-timeout');
+        setTimeout(() => {
+            Perf.start();
+            Logger.debug('start');
+            setTimeout(() => {
+                Perf.stop();
+                const measurements = Perf.getLastMeasurements();
+                Perf.printWasted(measurements);
+                Logger.debug('print');
+            }, 3000);
+        }, 2000);
     }
 
     componentDidUpdate() {

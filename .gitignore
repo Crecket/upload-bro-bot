@@ -20,3 +20,5 @@ public/assets/dist/*
 /npm-debug.log
 /npm-debug.log.*
 /webpack.report.html
+/webpack.stats.json
+/webpack.stats.html
