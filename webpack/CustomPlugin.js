@@ -97,11 +97,9 @@ module.exports = class SwPrecache {
             stripPrefix: PUBLIC_DIR,
             dynamicUrlToDependencies: {
                 '/': ServerViews.concat([
-                    SRC_DIR + "/PreRender.js",
                     CLIENT_DIR + "/Pages/Dashboard.jsx"
                 ]),
                 '/dashboard': ServerViews.concat([
-                    SRC_DIR + "/PreRender.js",
                     CLIENT_DIR + "/Pages/Dashboard.jsx"
                 ])
             },
