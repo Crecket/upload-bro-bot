@@ -10,7 +10,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const Visualizer = require('webpack-visualizer-plugin');
 
 // custom extension
-const CustomPlugin = require("./webpack/CustomPlugin");
+const SWPlugin = require("./webpack/SWPlugin");
 
 // src and build dirs
 const SRC_DIR = path.resolve(__dirname, "client");
@@ -58,7 +58,7 @@ let config = {
             allChunks: true
         }),
         // custom plugin
-        new CustomPlugin({
+        new SWPlugin({
             debug: DEV
         }),
         // webpack analyzer
