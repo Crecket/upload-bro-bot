@@ -9,19 +9,6 @@ module.exports = (app, passport, uploadApp) => {
     });
 
     // fetch user info from api
-    app.post('/api/get_user', (req, res) => {
-        let user_info = (req.user) ? req.user : false;
-        if (user_info) {
-            Object.keys(user_info.provider_sites).map(key => {
-                delete user_info.provider_sites[key].id_token;
-                delete user_info.provider_sites[key].access_token;
-                delete user_info.provider_sites[key].refresh_token;
-            })
-        }
-        res.json(user_info);
-    });
-
-    // fetch user info from api
     app.post('/remove/:type', (request, response) => {
         let type = request.params.type;
 

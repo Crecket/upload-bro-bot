@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 
 const GoogleHelperObj = require('./Helper');
 const UserHelperObj = rootRequire('src/UserHelper.js');
@@ -39,7 +39,7 @@ module.exports = (app, passport, uploadApp) => {
                     response.redirect(url);
                 })
                 .catch(err => {
-                    winston.error(err);
+                    Logger.error(err);
                     // redirect to home, something went terribly wrong
                     response.redirect('/');
                 });
@@ -117,14 +117,14 @@ module.exports = (app, passport, uploadApp) => {
                                 response.redirect(resultRoute);
                             })
                             .catch((err) => {
-                                winston.error(err);
+                                Logger.error(err);
                                 response.redirect(resultRoute);
                             });
                     });
                 })
                 .catch(err => {
                     // log and redirect
-                    winston.error(err);
+                    Logger.error(err);
                     response.redirect(resultRoute);
                 });
         }

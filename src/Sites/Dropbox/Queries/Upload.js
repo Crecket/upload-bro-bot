@@ -93,7 +93,7 @@ module.exports = class Upload extends HelperInterface {
                     path: '/' + path.basename(resolveResults.file_location),
                     contents: resolveResults.file_contents
                 },
-                resolveResults.userInfo.provider_sites.dropbox
+                resolveResults.userInfo
             ).then((upload_result) => {
                 // add new upload location
                 resolveResults.upload_result = upload_result;

@@ -49,125 +49,41 @@ module.exports = (app, passport, uploadApp) => {
         } else {
 
             // get collection and current sites
-            var current_provider_sites = request.user.provider_sites;
+            let current_provider_sites = request.user.provider_sites;
 
             // add new provider
             current_provider_sites.dropbox = {
                 access_token: access_token,
                 token_type: token_type,
                 uid: uid,
-                account_id: account_id,
+                account_id: account_id
             }
 
-            // update the tokens for this user
-            UserHelper.updateUserTokens(request.user, current_provider_sites)
-                .then((result) => {
-                    response.json(true);
+            // get user info for this user
+            DropboxHelper.getUserInfo(request.user)
+                .then(({account_id, name, email, email_verified, profile_photo_url}) => {
+                    // update user info in dropbox
+                    current_provider_sites.dropbox.user_info = {
+                        account_id: account_id,
+                        name: name,
+                        email: email,
+                        email_verified: email_verified,
+                        avatar: profile_photo_url
+                    };
+
+                    // update the tokens for this user
+                    UserHelper.updateUserTokens(request.user, current_provider_sites)
+                        .then(_ => {
+                            response.json(true);
+                        })
+                        .catch(err => {
+                            winston.error(err);
+                            response.status(500).json({error: err});
+                        });
                 })
-                .catch((err) => {
-                    winston.error(err);
-                    response.status(500).json({error: err});
+                .catch(err => {
+
                 });
         }
     });
-
-    // debug routes
-    if (process.env.DEBUG) {
-        app.get('/test_dropbox/share_link', (req, res) => {
-            var token = req.user.provider_sites.dropbox.access_token;
-            DropboxHelper.createShareLink('/file_69.jpg', token)
-                .then((result) => {
-                    res.json(result);
-                })
-                .catch((err) => {
-                    res.json(err)
-                });
-        });
-
-        app.get('/test_dropbox/file_list', (req, res) => {
-            var token = req.user.provider_sites.dropbox.access_token;
-            DropboxHelper.getFilesList('', token)
-                .then((result) => {
-                    res.json(result);
-                })
-                .catch((err) => {
-                    res.json(err)
-                });
-        });
-
-        app.get('/test_dropbox/user_info', (req, res) => {
-            var token = req.user.provider_sites.dropbox.access_token;
-            DropboxHelper.getUserInfo(token)
-                .then((result) => {
-                    res.json(result);
-                })
-                .catch((err) => {
-                    res.json(err)
-                });
-        });
-
-        /*
-         app.get('/test_dropbox/upload', (request, response) => {
-         // get the correct path
-         var filePath = path.join(__dirname, '../downloads/127251962/file_1.jpg');
-
-         // upload the file
-         GoogleHelper.uploadFile(
-         request.user.provider_sites.dropbox,
-         filePath,
-         "card_v2.jpg"
-         )
-         .then((result) => {
-         response.json(result);
-         })
-         .catch((err) => {
-         response.json(err);
-         });
-         })
-
-         app.get('/test_dropbox/download', (request, response) => {
-         // get the correct path
-         var filePath = path.join(__dirname, '../downloads/test.jpg');
-
-         var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
-
-         // download the file
-         GoogleHelper.downloadFile(
-         request.user.provider_sites.dropbox,
-         fileId,
-         filePath
-         ).then((result) => {
-         response.json(result);
-         }).catch((err) => {
-         response.json(err);
-         });
-         })
-
-         app.get('/test_dropbox/files_list', (request, response) => {
-         // get file list
-         GoogleHelper.getFilesList(request.user.provider_sites.dropbox)
-         .then((result) => {
-         response.json(result);
-         })
-         .catch((err) => {
-         response.json(err);
-         });
-         })
-
-         app.get('/test_dropbox/info', (request, response) => {
-         var fileId = "0B0vXmuBIOU5wejlnS19lSlhBdW8";
-
-         // download the file
-         GoogleHelper.fileInfo(
-         request.user.provider_sites.dropbox,
-         fileId
-         ).then((result) => {
-         response.json(result);
-         }).catch((err) => {
-         response.json(err);
-         });
-         })
-
-         //*/
-    }
 }

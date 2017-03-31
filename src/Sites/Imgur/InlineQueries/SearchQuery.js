@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 
 const HelperInterface = rootRequire('src/HelperInterface');
 const Utils = rootRequire('src/Utils');
@@ -47,7 +47,7 @@ module.exports = class SearchQuery extends HelperInterface {
                 // search for this file
                 this._ImgurHelper.imageList(user_info)
                     .then((file_results) => {
-                        winston.debug(file_results);
+                        Logger.debug(file_results);
 
                         var resultList = [];
                         file_results.map((file, key) => {
@@ -75,8 +75,8 @@ module.exports = class SearchQuery extends HelperInterface {
                             cacheTime: 1
                         })
 
-                    }).catch(err => winston.error(err));
-            }).catch(err => winston.error(err));
+                    }).catch(err => Logger.error(err));
+            }).catch(err => Logger.error(err));
         });
     }
 

@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
-
 const SiteInteface = require(__base + 'src/Sites/SiteInterface.js');
 
+// queries and commands
+const SearchQueryObj = require(__base + 'src/Sites/Dropbox/InlineQueries/SearchQuery');
 const UploadObj = require(__base + 'src/Sites/Dropbox/Queries/Upload');
 
 module.exports = class Dropbox extends SiteInteface {
@@ -19,6 +19,9 @@ module.exports = class Dropbox extends SiteInteface {
     register() {
         // register commands
         this._app._QueryHandler.register(new UploadObj(this._app));
+
+        // register inline queries
+        this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
 
         return Promise.resolve();
     }

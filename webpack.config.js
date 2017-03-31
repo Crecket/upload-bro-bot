@@ -98,24 +98,7 @@ let config = {
             {
                 test: /\.jsx?$/,
                 use: [{
-                    loader: "babel-loader",
-                    options: {
-                        plugins: [
-                            "react-html-attrs",
-                            [
-                                "transform-runtime",
-                                {
-                                    helpers: false,
-                                    polyfill: false,
-                                    regenerator: true,
-                                }
-                            ],
-                            "transform-class-properties",
-                            "transform-react-inline-elements",
-                            "transform-react-constant-elements",
-                            "transform-decorators-legacy"
-                        ]
-                    }
+                    loader: "babel-loader"
                 }]
             },
             {

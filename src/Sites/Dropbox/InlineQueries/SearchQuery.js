@@ -6,7 +6,7 @@ const Logger = rootRequire('src/Helpers/Logger.js');
 const HelperInterface = rootRequire('src/HelperInterface');
 const Utils = rootRequire('src/Utils');
 
-const GoogleHelperObj = rootRequire('src/Sites/Google/Helper');
+const DropboxHelperObj = rootRequire('src/Sites/Dropbox/Helper');
 
 module.exports = class SearchQuery extends HelperInterface {
     constructor(app) {
@@ -15,7 +15,7 @@ module.exports = class SearchQuery extends HelperInterface {
         this._app = app;
 
         // create google helper
-        this._GoogleHelper = new GoogleHelperObj(app);
+        this._DropboxHelper = new DropboxHelperObj(app);
     }
 
     /**
@@ -34,43 +34,46 @@ module.exports = class SearchQuery extends HelperInterface {
                     return resolve("It looks like you're not registered in our system.");
                 }
 
-                if (!user_info.provider_sites.google) {
+                // check if we have
+                if (!user_info.provider_sites.dropbox) {
                     return resolve(
                         [], // no results
                         {
-                            switch_pm_text: "Google service not connected to your account",
+                            switch_pm_text: "Dropbox service not connected to your account",
                             switch_pm_parameter: "login"
                         }
                     );
                 }
 
                 // search for this file
-                this._GoogleHelper.searchFile(
+                this._DropboxHelper.searchFile(
                     user_info, // tokens
                     match, // file name to search for
                     {}
                 ).then((file_results) => {
+
                     // Logger.debug(file_results);
                     var resultList = [];
                     file_results.map((file, key) => {
+                        if (file.match_type['.tag'] !== "file_name") {
+                            // not a file type
+                            return null;
+                        }
 
-                        var fileUrl = this._GoogleHelper.getShareableLink(file.id);
+                        // create a shareable url
+                        var shareUrl = this._DropboxHelper.createShareLink(user_info, file.metadata.path);
 
                         // create a new article
                         var fileResult = {
                             type: "article",
-                            id: file.id,
-                            title: file.name,
-                            url: file.webViewLink,
+                            id: file.meta_data.id,
+                            title: file.meta_data.name,
+                            url: shareUrl,
                             input_message_content: {
-                                message_text: "<a href='" + fileUrl + "'>" + file.name + "</a>",
+                                message_text: "<a href='" + shareUrl + "'>" + file.meta_data.name + "</a>",
                                 parse_mode: "HTML"
                             }
                         };
-                        // optional thumbnail url
-                        if (file.thumbnailLink) {
-                            fileResult.thumb_url = file.thumbnailLink;
-                        }
 
                         resultList.push(fileResult)
                     })
@@ -90,7 +93,7 @@ module.exports = class SearchQuery extends HelperInterface {
      * @returns {RegExp}
      */
     get match() {
-        return /google (.+)$/;
+        return /dropbox(.*)$/;
     }
 
     /**
@@ -98,7 +101,7 @@ module.exports = class SearchQuery extends HelperInterface {
      * @returns {string}
      */
     get name() {
-        return "google_search";
+        return "dropbox_search";
     }
 }
 

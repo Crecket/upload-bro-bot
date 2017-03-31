@@ -57,19 +57,21 @@ export default class ProviderBlocks extends React.Component {
         let finalBlocks = [];
         // loop through providers which havn't been verified
         Object.keys(this.props.provider_sites_info).map((key) => {
+            // site info for this site
             let siteInfo = this.props.provider_sites_info[key];
 
-            // check if this site is available for the user
-            if (this.props.provider_sites && this.props.provider_sites[siteInfo.key]) {
-                // always add to the list
-                finalBlocks.push(
-                    this.getBlockTemplate(
-                        key,
-                        siteInfo,
-                        this.props.provider_sites[siteInfo.key]
-                    )
-                );
-            }
+            // fallback to empty list
+            let providerSite = this.props.provider_sites && this.props.provider_sites[siteInfo.key] ?
+                this.props.provider_sites[siteInfo.key] : false
+
+            // always add to the list
+            finalBlocks.push(
+                this.getBlockTemplate(
+                    key,
+                    siteInfo,
+                    providerSite
+                )
+            );
         })
 
         return (

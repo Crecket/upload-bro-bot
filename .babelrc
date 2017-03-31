@@ -6,7 +6,21 @@
     "babel-preset-stage-0"
   ],
   "plugins": [
+    "react-html-attrs",
+    "transform-decorators-legacy",
+    [
+      "transform-runtime",
+      {
+        "helpers": false,
+        "polyfill": false,
+        "regenerator": true
+      }
+    ],
+    "transform-class-properties",
+    "transform-react-inline-elements",
+    "transform-react-constant-elements",
+    "transform-decorators-legacy",
     "syntax-dynamic-import",
-    "transform-decorators-legacy"
+    "js-logger"
   ]
 }
