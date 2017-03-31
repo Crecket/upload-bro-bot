@@ -55,8 +55,6 @@ export default class Main extends React.Component {
             // theme options
             muiTheme: store.get('theme') || "Dark", // default to dark
         };
-
-        console.log(store.get('theme'));
     };
 
     componentDidMount() {
