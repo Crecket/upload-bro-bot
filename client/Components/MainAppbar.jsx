@@ -13,17 +13,21 @@ import PowerIcon from 'material-ui/svg-icons/action/power-settings-new';
 import NavLink from "./Sub/NavLink";
 import ManualPost from "../Helpers/ManualPost";
 
-const LoggedIn = (props) => (
+const PopoverMenu = (props) => (
     <IconMenu
         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
         targetOrigin={{horizontal: 'left', vertical: 'top'}}
         anchorOrigin={{horizontal: 'left', vertical: 'top'}}
     >
-        <MenuItem
+        {props.loggedIn ? <MenuItem
             primaryText="Logout"
             rightIcon={<PowerIcon />}
             onClick={ManualPost("/logout")}
-        />
+        /> : <MenuItem
+            primaryText="Login"
+            rightIcon={<ExitToAppIcon />}
+            onClick={ManualPost("/login/telegram")}
+        />}
         <MenuItem
             primaryText="Change Theme"
             rightIcon={<ArrowDropRight />}
@@ -32,13 +36,13 @@ const LoggedIn = (props) => (
     </IconMenu>
 );
 
-const LoggedOut = (props) => (
-    <FlatButton
-        onClick={ManualPost("/login/telegram")}
-        labelPosition="before"
-        label="Login"
-        icon={<ExitToAppIcon/>}/>
-);
+// const LoggedOut = (props) => (
+//     <FlatButton
+//         onClick={ManualPost("/login/telegram")}
+//         labelPosition="before"
+//         label="Login"
+//         icon={<ExitToAppIcon/>}/>
+// );
 
 
 const styles = {
@@ -53,19 +57,13 @@ const styles = {
     }
 };
 
-class MainAppbar extends React.PureComponent  {
+class MainAppbar extends React.PureComponent {
     constructor(props, context) {
         super(props, context);
         this.state = {
             showPopover: false
         };
     };
-
-    // shouldComponentUpdate(nextProps, nextState) {
-    //     if (this.state !== nextState) return true;
-    //     if (this.props !== nextProps) return true;
-    //     return false;
-    // }
 
     // function that returns a setTheme function
     themeSwitcher = (theme) => {
@@ -104,7 +102,7 @@ class MainAppbar extends React.PureComponent  {
                 iconElementLeft={<IconButton containerElement={<NavLink to="/"/>}>
                     <img src="/favicon-32x32.png" alt="App bar logo"/>
                 </IconButton>}
-                iconElementRight={this.props.user_info ? <LoggedIn menuItems={MenuItems}/> : <LoggedOut />}
+                iconElementRight={<PopoverMenu menuItems={MenuItems} loggedIn={!!this.props.userInfo}/>}
             >
                 <Popover
                     open={this.state.open}

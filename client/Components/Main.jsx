@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
+import store from 'store';
 // import {RouteTransition} from 'react-router-transition';
 
 // custom components
@@ -52,8 +53,10 @@ export default class Main extends React.Component {
         super(props, context);
         this.state = {
             // theme options
-            muiTheme: 'Dark',
+            muiTheme: store.get('theme') || "Dark", // default to dark
         };
+
+        console.log(store.get('theme'));
     };
 
     componentDidMount() {
@@ -66,25 +69,29 @@ export default class Main extends React.Component {
 
         // fetch site data
         this.props.dispatch(siteUpdate());
-
-        window.setThemeTest = this.setTheme;
     };
 
     // =========== Static data =============
 
     // change the theme
     setTheme = (theme = false) => {
+        // default theme
+        let finalTheme = "Dark";
         if (theme && typeof ThemesList[theme] !== "undefined") {
-            this.setState({muiTheme: theme});
-            return true;
+            finalTheme = theme;
+        } else {
+            // no custom value given or value does not exist, just toggle between dark and light
+            if (this.state.muiTheme === "LightBlue") {
+                finalTheme = "Dark";
+            } else {
+                finalTheme = "LightBlue";
+            }
         }
 
-        // no custom value given or value does not exist, just toggle between dark and light
-        if (this.state.muiTheme === "LightBlue") {
-            this.setState({muiTheme: "Dark"});
-        } else {
-            this.setState({muiTheme: "LightBlue"});
-        }
+        // set the theme and store it
+        this.setState({muiTheme: finalTheme}, () => {
+            store.set('theme', finalTheme);
+        })
     };
 
     // open the general modal

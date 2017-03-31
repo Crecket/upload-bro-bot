@@ -2,7 +2,7 @@ import React from 'react';
 
 const styles = {
     h1: {
-        color: '#fff'
+        // color: '#fff'
     }
 }
 
