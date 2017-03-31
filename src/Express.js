@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const spdy = require('spdy');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = require('./Helpers/Logger.js');
+const glob = require('glob');
 
 // express libs
 const express = require('express');
@@ -20,9 +21,6 @@ const responseTime = require('response-time');
 const csurf = require('csurf');
 
 // general routes
-const GoogleRoutes = require('./Sites/Google/Routes');
-const ImgurRoutes = require('./Sites/Imgur/Routes');
-const DropboxRoutes = require('./Sites/Dropbox/Routes');
 const TelegramRoutes = require('./Routes/TelegramRoutes');
 const GeneralRoutes = require('./Routes/GeneralRoutes');
 const ApiRoutes = require('./Routes/ApiRoutes');
@@ -200,8 +198,8 @@ module.exports = function (uploadApp) {
                 new ouch.handlers.PrettyPageHandler()
             ).handleException(err, req, res,
                 () => {
-                    winston.error('Error handled');
-                    winston.error(err);
+                    Logger.error('Error handled');
+                    Logger.error(err);
                 }
             );
         });
@@ -222,11 +220,13 @@ module.exports = function (uploadApp) {
     GeneralRoutes(app, passport, uploadApp);
     ApiRoutes(app, passport, uploadApp);
 
-    // specific provider routes
-    // TODO make this loading automatic
-    GoogleRoutes(app, passport, uploadApp);
-    DropboxRoutes(app, passport, uploadApp);
-    ImgurRoutes(app, passport, uploadApp);
+    // find all specific provider routes
+    const ProviderRoutes = glob.sync(__dirname + '/Sites/**/Routes.js');
+    // load them all with the correct parameters
+    ProviderRoutes.map(providerRoute =>{
+        // require the route
+        require(providerRoute)(app, passport, uploadApp);
+    });
 
     // fall back route
     app.use('*', (req, res, next) => {
@@ -246,10 +246,10 @@ module.exports = function (uploadApp) {
         // start https
         if (useSsl) {
             httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
-                winston.info('Express listening on ' + process.env.EXPRESS_HTTPS_PORT + " and " + process.env.EXPRESS_PORT)
+                Logger.info('Express listening on ' + process.env.EXPRESS_HTTPS_PORT + " and " + process.env.EXPRESS_PORT)
             });
         } else {
-            winston.info('Express listening on ' + process.env.EXPRESS_PORT)
+            Logger.info('Express listening on ' + process.env.EXPRESS_PORT)
         }
     });
 };

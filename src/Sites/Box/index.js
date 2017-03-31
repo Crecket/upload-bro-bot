@@ -1,14 +1,15 @@
 const fs = require('fs');
 const path = require('path');
-const SiteInteface = require(__base + 'src/Sites/SiteInterface.js');
+const winston = rootRequire('src/Helpers/Logger.js');
 
-// queries and commands
-const SearchQueryObj = require(__base + 'src/Sites/Dropbox/InlineQueries/SearchQuery');
-const UploadObj = require(__base + 'src/Sites/Dropbox/Queries/Upload');
+const SiteInteface = rootRequire('src/Sites/SiteInterface.js');
 
-module.exports = class Dropbox extends SiteInteface {
+const UploadObj = rootRequire('src/Sites/Imgur/Queries/Upload');
+const SearchQueryObj = rootRequire('src/Sites/Imgur/InlineQueries/SearchQuery');
+
+module.exports = class Imgur extends SiteInteface {
     constructor(app) {
-        super();
+        super(app);
 
         this._app = app;
     }
@@ -21,7 +22,7 @@ module.exports = class Dropbox extends SiteInteface {
         this._app._QueryHandler.register(new UploadObj(this._app));
 
         // register inline queries
-        // this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
+        this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
 
         return Promise.resolve();
     }
@@ -32,7 +33,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get name() {
-        return 'Dropbox';
+        return "Box";
     }
 
     /**
@@ -41,7 +42,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get title() {
-        return 'Dropbox';
+        return "Box";
     }
 
     /**
@@ -50,7 +51,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get description() {
-        return 'Securely Share, Sync & Collaborate.';
+        return "Secure File Sharing, Storage, and Collaboration";
     }
 
     /**
@@ -59,7 +60,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get key() {
-        return "dropbox";
+        return "box";
     }
 
     /**
@@ -68,7 +69,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get url() {
-        return "https://www.dropbox.com";
+        return "https://www.box.com/home";
     }
 
     /**
@@ -77,13 +78,13 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     logoUrl(type = "png") {
-        switch (type) {
+        switch(type){
             case "png":
-                return "/assets/img/dropbox.png";
+                return "/assets/img/box.png";
             case "svg":
-                return "/assets/img/dropbox.svg";
+                return "/assets/img/box.svg";
         }
-        return "/assets/img/dropbox.png";
+        return "/assets/img/box.png";
     }
 
     /**
@@ -92,7 +93,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get logoUrlSvg() {
-        return "/assets/img/dropbox.svg";
+        return "/assets/img/box.svg";
     }
 
     /**

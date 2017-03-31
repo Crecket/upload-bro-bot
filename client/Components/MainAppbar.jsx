@@ -1,13 +1,12 @@
 import React  from 'react';
 import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import ExitToAppIcon from 'material-ui/svg-icons/action/exit-to-app';
 import MenuItem from 'material-ui/MenuItem';
 import Popover from 'material-ui/Popover';
 import IconMenu from 'material-ui/IconMenu';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import PaletteIcon from 'material-ui/svg-icons/image/palette';
 import PowerIcon from 'material-ui/svg-icons/action/power-settings-new';
 
 import NavLink from "./Sub/NavLink";
@@ -16,8 +15,8 @@ import ManualPost from "../Helpers/ManualPost";
 const PopoverMenu = (props) => (
     <IconMenu
         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-        targetOrigin={{horizontal: 'left', vertical: 'top'}}
-        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+        targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
+        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
     >
         {props.loggedIn ? <MenuItem
             primaryText="Logout"
@@ -30,7 +29,7 @@ const PopoverMenu = (props) => (
         />}
         <MenuItem
             primaryText="Change Theme"
-            rightIcon={<ArrowDropRight />}
+            rightIcon={<PaletteIcon />}
             menuItems={props.menuItems}
         />
     </IconMenu>

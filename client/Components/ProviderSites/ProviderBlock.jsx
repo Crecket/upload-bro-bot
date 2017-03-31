@@ -43,7 +43,7 @@ export default class ProviderBlock extends React.Component {
                     containerElement={<NavLink
                         to={"/remove/" + this.props.siteInfo.key}/>}
                     style={styles.button}>
-                    Remove {Utils.ucfirst(this.props.siteInfo.name)}
+                    Remove {this.props.siteInfo.title}
                 </RaisedButton>
             );
         } else {
@@ -51,7 +51,7 @@ export default class ProviderBlock extends React.Component {
                 <RaisedButton
                     secondary={true} style={styles.button}
                     href={"/login/" + this.props.siteInfo.key}>
-                    Add {this.props.siteInfo.name}
+                    Add {this.props.siteInfo.title}
                 </RaisedButton>
             );
         }

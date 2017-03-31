@@ -33,6 +33,7 @@ const LoginCommandObj = rootRequire('src/Commands/Login');
 const DropboxSiteObj = rootRequire('src/Sites/Dropbox');
 const GoogleSiteObj = rootRequire('src/Sites/Google');
 const ImgurSiteObj = rootRequire('src/Sites/Imgur');
+const BoxSiteObj = rootRequire('src/Sites/Box');
 
 // queries
 const RefreshSitesObj = rootRequire('src/Queries/RefreshSites');
@@ -130,6 +131,7 @@ module.exports = class App {
         this._SiteHandler.register(new DropboxSiteObj(this));
         this._SiteHandler.register(new ImgurSiteObj(this));
         this._SiteHandler.register(new GoogleSiteObj(this));
+        this._SiteHandler.register(new BoxSiteObj(this));
 
         Logger.info('Loaded ' + this._SiteHandler.siteCount + " sites");
 

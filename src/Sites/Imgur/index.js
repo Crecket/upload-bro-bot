@@ -78,7 +78,7 @@ module.exports = class Imgur extends SiteInteface {
      * @returns {string}
      */
     logoUrl(type = "png") {
-        switch(type){
+        switch (type) {
             case "png":
                 return "/assets/img/imgur.png";
             case "svg":
@@ -93,7 +93,7 @@ module.exports = class Imgur extends SiteInteface {
      * @returns {string}
      */
     get logoUrlSvg() {
-        return "/assets/img/imgur.png";
+        return "/assets/img/imgur.svg";
     }
 
     /**
