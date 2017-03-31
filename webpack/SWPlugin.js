@@ -70,7 +70,6 @@ module.exports = class SwPrecache {
 
     // compilation has finished
     done(stats) {
-        console.log(afterEmitFiles);
         // create the service worker with our after emit files
         SWHelper(afterEmitFiles);
     }

@@ -3,9 +3,43 @@ import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import ExitToAppIcon from 'material-ui/svg-icons/action/exit-to-app';
+import MenuItem from 'material-ui/MenuItem';
+import Popover from 'material-ui/Popover';
+import IconMenu from 'material-ui/IconMenu';
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import PowerIcon from 'material-ui/svg-icons/action/power-settings-new';
 
 import NavLink from "./Sub/NavLink";
 import ManualPost from "../Helpers/ManualPost";
+
+const LoggedIn = (props) => (
+    <IconMenu
+        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+    >
+        <MenuItem
+            primaryText="Logout"
+            rightIcon={<PowerIcon />}
+            onClick={ManualPost("/logout")}
+        />
+        <MenuItem
+            primaryText="Change Theme"
+            rightIcon={<ArrowDropRight />}
+            menuItems={props.menuItems}
+        />
+    </IconMenu>
+);
+
+const LoggedOut = (props) => (
+    <FlatButton
+        onClick={ManualPost("/login/telegram")}
+        labelPosition="before"
+        label="Login"
+        icon={<ExitToAppIcon/>}/>
+);
+
 
 const styles = {
     appbar: {
@@ -19,28 +53,49 @@ const styles = {
     }
 };
 
-class MainAppbar extends React.Component {
+class MainAppbar extends React.PureComponent  {
     constructor(props, context) {
         super(props, context);
-        this.state = {};
+        this.state = {
+            showPopover: false
+        };
+    };
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     if (this.state !== nextState) return true;
+    //     if (this.props !== nextProps) return true;
+    //     return false;
+    // }
+
+    // function that returns a setTheme function
+    themeSwitcher = (theme) => {
+        return () => {
+            this.props.setTheme(theme);
+        }
+    }
+
+    // touch event for popover
+    handleTouchTap = (event) => {
+        event.preventDefault();
+        this.setState({
+            open: true,
+            anchorEl: event.currentTarget,
+        });
+    };
+
+    // request event for popover
+    handleRequestClose = () => {
+        this.setState({
+            open: false,
+        });
     };
 
     render() {
-        var TopRightBtn = (
-            <FlatButton
-                onClick={ManualPost("/login/telegram")}
-                labelPosition="before"
-                label="Login"
-                icon={<ExitToAppIcon/>}/>
-        );
-        if (this.props.user_info) {
-            TopRightBtn = (
-                <FlatButton
-                    label="Logout"
-                    labelPosition="before"
-                    onClick={this.props.logoutUser}/>
-            )
-        }
+        const MenuItems = this.props.themeList.map(theme => {
+            return <MenuItem primaryText={theme + " Theme"}
+                             onClick={this.themeSwitcher(theme)}
+                             checked={this.props.currentTheme === theme}/>;
+        });
 
         return (
             <AppBar
@@ -49,8 +104,16 @@ class MainAppbar extends React.Component {
                 iconElementLeft={<IconButton containerElement={<NavLink to="/"/>}>
                     <img src="/favicon-32x32.png" alt="App bar logo"/>
                 </IconButton>}
-                iconElementRight={TopRightBtn}
-            />
+                iconElementRight={this.props.user_info ? <LoggedIn menuItems={MenuItems}/> : <LoggedOut />}
+            >
+                <Popover
+                    open={this.state.open}
+                    anchorEl={this.state.anchorEl}
+                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                    onRequestClose={this.handleRequestClose}
+                />
+            </AppBar>
         );
     };
 }

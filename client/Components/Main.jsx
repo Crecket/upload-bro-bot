@@ -17,17 +17,16 @@ const DrawerDebugger = ComponentLoader(
 // Themes
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import CustomBlue from '../Themes/CustomBlue';
-import CustomDark from '../Themes/CustomDark';
-import Purple from '../Themes/Purple';
+import LightBlue from '../Themes/LightBlue';
+import Dark from '../Themes/Dark';
 
 // navigator fallback for server-side rendering
 const navigatorHelper = (typeof navigator !== "undefined" && navigator.userAgent) ? navigator.userAgent : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
 const ThemesList = {
-    "CustomBlue": getMuiTheme(CustomBlue, {userAgent: navigatorHelper}),
-    "CustomDark": getMuiTheme(CustomDark, {userAgent: navigatorHelper}),
-    "Purple": getMuiTheme(Purple, {userAgent: navigatorHelper}),
+    "LightBlue": getMuiTheme(LightBlue, {userAgent: navigatorHelper}),
+    "Dark": getMuiTheme(Dark, {userAgent: navigatorHelper})
 };
+const ThemeListNames = Object.keys(ThemesList);
 
 // actions
 import {openModal, closeModal} from "../Actions/modalActions.js";
@@ -53,7 +52,7 @@ export default class Main extends React.Component {
         super(props, context);
         this.state = {
             // theme options
-            muiTheme: 'CustomDark',
+            muiTheme: 'Dark',
         };
     };
 
@@ -66,7 +65,7 @@ export default class Main extends React.Component {
         this.updateUser();
 
         // fetch site data
-        this.siteUpdate();
+        this.props.dispatch(siteUpdate());
 
         window.setThemeTest = this.setTheme;
     };
@@ -81,10 +80,10 @@ export default class Main extends React.Component {
         }
 
         // no custom value given or value does not exist, just toggle between dark and light
-        if (this.state.muiTheme === "CustomBlue") {
-            this.setState({muiTheme: "CustomDark"});
+        if (this.state.muiTheme === "LightBlue") {
+            this.setState({muiTheme: "Dark"});
         } else {
-            this.setState({muiTheme: "CustomBlue"});
+            this.setState({muiTheme: "LightBlue"});
         }
     };
 
@@ -96,11 +95,6 @@ export default class Main extends React.Component {
     // close the general modal
     closeModalHelper = () => {
         this.props.dispatch(closeModal());
-    };
-
-    // update provider info
-    siteUpdate = () => {
-        this.props.dispatch(siteUpdate());
     };
 
     // update current user info
@@ -156,6 +150,8 @@ export default class Main extends React.Component {
 
                                 <MainAppbar
                                     setTheme={this.setTheme}
+                                    currentTheme={this.state.muiTheme}
+                                    themeList={ThemeListNames}
                                     user_info={this.props.user_info}
                                     updateStaticData={this.updateStaticData}
                                     logoutUser={this.logoutUser}

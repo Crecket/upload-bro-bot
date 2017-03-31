@@ -7,7 +7,6 @@ const path = require("path");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const Visualizer = require('webpack-visualizer-plugin');
 
 // custom extension
 const SWPlugin = require("./webpack/SWPlugin");
@@ -75,9 +74,6 @@ let config = {
              */
             generateStatsFile: true,
             statsFilename: '../webpack.stats.json'
-        }),
-        new Visualizer({
-            filename: '../webpack.stats.html'
         }),
         // SwPrecachePlugin,
         new webpack.DefinePlugin({

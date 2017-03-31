@@ -1,9 +1,11 @@
 "use strict";
 // load env config
 require('dotenv').config();
+const Logger = require('./src/Helpers/Logger');
 
-process.on('unhandledRejection', (reason, promise) =>{
-    console.log(reason);
+// unhandledrejection listener
+process.on('unhandledRejection', (reason, promise) => {
+    Logger.error(reason);
 });
 
 // Fix route
@@ -13,5 +15,5 @@ global.rootRequire = function (name) {
 }
 
 // Load the app
-var App = require(__base + 'src/App');
-var BotApp = new App(process.env.TELEGRAM_TOKEN);
+const App = require(__base + 'src/App');
+new App(process.env.TELEGRAM_TOKEN);
