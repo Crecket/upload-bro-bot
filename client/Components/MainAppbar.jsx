@@ -102,7 +102,7 @@ class MainAppbar extends React.PureComponent {
                 iconElementLeft={<IconButton containerElement={<NavLink to="/"/>}>
                     <img src="/favicon-32x32.png" alt="App bar logo"/>
                 </IconButton>}
-                iconElementRight={<PopoverMenu menuItems={MenuItems} loggedIn={!!this.props.userInfo}/>}
+                iconElementRight={<PopoverMenu menuItems={MenuItems} loggedIn={!!this.props.user_info}/>}
             >
                 <Popover
                     open={this.state.open}
