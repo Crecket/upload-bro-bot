@@ -21,7 +21,7 @@ module.exports = class Dropbox extends SiteInteface {
         this._app._QueryHandler.register(new UploadObj(this._app));
 
         // register inline queries
-        this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
+        // this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
 
         return Promise.resolve();
     }
