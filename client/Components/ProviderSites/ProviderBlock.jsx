@@ -5,6 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {blue500, lightGreenA200} from 'material-ui/styles/colors'
 
 import Utils from '../../Helpers/Utils';
+import ManualPost from '../../Helpers/ManualPost';
 import NavLink from '../Sub/NavLink';
 
 const styles = {
@@ -50,7 +51,7 @@ export default class ProviderBlock extends React.Component {
             BlockBtn = (
                 <RaisedButton
                     secondary={true} style={styles.button}
-                    href={"/login/" + this.props.siteInfo.key}>
+                    onClick={ManualPost("/login/" + this.props.siteInfo.key)}>
                     Add {this.props.siteInfo.title}
                 </RaisedButton>
             );

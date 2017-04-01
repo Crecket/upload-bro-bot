@@ -1,19 +1,15 @@
+"use strict";
 const Logger = rootRequire('src/Helpers/Logger.js');
 
-const BoxHelperObj = require('./Helper');
-const UserHelperObj = require('./../../UserHelper.js');
+const BoxHelper = require('./Helper');
+const UserHelper = require('./../../UserHelper.js');
 
 module.exports = (app, passport, uploadApp) => {
-    let BoxHelper = new BoxHelperObj(uploadApp);
-    let UserHelper = new UserHelperObj(uploadApp);
+    let BoxHelperObj = new BoxHelper(uploadApp);
+    let UserHelperObj = new UserHelper(uploadApp);
 
     // returns a valid oauth url for the client
-    app.get('/login/box2', (request, response) => {
-        response.json(true);
-    });
-
-    // returns a valid oauth url for the client
-    app.get('/login/box', (request, response) => {
+    app.post('/login/box', (request, response) => {
         if (!request.user) {
             // not logged in
             return response.redirect('/');
@@ -29,7 +25,7 @@ module.exports = (app, passport, uploadApp) => {
         }
 
         // redirect to imgur login url
-        response.redirect(BoxHelper.getAuthorizationUrl());
+        response.redirect(BoxHelperObj.getAuthorizationUrl());
     });
 
     // handles the oauth callback
@@ -42,32 +38,49 @@ module.exports = (app, passport, uploadApp) => {
             response.redirect(resultRoute);
             return;
         } else {
-            BoxHelper.requestAccessToken(code)
+            // get access token for given code
+            BoxHelperObj.requestAccessToken(code)
                 .then((result) => {
                     let responseData = result;
 
-                    // get collection and current sites
-                    var current_provider_sites = request.user.provider_sites;
-
                     // set new data
-                    current_provider_sites.box = {
-                        access_token: responseData.accessToken,
-                        refresh_token: responseData.refreshToken,
+                    request.user.provider_sites.box = {};
+                    request.user.provider_sites.box = {
+                        accessToken: responseData.accessToken,
+                        refreshToken: responseData.refreshToken,
                         accessTokenTTLMS: responseData.accessTokenTTLMS,
                         acquiredAtMS: responseData.acquiredAtMS,
                         expiry_date: (new Date()).getTime() + parseInt(responseData.accessTokenTTLMS / 1000),
                     };
 
-                    // update the tokens for this user
-                    UserHelper.updateUserTokens(request.user, current_provider_sites)
-                        .then((result) => {
-                            response.redirect(resultRoute);
+                    // create a client to fetch the user info
+                    const client = BoxHelperObj.createOauthClient(request.user)
+                        .then(BoxClient => {
+                            Logger.debug(BoxClient);
+                            // get user info for current user
+                            BoxClient.users.get(client.CURRENT_USER_ID, null,
+                                (err, currentUser) => {
+                                    Logger.debug(err);
+                                    Logger.debug(currentUser);
+
+                                    // update the tokens for this user
+                                    // UserHelperObj.updateUserTokens(request.user)
+                                    //     .then((result) => {
+                                    //         response.redirect(resultRoute);
+                                    //     })
+                                    //     .catch((err) => {
+                                    //         response.redirect(resultRoute);
+                                    //     });
+                                }
+                            );
                         })
-                        .catch((err) => {
+                        .catch(err => {
+                            Logger.error(err);
                             response.redirect(resultRoute);
                         });
                 })
                 .catch((err) => {
+                    Logger.error(err);
                     response.redirect(resultRoute);
                 });
         }

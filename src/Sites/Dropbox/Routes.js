@@ -12,7 +12,7 @@ module.exports = (app, passport, uploadApp) => {
     var UserHelper = new UserHelperObj(uploadApp);
 
     // returns a valid oauth url for the client
-    app.get('/login/dropbox', (request, response) => {
+    app.post('/login/dropbox', (request, response) => {
         if (!request.user) {
             // not logged in
             response.redirect('/');

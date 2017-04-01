@@ -9,7 +9,7 @@ const tracerOptions = {
         {
             info: "{{title}}: {{message}}",
             warn: "{{title}}: {{timestamp}} {{message}} (in {{file}}:{{line}})",
-            error: "{{title}}: {{timestamp}} {{message}} (in {{file}}:{{line}})\nCall Stack:\n{{stack}}"
+            // error: "{{title}}: {{timestamp}} {{message}} (in {{file}}:{{line}})\nCall Stack:\n{{stack}}"
         }
     ],
     dateformat: "HH:MM:ss.L",

@@ -40,21 +40,8 @@ module.exports = class BoxHelper {
             // create a box sdk
             const sdk = this.getSdkClient();
             try {
-                // create a client with the tokens
-                const client = sdk.getPersistentClient(tokens, {
-                    read: (err, data) => {
-                        Logger.info("read");
-                        Logger.info(err, data);
-                    },
-                    write: (err, data) => {
-                        Logger.info("write");
-                        Logger.info(err, data);
-                    },
-                    clear: (err, data) => {
-                        Logger.info("clear");
-                        Logger.info(err, data);
-                    },
-                });
+                // create a client with the access token
+                const client = sdk.getBasicClient(tokens.accessToken);
                 resolve(client);
             } catch (ex) {
                 reject(ex);
@@ -67,7 +54,7 @@ module.exports = class BoxHelper {
      * @returns {*}
      */
     getToken(user_info) {
-        return user_info.provider_ites.box ? user_info.provider_ites.box : false;
+        return user_info.provider_sites.box ? user_info.provider_sites.box : false;
     }
 
     /**
@@ -92,7 +79,8 @@ module.exports = class BoxHelper {
     requestAccessToken(code) {
         return new Promise((resolve, reject) => {
             // create a new ouath client
-            const sdk = this.getSdkClient()
+            const sdk = this.getSdkClient();
+
             // get access token for code
             sdk.getTokensAuthorizationCodeGrant(code, null,
                 (err, tokenInfo) => {
@@ -117,22 +105,23 @@ module.exports = class BoxHelper {
     refreshAccessToken(tokens) {
         return new Promise((resolve, reject) => {
             // do api call with the refresh token to fetch a new access token
-            axios.post("https://api.imgur.com/oauth2/token", {
-                refresh_token: tokens.refresh_token,
-                client_id: process.env.IMGUR_CLIENT_ID,
-                client_secret: process.env.IMGUR_CLIENT_SECRET,
-                grant_type: 'refresh_token'
-            }).then(result => {
-                let resultData = result.data;
-
-                // return the new list
-                resolve(Object.assign(resultData, {
-                    expiry_date: (new Date()).getTime() + resultData.expires_in
-                }));
-            }).catch(err => {
-                reject(err);
-                Logger.error(err.response);
-            });
+            // axios.post("https://api.imgur.com/oauth2/token", {
+            //     refresh_token: tokens.refresh_token,
+            //     client_id: process.env.IMGUR_CLIENT_ID,
+            //     client_secret: process.env.IMGUR_CLIENT_SECRET,
+            //     grant_type: 'refresh_token'
+            // }).then(result => {
+            //     let resultData = result.data;
+            //
+            //     // return the new list
+            //     resolve(Object.assign(resultData, {
+            //         expiry_date: (new Date()).getTime() + resultData.expires_in
+            //     }));
+            // }).catch(err => {
+            //     reject(err);
+            //     Logger.error(err.response);
+            // });
+            reject();
         });
     }
 

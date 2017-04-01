@@ -12,7 +12,7 @@ module.exports = (app, passport, uploadApp) => {
     var UserHelper = new UserHelperObj(uploadApp);
 
     // returns a valid oauth url for the client
-    app.get('/login/google', (request, response) => {
+    app.post('/login/google', (request, response) => {
         if (!request.user) {
             // not logged in
             return response.redirect('/');

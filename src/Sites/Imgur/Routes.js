@@ -12,7 +12,7 @@ module.exports = (app, passport, uploadApp) => {
     let UserHelper = new UserHelperObj(uploadApp);
 
     // returns a valid oauth url for the client
-    app.get('/login/imgur', (request, response) => {
+    app.post('/login/imgur', (request, response) => {
         if (!request.user) {
             // not logged in
             response.redirect('/');
