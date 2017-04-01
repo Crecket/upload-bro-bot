@@ -41,7 +41,7 @@ export default class ProviderBlocks extends React.Component {
 
     getBlockTemplate = (key, siteInfo, userSiteInfo = false) => {
         return (
-            <div className="col-xs-12 col-sm-6 col-md-4"
+            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
                  key={key} style={styles.block}>
                 <div className="box">
                     <ProviderBlock
