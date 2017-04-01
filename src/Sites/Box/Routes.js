@@ -10,6 +10,7 @@ module.exports = (app, passport, uploadApp) => {
 
     // returns a valid oauth url for the client
     app.post('/login/box', (request, response) => {
+        return response.redirect('/');
         if (!request.user) {
             // not logged in
             return response.redirect('/');
@@ -30,6 +31,7 @@ module.exports = (app, passport, uploadApp) => {
 
     // handles the oauth callback
     app.get('/login/box/callback', function (request, response) {
+        return response.redirect('/');
         let code = request.query.code;
         let resultRoute = "/new/box";
 
