@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 
 const HelperInterface = rootRequire('src/HelperInterface');
 
@@ -37,7 +37,7 @@ module.exports = class Login extends HelperInterface {
         }).then((res) => {
             // console.log(res);
         }).catch((err) => {
-            winston.error(err);
+            Logger.error(err);
         });
     }
 

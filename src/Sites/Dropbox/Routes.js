@@ -63,13 +63,12 @@ module.exports = (app, passport, uploadApp) => {
             DropboxHelper.getUserInfo(request.user)
                 .then(({account_id, name, email, email_verified, profile_photo_url}) => {
                     // update user info in dropbox
-                    current_provider_sites.dropbox.user_info = {
-                        account_id: account_id,
-                        name: name,
-                        email: email,
-                        email_verified: email_verified,
-                        avatar: profile_photo_url
-                    };
+                    current_provider_sites.dropbox = Object.assign(
+                        current_provider_sites.dropbox, {
+                            name: name,
+                            email: email,
+                            avatar: profile_photo_url
+                        });
 
                     // update the tokens for this user
                     UserHelper.updateUserTokens(request.user, current_provider_sites)

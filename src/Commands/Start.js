@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 
-var HelperInterface = rootRequire('src/HelperInterface');
+const HelperInterface = rootRequire('src/HelperInterface');
 
-module.exports = class Keyboard extends HelperInterface {
+module.exports = class Start extends HelperInterface {
     constructor(app) {
         super(app);
 
@@ -19,7 +19,6 @@ module.exports = class Keyboard extends HelperInterface {
         // get the user for this request
         this._app._UserHelper.getUser(msg.from.id)
             .then((user_info) => {
-
                 // setup the message
                 var message = "I'm the <b>UploadBro bot</b>. \n";
                 message += "I can help you upload and download files to and from multiple services" +
@@ -34,8 +33,8 @@ module.exports = class Keyboard extends HelperInterface {
                     parse_mode: "HTML"
                 }).then((res) => {
                     // console.log(res);
-                }).catch(winston.error);
-            }).catch(winston.error);
+                }).catch(Logger.error);
+            }).catch(Logger.error);
     }
 
     /**

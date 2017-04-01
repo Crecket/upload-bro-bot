@@ -3,43 +3,27 @@ const TelegramBot = require('node-telegram-bot-api');
 const MongoClient = require('mongodb').MongoClient;
 const fs = require('fs');
 const del = require('del');
+const glob = require('glob');
 const path = require('path');
 const Cacheman = require('cacheman');
 const MongoDbEngine = require('cacheman-mongo');
-const Logger = rootRequire('src/Helpers/Logger.js');
+const Logger = require('./Helpers/Logger.js');
 
 // utilities
-let Utils = rootRequire('src/Utils');
+let Utils = require('./Utils');
 
 // express server
-let Express = rootRequire('src/Express');
+let Express = require('./Express');
 
 // handlers and other helpers
-const CommandHandler = rootRequire('src/Handlers/CommandHandler');
-const SiteHandler = rootRequire('src/Handlers/SiteHandler');
-const QueryHandler = rootRequire('src/Handlers/QueryHandler');
-const EventHandlersObj = rootRequire('src/Handlers/EventHandler');
-const InlineQueryHandlerObj = rootRequire('src/Handlers/InlineQueryHandler');
-const UserHelperObj = rootRequire('src/UserHelper');
-const QueueObj = rootRequire('src/Queue');
-const AnalyticsObj = rootRequire('src/Analytics');
-
-// commands
-const HelpCommandObj = rootRequire('src/Commands/Help');
-const StartCommandObj = rootRequire('src/Commands/Start');
-const LoginCommandObj = rootRequire('src/Commands/Login');
-
-// sites
-const DropboxSiteObj = rootRequire('src/Sites/Dropbox');
-const GoogleSiteObj = rootRequire('src/Sites/Google');
-const ImgurSiteObj = rootRequire('src/Sites/Imgur');
-const BoxSiteObj = rootRequire('src/Sites/Box');
-
-// queries
-const RefreshSitesObj = rootRequire('src/Queries/RefreshSites');
-const ScanChatQueryObj = rootRequire('src/Queries/ScanChat');
-
-// event handlers
+const CommandHandler = require('./Handlers/CommandHandler');
+const SiteHandler = require('./Handlers/SiteHandler');
+const QueryHandler = require('./Handlers/QueryHandler');
+const EventHandlersObj = require('./Handlers/EventHandler');
+const InlineQueryHandlerObj = require('./Handlers/InlineQueryHandler');
+const UserHelperObj = require('./UserHelper');
+const QueueObj = require('./Queue');
+const AnalyticsObj = require('./Analytics');
 
 module.exports = class App {
     constructor(token) {
@@ -128,13 +112,18 @@ module.exports = class App {
      */
     loadWebsites() {
         // Register the websites
-        this._SiteHandler.register(new DropboxSiteObj(this));
-        this._SiteHandler.register(new ImgurSiteObj(this));
-        this._SiteHandler.register(new GoogleSiteObj(this));
-        this._SiteHandler.register(new BoxSiteObj(this));
+        const Sites = glob.sync(__dirname + '/Sites/*/index.js');
+
+        // load them all with the correct parameters
+        Sites.map(Site => {
+            // require the file
+            const SiteObj = require(Site);
+
+            // require the index file and set the file handler
+            this._SiteHandler.register(new SiteObj(this));
+        });
 
         Logger.info('Loaded ' + this._SiteHandler.siteCount + " sites");
-
         return Promise.resolve();
     }
 
@@ -144,10 +133,17 @@ module.exports = class App {
      * @returns {Promise.<T>}
      */
     loadCommands() {
-        // Add the global commands
-        this._CommandHandler.register(new HelpCommandObj(this));
-        this._CommandHandler.register(new StartCommandObj(this));
-        this._CommandHandler.register(new LoginCommandObj(this));
+        // Register the commands
+        const Commands = glob.sync(__dirname + '/Commands/*.js');
+
+        // load them all with the correct parameters
+        Commands.map(Command => {
+            // require the file
+            const CommandObj = require(Command);
+
+            // require the index file and set the file handler
+            this._CommandHandler.register(new CommandObj(this));
+        });
 
         Logger.info('Loaded ' + this._CommandHandler.commandCount + " commands");
 
@@ -160,9 +156,17 @@ module.exports = class App {
      * @returns {Promise.<T>}
      */
     loadQueries() {
-        // Add the query handlers
-        this._QueryHandler.register(new RefreshSitesObj(this));
-        this._QueryHandler.register(new ScanChatQueryObj(this));
+        // Register the commands
+        const Queries = glob.sync(__dirname + '/Queries/*.js');
+
+        // load them all with the correct parameters
+        Queries.map(Query => {
+            // require the file
+            const QueryObj = require(Query);
+
+            // require the index file and set the file handler
+            this._QueryHandler.register(new QueryObj(this));
+        });
 
         Logger.info('Loaded ' + this._QueryHandler.queryCount + " queries");
 

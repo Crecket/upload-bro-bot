@@ -10,85 +10,64 @@ module.exports = class BoxHelper {
     }
 
     /**
+     * Create sdk client for box using our client id and secret
+     *
+     * @returns {BoxSDKNode}
+     */
+    getSdkClient() {
+        // create a new box sdk
+        return new BoxSDK({
+            clientID: process.env.BOX_CLIENT_ID,
+            clientSecret: process.env.BOX_CLIENT_SECRET
+        });
+    }
+
+    /**
      * gets a imgur object with the given keys set for the user
      *
      * @param user
      * @returns {*}
      */
-    createOauthClient(user = false) {
+    createOauthClient(user_info = false) {
         // no tokens found, just return the regular client
-        if (user) {
-            if (!user.provider_sites.box) {
-                return Promise.reject("Box tokens not set");
-            }
-            // set the token
-            const tokens = user.provider_sites.box;
+        if (user_info && !user_info.provider_sites.box) {
+            return Promise.reject("Box tokens not set");
         }
 
         return new Promise((resolve, reject) => {
-            // create a new box sdk
-            const sdk = new BoxSDK({
-                clientID: process.env.BOX_CLIENT_ID,
-                clientSecret: process.env.BOX_CLIENT_SECRET
-            });
-
-            resolve(sdk);
+            // set the token
+            const tokens = this.getToken(user_info);
+            // create a box sdk
+            const sdk = this.getSdkClient();
+            try {
+                // create a client with the tokens
+                const client = sdk.getPersistentClient(tokens, {
+                    read: (err, data) => {
+                        Logger.info("read");
+                        Logger.info(err, data);
+                    },
+                    write: (err, data) => {
+                        Logger.info("write");
+                        Logger.info(err, data);
+                    },
+                    clear: (err, data) => {
+                        Logger.info("clear");
+                        Logger.info(err, data);
+                    },
+                });
+                resolve(client);
+            } catch (ex) {
+                reject(ex);
+            }
         });
-
-        // check if tokens are valid
-        return new Promise((resolve, reject) => {
-            // validate the token
-            this.getValidToken(tokens)
-                .then(newTokens => {
-                    // check if new tokens === true or if new one have been fetched
-                    if (newTokens !== true) {
-                        // store the token new token in Imgur obj
-                        Imgur.setAccessToken(newTokens.access_token);
-
-                        // copy the user and prepare to update
-                        let newUser = user;
-                        newUser.provider_sites.imgur = newTokens;
-
-                        // update the user
-                        this._app._UserHelper.updateUserTokens(newUser)
-                            .then(success => {
-                                resolve(Imgur);
-                            }).catch(reject);
-                    } else {
-                        // use old tokens, no new tokens have been used
-                        Imgur.setAccessToken(tokens.access_token);
-                        resolve(Imgur);
-                    }
-                }).catch(reject);
-        })
     }
 
     /**
-     * Upload a file
-     *
-     * @param userInfo
-     * @param filePath
-     * @returns {Promise}
+     * @param user_info
+     * @returns {*}
      */
-    uploadFile(userInfo, filePath, fileName = false) {
-        return new Promise((resolve, reject) => {
-            // create a new ouath client
-            this.createOauthClient(userInfo)
-                .then(imgurClient => {
-
-                    // get the contents
-                    fs.readFile(filePath, {}, (err, data) => {
-                        if (err) {
-                            reject(err);
-                            return;
-                        }
-                        // A single image
-                        imgurClient.uploadFile(filePath)
-                            .then((json) => resolve(json.data))
-                            .catch(reject);
-                    });
-                }).catch(reject);
-        });
+    getToken(user_info) {
+        return user_info.provider_ites.box ? user_info.provider_ites.box : false;
     }
 
     /**
@@ -113,20 +92,19 @@ module.exports = class BoxHelper {
     requestAccessToken(code) {
         return new Promise((resolve, reject) => {
             // create a new ouath client
-            this.createOauthClient()
-                .then(BoxSDK => {
-                    // get the token
-                    BoxSDK.getTokensAuthorizationCodeGrant(code, null, (err, tokenInfo) => {
-                        if (err) {
-                            Logger.error(err);
-                            reject(err);
-                        } else {
-                            Logger.debug(tokenInfo);
-                            resolve(tokenInfo);
-                        }
-                    });
-                }).catch(reject);
-
+            const sdk = this.getSdkClient()
+            // get access token for code
+            sdk.getTokensAuthorizationCodeGrant(code, null,
+                (err, tokenInfo) => {
+                    if (err) {
+                        Logger.error(err);
+                        reject(err);
+                    } else {
+                        Logger.debug(tokenInfo);
+                        resolve(tokenInfo);
+                    }
+                }
+            );
         });
     }
 
@@ -176,6 +154,34 @@ module.exports = class BoxHelper {
                     .then(newTokens => resolve(newTokens))
                     .catch(reject);
             }
+        });
+    }
+
+    /**
+     * Upload a file
+     *
+     * @param userInfo
+     * @param filePath
+     * @returns {Promise}
+     */
+    uploadFile(userInfo, filePath, fileName = false) {
+        return new Promise((resolve, reject) => {
+            // create a new ouath client
+            this.createOauthClient(userInfo)
+                .then(imgurClient => {
+
+                    // get the contents
+                    fs.readFile(filePath, {}, (err, data) => {
+                        if (err) {
+                            reject(err);
+                            return;
+                        }
+                        // A single image
+                        imgurClient.uploadFile(filePath)
+                            .then((json) => resolve(json.data))
+                            .catch(reject);
+                    });
+                }).catch(reject);
         });
     }
 

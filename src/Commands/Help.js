@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 
 const HelperInterface = require(path.join(__dirname, '/../HelperInterface'));
 
@@ -21,7 +21,7 @@ module.exports = class Help extends HelperInterface {
         super.sendMessage(msg.chat.id, message, {
             parse_mode: "HTML"
         }).then(res => {
-        }).catch(winston.error);
+        }).catch(Logger.error);
     }
 
     /**
