@@ -61,14 +61,12 @@ export default class Dashboard extends React.Component {
                     />
                     <br/>
                     <div className="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-                        <RaisedButton openPage="https://telegram.me/uploadbro_bot"
-                                      style={{width: '100%'}}
-                                      rel="noopener"
-                                      target="_blank"
-                                      labelColor="#fff"
-                                      icon={<img src="/favicon-32x32.png"/>}
-                                      label="Get started"
-                        />
+                        <a href="https://telegram.me/uploadbro_bot"
+                           rel="noopener" target="_blank">
+                            <RaisedButton
+                                icon={<img src="/assets/img/telegram.svg" style={{width: 32}}/>}
+                            />
+                        </a>
                     </div>
                 </PaperHelper>
             </div>

@@ -37,13 +37,13 @@ export default class ProviderBlock extends React.Component {
         if (this.props.providerSite) {
             // user is logged into this site
             BlockBtn = (
-                <RaisedButton
-                    primary={true}
-                    containerElement={<NavLink
-                        to={"/remove/" + this.props.siteInfo.key}/>}
-                    style={styles.button}>
-                    Remove {this.props.siteInfo.title}
-                </RaisedButton>
+                <NavLink to={"/remove/" + this.props.siteInfo.key}>
+                    <RaisedButton
+                        primary={true}
+                        style={styles.button}>
+                        Remove {this.props.siteInfo.title}
+                    </RaisedButton>
+                </NavLink>
             );
         } else {
             BlockBtn = (
