@@ -71,7 +71,7 @@ module.exports = class SwPrecache {
     // compilation has finished
     done(stats) {
         // create the service worker with our after emit files
-        SWHelper(afterEmitFiles);
+        SWHelper(afterEmitFiles, DEBUG);
     }
 }
 

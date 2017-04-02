@@ -7,7 +7,7 @@ const PUBLIC_DIR = 'public';
 const CLIENT_DIR = 'client';
 
 // export the plugin
-const SWHelper = (customFilesList = false) => {
+const SWHelper = (customFilesList = false, DEBUG = true) => {
     // default static files
     let staticFiles = [
         'https://fonts.googleapis.com/css?family=Roboto:300,400,500',
@@ -26,8 +26,14 @@ const SWHelper = (customFilesList = false) => {
         // merge the afterEmitFiles list and remove duplicates
         staticFiles = [...new Set(staticFiles.concat(customFilesList))];
     } else {
+        // dont add .map files in production mode
+        const distFolderGlob = DEBUG ?
+            PUBLIC_DIR + "/assets/dist/*" :
+            PUBLIC_DIR + "/assets/dist/!(*.map)";
+
         // list all the files in the build folder
-        let distFolder = glob.sync(PUBLIC_DIR + "/assets/dist/!(*.map)");
+        let distFolder = glob.sync(distFolderGlob);
+
         // add them to the list without duplicates
         staticFiles = [...new Set(staticFiles.concat(distFolder))];
     }
@@ -78,6 +84,6 @@ module.exports = SWHelper;
 
 // if RUN is set as a env variable, run the helper
 // E.G. `cross-env RUN_HELPER=1 node webpack/SWHelper.js`
-if(process.env.RUN_HELPER){
+if (process.env.RUN_HELPER) {
     SWHelper();
 }
