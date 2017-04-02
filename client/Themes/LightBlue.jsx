@@ -1,7 +1,8 @@
 import {
-    cyan500,
-    grey300,
-    fullWhite, darkBlack, fullBlack
+    grey100, grey300, grey500,
+    white, darkBlack, fullBlack,
+    blue300, blue700,
+    indigo500, indigo700, indigo800,
 } from 'material-ui/styles/colors';
 import {fade} from 'material-ui/utils/colorManipulator';
 import spacing from 'material-ui/styles/spacing';
@@ -9,32 +10,24 @@ import spacing from 'material-ui/styles/spacing';
 export default {
     spacing: spacing,
     fontFamily: 'Roboto, sans-serif',
+    borderRadius: 2,
     palette: {
-        primary1Color: '#448AFF',
-        primary2Color: '#53a7ff',
-        primary3Color: '#6ebfff',
-        accent1Color: '#303F9F',
-        accent2Color: '#3F51B5',
-        accent3Color: '#C5CAE9',
-        textColor: '#212121',
-        secondaryTextColor: fade(fullWhite, 0.7),
-        alternateTextColor: '#FFFFFF',
+        primary1Color: indigo500,
+        primary2Color: indigo700,
+        primary3Color: grey500,
+        accent1Color: blue300,
+        accent2Color: grey100,
+        accent3Color: grey500,
+        textColor: darkBlack,
+        secondaryTextColor: fade(white, 0.7),
+        alternateTextColor: white,
+        canvasColor: white,
         borderColor: grey300,
         disabledColor: fade(darkBlack, 0.3),
-        pickerHeaderColor: cyan500,
+        pickerHeaderColor: blue700,
         clockCircleColor: fade(darkBlack, 0.07),
         shadowColor: fullBlack,
-        appBackgroundColor: '#ffffff',
+        appBackgroundColor: white,
     }
 };
 
-// old css colors
-// $primary-color-dark: #303F9F;
-// $primary-color: #3F51B5;
-// $primary-color-light: #C5CAE9;
-// $primary-color-text: #FFFFFF;
-// $accent-color: #448AFF;
-// $primary-text-color: #212121;
-// $secondary-text-color: #757575;
-// $divider-color: #BDBDBD;
-// $background-color: #142F4C;

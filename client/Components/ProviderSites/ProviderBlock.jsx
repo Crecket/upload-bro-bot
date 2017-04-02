@@ -2,7 +2,6 @@ import React  from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import LinkIcon from 'material-ui/svg-icons/content/link';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import {blue500, lightGreenA200} from 'material-ui/styles/colors'
 
 import Utils from '../../Helpers/Utils';
 import ManualPost from '../../Helpers/ManualPost';
@@ -35,7 +34,6 @@ export default class ProviderBlock extends React.Component {
 
     render() {
         let BlockBtn;
-
         if (this.props.providerSite) {
             // user is logged into this site
             BlockBtn = (

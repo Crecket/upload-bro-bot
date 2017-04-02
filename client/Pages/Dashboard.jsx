@@ -1,12 +1,10 @@
 import React from "react";
-// import Perf from 'react-addons-perf';
+import RaisedButton from 'material-ui/RaisedButton';
 
 // custom components
 import PaperHelper from '../Components/Sub/PaperHelper';
-import RaisedButton from '../Components/Sub/RaisedButton';
 import ComponentLoader from '../Components/Sub/ComponentLoader';
 import ForceLogin from '../Helpers/ForceLogin';
-import Logger from '../Helpers/Logger';
 
 // async components
 const ProviderBlocks = ComponentLoader(
@@ -63,7 +61,7 @@ export default class Dashboard extends React.Component {
                     />
                     <br/>
                     <div className="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
-                        <RaisedButton href="https://telegram.me/uploadbro_bot"
+                        <RaisedButton openPage="https://telegram.me/uploadbro_bot"
                                       style={{width: '100%'}}
                                       rel="noopener"
                                       target="_blank"

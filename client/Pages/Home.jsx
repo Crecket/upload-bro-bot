@@ -3,20 +3,20 @@ import React from "react";
 // custom components
 import ManualPost from '../Helpers/ManualPost';
 import PaperHelper from '../Components/Sub/PaperHelper';
-import RaisedButton from '../Components/Sub/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import ComponentLoader from '../Components/Sub/ComponentLoader';
 import ForceLogin from '../Helpers/ForceLogin';
 
 // async components
-    const FeatureList = ComponentLoader(
-        () => import('../Components/FeatureList'),
-        () => require.resolveWeak('../Components/FeatureList'));
-    const YoutubePreview = ComponentLoader(
-        () => import('../Components/YoutubePreview'),
-        () => require.resolveWeak('../Components/YoutubePreview'));
-    const SiteList = ComponentLoader(
-        () => import('../Components/SiteList'),
-        () => require.resolveWeak('../Components/SiteList'));
+const FeatureList = ComponentLoader(
+    () => import('../Components/FeatureList'),
+    () => require.resolveWeak('../Components/FeatureList'));
+const YoutubePreview = ComponentLoader(
+    () => import('../Components/YoutubePreview'),
+    () => require.resolveWeak('../Components/YoutubePreview'));
+const SiteList = ComponentLoader(
+    () => import('../Components/SiteList'),
+    () => require.resolveWeak('../Components/SiteList'));
 
 
 const styles = {

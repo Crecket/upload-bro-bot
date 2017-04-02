@@ -5,6 +5,7 @@ import withWidth, {SMALL} from 'material-ui/utils/withWidth';
 import typography from 'material-ui/styles/typography';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import ClearFix from 'material-ui/internal/ClearFix';
+import DevicesIcon from 'material-ui/svg-icons/action/important-devices';
 
 import {
     Checkbox,
@@ -24,6 +25,7 @@ import {
     Tabs,
     Tab,
     TextField,
+    TimePicker,
     Toggle,
 } from 'material-ui';
 
@@ -120,16 +122,16 @@ class ThemesPage extends Component {
             <ClearFix>
                 <div style={styles.group}>
                     <div style={styles.containerCentered}>
-                        <FloatingActionButton iconClassName="muidocs-icon-action-grade" disabled={true} />
+                        <DevicesIcon/>
                     </div>
                     <div style={styles.containerCentered}>
-                        <RaisedButton label="Secondary" secondary={true} />
+                        <RaisedButton label="Secondary" secondary={true}/>
                     </div>
                     <div style={styles.containerCentered}>
-                        <RaisedButton label="Primary" primary={true} />
+                        <RaisedButton label="Primary" primary={true}/>
                     </div>
                     <div style={styles.containerCentered}>
-                        <RaisedButton label="Default" />
+                        <RaisedButton label="Default"/>
                     </div>
                 </div>
                 <div style={styles.group}>
@@ -194,21 +196,26 @@ class ThemesPage extends Component {
                         />
                     </div>
                     <div style={styles.container}>
+                        <TimePicker
+                            key="timepickerkey"
+                            autoOk={true}/>
+                    </div>
+                    <div style={styles.container}>
                         <DropDownMenu value={3} style={{width: '100%'}}>
-                            <MenuItem value={1} primaryText={'Never'} />
-                            <MenuItem value={2} primaryText={'Every Night'} />
-                            <MenuItem value={3} primaryText={'Weeknights'} />
-                            <MenuItem value={4} primaryText={'Weekends'} />
-                            <MenuItem value={5} primaryText={'Weekly'} />
+                            <MenuItem value={1} primaryText={'Never'}/>
+                            <MenuItem value={2} primaryText={'Every Night'}/>
+                            <MenuItem value={3} primaryText={'Weeknights'}/>
+                            <MenuItem value={4} primaryText={'Weekends'}/>
+                            <MenuItem value={5} primaryText={'Weekly'}/>
                         </DropDownMenu>
                     </div>
                 </div>
                 <div style={styles.groupSlider}>
-                    <Slider style={styles.slider} name="slider2" defaultValue={0.5} />
+                    <Slider style={styles.slider} name="slider2" defaultValue={0.5}/>
                 </div>
                 <div style={styles.group}>
                     <div style={styles.containerCentered}>
-                        <FlatButton label="View Dialog" onTouchTap={this.handleTouchTapDialog} />
+                        <FlatButton label="View Dialog" onTouchTap={this.handleTouchTapDialog}/>
                         <Dialog
                             open={this.state.dialogOpen}
                             title="Dialog With Standard Actions"
