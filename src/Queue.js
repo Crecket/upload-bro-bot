@@ -1,26 +1,25 @@
 const crypto = require('crypto');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = require('./Helpers/Logger.js');
 
 module.exports = class Queue {
     constructor(limit = 10) {
+        // limit amount of items in the queue
         this.limit = limit;
+        // contains the queue items
         this.queue = [];
+        // active items currently in transfer
         this.active = {};
 
-        // check queue items
-        setInterval(() => {
-            if (this.queue.length > 0) {
-                if (Object.keys(this.active).length < this.limit) {
-                    // there is room, get the first item
-                    const firstItem = this.queue.shift();
+        // contains the interval object to keep track of the queue
+        this.timer = false;
 
-                    // winston.debug('Starting item: ', firstItem);
+        // expire active items after 5 seconds
+        this.expireTimeMs = 5000;
+        // speed at which the timer runs
+        this.timeSpeedMs = 150;
 
-                    // start this queue item
-                    this._start(firstItem);
-                }
-            }
-        }, 100);
+        // start the timer
+        this.startTimer();
     }
 
     /**
@@ -31,18 +30,17 @@ module.exports = class Queue {
      */
     enqueue(type) {
         return new Promise((resolve, reject) => {
+            // random key for the queue item
             crypto.randomBytes(24, (err, buffer) => {
                 const key = buffer.toString('hex');
 
                 // gather info
                 const newQueueItem = {
-                    started: new Date(),
+                    enqueued: new Date(),
                     ready: resolve,
                     type: type,
                     key: key
                 }
-
-                // winston.debug('Enqueued item: ', newQueueItem);
 
                 // check if a spot is already available
                 if (this.available()) {
@@ -51,6 +49,9 @@ module.exports = class Queue {
                     // add the item to the queue
                     this.queue.push(newQueueItem);
                 }
+
+                // start the timer
+                this.startTimer();
             });
         });
     }
@@ -62,8 +63,6 @@ module.exports = class Queue {
      * @returns {boolean}
      */
     _start(queueItem) {
-        // winston.debug(queueItem);
-
         // check if queue item exists
         if (queueItem) {
             // move queue item to active list
@@ -87,13 +86,54 @@ module.exports = class Queue {
     finish(key) {
         // check if item exists
         if (this.active[key]) {
-            // winston.debug('Finished item: ', key);
-
             // remove the active item
             delete this.active[key];
             return true;
         }
         return false;
+    }
+
+    startTimer() {
+        // check queue items every x seconds
+        this.timer = setInterval(() => {
+            // check if one of the active items has expired
+            if (Object.keys(this.active).length > 0) {
+                // loop through the active items to see if they have expired
+                Object.keys(this.active).forEach(key => {
+                    // check if this item has expired
+                    if (this.isExpired(this.active[key])) {
+                        // finish the item
+                        this.finish(key);
+                    }
+                });
+            }
+            // check if there are items in the queue
+            if (this.queue.length > 0) {
+                // check if a limit has been reached
+                if (Object.keys(this.active).length < this.limit) {
+                    // there is room, get the first item
+                    let firstItem = this.queue.shift();
+                    // update start time
+                    firstItem.started = new Date();
+                    // start this queue item
+                    this._start(firstItem);
+                }
+            } else if (Object.keys(this.active).length === 0) {
+                // both are empty, stop the queue
+                this.stopTimer();
+            }
+        }, this.timeSpeedMs);
+    }
+
+    /**
+     * Clear the timer for the queue to stop unnesary power
+     */
+    stopTimer() {
+        if (this.timer) {
+            // clear the timer
+            clearInterval(this.timer);
+            this.timer = false;
+        }
     }
 
     /**
@@ -103,6 +143,17 @@ module.exports = class Queue {
      */
     available() {
         return Object.keys(this.active).length < this.limit;
+    }
+
+    /**
+     * Checks if a item has expired
+     *
+     * @param queueItem
+     */
+    isExpired(queueItem) {
+        if (queueItem.started) {
+
+        }
     }
 
     /**

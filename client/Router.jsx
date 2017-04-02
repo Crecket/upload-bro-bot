@@ -22,6 +22,12 @@ const Routes = {
             }
         },
         {
+            path: '/theme',
+            getComponent(nextState, cb) {
+                import('./Pages/ThemeTest.jsx').then(component => cb(null, component.default));
+            }
+        },
+        {
             path: '/new/:type',
             getComponent(nextState, cb) {
                 import('./Pages/ProviderLogin.jsx').then(component => cb(null, component.default));

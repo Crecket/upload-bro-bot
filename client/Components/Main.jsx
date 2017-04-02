@@ -20,12 +20,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import LightBlue from '../Themes/LightBlue';
 import Dark from '../Themes/Dark';
+import Test from '../Themes/Test';
 
 // navigator fallback for server-side rendering
 const navigatorHelper = (typeof navigator !== "undefined" && navigator.userAgent) ? navigator.userAgent : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
 const ThemesList = {
     "LightBlue": getMuiTheme(LightBlue, {userAgent: navigatorHelper}),
-    "Dark": getMuiTheme(Dark, {userAgent: navigatorHelper})
+    "Dark": getMuiTheme(Dark, {userAgent: navigatorHelper}),
+    "Test": getMuiTheme(Test, {userAgent: navigatorHelper}),
 };
 const ThemeListNames = Object.keys(ThemesList);
 
