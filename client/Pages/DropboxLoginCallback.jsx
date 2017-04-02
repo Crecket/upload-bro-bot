@@ -84,7 +84,7 @@ class DropboxLoginCallback extends React.Component {
 
 
     render() {
-        var icon = <CircularProgress color="rgb(28, 142, 215)" size={80} thickness={6}/>
+        var icon = <CircularProgress color="rgb(28, 142, 215)" size={80} thickness={6}/>;
 
         if (this.state.error) {
             icon = (

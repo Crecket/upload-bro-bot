@@ -28,13 +28,13 @@ module.exports = class BoxHelper {
      * @param user
      * @returns {*}
      */
-    createOauthClient(user_info = false) {
+    async createOauthClient(user_info = false) {
         // no tokens found, just return the regular client
         if (user_info && !user_info.provider_sites.box) {
             return Promise.reject("Box tokens not set");
         }
 
-        return new Promise((resolve, reject) => {
+        return await new Promise((resolve, reject) => {
             // set the token
             const tokens = this.getToken(user_info);
             // create a box sdk
@@ -88,7 +88,6 @@ module.exports = class BoxHelper {
                         Logger.error(err);
                         reject(err);
                     } else {
-                        Logger.debug(tokenInfo);
                         resolve(tokenInfo);
                     }
                 }
