@@ -5,7 +5,7 @@ const winston = rootRequire('src/Helpers/Logger.js');
 const HelperInterface = require(__base + 'src/HelperInterface');
 const Utils = require(__base + 'src/Utils');
 
-const UploadStartObj = require(__base + 'src/Queries/Generic/UploadStartV2');
+const UploadStartObj = require(__base + 'src/Queries/Generic/UploadStart');
 const UploadFinishObj = require(__base + 'src/Queries/Generic/UploadFinish');
 const DropboxHelperObj = require(__base + 'src/Sites/Dropbox/Helper');
 

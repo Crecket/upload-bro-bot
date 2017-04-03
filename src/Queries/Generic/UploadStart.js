@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 
 const HelperInterface = rootRequire('src/HelperInterface');
 
@@ -18,90 +18,98 @@ module.exports = class UploadStart extends HelperInterface {
      * @param type - the provider type
      * @returns {Promise}
      */
-    handle(query,type) {
+    async handle(query, type) {
 
-        // console.log(query);
-        return new Promise((resolve, reject) => {
-            // global helpers
-            let userInfo
+        // global helpers
+        let userInfo,
+            resolveResults;
 
+        try {
             // get information about this query user
-            this.getUserInfo(query, type)
-                .then(resolveResults => {
-                    userInfo = resolveResults.userInfo;
+            resolveResults = await this.getUserInfo(query, type).then(resolveResults => {
+                userInfo = resolveResults.userInfo;
+                return resolveResults;
+            });
 
-                    // check the cache
-                    return this.checkCache(resolveResults)
-                })
-                // show initial status
-                .then(resolveResults => {
-                    // show status
-                    return new Promise((resolveEdit, rejectEdit) => {
-                        // set initial message status
-                        this.editMessage("\u{1F50E} Checking queue status... 1/4", {
-                            chat_id: resolveResults.msgInfo.chat_id,
-                            message_id: resolveResults.msgInfo.message_id
-                        }).then(resultMessage => {
-                            // store message
-                            resolveResults.resultMessage = resultMessage;
-                            // resolve results
-                            resolveEdit(resolveResults);
-                        }).catch(rejectEdit);
-                    });
-                })
-                // check queue status
-                .then(resolveResults => {
-                    // return Promise.resolve();
-                    return new Promise((finish, failed) => {
-                        // enqueue this attempt
-                        this._app._Queue.enqueue('upload')
-                            .then(finished => {
-                                // save queueKey
-                                resolveResults.queueKey = finished.key;
+            // check the cache
+            resolveResults = await this.checkCache(resolveResults);
 
-                                // resolve the resolveResults, queue item is ready to go
-                                finish(resolveResults);
-                            })
-                            .catch(failed);
-                    });
-                })
-                // show initial status
-                .then(resolveResults => {
-                    // show status
-                    return new Promise((resolveEdit, rejectEdit) => {
-                        // set initial message status
-                        this.editMessage("\u{1F50E} Downloading file... 2/4", {
-                            chat_id: resolveResults.msgInfo.chat_id,
-                            message_id: resolveResults.msgInfo.message_id
-                        }).then(resultMessage => {
-                            // store message
-                            resolveResults.resultMessage = resultMessage;
-                            // resolve results
-                            resolveEdit(resolveResults);
-                        }).catch(rejectEdit);
-                    });
-                })
-                // download file from telegram
-                .then(resolveResults => this.downloadTelegram(resolveResults))
-                // update status
-                .then(resolveResults => {
-                    // show status
-                    return new Promise((resolveEdit, rejectEdit) => {
-                        // begin uploading to dropbox drive
-                        this.editMessage("\u{1F4BE} Uploading... 3/4", {
-                            chat_id: resolveResults.msgInfo.chat_id,
-                            message_id: resolveResults.msgInfo.message_id
-                        }).then(resultMessage => {
-                            // store message
-                            resolveResults.resultMessage = resultMessage;
+            // show status update
+            resolveResults = await new Promise((resolve, rejectEdit) => {
+                // set initial message status
+                this.editMessage("\u{1F50E} Checking queue status... 1/4", {
+                    chat_id: resolveResults.msgInfo.chat_id,
+                    message_id: resolveResults.msgInfo.message_id
+                }).then(resultMessage => {
+                    // store message
+                    resolveResults.resultMessage = resultMessage;
+                    // resolve results
+                    resolve(resolveResults);
+                }).catch(rejectEdit);
+            });
 
-                            // everything is okay, resolve the info
-                            resolve(resolveResults)
-                        }).catch(rejectEdit);
+            // enqueue the upload attempt
+            resolveResults = await new Promise((resolve, failed) => {
+                // enqueue this attempt
+                this._app._Queue.enqueue('upload')
+                    .then(finished => {
+                        // save queueKey
+                        resolveResults.queueKey = finished.key;
+
+                        // resolve the resolveResults, queue item is ready to go
+                        resolve(resolveResults);
                     })
-                })
-                .catch(reject);
-        });
+                    .catch(failed);
+            });
+
+            // show initial status
+            resolveResults = await new Promise((resolve, rejectEdit) => {
+                // set initial message status
+                this.editMessage("\u{1F50E} Downloading file... 2/4", {
+                    chat_id: resolveResults.msgInfo.chat_id,
+                    message_id: resolveResults.msgInfo.message_id
+                }).then(resultMessage => {
+                    // store message
+                    resolveResults.resultMessage = resultMessage;
+                    // resolve results
+                    resolve(resolveResults);
+                }).catch(rejectEdit);
+            });
+            // download file from telegram
+            resolveResults = await this.downloadTelegram(resolveResults);
+
+            // update status
+            resolveResults = await new Promise((resolveEdit, rejectEdit) => {
+                // begin uploading to dropbox drive
+                this.editMessage("\u{1F4BE} Uploading... 3/4", {
+                    chat_id: resolveResults.msgInfo.chat_id,
+                    message_id: resolveResults.msgInfo.message_id
+                }).then(resultMessage => {
+                    // store message
+                    resolveResults.resultMessage = resultMessage;
+
+                    // everything is okay, resolve the info
+                    resolveEdit(resolveResults)
+                }).catch(rejectEdit);
+            });
+
+        } catch (ex) {
+            Logger.error(ex);
+
+            // display error message if we have msgInfo object
+            if (resolveResults.msgInfo) {
+                // display the error message
+                this.editMessageError({
+                    chat_id: resolveResults.msgInfo.chat_id,
+                    message_id: resolveResults.msgInfo.message_id
+                }).then(_ => {
+                }).catch(_ => {
+                });
+            }
+            return Promise.reject(ex);
+        }
+
+        return resolveResults;
     }
 
     /**
