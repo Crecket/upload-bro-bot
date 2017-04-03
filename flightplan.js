@@ -21,6 +21,10 @@ plan.target("production", {
 plan.remote("update", (remote) => {
     // move to correct context
     remote.with(`cd ${WEB_ROOT}`, () => {
+        // stop server temporarily
+        remote.log("Stopping server");
+        remote.sudo("pm2 stop upload-bro-bot");
+
         // fetch latest changes
         remote.log("Git fetch all");
         remote.sudo("git fetch --all");
@@ -39,7 +43,7 @@ plan.remote("update", (remote) => {
 
         // update yarn packages
         remote.log("Restarting server");
-        remote.sudo("pm2 restart upload-bro-bot");
+        remote.sudo("pm2 start upload-bro-bot");
     });
 });
 
