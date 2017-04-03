@@ -47,3 +47,10 @@ plan.remote("update", (remote) => {
     });
 });
 
+// main update task
+plan.remote("restart", (remote) => {
+    // update yarn packages
+    remote.log("Restarting server");
+    remote.sudo("pm2 start upload-bro-bot");
+});
+
