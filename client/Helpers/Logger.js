@@ -1,9 +1,5 @@
-const Logger = require('js-logger');
-
-// set default options along with logLevel
-Logger.useDefaults({
-    logLevel: process.env.DEBUG ? "debug" : "warning"
-});
-
-//export it
-module.exports = Logger;
+const log = require('loglevel');
+// set logging level based on env
+log.setLevel(process.env.DEBUG ? "trace" : "warn");
+// export the logger
+module.exports = log;

@@ -38,8 +38,6 @@ export default class ProviderBlocks extends React.Component {
     }
 
     render() {
-        Logger.debug('re-render', this.props);
-
         let finalBlocks = [];
         // loop through providers which havn't been verified
         Object.keys(this.props.provider_sites_info).map((key) => {

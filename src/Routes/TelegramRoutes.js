@@ -19,10 +19,13 @@ module.exports = (app, passport, uploadApp) => {
             TelegramMiddleware(req, res, next);
         }
     });
+
+    // login to telegram over GET is ignored and redirected
     app.get('/login/telegram', (req, res, next) => {
         res.redirect('/');
     });
 
+    // callback url to handle login attempts
     app.get('/login/telegram/callback', passport.authenticate('telegram', {
             session: true
         }), (req, res) => {

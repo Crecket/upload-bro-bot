@@ -63,7 +63,11 @@ module.exports = class SiteHandler {
      * @returns {Object}
      */
     get siteList() {
-       return Object.keys(this._sites).map(siteKey => this.getSiteBasic(siteKey));
+        let siteList = {};
+        Object.keys(this._sites).map(siteKey => {
+            siteList[siteKey] = this.getSiteBasic(siteKey);
+        });
+        return siteList;
     }
 
     /**

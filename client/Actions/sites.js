@@ -17,7 +17,7 @@ export function setSites(site_list) {
 export function siteUpdate() {
     return dispatch => {
         dispatch(siteLoading());
-        axios.get('/api/get_providers')
+        axios.post('/api/get_providers')
             .then(response => response.data)
             .then(json => {
                 dispatch(setSites(json));

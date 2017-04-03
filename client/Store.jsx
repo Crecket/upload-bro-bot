@@ -10,7 +10,9 @@ import reducer from "./Reducers/index.js";
 let middleware;
 if (process.env.DEBUG === true) {
     // create middleware with logger
-    middleware = applyMiddleware(promise(), thunk, logger());
+    middleware = applyMiddleware(promise(), thunk, logger({
+        timestamp: false,
+    }));
 } else {
     // default middleware
     middleware = applyMiddleware(promise(), thunk);

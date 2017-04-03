@@ -1,4 +1,4 @@
-import IsLoggedin from './IsLoggedin';
+import IsLoggedin from './IsLoggedin.jsx';
 
 /**
  * if authRequired === true, user has to be logged in or will be redirected

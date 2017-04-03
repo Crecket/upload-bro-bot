@@ -20,7 +20,6 @@ export function userUpdate() {
         axios.post('/api/get_user', {_csrf: csrfToken})
             .then(response => response.data)
             .then(json => {
-                Logger.warn(json);
                 // update user info and stop loading state
                 dispatch(userSetInfo(json));
                 dispatch(userNotLoading());
