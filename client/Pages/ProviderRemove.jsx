@@ -49,7 +49,7 @@ class ProviderRemove extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            loadingState: "loading",
+            loadingState: "nope",
             error: false
         };
     }
@@ -114,11 +114,13 @@ class ProviderRemove extends React.Component {
                 </div>
 
                 <div className="col-xs-6 col-md-4">
-                    <RaisedButton primary={true}
-                                  containerElement={<NavLink to="/"/>}>
-                        Cancel
-                    </RaisedButton>
+                    <NavLink to="/dashboard">
+                        <RaisedButton primary={true}>
+                            Cancel
+                        </RaisedButton>
+                    </NavLink>
                 </div>
+                
                 <div className="col-xs-6 col-md-4">
                     <RaisedButton secondary={true} backgroundColor={red800}
                                   onClick={this.removeProvider}>

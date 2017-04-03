@@ -21,7 +21,7 @@ module.exports = (app, passport, uploadApp) => {
                 delete user_info.provider_sites[key].id_token;
                 delete user_info.provider_sites[key].access_token;
                 delete user_info.provider_sites[key].refresh_token;
-            })
+            });
             // telegram tokens
             delete user_info.accessToken;
             delete user_info.refreshToken;

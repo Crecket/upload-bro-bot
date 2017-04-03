@@ -34,19 +34,26 @@ module.exports = class BoxHelper {
             return Promise.reject("Box tokens not set");
         }
 
-        return await new Promise((resolve, reject) => {
-            // set the token
-            const tokens = this.getToken(user_info);
+        // set the token
+        const tokens = this.getToken(user_info);
+
+        // verify if we got tokens
+        if (tokens) {
+            // get a valid token set
+            const {validTokens, isNew} = await this.getValidToken(tokens);
+
+            if (isNew) {
+                // update the tokens in database
+            }
+
             // create a box sdk
             const sdk = this.getSdkClient();
-            try {
-                // create a client with the access token
-                const client = sdk.getBasicClient(tokens.accessToken);
-                resolve(client);
-            } catch (ex) {
-                reject(ex);
-            }
-        });
+
+            // create a client with the access token
+            return sdk.getBasicClient(validTokens.accessToken);
+        }
+        // no tokens set, we can't continue
+        throw new Error('No tokens set');
     }
 
     /**
@@ -101,26 +108,21 @@ module.exports = class BoxHelper {
      * @param tokens
      * @returns {*}
      */
-    refreshAccessToken(tokens) {
-        return new Promise((resolve, reject) => {
-            // do api call with the refresh token to fetch a new access token
-            // axios.post("https://api.imgur.com/oauth2/token", {
-            //     refresh_token: tokens.refresh_token,
-            //     client_id: process.env.IMGUR_CLIENT_ID,
-            //     client_secret: process.env.IMGUR_CLIENT_SECRET,
-            //     grant_type: 'refresh_token'
-            // }).then(result => {
-            //     let resultData = result.data;
-            //
-            //     // return the new list
-            //     resolve(Object.assign(resultData, {
-            //         expiry_date: (new Date()).getTime() + resultData.expires_in
-            //     }));
-            // }).catch(err => {
-            //     reject(err);
-            //     Logger.error(err.response);
-            // });
-            reject();
+    async refreshAccessToken(tokens) {
+        return await new Promise((resolve, reject) => {
+            // create new sdk client
+            const sdk = this.getSdkClient();
+
+            // attempt to refresh tokens using refresh token
+            sdk.getTokensRefreshGrant(tokens.refreshToken, function (err, tokenInfo) {
+                if (err) {
+                    Logger.error(err);
+                    return reject(err);
+                }
+
+                Logger.debug(tokenInfo);
+                resolve(tokenInfo);
+            });
         });
     }
 
@@ -130,16 +132,19 @@ module.exports = class BoxHelper {
      * @param tokens
      * @returns {Promise}
      */
-    getValidToken(tokens) {
-        return new Promise((resolve, reject) => {
+    async getValidToken(tokens) {
+        return await new Promise((resolve, reject) => {
             // check if access token has expired
             if (tokens.expiry_date - (new Date()).getTime() >= 0) {
                 // not expired, no new tokens
-                resolve(true);
+                resolve({validTokens: tokens});
             } else {
                 // attempt to get  new tokens
                 this.refreshAccessToken(tokens)
-                    .then(newTokens => resolve(newTokens))
+                    .then(newTokens => resolve({
+                        validTokens: newTokens,
+                        isNew: true
+                    }))
                     .catch(reject);
             }
         });
