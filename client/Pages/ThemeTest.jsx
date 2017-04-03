@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import {Helmet} from "react-helmet";
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import withWidth, {SMALL} from 'material-ui/utils/withWidth';
@@ -352,6 +353,9 @@ class ThemesPage extends Component {
 
         return (
             <div>
+                <Helmet>
+                    <title>UploadBroBot - Theme test</title>
+                </Helmet>
                 <Paper style={styles.liveExamplePaper}>
                     <ClearFix style={styles.liveExampleBlock}>{this.getThemeExamples()}</ClearFix>
                 </Paper>

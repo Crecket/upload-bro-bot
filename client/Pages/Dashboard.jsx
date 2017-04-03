@@ -1,4 +1,5 @@
 import React from "react";
+import {Helmet} from "react-helmet";
 import RaisedButton from 'material-ui/RaisedButton';
 
 // custom components
@@ -50,6 +51,9 @@ export default class Dashboard extends React.Component {
     render() {
         return (
             <div>
+                <Helmet>
+                    <title>UploadBroBot - Dashboard</title>
+                </Helmet>
                 <PaperHelper style={styles.loggedIn}>
                     You're logged in as:<br/>
                     {this.props.user_info.username}<br/>

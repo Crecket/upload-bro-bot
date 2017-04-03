@@ -1,4 +1,5 @@
 import React from "react";
+import {Helmet} from "react-helmet";
 
 // custom components
 import ManualPost from '../Helpers/ManualPost';
@@ -52,6 +53,9 @@ export default class Home extends React.Component {
     render() {
         return (
             <div>
+                <Helmet>
+                    <title>UploadBroBot - Home</title>
+                </Helmet>
                 <PaperHelper style={Object.assign(styles.notLoggedIn, styles.centerBox)}>
                     <RaisedButton
                         onClick={ManualPost('/login/telegram')}

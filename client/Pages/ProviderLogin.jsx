@@ -1,4 +1,5 @@
 import React from "react";
+import {Helmet} from "react-helmet";
 import Paper from "material-ui/Paper";
 import Check from 'material-ui/svg-icons/navigation/check';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -85,6 +86,9 @@ export default class ProviderLogin extends React.Component {
         return (
             <div style={styles.paperWrapper}
                  className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                <Helmet>
+                    <title>UploadBroBot - {this.props.params.type} login</title>
+                </Helmet>
                 <Paper style={styles.paper}>
 
                     {loginStatusResult}
