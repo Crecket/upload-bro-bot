@@ -5,7 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import Utils from '../../Helpers/Utils';
 import ManualPost from '../../Helpers/ManualPost';
-import NavLink from '../Sub/NavLink';
+import NavLink from '../Sub/NavLink.jsx';
 
 const styles = {
     img: {

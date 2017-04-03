@@ -6,11 +6,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Check from 'material-ui/svg-icons/navigation/check';
 import Error from 'material-ui/svg-icons/alert/error';
 import {red500, red800, green800} from 'material-ui/styles/colors';
-import {browserHistory}  from 'react-router';
 
 import Utils from '../Helpers/Utils';
 import Logger from '../Helpers/Logger';
-import NavLink from '../Components/Sub/NavLink';
+import NavLink from '../Components/Sub/NavLink.jsx';
 import axios from 'axios';
 
 const styles = {
@@ -50,52 +49,58 @@ class ProviderRemove extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            loadingState: "awaitingResponse",
+            loadingState: "loading",
             error: false
         };
-    };
+    }
+
+    componentWillMount() {
+        // check if provider is available
+        if (!this.props.sites[this.props.params.type]) {
+            this.props.router.push('/dashboard');
+        }
+    }
 
     removeProvider = () => {
         let providerType = this.props.params.type;
 
         // send our hashtag data
-        axios.post("/remove/" + providerType, {_csrf: csrfToken})
+        axios.post("/api/remove/" + providerType, {_csrf: csrfToken})
             .then((result) => {
-                this.setState({
-                    loadingState: "removed"
-                });
+                Logger.debug(result.data);
+                if (result.data) {
+                    // update state
+                    this.setState({loadingState: "removed"});
 
-                // update the current user
-                this.props.updateUser();
-
-                setTimeout(() => {
-                    // send home after waiting a while
-                    browserHistory.push('/');
-                }, 2000);
+                    // update the current user
+                    this.props.updateUser();
+                    setTimeout(() => {
+                        this.props.router.push('/dashboard');
+                    }, 2000);
+                } else {
+                    this.setState({error: true});
+                    setTimeout(() => {
+                        this.props.router.push('/dashboard');
+                    }, 2000);
+                }
             })
             .catch((error) => {
                 Logger.error(error);
-                this.setState({
-                    error: true
-                });
+                this.setState({error: true});
                 setTimeout(() => {
-                    // send home after waiting a while
-                    browserHistory.push('/');
+                    this.props.router.push('/dashboard');
                 }, 2000);
             })
     }
 
     render() {
-        let providerType = Utils.ucfirst(this.props.params.type);
-
-        // security check
+        // check if provider is available
         if (!this.props.sites[this.props.params.type]) {
-            return (
-                <div>
-                    Loading
-                </div>
-            );
+            return null;
         }
+
+        // extract name
+        let providerType = Utils.ucfirst(this.props.params.type);
 
         let removeDiv = (
             <div className="row around-xs">
@@ -146,7 +151,6 @@ class ProviderRemove extends React.Component {
                 </div>
             )
         } else if (this.state.loadingState === "removed") {
-            // not loading or waiting for response
             removeDiv = (
                 <h3>
                     <Check style={styles.checkIcon}/>
@@ -167,7 +171,7 @@ class ProviderRemove extends React.Component {
                 </Paper>
             </div>
         );
-    };
+    }
 }
 
 export default ProviderRemove;

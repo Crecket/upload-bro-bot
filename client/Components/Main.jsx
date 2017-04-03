@@ -7,6 +7,7 @@ import store from 'store';
 
 // custom components
 import ComponentLoader from './Sub/ComponentLoader'
+import Logger from '../Helpers/Logger'
 
 // only allow this in debug enviroment, else return null
 const MainAppbar = ComponentLoader(

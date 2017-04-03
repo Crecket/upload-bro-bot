@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable';
-import LoadingComponent from './LoadingComponent';
+import LoadingComponent from './LoadingComponent.jsx';
 
 export default (importCb, webpackRequireWeakId = false) => {
     // if we have a webpack weak id, use it

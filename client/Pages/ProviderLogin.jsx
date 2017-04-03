@@ -8,6 +8,7 @@ import {red500, green800} from 'material-ui/styles/colors';
 import {browserHistory}  from 'react-router';
 
 import Utils from '../Helpers/Utils';
+import Logger from '../Helpers/Logger';
 
 const styles = {
     img: {
@@ -46,7 +47,7 @@ export default class ProviderLogin extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
-    };
+    }
 
     componentDidMount() {
         setTimeout(() => {
@@ -95,5 +96,5 @@ export default class ProviderLogin extends React.Component {
                 </Paper>
             </div>
         );
-    };
+    }
 }

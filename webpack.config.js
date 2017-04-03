@@ -29,7 +29,7 @@ let config = {
         // App css code
         "css-app": SRC_DIR + "/css-app.js",
         // Service worker registration
-        "sw-register": SRC_DIR + "/ServiceWorkers/ServiceWorkerRegistration.js",
+        "sw-register": SRC_DIR + "/Plugins/ServiceWorkerRegistration.js",
     },
     output: {
         path: BUILD_DIR,

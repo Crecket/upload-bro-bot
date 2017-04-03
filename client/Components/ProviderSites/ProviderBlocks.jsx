@@ -1,5 +1,7 @@
 import React  from 'react';
-import {connect} from "react-redux";
+
+import ProviderBlock from './ProviderBlock.jsx';
+import Logger from "../../Helpers/Logger";
 
 const styles = {
     container: {
@@ -16,27 +18,10 @@ const styles = {
     }
 }
 
-import ProviderBlock from './ProviderBlock.jsx';
-
-// actions
-import {openModal, closeModal} from "../../Actions/modalActions.js";
-
-// connect to redux
-@connect((store) => {
-    return {
-        modalText: store.modal.message,
-        modalTitle: store.modal.title,
-        modalOpen: store.modal.modalOpen,
-    };
-})
 export default class ProviderBlocks extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
-    };
-
-    openModal = (message, title) => {
-        this.props.dispatch(openModal(message, title));
     }
 
     getBlockTemplate = (key, siteInfo, userSiteInfo = false) => {
@@ -45,7 +30,6 @@ export default class ProviderBlocks extends React.Component {
                  key={key} style={styles.block}>
                 <div className="box">
                     <ProviderBlock
-                        showModal={this.openModal}
                         siteInfo={siteInfo}
                         providerSite={userSiteInfo}/>
                 </div>
@@ -54,6 +38,8 @@ export default class ProviderBlocks extends React.Component {
     }
 
     render() {
+        Logger.debug('re-render', this.props);
+
         let finalBlocks = [];
         // loop through providers which havn't been verified
         Object.keys(this.props.provider_sites_info).map((key) => {
@@ -79,5 +65,5 @@ export default class ProviderBlocks extends React.Component {
                 {finalBlocks}
             </div>
         );
-    };
+    }
 }

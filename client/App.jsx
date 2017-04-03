@@ -6,8 +6,8 @@ import injectTapEventPlugin  from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 // main app
-import Router from './Router';
-import Store from "./Store";
+import Router from './Router.jsx';
+import Store from "./Store.jsx";
 
 export default class App extends React.Component {
     constructor(props, context) {

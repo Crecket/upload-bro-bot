@@ -1,11 +1,6 @@
 import React from 'react';
 import ReactDOM  from 'react-dom';
 
-// js-logger helper
-require('js-logger').useDefaults({
-    level: process.env.DEBUB ? 0 : 4
-});
-
 // async loader and logger
 import ComponentLoader from './Components/Sub/ComponentLoader';
 

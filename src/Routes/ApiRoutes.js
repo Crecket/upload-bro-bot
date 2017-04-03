@@ -1,4 +1,4 @@
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;
@@ -30,4 +30,28 @@ module.exports = (app, passport, uploadApp) => {
         res.json(user_info);
     });
 
+    // fetch user info from api
+    app.post('/api/remove/:type', (request, response) => {
+        let type = request.params.type;
+
+        // get the site
+        if (request.user.provider_sites[type]) {
+            // site exists
+            delete request.user.provider_sites[type];
+
+            // update the tokens for this user
+            uploadApp._UserHelper.updateUserTokens(request.user)
+                .then(result => {
+                    Logger.debug('success');
+                    response.json(true);
+                })
+                .catch(err => {
+                    Logger.debug('failed1');
+                    response.status(500).json(false);
+                });
+        } else {
+            // doesn't exist
+            response.json(false);
+        }
+    });
 }

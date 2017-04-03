@@ -19,7 +19,6 @@
     "transform-react-inline-elements",
     "transform-react-constant-elements",
     "transform-decorators-legacy",
-    "syntax-dynamic-import",
-    "js-logger"
+    "syntax-dynamic-import"
   ]
 }

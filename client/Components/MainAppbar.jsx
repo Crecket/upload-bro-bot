@@ -56,7 +56,7 @@ const styles = {
     }
 };
 
-class MainAppbar extends React.PureComponent {
+class MainAppbar extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
