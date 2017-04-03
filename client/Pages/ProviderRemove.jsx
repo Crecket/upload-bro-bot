@@ -1,5 +1,5 @@
 import React from "react";
-import {Helmet} from "react-helmet";
+import Helmet from "react-helmet";
 import Paper from "material-ui/Paper";
 import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -161,7 +161,7 @@ class ProviderRemove extends React.Component {
                  className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                 <Paper style={styles.paper}>
                     <Helmet>
-                        <title>UploadBroBot - Remove {providerType}</title>
+                        <title>{`UploadBroBot - Remove ${providerType}`}</title>
                     </Helmet>
                     {removeDiv}
                 </Paper>

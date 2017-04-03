@@ -1,5 +1,5 @@
 import React from "react";
-import {Helmet} from "react-helmet";
+import Helmet from "react-helmet";
 import Paper from "material-ui/Paper";
 import CircularProgress from 'material-ui/CircularProgress';
 import Check from 'material-ui/svg-icons/navigation/check';
@@ -109,7 +109,7 @@ class DropboxLoginCallback extends React.Component {
             <div style={styles.paperWrapper}
                  className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                 <Helmet>
-                    <title>UploadBroBot - Dropbox Login</title>
+                    <title>{`UploadBroBot - Dropbox Login`}</title>
                 </Helmet>
                 <Paper style={styles.paper}>
                     <h1>Logging in to Dropbox</h1>

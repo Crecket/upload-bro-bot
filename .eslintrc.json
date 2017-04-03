@@ -6,7 +6,12 @@
     "eslint:recommended",
     "plugin:node/recommended"
   ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
   "rules": {
+    "strict": 0,
     "node/exports-style": [
       "error",
       "module.exports"

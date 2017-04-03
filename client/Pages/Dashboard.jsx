@@ -1,5 +1,5 @@
 import React from "react";
-import {Helmet} from "react-helmet";
+import Helmet from "react-helmet";
 import RaisedButton from 'material-ui/RaisedButton';
 
 // custom components
@@ -52,7 +52,7 @@ export default class Dashboard extends React.Component {
         return (
             <div>
                 <Helmet>
-                    <title>UploadBroBot - Dashboard</title>
+                    <title>{`UploadBroBot - Dashboard`}</title>
                 </Helmet>
                 <PaperHelper style={styles.loggedIn}>
                     You're logged in as:<br/>

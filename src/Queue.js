@@ -93,6 +93,9 @@ module.exports = class Queue {
         return false;
     }
 
+    /**
+     * Start the timer to push the queue and check for expired items
+     */
     startTimer() {
         // check queue items every x seconds
         this.timer = setInterval(() => {
@@ -101,7 +104,7 @@ module.exports = class Queue {
                 // loop through the active items to see if they have expired
                 Object.keys(this.active).forEach(key => {
                     // check if this item has expired
-                    if (this.isExpired(this.active[key])) {
+                    if (this.isExpired(this.active[key]) === true) {
                         // finish the item
                         this.finish(key);
                     }
@@ -152,8 +155,9 @@ module.exports = class Queue {
      */
     isExpired(queueItem) {
         if (queueItem.started) {
-
+            return false;
         }
+        return true;
     }
 
     /**
