@@ -63,22 +63,7 @@ module.exports = class SiteHandler {
      * @returns {Object}
      */
     get siteList() {
-        let sites = {};
-        Object.keys(this._sites).map(siteKey => {
-            sites[siteKey] = {
-                name: this._sites[siteKey].name,
-                title: this._sites[siteKey].title,
-                description: this._sites[siteKey].description,
-                key: this._sites[siteKey].key,
-                url: this._sites[siteKey].url,
-                logos: {
-                    "png": this._sites[siteKey].logoUrl("png"),
-                    "svg": this._sites[siteKey].logoUrl("svg"),
-                },
-                supportedExtensions: this._sites[siteKey].supportedExtensions
-            };
-        });
-        return sites;
+       return Object.keys(this._sites).map(siteKey => this.getSiteBasic(siteKey));
     }
 
     /**

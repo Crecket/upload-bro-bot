@@ -185,10 +185,10 @@ module.exports = class App {
     answerCallbackQuery(id, text = "", alert = false, options = {}) {
         return this._TelegramBot.answerCallbackQuery(id, text, alert, options)
             .then((result) => {
-                Logger.info("Responded to query " + id);
+                Logger.debug("Responded to query " + id);
             })
             .catch(() => {
-                Logger.info("Failed to respond to query " + id);
+                Logger.debug("Failed to respond to query " + id);
             });
     }
 
