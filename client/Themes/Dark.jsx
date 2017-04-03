@@ -18,7 +18,7 @@ export default {
         accent1Color: '#448AFF',
         accent2Color: '#3c7be2',
         accent3Color: '#325eb8',
-        textColor: '#ffffff',
+        textColor: white,
         secondaryTextColor: fade(white, 0.7),
         alternateTextColor: white,
         canvasColor: '#353535',

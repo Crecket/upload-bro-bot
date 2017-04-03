@@ -46,6 +46,15 @@ module.exports = class Imgur extends SiteInteface {
     }
 
     /**
+     * return this site's slogan
+     *
+     * @returns {string}
+     */
+    get slogan() {
+        return "The most awesome images on the Internet";
+    }
+
+    /**
      * return this site's full title
      *
      * @returns {string}
@@ -103,6 +112,15 @@ module.exports = class Imgur extends SiteInteface {
      */
     get supportedExtensions() {
         return ["jpg", "jpeg", "png", "gif", "apng", "tiff", "pdf", "xcf"];
+    }
+
+    /**
+     * A list with supported features
+     *
+     * @returns {[string,string]}
+     */
+    get supportedFeatures() {
+        return ["inlineQuery_search", "query_uploadImage"];
     }
 }
 

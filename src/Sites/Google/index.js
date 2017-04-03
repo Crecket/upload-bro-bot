@@ -45,7 +45,16 @@ module.exports = class Google extends SiteInteface {
     }
 
     /**
-     * return this site's full title
+     * return this site's slogan
+     *
+     * @returns {string}
+     */
+    get slogan() {
+        return 'Cloud Storage & File Backup for Photos, Docs & More';
+    }
+
+    /**
+     * return this site's description
      *
      * @returns {string}
      */
@@ -102,6 +111,15 @@ module.exports = class Google extends SiteInteface {
      */
     get supportedExtensions() {
         return true;
+    }
+
+    /**
+     * A list with supported features
+     *
+     * @returns {[string,string]}
+     */
+    get supportedFeatures() {
+        return ["inlineQuery_search", "query_upload"];
     }
 }
 

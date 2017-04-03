@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 
-const SiteInteface = rootRequire('src/Sites/SiteInterface.js');
+const SiteInteface = require('../SiteInterface.js');
 
-const UploadObj = rootRequire('src/Sites/Imgur/Queries/Upload');
-const SearchQueryObj = rootRequire('src/Sites/Imgur/InlineQueries/SearchQuery');
+// const UploadObj = rootRequire('src/Sites/Box/Queries/Upload');
+// const SearchQueryObj = rootRequire('src/Sites/Box/InlineQueries/SearchQuery');
 
-module.exports = class Imgur extends SiteInteface {
+module.exports = class Box extends SiteInteface {
     constructor(app) {
         super(app);
 
@@ -18,11 +18,11 @@ module.exports = class Imgur extends SiteInteface {
      * Load all commands for this website
      */
     register() {
-        // register commands
-        this._app._QueryHandler.register(new UploadObj(this._app));
-
-        // register inline queries
-        this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
+        // // register commands
+        // this._app._QueryHandler.register(new UploadObj(this._app));
+        //
+        // // register inline queries
+        // this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
 
         return Promise.resolve();
     }
@@ -46,7 +46,16 @@ module.exports = class Imgur extends SiteInteface {
     }
 
     /**
-     * return this site's full title
+     * return this site's slogan
+     *
+     * @returns {string}
+     */
+    get slogan() {
+        return "Secure File Sharing, Storage, and Collaboration";
+    }
+
+    /**
+     * return this site's description
      *
      * @returns {string}
      */
@@ -78,7 +87,7 @@ module.exports = class Imgur extends SiteInteface {
      * @returns {string}
      */
     logoUrl(type = "png") {
-        switch(type){
+        switch (type) {
             case "png":
                 return "/assets/img/box.png";
             case "svg":
@@ -103,6 +112,16 @@ module.exports = class Imgur extends SiteInteface {
      */
     get supportedExtensions() {
         return true;
+    }
+
+    /**
+     * A list with supported features
+     *
+     * @returns {[string,string]}
+     */
+    get supportedFeatures() {
+        return [];
+        // return ["inlineQuery_search", "query_upload"];
     }
 }
 
