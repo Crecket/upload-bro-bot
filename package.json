@@ -13,10 +13,8 @@
     "lint-server": "eslint --config .eslintrc.json src/ --fix",
     "test": "node ./node_modules/mocha/bin/mocha --recursive",
     "sw": "cross-env RUN_HELPER=1 node webpack/SWHelper.js",
-    "release": "npm run fly-update && npm run fly-build",
-    "fly-build": "fly build:production && npm run fly-restart",
-    "fly-update": "fly update:production && npm run fly-restart",
-    "fly-restart": "fly restart:production",
+    "release": "npm run build && npm run fly-update",
+    "fly-update": "fly update:production",
     "pm2": "pm2 start pm2.json"
   },
   "engines": {
