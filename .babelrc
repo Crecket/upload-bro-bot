@@ -1,6 +1,6 @@
 {
   "presets": [
-    "babel-preset-es2017",
+    "latest",
     "babel-preset-react",
     "babel-preset-stage-0"
   ],

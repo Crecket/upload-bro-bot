@@ -1,4 +1,3 @@
-import browserHistory from 'react-router/lib/browserHistory';
 import IsLoggedin from './IsLoggedin';
 
 /**

@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "plugins": [
     "react",
     "babel"
@@ -10,7 +11,9 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
   ],
   "rules": {
     "react/jsx-uses-react": "error",
@@ -19,14 +22,21 @@
       "error",
       "module.exports"
     ],
-    "no-unused-vars": 2,
-    "no-undef": 2,
+    "no-unused-vars": 0,
+    "no-undef": 1,
     "node/no-unsupported-features": 0,
-    "node/no-unpublished-require": 0
-  },
-  "globals": {
-    "DEVELOPMENT_MODE": true,
-    "csrfToken": true
+    "node/no-unpublished-require": 0,
+    "import/no-unresolved": [
+      2,
+      {
+        "commonjs": true,
+        "amd": true
+      }
+    ],
+    "import/named": 2,
+    "import/namespace": 2,
+    "import/default": 2,
+    "import/export": 2
   },
   "parserOptions": {
     "sourceType": "module",
@@ -35,6 +45,10 @@
       "jsx": true,
       "experimentalObjectRestSpread": true
     }
+  },
+  "globals": {
+    "DEVELOPMENT_MODE": true,
+    "csrfToken": true
   }
 }
 

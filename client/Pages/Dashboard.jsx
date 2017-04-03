@@ -27,21 +27,8 @@ export default class Dashboard extends React.Component {
         this.state = {};
     };
 
-    componentWillMount() {
-        // Logger.debug('start');
-        // Perf.start();
-    }
-
     componentDidMount() {
         ForceLogin(this.props, true);
-        // Logger.debug('pre-timeout');
-        // setTimeout(() => {
-        //     Logger.debug('stop');
-        //     Perf.stop();
-        //     const measurements = Perf.getLastMeasurements();
-        //     Logger.debug('print');
-        //     Perf.printWasted(measurements);
-        // }, 2000);
     }
 
     componentDidUpdate() {
