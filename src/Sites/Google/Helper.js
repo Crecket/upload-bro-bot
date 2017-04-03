@@ -2,12 +2,8 @@ const fs = require('fs');
 const mime = require('mime');
 const path = require('path');
 const google = require('googleapis');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 const OAuth2 = google.auth.OAuth2;
-
-// https://developers.google.com/apis-explorer/#search/drive/
-// https://developers.google.com/drive/v3/web/about-sdk
-// https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=
 
 module.exports = class GoogleHelper {
     constructor(app) {
@@ -20,61 +16,51 @@ module.exports = class GoogleHelper {
      * @param userInfo
      * @returns {Promise}
      */
-    createOauthClient(userInfo) {
-        return new Promise((resolve, reject) => {
-            // create default oauth2 client
-            const oauthclient = new OAuth2(
-                process.env.GOOGLE_CLIENT_ID,
-                process.env.GOOGLE_SECRET,
-                process.env.WEBSITE_URL + process.env.GOOGLE_REDIRECT_URI
-            );
+    async createOauthClient(userInfo) {
+        // create default oauth2 client
+        const oauthclient = new OAuth2(
+            process.env.GOOGLE_CLIENT_ID,
+            process.env.GOOGLE_SECRET,
+            process.env.WEBSITE_URL + process.env.GOOGLE_REDIRECT_URI
+        );
 
-            // check if user info is set, else just return the oauth2 client
-            if (!userInfo) {
-                // nothing more to do
-                resolve(oauthclient);
+        // check if user info is set, else just return the oauth2 client
+        if (!userInfo) {
+            // nothing more to do
+            return Promise.resolve(oauthclient);
+        }
+
+        // seperate correct tokens
+        const tokens = userInfo.provider_sites.google;
+
+        // check if oogle tokens found
+        if (tokens) {
+            // store the initial credentials
+            oauthclient.setCredentials(tokens);
+
+            // get a valid token
+            const newTokens = await this.getValidToken(oauthclient, userInfo._id);
+
+            // true means not new
+            if (newTokens === true) {
+                // tokens were still valid, resolve existing client
+                return Promise.resolve(oauthclient);
             }
 
-            // seperate correct tokens
-            const tokens = userInfo.provider_sites.google;
+            // copy the user and prepare to update
+            let newUser = userInfo;
+            newUser.provider_sites.google = Object.assign({}, newUser.provider_sites.google, newTokens);
 
-            // check if oogle tokens found
-            if (tokens) {
-                // store the credentials
-                oauthclient.setCredentials(tokens);
+            // store new crednetials
+            oauthclient.setCredentials(newTokens);
 
-                // get a valid token
-                this.getValidToken(oauthclient, userInfo._id)
-                    .then(newTokens => {
-                        // true means not new
-                        if (newTokens === true) {
-                            // tokens were still valid, resolve existing client
-                            return resolve(oauthclient);
-                        }
-
-                        // copy the user and prepare to update
-                        let newUser = userInfo;
-                        newUser.provider_sites.google = newTokens;
-
-                        // store new crednetials
-                        oauthclient.setCredentials(newTokens);
-
-                        // update the user
-                        this._app._UserHelper.updateUserTokens(newUser)
-                            .then(success => {
-                                resolve(oauthclient);
-                            }).catch(reject);
-                    })
-                    .catch(err => {
-                        // failed to get valid tokens
-                        // TODO remove tokens here?
-                        reject(err);
-                    })
-            } else {
-                reject("No token found for Google provider");
-            }
-
-        });
+            // update the user
+            const success = await this._app._UserHelper.updateUserTokens(newUser);
+            if (success) return oauthclient;
+            // new token failed to store
+            throw new Error('Failed to store new access tokens');
+        }
+        throw new Error("No token found for Google provider");
     }
 
     /**
@@ -86,32 +72,30 @@ module.exports = class GoogleHelper {
      *
      * @see https://developers.google.com/drive/v3/web/search-parameters
      */
-    searchFile(user, file_name, advanced_options = {}) {
+    async searchFile(user, file_name, advanced_options = {}) {
+        // get a valid oauth client
+        const authclient = await this.createOauthClient(user);
+
+        // drive object
+        var drive = google.drive({version: 'v3', auth: authclient});
+
+        // options to use in upload
+        var options = Object.assign({
+            q: "name contains '" + file_name + "'",
+            fields: "nextPageToken, files(id, name, mimeType, thumbnailLink, webViewLink, webContentLink, description)",
+            spaces: 'drive',
+            pageToken: null
+        }, advanced_options);
+
         return new Promise((resolve, reject) => {
-            // get a valid oauth client
-            this.createOauthClient(user)
-                .then(authclient => {
-                    // drive object
-                    var drive = google.drive({version: 'v3', auth: authclient});
-
-                    // options to use in upload
-                    var options = Object.assign({
-                        q: "name contains '" + file_name + "'",
-                        fields: "nextPageToken, files(id, name, mimeType, thumbnailLink, webViewLink, webContentLink, description)",
-                        spaces: 'drive',
-                        pageToken: null
-                    }, advanced_options);
-
-                    // load the files
-                    drive.files.list(options, (err, res) => {
-                        if (err) {
-                            reject(err);
-                        } else {
-                            resolve(res.files);
-                        }
-                    });
-                })
-                .catch(reject);
+            // load the files
+            drive.files.list(options, (err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.files);
+                }
+            });
         });
     }
 
@@ -126,51 +110,51 @@ module.exports = class GoogleHelper {
      *
      * @see https://developers.google.com/drive/v3/web/manage-uploads
      */
-    uploadFile(userInfo, filePath, fileName = false, parent_folder_id = false) {
+    async uploadFile(userInfo, filePath, fileName = false, parent_folder_id = false) {
+        // get a valid oauth client
+        const authclient = await this.createOauthClient(userInfo);
+
+        // drive object
+        let drive = google.drive({version: 'v3', auth: authclient});
+
+        // promise to wrap the callback functions
         return new Promise((resolve, reject) => {
-            // create a new ouath client
-            this.createOauthClient(userInfo)
-                .then(authclient => {
-                    // drive object
-                    let drive = google.drive({version: 'v3', auth: authclient});
+            // get the contents
+            fs.readFile(filePath, {}, (err, data) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
 
-                    // get the contents
-                    fs.readFile(filePath, {}, (err, data) => {
-                        if (err) {
-                            reject(err);
-                            return;
-                        }
+                // get the file mimetype
+                var mimeType = mime.lookup(filePath);
 
-                        // get the file mimetype
-                        var mimeType = mime.lookup(filePath);
+                // what file name to use
+                var uploadFileName = fileName ? fileName : path.basename(filePath);
 
-                        // what file name to use
-                        var uploadFileName = fileName ? fileName : path.basename(filePath);
+                // file resources
+                let fileResource = {
+                    name: uploadFileName,
+                    mimeType: mimeType
+                };
 
-                        // file resources
-                        let fileResource = {
-                            name: uploadFileName,
-                            mimeType: mimeType
-                        };
+                //check if a parent folder id was given
+                if (parent_folder_id) {
+                    fileResource.parents = [];
+                    fileResource.parents.push(parent_folder_id);
+                }
 
-                        //check if a parent folder id was given
-                        if (parent_folder_id) {
-                            fileResource.parents = [];
-                            fileResource.parents.push(parent_folder_id);
-                        }
-
-                        // create the file
-                        drive.files.create({
-                            resource: fileResource,
-                            media: {
-                                mimeType: mimeType,
-                                body: data
-                            }
-                        }, (err, result) => {
-                            resolve(result);
-                        });
-                    });
-                })
+                // create the file
+                drive.files.create({
+                    resource: fileResource,
+                    media: {
+                        mimeType: mimeType,
+                        body: data
+                    }
+                }, (err, result) => {
+                    resolve(result);
+                });
+            });
         });
     }
 
@@ -182,52 +166,56 @@ module.exports = class GoogleHelper {
      *
      * @see https://developers.google.com/drive/v3/web/folder
      */
-    assertUploadFolder(userInfo) {
-        return new Promise((resolve, reject) => {
+    async assertUploadFolder(userInfo) {
+        return await new Promise((resolve, reject) => {
             // check if the folder exists with the name uploadbro
             this.searchFile(userInfo, 'UploadBro', {
                 q: "name = 'UploadBro' and trashed = false and mimeType = 'application/vnd.google-apps.folder'"
-            })
-                .then(file_info => {
-                    // should only return 1 result
-                    if (file_info.length === 0) {
-                        // no results so we need to create it
-                        this.createFolder(userInfo, 'UploadBro')
-                            .then(resolve)
-                            .catch(reject);
-                    } else if (file_info.length === 1) {
-                        // return the folrder id
-                        resolve(file_info[0]['id']);
-                    } else {
-                        reject('Failed to reliably fetch the UploadBro folder');
-                    }
-                })
-                .catch(reject);
+            }).then(file_info => {
+                // should only return 1 result
+                if (file_info.length === 0) {
+                    // no results so we need to create it
+                    this.createFolder(userInfo, 'UploadBro')
+                        .then(resolve)
+                        .catch(reject);
+                } else if (file_info.length === 1) {
+                    // return the folrder id
+                    resolve(file_info[0]['id']);
+                } else {
+                    reject('Failed to reliably fetch the UploadBro folder');
+                }
+            }).catch(reject);
         });
     }
 
-    createFolder(userInfo, folder_name) {
-        return new Promise((resolve, reject) => {
-            // create a new ouath client
-            this.createOauthClient(userInfo)
-                .then(authclient => {
-                    // drive object
-                    let drive = google.drive({version: 'v3', auth: authclient});
+    /**
+     * Create a new folder on a specific location
+     *
+     * @param userInfo
+     * @param folder_name
+     * @returns {Promise}
+     */
+    async createFolder(userInfo, folder_name) {
+        // create a new ouath client
+        const authClient = await   this.createOauthClient(userInfo);
 
-                    // create the file
-                    drive.files.create({
-                        resource: {
-                            'name': 'UploadBro',
-                            'mimeType': 'application/vnd.google-apps.folder'
-                        },
-                        fields: 'id'
-                    }, (err, file) => {
-                        if (err) return reject(err);
-                        // resolve the file id
-                        resolve(file.id);
-                    });
-                })
-        });
+        // drive object
+        let drive = google.drive({version: 'v3', auth: authClient});
+
+        return new Promise((resolve, reject) => {
+            // create the file
+            drive.files.create({
+                resource: {
+                    'name': 'UploadBro',
+                    'mimeType': 'application/vnd.google-apps.folder'
+                },
+                fields: 'id'
+            }, (err, file) => {
+                if (err) return reject(err);
+                // resolve the file id
+                resolve(file.id);
+            });
+        })
     }
 
     /**
@@ -240,19 +228,20 @@ module.exports = class GoogleHelper {
      *
      * @see https://developers.google.com/drive/v3/web/manage-downloads
      */
-    downloadFile(google_tokens, fileId, filePath) {
-        return new Promise((resolve, reject) => {
-            var authclient = this.createOauthClient(google_tokens)
+    async downloadFile(google_tokens, fileId, filePath) {
+        // create new auth client
+        var authclient = await this.createOauthClient(google_tokens);
 
-            // drive object
-            var drive = google.drive({version: 'v3', auth: authclient});
+        // drive object
+        var drive = google.drive({version: 'v3', auth: authclient});
 
-            // get the file mimetype
-            var mimeType = mime.lookup(filePath);
+        // get the file mimetype
+        var mimeType = mime.lookup(filePath);
 
-            // create target stream
-            var dest = fs.createWriteStream(filePath);
+        // create target stream
+        var dest = fs.createWriteStream(filePath);
 
+        return await new Promise((resolve, reject) => {
             // start export
             drive.files.get({
                 fileId: fileId,
@@ -351,8 +340,8 @@ module.exports = class GoogleHelper {
      * @param user_id
      * @returns {Promise}
      */
-    getValidToken(oauthClient, user_id) {
-        return new Promise((resolve, reject) => {
+    async getValidToken(oauthClient, user_id) {
+        return await new Promise((resolve, reject) => {
             if (oauthClient.credentials.access_token && this.hasNotExpired(oauthClient)) {
                 // not expired
                 resolve(true);

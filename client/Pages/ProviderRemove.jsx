@@ -120,7 +120,7 @@ class ProviderRemove extends React.Component {
                         </RaisedButton>
                     </NavLink>
                 </div>
-                
+
                 <div className="col-xs-6 col-md-4">
                     <RaisedButton secondary={true} backgroundColor={red800}
                                   onClick={this.removeProvider}>

@@ -8,8 +8,8 @@ module.exports = class UserHelper {
      * @param user
      * @returns {Promise}
      */
-    updateUserTokens(user) {
-        return new Promise((resolve, reject) => {
+    async updateUserTokens(user) {
+        return await new Promise((resolve, reject) => {
             var db = this._app._Db;
             var usersCollection = db.collection('users');
 

@@ -38,22 +38,34 @@ module.exports = class BoxHelper {
         const tokens = this.getToken(user_info);
 
         // verify if we got tokens
-        if (tokens) {
-            // get a valid token set
-            const {validTokens, isNew} = await this.getValidToken(tokens);
-
-            if (isNew) {
-                // update the tokens in database
-            }
-
-            // create a box sdk
-            const sdk = this.getSdkClient();
-
-            // create a client with the access token
-            return sdk.getBasicClient(validTokens.accessToken);
+        if (!tokens) {
+            // no tokens set, we can't continue
+            throw new Error('No tokens set');
         }
-        // no tokens set, we can't continue
-        throw new Error('No tokens set');
+
+        // get a valid token set
+        let {validTokens, isNew} = await this.getValidToken(tokens);
+
+        if (isNew) {
+            // copy the user and prepare to update
+            let newUser = {};
+            // merge existing with new
+            newUser.provider_sites.google = Object.assign({}, user_info.provider_sites.google, validTokens);
+
+            // update the user
+            const success = await this._app._UserHelper.updateUserTokens(newUser)
+            if (success === false) {
+                // no tokens set, we can't continue
+                throw new Error('Failed to store refreshed tokens');
+            }
+        }
+
+        // create a box sdk
+        const sdk = this.getSdkClient();
+
+        // create a client with the access token
+        return sdk.getBasicClient(validTokens.accessToken);
+
     }
 
     /**
@@ -83,8 +95,8 @@ module.exports = class BoxHelper {
      * @param code
      * @returns {Promise}
      */
-    requestAccessToken(code) {
-        return new Promise((resolve, reject) => {
+    async requestAccessToken(code) {
+        return await new Promise((resolve, reject) => {
             // create a new ouath client
             const sdk = this.getSdkClient();
 
@@ -120,6 +132,10 @@ module.exports = class BoxHelper {
                     return reject(err);
                 }
 
+                // set the expiry date
+                tokenInfo.expiry_date = (new Date()).getTime() + parseInt(tokenInfo.accessTokenTTLMS / 1000);
+
+                // return the tokens
                 Logger.debug(tokenInfo);
                 resolve(tokenInfo);
             });
@@ -157,8 +173,8 @@ module.exports = class BoxHelper {
      * @param filePath
      * @returns {Promise}
      */
-    uploadFile(userInfo, filePath, fileName = false) {
-        return new Promise((resolve, reject) => {
+    async uploadFile(userInfo, filePath, fileName = false) {
+        return await new Promise((resolve, reject) => {
             // create a new ouath client
             this.createOauthClient(userInfo)
                 .then(imgurClient => {
