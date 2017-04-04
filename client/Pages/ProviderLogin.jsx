@@ -51,7 +51,7 @@ export default class ProviderLogin extends React.Component {
 
     componentDidMount() {
         setTimeout(() => {
-            browserHistory.push('/');
+            browserHistory.push('/dashboard');
         }, 2000);
     }
 

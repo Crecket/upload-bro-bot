@@ -6,6 +6,7 @@ import Markdown from 'react-markdown';
 // custom components
 import PaperHelper from '../Components/Sub/PaperHelper';
 import ComponentLoader from '../Components/Sub/ComponentLoader';
+import LoadingScreen from '../Components/Sub/LoadingScreen';
 import ForceLogin from '../Helpers/ForceLogin';
 
 // async components
@@ -63,6 +64,7 @@ export default class Dashboard extends React.Component {
                     {/*<div className="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">*/}
                         {/*<Markdown source={this.props.sites.imgur.documentation}/>*/}
                     {/*</div>*/}
+                    {/*<LoadingScreen/>*/}
                 </PaperHelper>
             </div>
         );

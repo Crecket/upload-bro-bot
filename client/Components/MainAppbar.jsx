@@ -9,7 +9,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import PaletteIcon from 'material-ui/svg-icons/image/palette';
 import PowerIcon from 'material-ui/svg-icons/action/power-settings-new';
 
-import NavLink from "./Sub/NavLink";
+import NavLink from "./Sub/NavLink.jsx";
 import ManualPost from "../Helpers/ManualPost";
 
 const PopoverMenu = (props) => (
@@ -98,10 +98,11 @@ class MainAppbar extends React.Component {
             <AppBar
                 title="UploadBroBot"
                 style={styles.appbar}
-                iconElementLeft={<IconButton containerElement={<NavLink to="/"/>}>
+                iconElementLeft={<NavLink to="/"><IconButton>
                     <img src="/favicon-32x32.png" alt="App bar logo"/>
-                </IconButton>}
-                iconElementRight={<PopoverMenu menuItems={MenuItems} loggedIn={!!this.props.user_info}/>}
+                </IconButton></NavLink>}
+                iconElementRight={<PopoverMenu menuItems={MenuItems}
+                                               loggedIn={!!this.props.user_info}/>}
             >
                 <Popover
                     open={this.state.open}

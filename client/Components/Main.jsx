@@ -30,7 +30,31 @@ const ThemesList = {
 };
 const ThemeListNames = Object.keys(ThemesList);
 
-// actions
+//
+// transition="opacity 0.3s ease-in, width 0.3s ease-in"
+// initialStyle={{}}
+// finalStyle={{opacity: 1, width: '100%'}}
+// leaveStyle={{opacity: 0, width: '100%'}}
+
+// transition options
+const transitionOptions = {
+    transition: "opacity 0.3s ease-in, width 0.3s ease-in",
+    initialStyle: {
+        opacity: 0,
+        // width: '95%',
+        // margin: 'auto'
+    },
+    finalStyle: {
+        opacity: 1,
+        // width: '100%'
+    },
+    leaveStyle: {
+        opacity: 0,
+        // width: '100%'
+    }
+};
+
+// redux actions
 import {openModal, closeModal} from "../Actions/modalActions.js";
 import {userUpdate, userLogout, userLoadLocalstorage} from "../Actions/user.js";
 import {siteUpdate, siteLoadLocalstorage} from "../Actions/sites.js";
@@ -163,12 +187,7 @@ export default class Main extends React.Component {
                                     logoutUser={this.logoutUser}
                                 />
 
-                                <EasyTransition
-                                    path={location.pathname}
-                                    initialStyle={{opacity: 0}}
-                                    transition="opacity 0.3s ease-in"
-                                    finalStyle={{opacity: 1}}
-                                >
+                                <EasyTransition path={location.pathname} {...transitionOptions}>
                                     {mainBody}
                                 </EasyTransition>
 

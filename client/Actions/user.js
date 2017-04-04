@@ -15,7 +15,7 @@ export function userSetInfo(user_info) {
 export function userUpdate() {
     return dispatch => {
         dispatch(userLoading());
-        axios.post('/api/get_user', {_csrf: csrfToken})
+        axios.post('/api/get_user')
             .then(response => response.data)
             .then(json => {
                 // update user info and stop loading state
