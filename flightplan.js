@@ -19,12 +19,12 @@ plan.target("production", {
 
 // main update task
 plan.remote("update", (remote) => {
+    // stop server temporarily
+    remote.log("Stopping server");
+    remote.sudo("pm2 stop upload-bro-bot");
+
     // move to correct context
     remote.with(`cd ${WEB_ROOT}`, () => {
-        // stop server temporarily
-        remote.log("Stopping server");
-        remote.sudo("pm2 stop upload-bro-bot");
-
         // fetch latest changes
         remote.log("Git fetch all");
         remote.sudo("git fetch --all");
@@ -40,11 +40,11 @@ plan.remote("update", (remote) => {
         // create a new client production build with webpack
         remote.log("Creating a new client build");
         remote.sudo("npm run build-silent");
-
-        // update yarn packages
-        remote.log("Restarting server");
-        remote.sudo("pm2 start upload-bro-bot");
     });
+
+    // update yarn packages
+    remote.log("Restarting server");
+    remote.sudo("pm2 start upload-bro-bot");
 });
 
 // main update task

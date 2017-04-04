@@ -51,7 +51,7 @@ module.exports = class App {
                 this._Db = db;
 
                 // create mongodb cache engine
-                var engine = new MongoDbEngine(db, {collection: 'cache'});
+                const engine = new MongoDbEngine(db, {collection: 'cache'});
 
                 // store the cache in the app
                 this._Cache = new Cacheman('uploadbro_cache', {
@@ -79,8 +79,8 @@ module.exports = class App {
             // finish setup
             .then(() => {
                 // finished loading everything
-                Logger.info("Loaded the following commands:");
-                Logger.info(this._CommandHandler.info);
+                Logger.debug("Loaded the following commands:");
+                Logger.debug(this._CommandHandler.info);
                 // start express listener
                 Express(this);
             })
@@ -123,7 +123,7 @@ module.exports = class App {
             this._SiteHandler.register(new SiteObj(this));
         });
 
-        Logger.info('Loaded ' + this._SiteHandler.siteCount + " sites");
+        Logger.debug('Loaded ' + this._SiteHandler.siteCount + " sites");
         return Promise.resolve();
     }
 
@@ -145,9 +145,7 @@ module.exports = class App {
             this._CommandHandler.register(new CommandObj(this));
         });
 
-        Logger.info('Loaded ' + this._CommandHandler.commandCount + " commands");
-
-        // not used for now
+        Logger.debug('Loaded ' + this._CommandHandler.commandCount + " commands");
         return Promise.resolve();
     }
 
@@ -168,9 +166,7 @@ module.exports = class App {
             this._QueryHandler.register(new QueryObj(this));
         });
 
-        Logger.info('Loaded ' + this._QueryHandler.queryCount + " queries");
-
-        // not used for now
+        Logger.debug('Loaded ' + this._QueryHandler.queryCount + " queries");
         return Promise.resolve();
     }
 
