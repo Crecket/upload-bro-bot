@@ -14,12 +14,12 @@ export default (props, userLoggedinRequired = true) => {
 
     // navigate when neccesary
     if (IsLoggedinResult) {
-        if (userLoggedinRequired === false) {
+        if (userLoggedinRequired === false && props.initialCheck) {
             // user is logged in when he shouldn't be, redirect to home
             props.router.push('/dashboard');
         }
     } else {
-        if (userLoggedinRequired === true) {
+        if (userLoggedinRequired === true && props.initialCheck) {
             // user is not logged in when he should be, redirect to home
             props.router.push('/');
         }

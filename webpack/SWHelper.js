@@ -47,7 +47,7 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
         stripPrefix: PUBLIC_DIR,
         dynamicUrlToDependencies: {
             '/': ServerViews.concat([
-                CLIENT_DIR + "/Pages/Dashboard.jsx"
+                CLIENT_DIR + "/Pages/Home.jsx"
             ]),
             '/dashboard': ServerViews.concat([
                 CLIENT_DIR + "/Pages/Dashboard.jsx"
