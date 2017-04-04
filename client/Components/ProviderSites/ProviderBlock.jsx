@@ -71,6 +71,7 @@ export default class ProviderBlock extends React.Component {
                 </FloatingActionButton>
                 {svgLogo}
                 <br/>
+                {this.props.providerSite.display_name}
                 <br/>
                 {BlockBtn}
             </div>
