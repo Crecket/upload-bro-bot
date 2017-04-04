@@ -3,22 +3,26 @@ import Helmet from "react-helmet";
 
 // custom components
 import ManualPost from '../Helpers/ManualPost';
-import PaperHelper from '../Components/Sub/PaperHelper';
+import PaperHelper from '../Components/Sub/PaperHelper.jsx';
 import RaisedButton from 'material-ui/RaisedButton';
-import ComponentLoader from '../Components/Sub/ComponentLoader';
-import ForceLogin from '../Helpers/ForceLogin';
+import ComponentLoader from '../Components/Sub/ComponentLoader.jsx';
+import ForceLogin from '../Helpers/ForceLogin.jsx';
 
 // async components
-const FeatureList = ComponentLoader(
-    () => import('../Components/FeatureList'),
-    () => require.resolveWeak('../Components/FeatureList'));
-const YoutubePreview = ComponentLoader(
-    () => import('../Components/YoutubePreview'),
-    () => require.resolveWeak('../Components/YoutubePreview'));
-const SiteList = ComponentLoader(
-    () => import('../Components/SiteList'),
-    () => require.resolveWeak('../Components/SiteList'));
+// const FeatureList = ComponentLoader(
+//     () => import('../Components/FeatureList'),
+//     () => require.resolveWeak('../Components/FeatureList'));
+// const YoutubePreview = ComponentLoader(
+//     () => import('../Components/YoutubePreview'),
+//     () => require.resolveWeak('../Components/YoutubePreview'));
+// const SiteList = ComponentLoader(
+//     () => import('../Components/SiteList'),
+//     () => require.resolveWeak('../Components/SiteList'));
 
+// make sync
+import FeatureList from '../Components/FeatureList.jsx';
+import YoutubePreview from '../Components/YoutubePreview.jsx';
+import SiteList from '../Components/SiteList.jsx';
 
 const styles = {
     centerBox: {

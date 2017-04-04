@@ -45,7 +45,6 @@ export default class Dashboard extends React.Component {
                 </Helmet>
                 <PaperHelper style={styles.loggedIn}>
                     You're logged in as:<br/>
-                    {this.props.user_info.username}<br/>
                     {this.props.user_info.first_name} {this.props.user_info.last_name}
                     <br/>
                     <ProviderBlocks
@@ -61,9 +60,11 @@ export default class Dashboard extends React.Component {
                             />
                         </a>
                     </div>
+
                     {/*<div className="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">*/}
                         {/*<Markdown source={this.props.sites.imgur.documentation}/>*/}
                     {/*</div>*/}
+
                     {/*<LoadingScreen/>*/}
                 </PaperHelper>
             </div>

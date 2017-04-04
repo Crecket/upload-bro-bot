@@ -1,5 +1,5 @@
-
 @import '../../node_modules/spinkit/scss/spinners/9-cube-grid';
+
 .Dark {
   //in dark themes make the theme whiter
   .sk-cube-grid .sk-cube {
@@ -15,9 +15,15 @@
   height: 100%;
   z-index: 10000;
   background-color: #333333;
-  //in dark themes make the theme whiter
+
+  // in dark themes make the theme whiter
   .sk-cube-grid .sk-cube {
     background-color: #ffffff;
+  }
+
+  // JavaScript Turned Off
+  .no-js {
+    display: none;
   }
 
   #loader {
@@ -63,10 +69,4 @@
     -webkit-transition: all 0.3s 1s ease-out;
     transition: all 0.3s 1s ease-out;
   }
-
-  /* JavaScript Turned Off */
-  .no-js {
-    display: none;
-  }
-
 }
