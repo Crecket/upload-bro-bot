@@ -256,62 +256,88 @@ module.exports = class GoogleHelper {
     }
 
     /**
-     * get file info
+     * get info about oauth client's user
      *
-     * @param google_tokens
-     * @param fileId
-     * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
-     *
-     * @see https://developers.google.com/drive/v3/web/manage-downloads
+     * @param user_info
+     * @returns {Promise}
      */
-    fileInfo(google_tokens, fileId) {
+    async userInfo(user_info) {
+        const authclient = await this.createOauthClient(user_info)
+
+        // drive object
+        var drive = google.drive({version: 'v3', auth: authclient});
+
+        // start export
         return new Promise((resolve, reject) => {
-            var authclient = this.createOauthClient(google_tokens)
-
-            // drive object
-            var drive = google.drive({version: 'v3', auth: authclient});
-
-            // start export
-            drive.files.get({
-                fileId: fileId
-            }, (err, buffer) => {
+            drive.about.get({
+                fields: "user"
+            }, (err, userInformation) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(buffer);
+                    resolve(userInformation);
                 }
             });
         });
     }
 
-    /**
-     * get files list
-     *
-     * @param file
-     * @param newOptions
-     * @param dropboxToken
-     * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadError>>}
-     *
-     * @see
-     */
-    getFilesList(google_tokens, path = "") {
-        return new Promise((resolve, reject) => {
-            var authclient = this.createOauthClient(google_tokens)
-            var drive = google.drive({version: 'v3', auth: authclient});
-
-            drive.files.list({
-                auth: authclient,
-                pageSize: 10,
-                fields: "nextPageToken, files(id, name, thumbnailLink, description)"
-            }, (err, response) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(response.files);
-                }
-            });
-        })
-    }
+    // /**
+    //  * get file info
+    //  *
+    //  * @param google_tokens
+    //  * @param fileId
+    //  * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
+    //  *
+    //  * @see https://developers.google.com/drive/v3/web/manage-downloads
+    //  */
+    // fileInfo(google_tokens, fileId) {
+    //     return new Promise((resolve, reject) => {
+    //         var authclient = this.createOauthClient(google_tokens)
+    //
+    //         // drive object
+    //         var drive = google.drive({version: 'v3', auth: authclient});
+    //
+    //         // start export
+    //         drive.files.get({
+    //             fileId: fileId
+    //         }, (err, buffer) => {
+    //             if (err) {
+    //                 reject(err);
+    //             } else {
+    //                 resolve(buffer);
+    //             }
+    //         });
+    //     });
+    // }
+    //
+    // /**
+    //  * get files list
+    //  *
+    //  * @param file
+    //  * @param newOptions
+    //  * @param dropboxToken
+    //  * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadError>>}
+    //  *
+    //  * @see
+    //  */
+    // getFilesList(google_tokens, path = "") {
+    //     return new Promise((resolve, reject) => {
+    //         var authclient = this.createOauthClient(google_tokens)
+    //         var drive = google.drive({version: 'v3', auth: authclient});
+    //
+    //         drive.files.list({
+    //             auth: authclient,
+    //             pageSize: 10,
+    //             fields: "nextPageToken, files(id, name, thumbnailLink, description)"
+    //         }, (err, response) => {
+    //             if (err) {
+    //                 reject(err);
+    //             } else {
+    //                 resolve(response.files);
+    //             }
+    //         });
+    //     })
+    // }
 
     /**
      * Creates a shareable link

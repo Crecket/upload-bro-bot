@@ -66,6 +66,7 @@ module.exports = (app, passport, uploadApp) => {
                     current_provider_sites.dropbox = Object.assign(
                         current_provider_sites.dropbox, {
                             name: name,
+                            display_name: name.display_name,
                             email: email,
                             avatar: profile_photo_url
                         });

@@ -75,7 +75,8 @@ module.exports = (app, passport, uploadApp) => {
                         scope: responseData.scope,
                         refresh_token: responseData.refresh_token,
                         account_id: responseData.account_id,
-                        account_username: responseData.account_username,
+                        display_name: responseData.account_username,
+                        avatar: false,
                     };
 
                     // update the tokens for this user

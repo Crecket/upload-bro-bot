@@ -93,17 +93,15 @@ module.exports = (app, passport, uploadApp) => {
                             return;
                         }
 
-                        // get collection and current sites
-                        var current_provider_sites = request.user.provider_sites;
-
-                        if (current_provider_sites['google']) {
+                        // update or overwrite
+                        if (request.user.provider_sites.google) {
                             // already exists, update existing values
-                            current_provider_sites.google.expiry_date = tokens.expiry_date;
-                            current_provider_sites.google.access_token = tokens.access_token;
-                            current_provider_sites.google.id_token = tokens.id_token;
+                            request.user.provider_sites.google.expiry_date = tokens.expiry_date;
+                            request.user.provider_sites.google.access_token = tokens.access_token;
+                            request.user.provider_sites.google.id_token = tokens.id_token;
                         } else {
                             // add new provider
-                            current_provider_sites.google = {
+                            request.user.provider_sites.google = {
                                 expiry_date: tokens.expiry_date,
                                 access_token: tokens.access_token,
                                 refresh_token: tokens.refresh_token,
@@ -111,15 +109,30 @@ module.exports = (app, passport, uploadApp) => {
                             }
                         }
 
-                        // update the tokens for this user
-                        UserHelper.updateUserTokens(request.user, current_provider_sites)
-                            .then((result) => {
-                                response.redirect(resultRoute);
+                        // attempt to get information about username
+                        GoogleHelper.userInfo(request.user)
+                            .then(user_information => {
+                                // merge new user info content
+                                request.user.provider_sites.google = Object.assign({}, request.user.provider_sites.google, {
+                                    avatar: user_information.user.photoLink,
+                                    display_name: user_information.user.displayName,
+                                    email: user_information.user.emailAddress
+                                });
+
+                                // update the tokens for this user
+                                UserHelper.updateUserTokens(request.user, request.user.provider_sites)
+                                    .then((result) => {
+                                        response.redirect(resultRoute);
+                                    })
+                                    .catch((err) => {
+                                        Logger.error(err);
+                                        response.redirect(resultRoute);
+                                    });
                             })
-                            .catch((err) => {
+                            .catch(err => {
                                 Logger.error(err);
                                 response.redirect(resultRoute);
-                            });
+                            })
                     });
                 })
                 .catch(err => {

@@ -68,6 +68,8 @@ module.exports = (app, passport, uploadApp) => {
 
                                     // store the new user info
                                     request.user.provider_sites.box.user_info = currentUser;
+                                    request.user.provider_sites.box.display_name = currentUser.name;
+                                    request.user.provider_sites.box.avatar = currentUser.avatar_url;
 
                                     // update the tokens for this user
                                     UserHelperObj.updateUserTokens(request.user)
