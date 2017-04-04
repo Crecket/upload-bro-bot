@@ -6,6 +6,8 @@ export default (state = {
                 }, action) => {
     switch (action.type) {
         case "SITE_SET_INFO":
+            // update local storage
+            store.set('sites', action.payload.sites);
             return {
                 ...state,
                 sites: action.payload.sites

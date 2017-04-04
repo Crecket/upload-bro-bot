@@ -3,8 +3,6 @@ const Logger = require('../Helpers/Logger');
 const store = require('store');
 
 export function setSites(site_list) {
-    // update local storage
-    store.set('sites', site_list);
     // return the action
     return {
         type: 'SITE_SET_INFO',

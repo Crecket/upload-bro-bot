@@ -3,8 +3,6 @@ const Logger = require('../Helpers/Logger');
 const store = require('store');
 
 export function userSetInfo(user_info) {
-    // update local storage
-    store.set('user_info', user_info);
     // return the action
     return {
         type: 'USER_SET_INFO',
