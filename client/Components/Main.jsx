@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import store from 'store';
-// import {RouteTransition} from 'react-router-transition';
+import EasyTransition from 'react-easy-transition'
 
 // custom components
 import ComponentLoader from './Sub/ComponentLoader'
@@ -163,19 +163,15 @@ export default class Main extends React.Component {
                                     logoutUser={this.logoutUser}
                                 />
 
-                                {/*<RouteTransition*/}
-                                {/*pathname={this.props.location.pathname}*/}
-                                {/*runOnMount={false}*/}
-                                {/*atEnter={{opacity: 0}}*/}
-                                {/*atLeave={{opacity: 2}}*/}
-                                {/*atActive={{opacity: 1}}*/}
-                                {/*mapStyles={styles => {*/}
-                                {/*if (styles.opacity > 1) {*/}
-                                {/*return {display: 'none'}*/}
-                                {/*}*/}
-                                {/*return {opacity: styles.opacity, display: 'block'}*/}
-                                {/*}}></RouteTransition>*/}
-                                {mainBody}
+                                <EasyTransition
+                                    path={location.pathname}
+                                    initialStyle={{opacity: 0}}
+                                    transition="opacity 0.3s ease-in"
+                                    finalStyle={{opacity: 1}}
+                                >
+                                    {mainBody}
+                                </EasyTransition>
+
                             </div>
                         </div>
                     </div>

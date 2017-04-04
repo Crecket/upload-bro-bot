@@ -22,20 +22,23 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
         glob.sync(PUBLIC_DIR + '/**/*.{png,svg,jpg,gif,ico}')
     );
 
-    if (customFilesList) {
-        // merge the afterEmitFiles list and remove duplicates
-        staticFiles = [...new Set(staticFiles.concat(customFilesList))];
-    } else {
-        // dont add .map files in production mode
-        const distFolderGlob = DEBUG ?
-            PUBLIC_DIR + "/assets/dist/*" :
-            PUBLIC_DIR + "/assets/dist/!(*.map)";
+    // if Disable static is set, don't cache webpack output
+    if (!process.env.DISABLE_STATIC) {
+        if (customFilesList) {
+            // merge the afterEmitFiles list and remove duplicates
+            staticFiles = [...new Set(staticFiles.concat(customFilesList))];
+        } else {
+            // dont add .map files in production mode
+            const distFolderGlob = DEBUG ?
+                PUBLIC_DIR + "/assets/dist/*" :
+                PUBLIC_DIR + "/assets/dist/!(*.map)";
 
-        // list all the files in the build folder
-        let distFolder = glob.sync(distFolderGlob);
+            // list all the files in the build folder
+            let distFolder = glob.sync(distFolderGlob);
 
-        // add them to the list without duplicates
-        staticFiles = [...new Set(staticFiles.concat(distFolder))];
+            // add them to the list without duplicates
+            staticFiles = [...new Set(staticFiles.concat(distFolder))];
+        }
     }
 
     // generate a list of all the server-side views
