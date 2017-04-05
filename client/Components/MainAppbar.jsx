@@ -99,11 +99,9 @@ class MainAppbar extends React.Component {
                 title="UploadBro"
                 style={styles.appbar}
                 iconElementLeft={
-                    <NavLink to="/">
-                        <IconButton>
-                            <img src="/favicon-32x32.png" alt="App bar logo"/>
-                        </IconButton>
-                    </NavLink>
+                    <IconButton>
+                        <img src="/favicon-32x32.png" alt="App bar logo"/>
+                    </IconButton>
                 }
                 iconElementRight={
                     <PopoverMenu menuItems={MenuItems}

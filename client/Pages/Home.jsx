@@ -5,10 +5,10 @@ import Helmet from "react-helmet";
 import ManualPost from '../Helpers/ManualPost';
 import PaperHelper from '../Components/Sub/PaperHelper.jsx';
 import RaisedButton from 'material-ui/RaisedButton';
-import ComponentLoader from '../Components/Sub/ComponentLoader.jsx';
 import ForceLogin from '../Helpers/ForceLogin.jsx';
 
 // async components
+// import ComponentLoader from '../Components/Sub/ComponentLoader.jsx';
 // const FeatureList = ComponentLoader(
 //     () => import('../Components/FeatureList'),
 //     () => require.resolveWeak('../Components/FeatureList'));
@@ -44,7 +44,7 @@ export default class Home extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
-    };
+    }
 
     componentDidMount() {
         ForceLogin(this.props, false);
@@ -72,5 +72,5 @@ export default class Home extends React.Component {
                 <YoutubePreview/>
             </div>
         );
-    };
+    }
 }

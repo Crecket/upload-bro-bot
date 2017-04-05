@@ -1,32 +1,36 @@
 import IsLoggedin from './IsLoggedin.jsx';
 
 /**
- * if authRequired === true, user has to be logged in or will be redirected
- * if authRequired === false, user has to be logged out and wil be redirected
+ * if requiresLogin === true, user has to be logged in or will be redirected
+ * if requiresLogin === false, user has to be logged out and wil be redirected
  *
  * @param props
  * @param authRequired
  * @returns {boolean}
  */
-export default (props, userLoggedinRequired = true) => {
+export default (props, requiresLogin = true) => {
     // check if user profile is set and intial check has been done
     const IsLoggedinResult = IsLoggedin(props);
 
+    // get current path
+    const currentLocation = props.router.location.pathname;
+
     // navigate when neccesary
     if (IsLoggedinResult) {
-        if (userLoggedinRequired === false
-        // && props.initialCheck
-        ) {
+        if (requiresLogin === false && props.initialCheck) {
             // user is logged in when he shouldn't be, redirect to home
-            // props.router.push('/dashboard');
+            if (currentLocation !== "/dashboard") {
+                props.router.push('/dashboard');
+            }
         }
     } else {
-        if (userLoggedinRequired === true
-            // && props.initialCheck
-        ) {
+        if (requiresLogin === true) {
             // user is not logged in when he should be, redirect to home
-            // props.router.push('/');
+            if (currentLocation !== "/") {
+                props.router.push('/');
+            }
         }
     }
+
     return IsLoggedinResult;
 }
