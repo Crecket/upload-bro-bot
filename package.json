@@ -54,6 +54,7 @@
     "passport": "^0.3.2",
     "passport-oauth2-refresh": "^1.0.0",
     "passport-telegram": "^1.0.0",
+    "react-easy-transition": "^1.2.4",
     "response-time": "^2.3.2",
     "spdy": "^3.4.4",
     "tracer": "^0.8.7",
