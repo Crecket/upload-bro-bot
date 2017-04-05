@@ -181,9 +181,9 @@ export default class Main extends React.Component {
                                     logoutUser={this.logoutUser}
                                 />
 
-                                <EasyTransition path={location.pathname} {...transitionOptions}>
+                                {/*<EasyTransition path={location.pathname} {...transitionOptions}>*/}
                                     {mainBody}
-                                </EasyTransition>
+                                {/*</EasyTransition>*/}
 
                             </div>
                         </div>
