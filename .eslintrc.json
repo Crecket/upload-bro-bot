@@ -1,7 +1,8 @@
 {
   "plugins": [
     "node",
-    "babel"
+    "babel",
+    "security"
   ],
   "extends": [
     "eslint:recommended",

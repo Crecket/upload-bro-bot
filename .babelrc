@@ -1,6 +1,7 @@
 {
   "presets": [
     "env",
+    "flow",
     "babel-preset-react",
     "babel-preset-stage-0"
   ],

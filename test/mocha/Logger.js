@@ -1,7 +1,7 @@
 const assert = require('assert');
 
 describe('Logger', () => {
-    const Logger = require('../src/Helpers/Logger.js');
+    const Logger = require('../../src/Helpers/Logger.js');
     describe('#trace()', () => {
         it('should output empty string', () => {
             Logger.trace('');
