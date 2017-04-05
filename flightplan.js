@@ -35,7 +35,7 @@ plan.remote("update", (remote) => {
 
         // update yarn packages
         remote.log("Update yarn packages");
-        remote.sudo("yarn");
+        remote.sudo("yarn --ignore-engines");
 
         // create a new client production build with webpack
         remote.log("Creating a new client build");
