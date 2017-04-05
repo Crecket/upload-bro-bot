@@ -4829,10 +4829,6 @@ pbkdf2@^3.0.3:
   dependencies:
     create-hmac "^1.1.2"
 
-performance-now@^0.2.0, performance-now@~0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-0.2.0.tgz#33ef30c5c77d4ea21c5a53869d91b56d8f2555e5"
-
 pify@^2.0.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
@@ -5257,12 +5253,6 @@ querystring@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
 
-raf@^3.1.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/raf/-/raf-3.3.0.tgz#93845eeffc773f8129039f677f80a36044eee2c3"
-  dependencies:
-    performance-now "~0.2.0"
-
 random-bytes@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/random-bytes/-/random-bytes-1.0.0.tgz#4f68a1dc0ae58bd3fb95848c30324db75d64360b"
@@ -5320,7 +5310,7 @@ react-addons-shallow-compare@^15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-addons-transition-group@^15.0.0:
+"react-addons-transition-group@^0.14.0 || ^15.0", react-addons-transition-group@^15.0.0:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-addons-transition-group/-/react-addons-transition-group-15.4.2.tgz#4c42fa1c2ce024acab2924316c0f11268ded1af3"
   dependencies:
@@ -5334,6 +5324,13 @@ react-dom@^15.4.2:
     fbjs "^0.8.1"
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
+
+react-easy-transition@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/react-easy-transition/-/react-easy-transition-1.2.3.tgz#40014223452af7b79274fc1181642c0eb2bb6eb6"
+  dependencies:
+    react "^0.14.0 || ^15.0"
+    react-addons-transition-group "^0.14.0 || ^15.0"
 
 react-event-listener@^0.4.0:
   version "0.4.1"
@@ -5363,13 +5360,6 @@ react-markdown@^2.4.6:
     commonmark-react-renderer "^4.2.4"
     in-publish "^2.0.0"
 
-react-motion@^0.4.2:
-  version "0.4.7"
-  resolved "https://registry.yarnpkg.com/react-motion/-/react-motion-0.4.7.tgz#f77331ec7920bdb0d0cfc37eb6ffa10571bf42c7"
-  dependencies:
-    performance-now "^0.2.0"
-    raf "^3.1.0"
-
 react-redux@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.2.tgz#3d9878f5f71c6fafcd45de1fbb162ea31f389814"
@@ -5379,12 +5369,6 @@ react-redux@^5.0.2:
     lodash "^4.2.0"
     lodash-es "^4.2.0"
     loose-envify "^1.1.0"
-
-react-router-transition@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/react-router-transition/-/react-router-transition-0.0.6.tgz#5da212f1c028e79534452bd2a8cf6bf02fc81963"
-  dependencies:
-    react-motion "^0.4.2"
 
 react-router@^3.0.2:
   version "3.0.2"
@@ -5416,7 +5400,7 @@ react-youtube@^7.3.0:
     lodash.isequal "^4.4.0"
     youtube-player "^4.0.1"
 
-react@^15.4.2:
+"react@^0.14.0 || ^15.0", react@^15.4.2:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.4.2.tgz#41f7991b26185392ba9bae96c8889e7e018397ef"
   dependencies:
@@ -6006,6 +5990,10 @@ spdy@^3.4.4:
     http-deceiver "^1.2.4"
     select-hose "^2.0.0"
     spdy-transport "^2.0.15"
+
+spinkit@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/spinkit/-/spinkit-1.2.5.tgz#90f9f466a20e8e39ef24da959c1e611c2a30dd54"
 
 split@0.3:
   version "0.3.3"

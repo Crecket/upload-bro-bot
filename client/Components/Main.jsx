@@ -30,27 +30,21 @@ const ThemesList = {
 };
 const ThemeListNames = Object.keys(ThemesList);
 
-//
-// transition="opacity 0.3s ease-in, width 0.3s ease-in"
-// initialStyle={{}}
-// finalStyle={{opacity: 1, width: '100%'}}
-// leaveStyle={{opacity: 0, width: '100%'}}
-
 // transition options
 const transitionOptions = {
-    transition: "opacity 0.3s ease-in, width 0.3s ease-in",
+    transition: "opacity 150ms ease-in, width 150ms ease-in",
     initialStyle: {
         opacity: 0,
-        // width: '95%',
-        // margin: 'auto'
+        width: '95%',
+        margin: 'auto'
     },
     finalStyle: {
         opacity: 1,
-        // width: '100%'
+        width: '100%'
     },
     leaveStyle: {
         opacity: 0,
-        // width: '100%'
+        width: '100%'
     }
 };
 

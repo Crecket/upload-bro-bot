@@ -26,10 +26,10 @@ module.exports = class UploadStart extends HelperInterface {
 
         try {
             // get information about this query user
-            resolveResults = await this.getUserInfo(query, type).then(resolveResults => {
-                userInfo = resolveResults.userInfo;
-                return resolveResults;
-            });
+            resolveResults = await this.getUserInfo(query, type);
+
+            // store userInfo
+            userInfo = resolveResults.userInfo;
 
             // check the cache
             resolveResults = await this.checkCache(resolveResults);

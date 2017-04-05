@@ -65,7 +65,7 @@ class ProviderRemove extends React.Component {
         let providerType = this.props.params.type;
 
         // send our hashtag data
-        axios.post("/api/remove/" + providerType, {_csrf: csrfToken})
+        axios.post("/api/remove/" + providerType)
             .then((result) => {
                 if (result.data) {
                     // update state

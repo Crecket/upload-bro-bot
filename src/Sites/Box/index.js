@@ -4,7 +4,7 @@ const Logger = rootRequire('src/Helpers/Logger.js');
 
 const SiteInteface = require('../SiteInterface.js');
 
-// const UploadObj = rootRequire('src/Sites/Box/Queries/Upload');
+const UploadObj = rootRequire('src/Sites/Box/Queries/Upload');
 // const SearchQueryObj = rootRequire('src/Sites/Box/InlineQueries/SearchQuery');
 
 module.exports = class Box extends SiteInteface {
@@ -18,8 +18,8 @@ module.exports = class Box extends SiteInteface {
      * Load all commands for this website
      */
     register() {
-        // // register commands
-        // this._app._QueryHandler.register(new UploadObj(this._app));
+        // register commands
+        this._app._QueryHandler.register(new UploadObj(this._app));
         //
         // // register inline queries
         // this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
@@ -120,7 +120,7 @@ module.exports = class Box extends SiteInteface {
      * @returns {[string,string]}
      */
     get supportedFeatures() {
-        return [];
+        return ["query_upload"];
         // return ["inlineQuery_search", "query_upload"];
     }
 }

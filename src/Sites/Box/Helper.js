@@ -46,11 +46,14 @@ module.exports = class BoxHelper {
         // get a valid token set
         let {validTokens, isNew} = await this.getValidToken(tokens);
 
+        Logger.debug(user_info);
+
         if (isNew) {
             // copy the user and prepare to update
             let newUser = {};
+            newUser.provider_sites = {};
             // merge existing with new
-            newUser.provider_sites.google = Object.assign({}, user_info.provider_sites.google, validTokens);
+            newUser.provider_sites.box = Object.assign({}, user_info.provider_sites.box, validTokens);
 
             // update the user
             const success = await this._app._UserHelper.updateUserTokens(newUser)
@@ -173,24 +176,30 @@ module.exports = class BoxHelper {
      * @param filePath
      * @returns {Promise}
      */
-    async uploadFile(userInfo, filePath, fileName = false) {
+    async uploadFile(userInfo, filePath, parentFoldId = '0') {
         return await new Promise((resolve, reject) => {
             // create a new ouath client
             this.createOauthClient(userInfo)
-                .then(imgurClient => {
-
+                .then(oauthCllient => {
                     // get the contents
                     fs.readFile(filePath, {}, (err, data) => {
                         if (err) {
                             reject(err);
                             return;
                         }
-                        // A single image
-                        imgurClient.uploadFile(filePath)
-                            .then((json) => resolve(json.data))
-                            .catch(reject);
+
+                        // upload file using oauth client
+                        oauthCllient.files.uploadFile(
+                            parentFoldId,
+                            path.basename(filePath),
+                            data,
+                            (err, file) => {
+                                if (!err) return resolve(resolve);
+                                reject(err);
+                            });
                     });
-                }).catch(reject);
+                })
+                .catch(reject);
         });
     }
 

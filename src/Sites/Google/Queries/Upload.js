@@ -57,46 +57,28 @@ module.exports = class Upload extends HelperInterface {
      * @param userInfo
      * @returns {Promise}
      */
-    uploadGoogle(resolveResults) {
-        return new Promise((resolve, reject) => {
+    async uploadGoogle(resolveResults) {
+        try {
             // make sure we have a uploadbro folder
-            this._GoogleHelper.assertUploadFolder(resolveResults.userInfo)
-                .then(folder_id => {
+            const folder_id = await this._GoogleHelper.assertUploadFolder(resolveResults.userInfo);
 
-                    // upload the file to google folder
-                    this._GoogleHelper.uploadFile(
-                        resolveResults.userInfo,
-                        resolveResults.file_location,
-                        path.basename(resolveResults.file_location),
-                        folder_id
-                    ).then((upload_result) => {
-                        // add new upload location
-                        resolveResults.upload_result = upload_result;
+            // store upload results
+            resolveResults.upload_result = await this._GoogleHelper.uploadFile(
+                resolveResults.userInfo,
+                resolveResults.file_location,
+                path.basename(resolveResults.file_location),
+                folder_id
+            );
 
-                        // resolve the results
-                        resolve(resolveResults);
-                    }).catch(err => {
-                        // google upload failed
-                        reject(err);
-
-                        // error result message
-                        this.editMessageError({
-                            chat_id: resolveResults.msgInfo.chat_id,
-                            message_id: resolveResults.msgInfo.message_id
-                        });
-                    });
-                })
-                .catch(err => {
-                    // google folder creation failed
-                    reject(err);
-
-                    // error result message
-                    this.editMessageError({
-                        chat_id: resolveResults.msgInfo.chat_id,
-                        message_id: resolveResults.msgInfo.message_id
-                    });
-                });
-        })
+            return resolveResults;
+        } catch (ex) {
+            // error result message
+            this.editMessageError({
+                chat_id: resolveResults.msgInfo.chat_id,
+                message_id: resolveResults.msgInfo.message_id
+            });
+            throw new Error(ex);
+        }
     }
 
     /**
