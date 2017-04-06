@@ -2,16 +2,20 @@
   "plugins": [
     "node",
     "babel",
-    "security"
+    "security",
+    "jest"
   ],
   "extends": [
     "eslint:recommended",
     "plugin:node/recommended",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
+    "plugin:jest/recommended"
   ],
   "env": {
-    "es6": true
+    "es6": true,
+    "node": true,
+    "jest/globals": true
   },
   "parser": "babel-eslint",
   "parserOptions": {

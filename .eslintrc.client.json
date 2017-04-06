@@ -2,18 +2,20 @@
   "parser": "babel-eslint",
   "plugins": [
     "react",
-    "babel"
+    "babel",
+    "jest"
   ],
   "env": {
     "browser": true,
-    "node": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:import/errors",
-    "plugin:import/warnings"
+    "plugin:import/warnings",
+    "plugin:jest/recommended"
   ],
   "rules": {
     "react/jsx-uses-react": "error",
@@ -48,7 +50,8 @@
   },
   "globals": {
     "DEVELOPMENT_MODE": true,
-    "csrfToken": true
+    "describe": true,
+    "it": true
   }
 }
 
