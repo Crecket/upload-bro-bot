@@ -4,7 +4,6 @@ const mime = require('mime');
 const Logger = rootRequire('src/Helpers/Logger.js');
 
 const HelperInterface = rootRequire('src/HelperInterface');
-const Utils = rootRequire('src/Utils');
 
 const GoogleHelperObj = rootRequire('src/Sites/Google/Helper');
 

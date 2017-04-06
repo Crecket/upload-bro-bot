@@ -1,11 +1,5 @@
 import React from 'react';
 
-const styles = {
-    h1: {
-        // color: '#fff'
-    }
-}
-
 class TitleBar extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -15,7 +9,7 @@ class TitleBar extends React.Component {
     render() {
         return (
             <div className="row center-xs">
-                <h1 style={styles.h1} {...this.props}>
+                <h1 {...this.props}>
                     {this.props.children}
                 </h1>
             </div>

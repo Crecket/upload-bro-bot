@@ -13,7 +13,8 @@
     "lint-client": "eslint --config .eslintrc.client.json client/ --fix",
     "lint-server": "eslint --config .eslintrc.json src/ --fix",
     "test": "node ./node_modules/mocha/bin/mocha \"test/mocha\" --recursive",
-    "jest": "node ./node_modules/jest/bin/jest.js -- \"test/jest/**\"",
+    "jest": "node ./node_modules/jest/bin/jest.js",
+    "jest-snapshot": "node ./node_modules/jest/bin/jest.js --updateSnapshot",
     "sw": "cross-env RUN_HELPER=1 node webpack/SWHelper.js",
     "release": "fly update:production",
     "fly-restart": "fly restart:production",
@@ -21,6 +22,9 @@
   },
   "engines": {
     "node": ">=7.8.0"
+  },
+  "jest": {
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
   },
   "author": "",
   "license": "ISC",
@@ -80,8 +84,10 @@
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.24.0",
+    "chai": "^3.5.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
+    "enzyme": "^2.8.0",
     "eslint": "^3.19.0",
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-import": "^2.2.0",
@@ -98,6 +104,7 @@
     "node-sass": "^4.3.0",
     "nodemon": "^1.11.0",
     "react": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-helmet": "^5.0.2",
     "react-loadable": "^3.0.1",
@@ -112,6 +119,7 @@
     "redux-promise-middleware": "^4.2.0",
     "redux-thunk": "^2.1.0",
     "sass-loader": "^4.1.1",
+    "sinon": "^2.1.0",
     "spinkit": "^1.2.5",
     "store": "^2.0.4",
     "style-loader": "^0.13.1",

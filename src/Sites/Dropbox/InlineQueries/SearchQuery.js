@@ -4,8 +4,6 @@ const mime = require('mime');
 const Logger = rootRequire('src/Helpers/Logger.js');
 
 const HelperInterface = rootRequire('src/HelperInterface');
-const Utils = rootRequire('src/Utils');
-
 const DropboxHelperObj = rootRequire('src/Sites/Dropbox/Helper');
 
 module.exports = class SearchQuery extends HelperInterface {

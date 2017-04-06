@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 
-var Utils = rootRequire('src/Utils');
+var Utils = require('./Helpers/Utils');
 
 module.exports = class HelperInterface {
     constructor(app) {

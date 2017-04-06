@@ -3,7 +3,6 @@ const path = require('path');
 const Logger = rootRequire('src/Helpers/Logger.js');
 
 const HelperInterface = rootRequire('src/HelperInterface');
-const Utils = rootRequire('src/Utils');
 
 const UploadStart = rootRequire('src/Queries/Generic/UploadStart');
 const UploadFinish = rootRequire('src/Queries/Generic/UploadFinish');

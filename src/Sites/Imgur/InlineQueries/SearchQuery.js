@@ -4,8 +4,6 @@ const mime = require('mime');
 const Logger = rootRequire('src/Helpers/Logger.js');
 
 const HelperInterface = rootRequire('src/HelperInterface');
-const Utils = rootRequire('src/Utils');
-
 const ImgurHelperObj = rootRequire('src/Sites/Imgur/Helper');
 
 module.exports = class SearchQuery extends HelperInterface {

@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire('src/Helpers/Logger.js');
 
 const HelperInterface = rootRequire('src/HelperInterface');
-const Utils = rootRequire('src/Utils');
 
 const UploadStartObj = rootRequire('src/Queries/Generic/UploadStart');
 const UploadFinishObj = rootRequire('src/Queries/Generic/UploadFinish');

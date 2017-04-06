@@ -10,7 +10,7 @@ const MongoDbEngine = require('cacheman-mongo');
 const Logger = require('./Helpers/Logger.js');
 
 // utilities
-let Utils = require('./Utils');
+let Utils = require('./Helpers/Utils');
 
 // express server
 let Express = require('./Express');
