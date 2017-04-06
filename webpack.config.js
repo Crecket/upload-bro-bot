@@ -72,7 +72,7 @@ let config = {
              * @see https://alexkuz.github.io/stellar-webpack/
              * @see https://alexkuz.github.io/webpack-chart/
              */
-            generateStatsFile: true,
+            generateStatsFile: false,
             statsFilename: '../webpack.stats.json'
         }),
         // SwPrecachePlugin,
