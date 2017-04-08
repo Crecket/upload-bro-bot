@@ -1,5 +1,5 @@
 // stylesheets
-require("./../node_modules/flexboxgrid/dist/flexboxgrid.css");
-require("./Scss/index.scss");
+require(__dirname + "/../node_modules/flexboxgrid/dist/flexboxgrid.css");
+require(__dirname + "/Scss/index.scss");
 
 // split from the main app
