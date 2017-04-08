@@ -1,5 +1,8 @@
-"use strict";
-const Logger = require('./Logger');
+const assert = require('assert');
+
+// set debug to false for logger env
+process.env.DEBUG = "false";
+const Logger = require('../Logger.js');
 
 describe('#Logger', () => {
     it('trace function available', () => {
@@ -18,4 +21,3 @@ describe('#Logger', () => {
         expect(Logger).toHaveProperty('error');
     });
 });
-
