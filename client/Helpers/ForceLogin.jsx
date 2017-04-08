@@ -12,22 +12,25 @@ export default (props, requiresLogin = true) => {
     // check if user profile is set and intial check has been done
     const IsLoggedinResult = IsLoggedin(props);
 
-    // get current path
-    const currentLocation = props.router.location.pathname;
+    // only do this if we are within a router
+    if (props.router) {
+        // get current path
+        const currentLocation = props.router.location.pathname;
 
-    // navigate when neccesary
-    if (IsLoggedinResult) {
-        if (requiresLogin === false && props.initialCheck) {
-            // user is logged in when he shouldn't be, redirect to home
-            if (currentLocation !== "/dashboard") {
-                props.router.push('/dashboard');
+        // navigate when neccesary
+        if (IsLoggedinResult) {
+            if (requiresLogin === false && props.initialCheck) {
+                // user is logged in when he shouldn't be, redirect to home
+                if (currentLocation !== "/dashboard") {
+                    props.router.push('/dashboard');
+                }
             }
-        }
-    } else {
-        if (requiresLogin === true) {
-            // user is not logged in when he should be, redirect to home
-            if (currentLocation !== "/") {
-                props.router.push('/');
+        } else {
+            if (requiresLogin === true) {
+                // user is not logged in when he should be, redirect to home
+                if (currentLocation !== "/") {
+                    props.router.push('/');
+                }
             }
         }
     }

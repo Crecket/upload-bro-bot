@@ -46,8 +46,6 @@ module.exports = class BoxHelper {
         // get a valid token set
         let {validTokens, isNew} = await this.getValidToken(tokens);
 
-        Logger.debug(user_info);
-
         if (isNew) {
             // copy the user and prepare to update
             let newUser = {};
@@ -139,7 +137,6 @@ module.exports = class BoxHelper {
                 tokenInfo.expiry_date = (new Date()).getTime() + parseInt(tokenInfo.accessTokenTTLMS / 1000);
 
                 // return the tokens
-                Logger.debug(tokenInfo);
                 resolve(tokenInfo);
             });
         });

@@ -7,8 +7,6 @@ cache:
     - node_modules
 script:
   - npm run test
-  - npm run lint-server
-  - npm run lint-client
   - npm run build
 #services:
 #  - mongodb
