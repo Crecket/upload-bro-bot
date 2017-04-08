@@ -1,8 +1,15 @@
 const tracer = require('tracer');
 
 // disable/enable based on enviroment and debug settings
-const DEV = process.env.DEBUG || process.env.NODE_ENV !== "production";
+const DEV = process.env.DEBUG === "false";
 
+// prePreocess
+const preProcess = (data) => {
+    data.title = data.title.toUpperCase();
+    return data;
+};
+
+// options
 const tracerOptions = {
     format: [
         "{{title}}: {{message}} (in {{file}}:{{line}})",
@@ -13,13 +20,15 @@ const tracerOptions = {
         }
     ],
     dateformat: "HH:MM:ss.L",
-    level: DEV ? 1 : 4,
-    preprocess: function (data) {
-        data.title = data.title.toUpperCase();
-    }
+    level: DEV ? "trace" : "error",
+    preprocess: preProcess
 };
 
-// export the logger
-module.exports = DEV ?
-    tracer.colorConsole(tracerOptions) :
-    tracer.console(tracerOptions);
+// create a new logger using the options
+let Logger = tracer.colorConsole(tracerOptions);
+
+// export the preProcess function for testing
+Logger.preProcess = preProcess;
+
+//export it
+module.exports = Logger;
