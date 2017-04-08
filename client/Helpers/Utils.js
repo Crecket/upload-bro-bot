@@ -4,17 +4,15 @@ export default {
         let e;
         let a = /\+/g;  // Regex for replacing addition symbol with a space
         let r = /([^&;=]+)=?([^&;]*)/g;
-        let d = function (s) {
+        let d = (s) => {
             return decodeURIComponent(s.replace(a, " "));
         };
         let q = window.location.hash.substring(1);
-
         e = r.exec(q)
         while (e) {
             hashParams[d(e[1])] = d(e[2]);
             e = r.exec(q)
         }
-
         return hashParams;
     },
     ucfirst: (str) => {
