@@ -104,14 +104,14 @@ let config = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
+                    fallback: "style-loader!css-loader",
                     use: "css-loader"
                 })
             },
             {
                 test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
+                    fallback: "style-loader!css-loader!sass-loader",
                     use: "css-loader!sass-loader"
                 })
             }
