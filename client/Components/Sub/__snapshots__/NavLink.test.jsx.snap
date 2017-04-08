@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NavLink /> matches snapshot 1`] = `
+<a
+  onClick={[Function]}
+  style={Object {}}
+/>
+`;

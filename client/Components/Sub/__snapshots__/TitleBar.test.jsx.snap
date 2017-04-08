@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TitleBar /> matches snapshot 1`] = `
+<div
+  className="row center-xs"
+>
+  <h1 />
+</div>
+`;

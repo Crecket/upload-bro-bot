@@ -22,3 +22,4 @@ public/assets/dist/*
 /webpack.report.html
 /webpack.stats.json
 /webpack.stats.html
+/coverage/

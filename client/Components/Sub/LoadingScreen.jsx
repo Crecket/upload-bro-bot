@@ -17,7 +17,34 @@ const getLoaderType = (type) => {
                     <div className="sk-cube sk-cube8"></div>
                     <div className="sk-cube sk-cube9"></div>
                 </div>
-            )
+            );
+        }
+        case "rotating-plane": {
+            return (
+                <div class="rotating-plane"></div>
+            );
+        }
+        case "double-bounce": {
+            return (
+                <div>
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+            );
+        }
+        case "rectangle-bounce": {
+            return (
+                <li class="rectangle-bounce">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </li>
+            );
+        }
+        default: {
+            throw new Error('Invalid loading type');
         }
     }
 }
@@ -30,7 +57,9 @@ class LoadingScreen extends React.PureComponent {
 
     render() {
         return (
-            getLoaderType("cube-grid")
+            <div className="sk-loader">
+                {getLoaderType(this.props.loadingType || "cube-grid")}
+            </div>
         );
     }
 }

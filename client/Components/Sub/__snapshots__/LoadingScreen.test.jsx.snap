@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoadingScreen /> matches cube-grid snapshot 1`] = `
+<div
+  className="sk-loader"
+>
+  <div
+    className="sk-cube-grid"
+  >
+    <div
+      className="sk-cube sk-cube1"
+    />
+    <div
+      className="sk-cube sk-cube2"
+    />
+    <div
+      className="sk-cube sk-cube3"
+    />
+    <div
+      className="sk-cube sk-cube4"
+    />
+    <div
+      className="sk-cube sk-cube5"
+    />
+    <div
+      className="sk-cube sk-cube6"
+    />
+    <div
+      className="sk-cube sk-cube7"
+    />
+    <div
+      className="sk-cube sk-cube8"
+    />
+    <div
+      className="sk-cube sk-cube9"
+    />
+  </div>
+</div>
+`;
+
+exports[`<LoadingScreen /> matches default snapshot 1`] = `
+<div
+  className="sk-loader"
+>
+  <div
+    className="sk-cube-grid"
+  >
+    <div
+      className="sk-cube sk-cube1"
+    />
+    <div
+      className="sk-cube sk-cube2"
+    />
+    <div
+      className="sk-cube sk-cube3"
+    />
+    <div
+      className="sk-cube sk-cube4"
+    />
+    <div
+      className="sk-cube sk-cube5"
+    />
+    <div
+      className="sk-cube sk-cube6"
+    />
+    <div
+      className="sk-cube sk-cube7"
+    />
+    <div
+      className="sk-cube sk-cube8"
+    />
+    <div
+      className="sk-cube sk-cube9"
+    />
+  </div>
+</div>
+`;
+
+exports[`<LoadingScreen /> matches double-bounce snapshot 1`] = `
+<div
+  className="sk-loader"
+>
+  <div>
+    <div
+      class="double-bounce1"
+    />
+    <div
+      class="double-bounce2"
+    />
+  </div>
+</div>
+`;
+
+exports[`<LoadingScreen /> matches rectangle-bounce snapshot 1`] = `
+<div
+  className="sk-loader"
+>
+  <li
+    class="rectangle-bounce"
+  >
+    <div
+      class="rect1"
+    />
+    <div
+      class="rect2"
+    />
+    <div
+      class="rect3"
+    />
+    <div
+      class="rect4"
+    />
+    <div
+      class="rect5"
+    />
+  </li>
+</div>
+`;
+
+exports[`<LoadingScreen /> matches rotating-plane snapshot 1`] = `
+<div
+  className="sk-loader"
+>
+  <div
+    class="rotating-plane"
+  />
+</div>
+`;

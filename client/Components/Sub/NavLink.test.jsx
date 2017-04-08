@@ -1,20 +1,20 @@
+import NavLink from'./NavLink.jsx';
+
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 
-import TitleBar from'./TitleBar.jsx';
-
-describe('<TitleBar />', () => {
+describe('<NavLink />', () => {
     it('matches snapshot', () => {
         const tree = renderer.create(
-            <TitleBar/>
+            <NavLink/>
         );
         expect(tree).toMatchSnapshot();
     });
 
-    it('renders title text when passed', () => {
+    it('renders children when passed', () => {
         const wrapper = shallow(
-            <TitleBar>Some Text</TitleBar>
+            <NavLink><h1>Some Text</h1></NavLink>
         );
         expect(wrapper.contains(<h1>Some Text</h1>)).toBe(true);
     });
