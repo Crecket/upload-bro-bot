@@ -23,6 +23,9 @@ const styles = {
         zIndex: 1000,
         top: 0,
         right: 0
+    },
+    block: {
+        marginBottom: 20
     }
 }
 
@@ -34,7 +37,7 @@ export default class ProviderBlock extends React.Component {
 
     render() {
         let BlockBtn;
-        if (this.props.providerSite) {
+        if (this.props.userSiteInfo) {
             // user is logged into this site
             BlockBtn = (
                 <NavLink to={"/remove/" + this.props.siteInfo.key}>
@@ -63,18 +66,24 @@ export default class ProviderBlock extends React.Component {
         }
 
         return (
-            <div style={styles.container}>
-                <FloatingActionButton
-                    mini={true} style={styles.floatingBtn}
-                    href={this.props.siteInfo.url} rel="noopener" target="_blank">
-                    <LinkIcon />
-                </FloatingActionButton>
-                {svgLogo}
-                <br/>
-                {this.props.providerSite.display_name}
-                <br/>
-                {BlockBtn}
+            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                 key={this.props.key} style={styles.block}>
+                <div className="box">
+                    <div style={styles.container}>
+                        <FloatingActionButton
+                            mini={true} style={styles.floatingBtn}
+                            href={this.props.siteInfo.url} rel="noopener" target="_blank">
+                            <LinkIcon />
+                        </FloatingActionButton>
+                        {svgLogo}
+                        <br/>
+                        {this.props.userSiteInfo.display_name}
+                        <br/>
+                        {BlockBtn}
+                    </div>
+                </div>
             </div>
+
         );
     }
 }

@@ -20,7 +20,9 @@ module.exports = (app, passport, uploadApp) => {
             Object.keys(user_info.provider_sites).map(key => {
                 delete user_info.provider_sites[key].id_token;
                 delete user_info.provider_sites[key].access_token;
+                delete user_info.provider_sites[key].accessToken;
                 delete user_info.provider_sites[key].refresh_token;
+                delete user_info.provider_sites[key].refreshToken;
             });
             // telegram tokens
             delete user_info.accessToken;

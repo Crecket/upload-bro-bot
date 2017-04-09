@@ -48,8 +48,8 @@ export default class Dashboard extends React.Component {
                     {this.props.user_info.first_name} {this.props.user_info.last_name}
                     <br/>
                     <ProviderBlocks
-                        provider_sites={this.props.user_info.provider_sites}
-                        provider_sites_info={this.props.sites}
+                        user_provider_sites={this.props.user_info.provider_sites}
+                        provider_sites={this.props.sites}
                     />
                     <br/>
                     <div className="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">

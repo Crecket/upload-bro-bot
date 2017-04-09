@@ -1,0 +1,66 @@
+{
+  "_id": 127251962,
+  "provider": "telegram",
+  "first_name": "Gregory",
+  "last_name": "Goijaerts",
+  "username": "gregoryg",
+  "avatar": null,
+  "provider_sites": {
+    "imgur": {
+      "expires_in": 2419200,
+      "expiry_date": 1491331268393,
+      "token_type": "bearer",
+      "scope": null,
+      "account_id": 13149858,
+      "display_name": "Crecket",
+      "avatar": false
+    },
+    "google": {
+      "expiry_date": 1491659480522,
+      "token_type": "Bearer",
+      "avatar": "https://lh4.googleusercontent.com/-rEW2fNK1Sqs/AAAAAAAAAAI/AAAAAAAAAE0/5XBbvr9HGEg/s64/photo.jpg",
+      "display_name": "Gregory Goijaerts",
+      "email": "crecketgaming@gmail.com"
+    },
+    "dropbox": {
+      "token_type": "bearer",
+      "uid": "50111006",
+      "account_id": "dbid:AADGLCD-QPTNseOBodS0vIvIh3AjVSSn9Uc",
+      "name": {
+        "given_name": "Gregory",
+        "surname": "Goijaerts",
+        "familiar_name": "Gregory",
+        "display_name": "Gregory Goijaerts",
+        "abbreviated_name": "GG"
+      },
+      "display_name": "Gregory Goijaerts",
+      "email": "crecketgaming@gmail.com",
+      "avatar": "https://dl-web.dropbox.com/account_photo/get/dbid%3AAADGLCD-QPTNseOBodS0vIvIh3AjVSSn9Uc?size=128x128&vers=1426612432060"
+    },
+    "box": {
+      "accessTokenTTLMS": 4068000,
+      "acquiredAtMS": 1491655918821,
+      "expiry_date": 1491655922889,
+      "user_info": {
+        "type": "user",
+        "id": "1379684605",
+        "name": "Gregory Goijaerts",
+        "login": "crecketgaming@gmail.com",
+        "created_at": "2017-03-31T02:37:41-07:00",
+        "modified_at": "2017-04-05T03:31:49-07:00",
+        "language": "en",
+        "timezone": "America/Los_Angeles",
+        "space_amount": 10737418240,
+        "space_used": 56640,
+        "max_upload_size": 2147483648,
+        "status": "active",
+        "job_title": "",
+        "phone": "",
+        "address": "",
+        "avatar_url": "https://app.box.com/api/avatar/large/1379684605"
+      },
+      "display_name": "Gregory Goijaerts",
+      "avatar": "https://app.box.com/api/avatar/large/1379684605"
+    }
+  }
+}

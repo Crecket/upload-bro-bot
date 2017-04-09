@@ -10,9 +10,6 @@ const styles = {
     img: {
         maxWidth: 150
     },
-    block: {
-        marginBottom: 20
-    },
     blocks: {
         margin: 20
     }
@@ -24,37 +21,23 @@ export default class ProviderBlocks extends React.Component {
         this.state = {};
     }
 
-    getBlockTemplate = (key, siteInfo, userSiteInfo = false) => {
-        return (
-            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
-                 key={key} style={styles.block}>
-                <div className="box">
-                    <ProviderBlock
-                        siteInfo={siteInfo}
-                        providerSite={userSiteInfo}/>
-                </div>
-            </div>
-        );
-    }
-
     render() {
         let finalBlocks = [];
         // loop through providers which havn't been verified
-        Object.keys(this.props.provider_sites_info).map((key) => {
+        Object.keys(this.props.provider_sites).map((key) => {
             // site info for this site
-            let siteInfo = this.props.provider_sites_info[key];
+            let siteInfo = this.props.provider_sites[key];
 
             // fallback to empty list
-            let providerSite = this.props.provider_sites && this.props.provider_sites[siteInfo.key] ?
-                this.props.provider_sites[siteInfo.key] : false
+            let userSiteInfo = this.props.user_provider_sites && this.props.user_provider_sites[siteInfo.key] ?
+                this.props.user_provider_sites[siteInfo.key] : false
 
             // always add to the list
             finalBlocks.push(
-                this.getBlockTemplate(
-                    key,
-                    siteInfo,
-                    providerSite
-                )
+                <ProviderBlock
+                    key={key}
+                    siteInfo={siteInfo}
+                    userSiteInfo={userSiteInfo}/>
             );
         })
 

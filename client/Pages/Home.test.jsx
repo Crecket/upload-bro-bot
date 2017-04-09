@@ -6,7 +6,7 @@ import renderer from 'react-test-renderer';
 import Wrapper from '../TestHelpers/Wrapper.jsx';
 import Home from'./Home.jsx';
 
-const siteTestList = require('../TestHelpers/Data/ApiProviderList.json');
+const siteTestList = require('../TestHelpers/Data/api-get_providers.json');
 
 describe('<Home />', () => {
     it('matches snapshot', () => {
