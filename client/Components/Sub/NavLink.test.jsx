@@ -12,6 +12,13 @@ describe('<NavLink />', () => {
         expect(tree).toMatchSnapshot();
     });
 
+    it('matches snapshot with children', () => {
+        const tree = renderer.create(
+            <NavLink><h1>Some Text</h1></NavLink>
+        );
+        expect(tree).toMatchSnapshot();
+    });
+
     it('renders children when passed', () => {
         const wrapper = shallow(
             <NavLink><h1>Some Text</h1></NavLink>

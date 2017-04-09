@@ -6,3 +6,14 @@ exports[`<NavLink /> matches snapshot 1`] = `
   style={Object {}}
 />
 `;
+
+exports[`<NavLink /> matches snapshot with children 1`] = `
+<a
+  onClick={[Function]}
+  style={Object {}}
+>
+  <h1>
+    Some Text
+  </h1>
+</a>
+`;
