@@ -1,7 +1,7 @@
 "use strict";
 
 import React from 'react';
-import renderer from 'react-test-renderer';
+import ReactTestRenderer  from 'react-test-renderer';
 import {shallow} from 'enzyme';
 
 import Wrapper from '../../TestHelpers/Wrapper.jsx';
@@ -9,7 +9,7 @@ import PaperHelper from'./PaperHelper.jsx';
 
 describe('<PaperHelper />', () => {
     it('matches snapshot', () => {
-        const tree = renderer.create(
+        const tree = ReactTestRenderer.create(
             <Wrapper><PaperHelper/></Wrapper>
         );
 

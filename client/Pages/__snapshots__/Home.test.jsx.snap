@@ -9,7 +9,7 @@ exports[`<Home /> matches snapshot 1`] = `
         "alignContent": "center",
         "alignItems": "center",
         "backgroundColor": "#353535",
-        "borderRadius": "2px",
+        "borderRadius": 2,
         "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                0 1px 4px rgba(0, 0, 0, 0.12)",
         "boxSizing": "border-box",
@@ -32,7 +32,7 @@ exports[`<Home /> matches snapshot 1`] = `
         Object {
           "WebkitTapHighlightColor": "rgba(0,0,0,0)",
           "backgroundColor": "#353535",
-          "borderRadius": "2px",
+          "borderRadius": 2,
           "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                  0 1px 4px rgba(0, 0, 0, 0.12)",
           "boxSizing": "border-box",
@@ -153,7 +153,7 @@ exports[`<Home /> matches snapshot 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -182,7 +182,7 @@ exports[`<Home /> matches snapshot 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -260,7 +260,7 @@ exports[`<Home /> matches snapshot 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -338,7 +338,7 @@ exports[`<Home /> matches snapshot 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -416,7 +416,7 @@ exports[`<Home /> matches snapshot 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -506,7 +506,7 @@ exports[`<Home /> matches snapshot 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -535,7 +535,7 @@ exports[`<Home /> matches snapshot 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -601,7 +601,7 @@ exports[`<Home /> matches snapshot 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -667,7 +667,7 @@ exports[`<Home /> matches snapshot 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -733,7 +733,7 @@ exports[`<Home /> matches snapshot 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -804,7 +804,7 @@ exports[`<Home /> matches snapshot 1`] = `
         Object {
           "WebkitTapHighlightColor": "rgba(0,0,0,0)",
           "backgroundColor": "#353535",
-          "borderRadius": "2px",
+          "borderRadius": 2,
           "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                  0 1px 4px rgba(0, 0, 0, 0.12)",
           "boxSizing": "border-box",
@@ -846,7 +846,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
         "alignContent": "center",
         "alignItems": "center",
         "backgroundColor": "#353535",
-        "borderRadius": "2px",
+        "borderRadius": 2,
         "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                0 1px 4px rgba(0, 0, 0, 0.12)",
         "boxSizing": "border-box",
@@ -869,7 +869,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
         Object {
           "WebkitTapHighlightColor": "rgba(0,0,0,0)",
           "backgroundColor": "#353535",
-          "borderRadius": "2px",
+          "borderRadius": 2,
           "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                  0 1px 4px rgba(0, 0, 0, 0.12)",
           "boxSizing": "border-box",
@@ -990,7 +990,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -1019,7 +1019,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -1097,7 +1097,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -1175,7 +1175,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -1253,7 +1253,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -1343,7 +1343,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
               "backgroundColor": "#353535",
-              "borderRadius": "2px",
+              "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
@@ -1377,7 +1377,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
         Object {
           "WebkitTapHighlightColor": "rgba(0,0,0,0)",
           "backgroundColor": "#353535",
-          "borderRadius": "2px",
+          "borderRadius": 2,
           "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                  0 1px 4px rgba(0, 0, 0, 0.12)",
           "boxSizing": "border-box",
