@@ -4,7 +4,8 @@ import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import store from 'store';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
-// import EasyTransition from 'react-easy-transition'
+// import TransitionGroup from 'react-transition-group/TransitionGroup';
+// import TweenMax from 'gsap/TweenMax';
 
 // custom components
 import ComponentLoader from './Sub/ComponentLoader'
@@ -30,24 +31,6 @@ const ThemesList = {
     "Dark": getMuiTheme(Dark, {userAgent: navigatorHelper}),
 };
 const ThemeListNames = Object.keys(ThemesList);
-
-// transition options
-const transitionOptions = {
-    transition: "opacity 150ms ease-in, width 150ms ease-in",
-    initialStyle: {
-        opacity: 0,
-        width: '95%',
-        margin: 'auto'
-    },
-    finalStyle: {
-        opacity: 1,
-        width: '100%'
-    },
-    leaveStyle: {
-        opacity: 0,
-        width: '100%'
-    }
-};
 
 // redux actions
 import {openModal, closeModal} from "../Actions/modalActions.js";
@@ -130,6 +113,16 @@ export default class Main extends React.Component {
         this.props.dispatch(userLogout());
     };
 
+    // componentWillEnter (callback) {
+    //     const el = this.container;
+    //     TweenMax.fromTo(el, 0.3, {y: 100, opacity: 0}, {y: 0, opacity: 1, onComplete: callback});
+    // }
+    //
+    // componentWillLeave (callback) {
+    //     const el = this.container;
+    //     TweenMax.fromTo(el, 0.3, {y: 0, opacity: 1}, {y: -100, opacity: 0, onComplete: callback});
+    // }
+
     render() {
         // get the children pages and give them some default props
         const mainBody = React.Children.map(
@@ -183,14 +176,12 @@ export default class Main extends React.Component {
                                     logoutUser={this.logoutUser}
                                 />
 
-                                {/*<EasyTransition path={location.pathname} {...transitionOptions}>*/}
                                 <CSSTransitionGroup
                                     transitionName="page-animation"
                                     transitionEnterTimeout={500}
                                     transitionLeaveTimeout={300}>
                                     {mainBody}
                                 </CSSTransitionGroup>
-                                {/*</EasyTransition>*/}
 
                             </div>
                         </div>
