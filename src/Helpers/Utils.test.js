@@ -1,20 +1,20 @@
 const assert = require('assert');
 const path = require('path');
+const Utils = require('./Utils.js');
 
 describe('Utils', () => {
-    const Utils = require('./Utils.js');
-
     describe('ensureFolderExists()', () => {
 
         it('should do nothing and return false', async () => {
-            const folderAttempt = await Utils.ensureFolderExists(path.resolve(__dirname + '/../Helpers'));
+            // attempt to create a folder that already exists
+            const folderAttempt = await Utils.ensureFolderExists(path.resolve(__dirname));
             // expect false since folder exists
             expect(folderAttempt).toEqual(false);
         });
 
         it('should create folder and return true', async () => {
             // set path for target folder
-            const folderTarget = __dirname + '/../../Downloads/test_folder_' + (new Date()).getTime();
+            const folderTarget = __dirname + '/../../downloads/test_folder_' + (new Date()).getTime();
             // attempt to create the new folder
             const folderAttempt = await Utils.ensureFolderExists(path.resolve(folderTarget));
             // expect true since folder shouldn't exist
