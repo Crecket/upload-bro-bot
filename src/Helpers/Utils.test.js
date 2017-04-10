@@ -7,7 +7,7 @@ describe('Utils', () => {
     describe('ensureFolderExists()', () => {
 
         it('should do nothing and return false', async () => {
-            const folderAttempt = await Utils.ensureFolderExists(path.resolve('../Helpers'));
+            const folderAttempt = await Utils.ensureFolderExists(path.resolve(__dirname + '/../Helpers'));
             // expect false since folder exists
             expect(folderAttempt).toEqual(false);
         });
