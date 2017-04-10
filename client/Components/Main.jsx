@@ -3,11 +3,12 @@ import {connect} from "react-redux";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import store from 'store';
-import EasyTransition from 'react-easy-transition'
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+// import EasyTransition from 'react-easy-transition'
 
 // custom components
 import ComponentLoader from './Sub/ComponentLoader'
-import Logger from '../Helpers/Logger'
+// import Logger from '../Helpers/Logger'
 
 // only allow this in debug enviroment, else return null
 const MainAppbar = ComponentLoader(
@@ -134,6 +135,7 @@ export default class Main extends React.Component {
         const mainBody = React.Children.map(
             this.props.children,
             (child) => React.cloneElement(child, {
+                key: child.type.name,
                 initialCheck: this.props.initialCheck,
                 user_info: this.props.user_info,
                 sites: this.props.sites,
@@ -182,7 +184,12 @@ export default class Main extends React.Component {
                                 />
 
                                 {/*<EasyTransition path={location.pathname} {...transitionOptions}>*/}
+                                <CSSTransitionGroup
+                                    transitionName="page-animation"
+                                    transitionEnterTimeout={500}
+                                    transitionLeaveTimeout={300}>
                                     {mainBody}
+                                </CSSTransitionGroup>
                                 {/*</EasyTransition>*/}
 
                             </div>

@@ -1,19 +1,19 @@
 import React from "react";
 import Helmet from "react-helmet";
 import RaisedButton from 'material-ui/RaisedButton';
-import Markdown from 'react-markdown';
+// import Markdown from 'react-markdown';
 
 // custom components
+import ProviderBlocks from '../Components/ProviderSites/ProviderBlocks';
 import PaperHelper from '../Components/Sub/PaperHelper';
-import ComponentLoader from '../Components/Sub/ComponentLoader';
-import LoadingScreen from '../Components/Sub/LoadingScreen';
+// import ComponentLoader from '../Components/Sub/ComponentLoader';
+// import LoadingScreen from '../Components/Sub/LoadingScreen';
 import ForceLogin from '../Helpers/ForceLogin';
 
 // async components
-const ProviderBlocks = ComponentLoader(
-    () => import('../Components/ProviderSites/ProviderBlocks'),
-    () => require.resolveWeak('../Components/ProviderSites/ProviderBlocks'));
-
+// const ProviderBlocks = ComponentLoader(
+//     () => import('../Components/ProviderSites/ProviderBlocks'),
+//     () => require.resolveWeak('../Components/ProviderSites/ProviderBlocks'));
 
 const styles = {
     loggedIn: {
@@ -62,7 +62,7 @@ export default class Dashboard extends React.Component {
                     </div>
 
                     {/*<div className="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">*/}
-                        {/*<Markdown source={this.props.sites.imgur.documentation}/>*/}
+                    {/*<Markdown source={this.props.sites.imgur.documentation}/>*/}
                     {/*</div>*/}
 
                     {/*<LoadingScreen/>*/}

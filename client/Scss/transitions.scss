@@ -1,0 +1,18 @@
+.page-animation-enter {
+  opacity: 0.01;
+}
+
+.page-animation-enter.page-animation-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.page-animation-leave {
+  //opacity: 1;
+  display: none;
+}
+
+.page-animation-leave.page-animation-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

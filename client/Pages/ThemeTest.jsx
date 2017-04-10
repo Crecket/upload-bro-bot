@@ -185,12 +185,14 @@ class ThemesPage extends Component {
                 <div style={Object.assign({}, styles.group, {marginTop: 0})}>
                     <div style={styles.container}>
                         <TextField
+                            id="field1"
                             style={styles.textfield}
                             hintText="TextField"
                         />
                     </div>
                     <div style={styles.container}>
                         <DatePicker
+                            id="field2"
                             hintText="Landscape Dialog"
                             mode="landscape"
                             style={{width: '100%'}}
@@ -198,6 +200,7 @@ class ThemesPage extends Component {
                     </div>
                     <div style={styles.container}>
                         <TimePicker
+                            id="timepickerkey"
                             key="timepickerkey"
                             autoOk={true}/>
                     </div>

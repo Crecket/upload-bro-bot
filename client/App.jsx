@@ -1,8 +1,8 @@
 import React from 'react';
 import {Provider} from "react-redux";
-import injectTapEventPlugin  from 'react-tap-event-plugin';
 
 // injection, required for materialze tap events
+import injectTapEventPlugin  from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 // main app
