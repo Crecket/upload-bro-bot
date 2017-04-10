@@ -46,7 +46,7 @@ let config = {
         ]
     },
     // devtool for source maps
-    devtool: DEV ? "source-map" : "cheap-module-source-ma",
+    devtool: DEV ? "source-map" : false,
     plugins: [
         // stop emit if we get errors
         new webpack.NoEmitOnErrorsPlugin(),
