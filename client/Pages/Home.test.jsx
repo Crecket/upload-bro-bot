@@ -2,6 +2,7 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {shallow} from 'enzyme';
 
 import Wrapper from '../TestHelpers/Wrapper.jsx';
 import Home from'./Home.jsx';
@@ -21,5 +22,12 @@ describe('<Home />', () => {
             <Wrapper><Home sites={{}}/></Wrapper>
         );
         expect(tree).toMatchSnapshot();
+    });
+
+    it('lifeCycle will update event works', () => {
+        const wrapper = shallow(
+            <Home sites={{}}/>
+        );
+        wrapper.instance().setState({a: true});
     });
 });
