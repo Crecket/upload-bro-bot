@@ -9,7 +9,6 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import PaletteIcon from 'material-ui/svg-icons/image/palette';
 import PowerIcon from 'material-ui/svg-icons/action/power-settings-new';
 
-import NavLink from "./Sub/NavLink.jsx";
 import ManualPost from "../Helpers/ManualPost";
 
 const PopoverMenu = (props) => (
@@ -34,15 +33,6 @@ const PopoverMenu = (props) => (
         />
     </IconMenu>
 );
-
-// const LoggedOut = (props) => (
-//     <FlatButton
-//         onClick={ManualPost("/login/telegram")}
-//         labelPosition="before"
-//         label="Login"
-//         icon={<ExitToAppIcon/>}/>
-// );
-
 
 const styles = {
     appbar: {

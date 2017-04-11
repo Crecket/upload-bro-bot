@@ -15,7 +15,7 @@ module.exports = (title, message, options = {}) => {
         };
 
         // detect if notification is supported
-        if (!Notification || !("Notification" in window)) {
+        if (!("Notification" in window) || !Notification) {
             return reject("Notification not supported");
         }
 

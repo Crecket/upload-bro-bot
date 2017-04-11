@@ -5887,6 +5887,10 @@ react-dom@15.4.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
+react-easy-swipe@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-easy-swipe/-/react-easy-swipe-0.0.8.tgz#6d265d54993df46169634f752a85b9f2e176ac6b"
+
 react-easy-transition@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/react-easy-transition/-/react-easy-transition-1.2.4.tgz#4d7aa3e35a07e82e34b2d20508e4983e4233735e"

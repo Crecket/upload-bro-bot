@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Check from 'material-ui/svg-icons/navigation/check';
 import Error from 'material-ui/svg-icons/alert/error';
 import {red500, red800, green800} from 'material-ui/styles/colors';
+import Swipe from 'react-easy-swipe';
 import axios from 'axios';
 
 import Utils from '../Helpers/Utils';
@@ -24,7 +25,7 @@ const styles = {
         width: '100%',
     },
     paperWrapper: {
-        marginTop: 40,
+        marginTop: 20,
         textAlign: 'center'
     },
     paper: {
@@ -48,19 +49,84 @@ const styles = {
 export default class ProviderRemove extends React.Component {
     constructor(props, context) {
         super(props, context);
+
+        // bind events
+        this._onSwipeMove = this.onSwipeMove.bind(this);
+        this._onSwipeEnd = this.onSwipeEnd.bind(this);
+
         this.state = {
             loadingState: "nope",
-            error: false
+            error: false,
+            nextSite: false,
+            previousSite: false,
+            swipeAmount: 0
         };
+    }
+
+    componentDidMount() {
+        // calculate which items are before/after this site
+        const siteKeys = Object.keys(this.props.sites);
+
+        // ensure we have more than 1 site type
+        if (siteKeys.length > 1) {
+            const siteIndex = siteKeys.indexOf(this.props.params.type);
+
+            // on previous-site event go here
+            const previousIndex = siteIndex > 0 ? siteIndex - 1 : siteKeys.length - 1;
+            const previousItem = this.props.sites[siteKeys[previousIndex]];
+
+            // on next-site event go here
+            const nextIndex = siteIndex >= (siteKeys.length - 1) ? 0 : siteIndex + 1;
+            const nextItem = this.props.sites[siteKeys[nextIndex]];
+
+            // update state
+            this.setState({
+                nextSite: nextItem.key,
+                previousSite: previousItem.key,
+            });
+        } else {
+            // fallback to own type since we don't have more than 1 site
+            this.setState({
+                nextSite: this.props.params.type,
+                previousSite: this.props.params.type,
+            });
+        }
     }
 
     componentWillMount() {
         // check if provider is available
         if (!this.props.sites[this.props.params.type]) {
+            // cancel and go to dashbaord
             this.props.router.push('/dashboard');
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        // dont update if the swipe amount changed
+        if (nextState.swipeAmount !== this.state.swipeAmount) {
+            return false;
+        }
+        return true;
+    }
+
+    onSwipeMove(position, event) {
+        // update swipe amount in state
+        this.setState({swipeAmount: position.x});
+    }
+
+    onSwipeEnd(event) {
+        if (this.state.swipeAmount >= 140) {
+            // move to right
+            this.props.router.push('/remove/' + this.state.nextSite);
+        } else if (this.state.swipeAmount <= -140) {
+            // move to left
+            this.props.router.push('/remove/' + this.state.previousSite);
+        }
+        // reset swipe amount
+        this.setState({swipeAmount: 0});
+    }
+
+    // do api call to remove this provider from account
     removeProvider = () => {
         let providerType = this.props.params.type;
 
@@ -94,15 +160,13 @@ export default class ProviderRemove extends React.Component {
         if (!this.props.sites[this.props.params.type]) {
             return null;
         }
-
-        // extract name
-        let providerType = Utils.ucfirst(this.props.params.type);
+        const providerTitle = this.props.sites[this.props.params.type].title;
 
         let removeDiv = (
             <div className="row around-xs">
                 <div className="col-xs-12">
-                    <h1>Remove {providerType}?</h1>
-                    <p>This will disable {providerType} service for UploadBro</p>
+                    <h1>Remove {providerTitle}?</h1>
+                    <p>This will disable {providerTitle} service for UploadBro</p>
                 </div>
 
                 <div className="col-xs-12">
@@ -138,7 +202,7 @@ export default class ProviderRemove extends React.Component {
             removeDiv = (
                 <div className="row around-xs">
                     <div className="col-xs-12">
-                        <h1>Removing {providerType}</h1>
+                        <h1>Removing {providerTitle}</h1>
                     </div>
 
                     <div className="col-xs-12">
@@ -153,7 +217,7 @@ export default class ProviderRemove extends React.Component {
                 <h3>
                     <Check style={styles.checkIcon}/>
                     <br/>
-                    Removed your {providerType} account
+                    Removed your {providerTitle} account
                 </h3>
             );
         }
@@ -163,9 +227,13 @@ export default class ProviderRemove extends React.Component {
                  className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                 <Paper style={styles.paper}>
                     <Helmet>
-                        <title>{`UploadBroBot - Remove ${providerType}`}</title>
+                        <title>{`UploadBroBot - Remove ${providerTitle}`}</title>
                     </Helmet>
-                    {removeDiv}
+                    <Swipe
+                        onSwipeMove={this.onSwipeMove.bind(this)}
+                        onSwipeEnd={this.onSwipeEnd.bind(this)}>
+                        {removeDiv}
+                    </Swipe>
                 </Paper>
             </div>
         );

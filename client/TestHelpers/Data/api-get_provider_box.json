@@ -1,0 +1,14 @@
+{
+  "name": "Box",
+  "title": "Box",
+  "description": "Secure File Sharing, Storage, and Collaboration",
+  "slogan": "Secure File Sharing, Storage, and Collaboration",
+  "key": "box",
+  "url": "https://www.box.com/home",
+  "supportedExtensions": true,
+  "logos": {
+    "png": "/assets/img/box.png",
+    "svg": "/assets/img/box.svg"
+  },
+  "documentation": "## Box\n### Supported features\n\n - Upload files directly from the chat"
+}
