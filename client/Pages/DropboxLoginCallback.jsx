@@ -6,9 +6,9 @@ import Check from 'material-ui/svg-icons/navigation/check';
 import Error from 'material-ui/svg-icons/alert/error';
 import {red500, green800} from 'material-ui/styles/colors';
 import {browserHistory}  from 'react-router';
+import axios from 'axios';
 
 import Utils from '../Helpers/Utils';
-import axios from 'axios';
 
 const styles = {
     inputs: {

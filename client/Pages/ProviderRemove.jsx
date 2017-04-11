@@ -11,7 +11,7 @@ import axios from 'axios';
 import Utils from '../Helpers/Utils';
 import Logger from '../Helpers/Logger';
 import NavLink from '../Components/Sub/NavLink.jsx';
-// import FadesUp from '../Components/Sub/FadesUp';
+import FadesUp from '../Components/Sub/FadesUp';
 
 const styles = {
     img: {

@@ -14,19 +14,15 @@ function makeFadesUp(Component, options = {duration: 0.5}) {
             const el = findDOMNode(this);
             TweenLite.fromTo(el, options.duration,
                 {
-                    x: 500,
                     scaleX: 0.5,
                     scaleY: 0.5,
                     opacity: 0,
-                    position: "fixed",
                 },
                 {
-                    x: 0,
                     scaleX: 1,
                     scaleY: 1,
                     opacity: 1,
                     ease: Sine.easeInOut,
-                    position: "relative",
                     onComplete: callback,
                 },
             );
@@ -41,27 +37,27 @@ function makeFadesUp(Component, options = {duration: 0.5}) {
                 options.duration,
                 {
                     // start properties
-                    x: 0,
-                    scaleX: 1,
-                    scaleY: 1,
-                    opacity: 1,
-                    position: "fixed",
+                    // x: 0,
+                    // scaleX: 1,
+                    // scaleY: 1,
+                    opacity: 0,
+                    // position: "fixed",
                 },
                 {
                     // end properties
-                    x: -500,
-                    scaleX: 0.5,
-                    scaleY: 0.5,
+                    // x: -500,
+                    // scaleX: 0.5,
+                    // scaleY: 0.5,
                     opacity: 0,
-                    position: "fixed",
-                    ease: Power4.easeInOut,
+                    // position: "fixed",
+                    // ease: Power4.easeInOut,
                     onComplete: callback,
                 }
             );
         }
 
         render() {
-            return <Component ref="child" {...this.props} />;
+            return <Component {...this.props} />;
         }
     }
 }

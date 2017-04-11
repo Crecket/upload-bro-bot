@@ -6,8 +6,8 @@ import store from 'store';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 // custom components
-import ComponentLoader from './Sub/ComponentLoader'
-// import Logger from '../Helpers/Logger'
+import ComponentLoader from './Sub/ComponentLoader';
+import Logger from '../Helpers/Logger';
 
 // only allow this in debug enviroment, else return null
 const MainAppbar = ComponentLoader(
@@ -115,6 +115,7 @@ export default class Main extends React.Component {
         // get the children pages and give them some default props
         const mainBody = React.Children.map(this.props.children, (child) => {
                 // console.log(child.props);
+
                 return React.cloneElement(child, {
                     key: child.props.route.path,
                     initialCheck: this.props.initialCheck,
@@ -124,7 +125,7 @@ export default class Main extends React.Component {
                     updateUser: this.updateUser,
                     openModalHelper: this.openModalHelper,
                     closeModalHelper: this.closeModalHelper
-                })
+                });
             }
         );
 

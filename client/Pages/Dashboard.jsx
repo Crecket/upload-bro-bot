@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ProviderBlocks from '../Components/ProviderSites/ProviderBlocks';
 import PaperHelper from '../Components/Sub/PaperHelper';
 import ForceLogin from '../Helpers/ForceLogin';
-// import FadesUp from '../Components/Sub/FadesUp';
+import FadesUp from '../Components/Sub/FadesUp';
 
 const styles = {
     loggedIn: {
@@ -16,6 +16,10 @@ const styles = {
         textAlign: 'center'
     }
 }
+
+// 1.64mb without
+// 1.75mb for one
+// 1.87mb both
 
 // @FadesUp
 export default class Dashboard extends React.Component {
