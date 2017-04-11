@@ -6,11 +6,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Check from 'material-ui/svg-icons/navigation/check';
 import Error from 'material-ui/svg-icons/alert/error';
 import {red500, red800, green800} from 'material-ui/styles/colors';
+import axios from 'axios';
 
 import Utils from '../Helpers/Utils';
 import Logger from '../Helpers/Logger';
 import NavLink from '../Components/Sub/NavLink.jsx';
-import axios from 'axios';
+// import FadesUp from '../Components/Sub/FadesUp';
 
 const styles = {
     img: {
@@ -45,7 +46,8 @@ const styles = {
     }
 };
 
-class ProviderRemove extends React.Component {
+// @FadesUp
+export default class ProviderRemove extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -73,15 +75,12 @@ class ProviderRemove extends React.Component {
 
                     // update the current user
                     this.props.updateUser();
-                    setTimeout(() => {
-                        this.props.router.push('/dashboard');
-                    }, 2000);
                 } else {
                     this.setState({error: true});
-                    setTimeout(() => {
-                        this.props.router.push('/dashboard');
-                    }, 2000);
                 }
+                setTimeout(() => {
+                    this.props.router.push('/dashboard');
+                }, 2000);
             })
             .catch((error) => {
                 Logger.error(error);
@@ -128,7 +127,7 @@ class ProviderRemove extends React.Component {
                     </RaisedButton>
                 </div>
             </div>
-        )
+        );
         if (this.state.error) {
             removeDiv = (
                 <h3>
@@ -136,7 +135,7 @@ class ProviderRemove extends React.Component {
                     <br/>
                     Something went wrong
                 </h3>
-            )
+            );
         } else if (this.state.loadingState === "loading") {
             removeDiv = (
                 <div className="row around-xs">
@@ -150,7 +149,7 @@ class ProviderRemove extends React.Component {
                         </div>
                     </div>
                 </div>
-            )
+            );
         } else if (this.state.loadingState === "removed") {
             removeDiv = (
                 <h3>
@@ -158,7 +157,7 @@ class ProviderRemove extends React.Component {
                     <br/>
                     Removed your {providerType} account
                 </h3>
-            )
+            );
         }
 
         return (
@@ -174,5 +173,3 @@ class ProviderRemove extends React.Component {
         );
     }
 }
-
-export default ProviderRemove;

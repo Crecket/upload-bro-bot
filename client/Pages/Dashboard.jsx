@@ -6,14 +6,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 // custom components
 import ProviderBlocks from '../Components/ProviderSites/ProviderBlocks';
 import PaperHelper from '../Components/Sub/PaperHelper';
-// import ComponentLoader from '../Components/Sub/ComponentLoader';
-// import LoadingScreen from '../Components/Sub/LoadingScreen';
 import ForceLogin from '../Helpers/ForceLogin';
-
-// async components
-// const ProviderBlocks = ComponentLoader(
-//     () => import('../Components/ProviderSites/ProviderBlocks'),
-//     () => require.resolveWeak('../Components/ProviderSites/ProviderBlocks'));
+// import FadesUp from '../Components/Sub/FadesUp';
 
 const styles = {
     loggedIn: {
@@ -23,6 +17,7 @@ const styles = {
     }
 }
 
+// @FadesUp
 export default class Dashboard extends React.Component {
     constructor(props, context) {
         super(props, context);

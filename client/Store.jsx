@@ -11,6 +11,7 @@ let middleware;
 if (process.env.DEBUG === true) {
     // create middleware with logger
     middleware = applyMiddleware(promise(), thunk, createLogger({
+        collapsed: true,
         timestamp: false,
     }));
 } else {

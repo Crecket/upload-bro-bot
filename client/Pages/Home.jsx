@@ -1,23 +1,11 @@
 import React from "react";
 import Helmet from "react-helmet";
+import RaisedButton from 'material-ui/RaisedButton';
 
 // custom components
 import ManualPost from '../Helpers/ManualPost';
 import PaperHelper from '../Components/Sub/PaperHelper.jsx';
-import RaisedButton from 'material-ui/RaisedButton';
 import ForceLogin from '../Helpers/ForceLogin.jsx';
-
-// async components
-// import ComponentLoader from '../Components/Sub/ComponentLoader.jsx';
-// const FeatureList = ComponentLoader(
-//     () => import('../Components/FeatureList'),
-//     () => require.resolveWeak('../Components/FeatureList'));
-// const YoutubePreview = ComponentLoader(
-//     () => import('../Components/YoutubePreview'),
-//     () => require.resolveWeak('../Components/YoutubePreview'));
-// const SiteList = ComponentLoader(
-//     () => import('../Components/SiteList'),
-//     () => require.resolveWeak('../Components/SiteList'));
 
 // make sync
 import FeatureList from '../Components/FeatureList.jsx';
