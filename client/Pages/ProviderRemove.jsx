@@ -11,7 +11,6 @@ import axios from 'axios';
 import Utils from '../Helpers/Utils';
 import Logger from '../Helpers/Logger';
 import NavLink from '../Components/Sub/NavLink.jsx';
-import FadesUp from '../Components/Sub/FadesUp';
 
 const styles = {
     img: {
@@ -46,7 +45,6 @@ const styles = {
     }
 };
 
-// @FadesUp
 export default class ProviderRemove extends React.Component {
     constructor(props, context) {
         super(props, context);

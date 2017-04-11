@@ -1,10 +1,10 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
-import {TweenMax, Power4, Sine} from 'gsap';
+import {TweenLite, Sine, Power2} from 'gsap';
 
 // returns fade up animation
-function makeFadesUp(Component, options = {duration: 0.5}) {
-    return class FadesUp extends React.Component {
+function makeFadesIn(Component, options = {duration: 0.5}) {
+    return class FadesIn extends React.Component {
         static get propTypes() {
             key: Component.name
         }
@@ -14,15 +14,15 @@ function makeFadesUp(Component, options = {duration: 0.5}) {
             const el = findDOMNode(this);
             TweenLite.fromTo(el, options.duration,
                 {
-                    scaleX: 0.5,
-                    scaleY: 0.5,
+                    scaleX: 0.75,
+                    scaleY: 0.75,
                     opacity: 0,
                 },
                 {
                     scaleX: 1,
                     scaleY: 1,
                     opacity: 1,
-                    ease: Sine.easeInOut,
+                    ease: Power2.easeOut,
                     onComplete: callback,
                 },
             );
@@ -31,26 +31,11 @@ function makeFadesUp(Component, options = {duration: 0.5}) {
         // this component is about to leave, just hide it for now
         componentWillLeave(callback) {
             const el = findDOMNode(this);
-            TweenMax.fromTo(
+            TweenLite.to(
                 el,
-                // duration
-                options.duration,
+                0,
                 {
-                    // start properties
-                    // x: 0,
-                    // scaleX: 1,
-                    // scaleY: 1,
                     opacity: 0,
-                    // position: "fixed",
-                },
-                {
-                    // end properties
-                    // x: -500,
-                    // scaleX: 0.5,
-                    // scaleY: 0.5,
-                    opacity: 0,
-                    // position: "fixed",
-                    // ease: Power4.easeInOut,
                     onComplete: callback,
                 }
             );
@@ -63,10 +48,10 @@ function makeFadesUp(Component, options = {duration: 0.5}) {
 }
 
 // helper function to parse options from fadeup call
-function fadesUp(Component) {
+function fadesIn(Component) {
     return typeof arguments[0] === 'function'
-        ? makeFadesUp(arguments[0])
-        : Component => makeFadesUp(Component, arguments[0]);
+        ? makeFadesIn(arguments[0])
+        : Component => makeFadesIn(Component, arguments[0]);
 }
 
-export default fadesUp;
+export default fadesIn;
