@@ -61,22 +61,6 @@ class MainAppbar extends React.Component {
         }
     }
 
-    // touch event for popover
-    handleTouchTap = (event) => {
-        event.preventDefault();
-        this.setState({
-            open: true,
-            anchorEl: event.currentTarget,
-        });
-    };
-
-    // request event for popover
-    handleRequestClose = () => {
-        this.setState({
-            open: false,
-        });
-    };
-
     render() {
         const MenuItems = this.props.themeList.map(theme => {
             return <MenuItem primaryText={theme + " Theme"}
@@ -99,11 +83,9 @@ class MainAppbar extends React.Component {
                 }
             >
                 <Popover
-                    open={this.state.open}
                     anchorEl={this.state.anchorEl}
                     anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
                     targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                    onRequestClose={this.handleRequestClose}
                 />
             </AppBar>
         );

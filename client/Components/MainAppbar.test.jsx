@@ -40,13 +40,21 @@ describe('<MainAppbar />', () => {
     });
 
     it('themeSwitcher click event', () => {
+        const themeSwitch = jest.fn();
         const wrapper = shallow(
             <MainAppbar themeList={["Dark"]}
+                        setTheme={themeSwitch}
                         user_info={false}/>
         );
 
         // attempt themeswitcher click event
-        wrapper.instance().themeSwitcher("Dark");
+        const themeSwitcherFunc = wrapper.instance().themeSwitcher("Dark");
+
+        // call the returned function
+        themeSwitcherFunc();
+
+        // expect the setTheme function to have been called with the "Dark" theme
+        expect(themeSwitch).toHaveBeenCalledWith("Dark");
     });
 
 });
