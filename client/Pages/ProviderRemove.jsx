@@ -9,7 +9,6 @@ import {red500, red800, green800} from 'material-ui/styles/colors';
 import Swipe from 'react-easy-swipe';
 import axios from 'axios';
 
-import Utils from '../Helpers/Utils';
 import Logger from '../Helpers/Logger';
 import NavLink from '../Components/Sub/NavLink.jsx';
 
@@ -103,17 +102,17 @@ export default class ProviderRemove extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         // dont update if the swipe amount changed
-        if (nextState.swipeAmount !== this.state.swipeAmount) {
+        if (nextState.swipeAmount !== this.state.swipeAmount && nextState.swipeAmount !== 0) {
             return false;
         }
         return true;
     }
 
+    // swipe events for mobile
     onSwipeMove(position, event) {
         // update swipe amount in state
         this.setState({swipeAmount: position.x});
     }
-
     onSwipeEnd(event) {
         if (this.state.swipeAmount >= 140) {
             // move to right
@@ -129,6 +128,9 @@ export default class ProviderRemove extends React.Component {
     // do api call to remove this provider from account
     removeProvider = () => {
         let providerType = this.props.params.type;
+
+        // set loading state
+        this.setState({loadingState: "loading"});
 
         // send our hashtag data
         axios.post("/api/remove/" + providerType)
@@ -147,7 +149,7 @@ export default class ProviderRemove extends React.Component {
                 }, 2000);
             })
             .catch((error) => {
-                Logger.error(error);
+                // Logger.error(error);
                 this.setState({error: true});
                 setTimeout(() => {
                     this.props.router.push('/dashboard');

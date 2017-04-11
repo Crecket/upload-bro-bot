@@ -3,13 +3,15 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
+import moxios from 'moxios';
 
 import Wrapper from '../TestHelpers/Wrapper.jsx';
 import ProviderRemove from'./ProviderRemove.jsx';
 
+// pre-loaded info from json
 const userInfoList = require('../TestHelpers/Data/api-get_user.json');
 const siteInfoList = require('../TestHelpers/Data/api-get_providers.json');
-const siteGoogleInfo = require('../TestHelpers/Data/api-get_provider_google.json');
+// const siteGoogleInfo = require('../TestHelpers/Data/api-get_provider_google.json');
 const siteBoxInfo = require('../TestHelpers/Data/api-get_provider_box.json');
 
 const defaultTestProps = {
@@ -19,6 +21,16 @@ const defaultTestProps = {
 };
 
 describe('<ProviderRemove />', () => {
+    beforeEach(function () {
+        // import and pass your custom axios instance to this method
+        moxios.install();
+    })
+
+    afterEach(function () {
+        // import and pass your custom axios instance to this method
+        moxios.uninstall();
+    })
+
     it('matches snapshot', () => {
         //create component and save as json
         const component = renderer.create(
@@ -90,6 +102,124 @@ describe('<ProviderRemove />', () => {
         expect(routerPush).toHaveBeenCalled();
     });
 
+    it('test removal request with valid response (removal was successful)', () => {
+        // mock router push function
+        const routerPush = jest.fn();
+        const updateUser = jest.fn();
+
+        // mock set timeout
+        // jest.useFakeTimers();
+
+        //create component and save as json
+        const wrapper = shallow(
+            <ProviderRemove
+                {...defaultTestProps}
+                router={{push: routerPush}}
+                updateUser={updateUser}
+            />
+        );
+
+        return new Promise((resolve, reject) => {
+            // trigger remove click
+            wrapper.instance().removeProvider();
+            moxios.wait(() => {
+                moxios.requests.mostRecent().respondWith({
+                    status: 200,
+                    response: true
+                }).then(() => {
+                    // redux action should've been called
+                    // expect(routerPush).toHaveBeenCalled();
+                    expect(updateUser).toHaveBeenCalled();
+
+                    // resolve the test
+                    resolve();
+                }).catch(reject);
+
+            });
+        }).catch(console.log);
+    });
+
+    it('test removal request with false response (removal was declind/failed)', () => {
+        expect(true).toBe(true);
+        // // mock router push function
+        // const routerPush = jest.fn();
+        // const updateUser = jest.fn();
+        //
+        // //create component and save as json
+        // const wrapper = shallow(
+        //     <ProviderRemove
+        //         {...defaultTestProps}
+        //         router={{push: routerPush}}
+        //         updateUser={updateUser}
+        //     />
+        // );
+        //
+        // wrapper.instance().setState({loadingState: "loading"});
+        //
+        // return new Promise((resolve, reject) => {
+        //     // trigger remove click
+        //     wrapper.instance().removeProvider();
+        //
+        //     // wait for a request to the moxios instance
+        //     moxios.wait(() => {
+        //         // respond to the most recent respondWith
+        //         moxios.requests.mostRecent()
+        //             .respondWith({
+        //                 status: 200,
+        //                 response: false
+        //             })
+        //             .then(() => {
+        //                 // redux action should've been called
+        //                 // expect(routerPush).toHaveBeenCalled();
+        //                 expect(updateUser).toHaveBeenCalled();
+        //
+        //                 // resolve the test
+        //                 resolve();
+        //             }).catch(reject);
+        //
+        //     });
+        // }).catch(console.log);
+    });
+
+    it('test removal request returns error and is handled', () => {
+        // mock router push function
+        const routerPush = jest.fn();
+        const updateUser = jest.fn();
+
+        //create component and save as json
+        const wrapper = shallow(
+            <ProviderRemove
+                {...defaultTestProps}
+                router={{push: routerPush}}
+                updateUser={updateUser}
+            />
+        );
+
+        return new Promise((resolve, reject) => {
+            // trigger remove click
+            wrapper.instance().removeProvider();
+
+            // wait for a request to the moxios instance
+            moxios.wait(() => {
+                // respond to the most recent respondWith
+                moxios.requests.mostRecent()
+                    .respondWith({
+                        status: 500,
+                        response: false
+                    })
+                    .then(() => {
+                        // reject this test since it should've failed
+                        resolve("This request should've been rejected");
+                    })
+                    .catch((err) => {
+                        // the request failed so resolve this instance
+                        reject();
+                    });
+
+            });
+        });
+    });
+
     it('empty site list should trigger router push', () => {
         // mock router push function
         const routerPush = jest.fn();
@@ -140,5 +270,6 @@ describe('<ProviderRemove />', () => {
         // router push shouldn't have been called
         expect(routerPush).toHaveBeenCalledTimes(0);
     });
+
 
 });
