@@ -9,6 +9,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import PaletteIcon from 'material-ui/svg-icons/image/palette';
 import PowerIcon from 'material-ui/svg-icons/action/power-settings-new';
 
+import {userLogout} from "../Actions/user.js";
 import ManualPost from "../Helpers/ManualPost";
 
 const PopoverMenu = (props) => (
@@ -20,7 +21,7 @@ const PopoverMenu = (props) => (
         {props.loggedIn ? <MenuItem
             primaryText="Logout"
             rightIcon={<PowerIcon />}
-            onClick={ManualPost("/logout")}
+            onClick={props.logoutUser}
         /> : <MenuItem
             primaryText="Login"
             rightIcon={<ExitToAppIcon />}
@@ -61,6 +62,11 @@ class MainAppbar extends React.Component {
         }
     }
 
+    // logout request
+    logoutUser = () => {
+        this.props.dispatch(userLogout());
+    }
+
     render() {
         const MenuItems = this.props.themeList.map(theme => {
             return <MenuItem primaryText={theme + " Theme"}
@@ -79,6 +85,7 @@ class MainAppbar extends React.Component {
                 }
                 iconElementRight={
                     <PopoverMenu menuItems={MenuItems}
+                                 logoutUser={this.logoutUser}
                                  loggedIn={!!this.props.user_info}/>
                 }
             >
