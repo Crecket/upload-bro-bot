@@ -28,4 +28,4 @@ module.exports = class InlineQueryHandler {
     get inlineQueryCount() {
         return Object.keys(this._inlineQueries).length;
     }
-}
+};

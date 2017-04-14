@@ -1,25 +1,25 @@
-const del = require('del');
-const glob = require('glob');
-const swPrecache = require('sw-precache');
+const del = require("del");
+const glob = require("glob");
+const swPrecache = require("sw-precache");
 
 // folder constants
-const PUBLIC_DIR = 'public';
-const CLIENT_DIR = 'client';
+const PUBLIC_DIR = "public";
+const CLIENT_DIR = "client";
 
 // export the plugin
 const SWHelper = (customFilesList = false, DEBUG = true) => {
     // default static files
     let staticFiles = [
-        'https://fonts.googleapis.com/css?family=Roboto:300,400,500',
+        "https://fonts.googleapis.com/css?family=Roboto:300,400,500",
         // general important files
-        '/robots.txt',
-        '/manifest.json',
-        '/browserconfig.xml'
+        "/robots.txt",
+        "/manifest.json",
+        "/browserconfig.xml"
     ];
 
     // all images in assets folder
     staticFiles = staticFiles.concat(
-        glob.sync(PUBLIC_DIR + '/**/*.{png,svg,jpg,gif,ico}')
+        glob.sync(PUBLIC_DIR + "/**/*.{png,svg,jpg,gif,ico}")
     );
 
     // if Disable static is set, don't cache webpack output
@@ -29,9 +29,9 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
             staticFiles = [...new Set(staticFiles.concat(customFilesList))];
         } else {
             // dont add .map files in production mode
-            const distFolderGlob = DEBUG ?
-                PUBLIC_DIR + "/assets/dist/*" :
-                PUBLIC_DIR + "/assets/dist/!(*.map)";
+            const distFolderGlob = DEBUG
+                ? PUBLIC_DIR + "/assets/dist/*"
+                : PUBLIC_DIR + "/assets/dist/!(*.map)";
 
             // list all the files in the build folder
             let distFolder = glob.sync(distFolderGlob);
@@ -42,46 +42,50 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
     }
 
     // generate a list of all the server-side views
-    const ServerViews = glob.sync('src/Resources/Views/**/*.twig')
+    const ServerViews = glob.sync("src/Resources/Views/**/*.twig");
 
     // write the precache file
-    swPrecache.write(PUBLIC_DIR + '/sw.js', {
-        staticFileGlobs: staticFiles,
-        stripPrefix: PUBLIC_DIR,
-        dynamicUrlToDependencies: {
-            '/': ServerViews.concat([
-                CLIENT_DIR + "/Pages/Home.jsx"
-            ]),
-            '/dashboard': ServerViews.concat([
-                CLIENT_DIR + "/Pages/Dashboard.jsx"
-            ])
+    swPrecache.write(
+        PUBLIC_DIR + "/sw.js",
+        {
+            staticFileGlobs: staticFiles,
+            stripPrefix: PUBLIC_DIR,
+            dynamicUrlToDependencies: {
+                "/": ServerViews.concat([CLIENT_DIR + "/Pages/Home.jsx"]),
+                "/dashboard": ServerViews.concat([
+                    CLIENT_DIR + "/Pages/Dashboard.jsx"
+                ])
+            },
+            navigateFallback: "/",
+            navigateFallbackWhitelist: [
+                // /\/login\/((?!(telegram))\w)*\/callback/,
+                /\/remove\/.+/,
+                /\/new\/.+/
+            ],
+            runtimeCaching: [
+                {
+                    urlPattern: /\/login\/telegram.+/,
+                    handler: "networkFirst"
+                },
+                {
+                    urlPattern: /\/api/,
+                    handler: "networkOnly"
+                },
+                {
+                    urlPattern: /[.]?(js|css|json|html|map)/,
+                    handler: "networkFirst"
+                },
+                {
+                    urlPattern: /[.]?(png|jpg|svg|gif|jpeg|woff|woff2|ttf|eot)/,
+                    handler: "cacheFirst"
+                }
+            ]
         },
-        navigateFallback: '/',
-        navigateFallbackWhitelist: [
-            // /\/login\/((?!(telegram))\w)*\/callback/,
-            /\/remove\/.+/,
-            /\/new\/.+/,
-        ],
-        runtimeCaching: [
-            {
-                urlPattern: /\/login\/telegram.+/,
-                handler: 'networkFirst'
-            }, {
-                urlPattern: /\/api/,
-                handler: 'networkOnly'
-            }, {
-                urlPattern: /[.]?(js|css|json|html|map)/,
-                handler: 'networkFirst'
-            }, {
-                urlPattern: /[.]?(png|jpg|svg|gif|jpeg|woff|woff2|ttf|eot)/,
-                handler: 'cacheFirst'
-            }
-        ]
-    }, () => {
-        // finished writing service worker
-    });
-
-}
+        () => {
+            // finished writing service worker
+        }
+    );
+};
 
 module.exports = SWHelper;
 

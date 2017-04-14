@@ -1,10 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const SiteInteface = require(__base + 'src/Sites/SiteInterface.js');
+const fs = require("fs");
+const path = require("path");
+const SiteInteface = require(__base + "src/Sites/SiteInterface.js");
 
 // queries and commands
-const SearchQueryObj = require(__base + 'src/Sites/Dropbox/InlineQueries/SearchQuery');
-const UploadObj = require(__base + 'src/Sites/Dropbox/Queries/Upload');
+const SearchQueryObj = require(__base +
+    "src/Sites/Dropbox/InlineQueries/SearchQuery");
+const UploadObj = require(__base + "src/Sites/Dropbox/Queries/Upload");
 
 module.exports = class Dropbox extends SiteInteface {
     constructor(app) {
@@ -32,7 +33,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get name() {
-        return 'Dropbox';
+        return "Dropbox";
     }
 
     /**
@@ -41,7 +42,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get title() {
-        return 'Dropbox';
+        return "Dropbox";
     }
 
     /**
@@ -50,7 +51,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get slogan() {
-        return 'Securely Share, Sync & Collaborate.';
+        return "Securely Share, Sync & Collaborate.";
     }
 
     /**
@@ -59,7 +60,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get description() {
-        return 'Securely Share, Sync & Collaborate.';
+        return "Securely Share, Sync & Collaborate.";
     }
 
     /**
@@ -121,5 +122,4 @@ module.exports = class Dropbox extends SiteInteface {
     get supportedFeatures() {
         return ["query_upload"];
     }
-}
-
+};

@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const winston = rootRequire("src/Helpers/Logger.js");
 
-const HelperInterface = rootRequire('src/HelperInterface');
+const HelperInterface = rootRequire("src/HelperInterface");
 
 module.exports = class UploadFinish extends HelperInterface {
     constructor(app) {
@@ -47,12 +47,11 @@ module.exports = class UploadFinish extends HelperInterface {
     removeOldFile(file_location) {
         return new Promise((resolve, reject) => {
             // attempt to remove file
-            fs.unlink(file_location, (err) => {
+            fs.unlink(file_location, err => {
                 // not important if it fails
-            })
+            });
 
             resolve();
-        })
+        });
     }
-}
-
+};

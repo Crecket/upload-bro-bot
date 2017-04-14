@@ -1,12 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const Logger = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const Logger = rootRequire("src/Helpers/Logger.js");
 
-const HelperInterface = rootRequire('src/HelperInterface');
+const HelperInterface = rootRequire("src/HelperInterface");
 
-const UploadStart = rootRequire('src/Queries/Generic/UploadStart');
-const UploadFinish = rootRequire('src/Queries/Generic/UploadFinish');
-const BoxHelper = require('../Helper');
+const UploadStart = rootRequire("src/Queries/Generic/UploadStart");
+const UploadFinish = rootRequire("src/Queries/Generic/UploadFinish");
+const BoxHelper = require("../Helper");
 
 module.exports = class Upload extends HelperInterface {
     constructor(app) {
@@ -27,7 +27,7 @@ module.exports = class Upload extends HelperInterface {
      */
     async handle(query) {
         // generic start upload event
-        let resolveResults = await this.UploadStartObj.handle(query, 'box');
+        let resolveResults = await this.UploadStartObj.handle(query, "box");
 
         // upload to box
         resolveResults = await this.uploadBox(resolveResults);
@@ -75,5 +75,4 @@ module.exports = class Upload extends HelperInterface {
     get event() {
         return "upload_box";
     }
-}
-
+};

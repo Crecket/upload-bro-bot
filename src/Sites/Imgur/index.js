@@ -1,11 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const winston = rootRequire("src/Helpers/Logger.js");
 
-const SiteInteface = rootRequire('src/Sites/SiteInterface.js');
+const SiteInteface = rootRequire("src/Sites/SiteInterface.js");
 
-const UploadObj = rootRequire('src/Sites/Imgur/Queries/Upload');
-const SearchQueryObj = rootRequire('src/Sites/Imgur/InlineQueries/SearchQuery');
+const UploadObj = rootRequire("src/Sites/Imgur/Queries/Upload");
+const SearchQueryObj = rootRequire("src/Sites/Imgur/InlineQueries/SearchQuery");
 
 module.exports = class Imgur extends SiteInteface {
     constructor(app) {
@@ -122,5 +122,4 @@ module.exports = class Imgur extends SiteInteface {
     get supportedFeatures() {
         return ["inlineQuery_search", "query_uploadImage"];
     }
-}
-
+};

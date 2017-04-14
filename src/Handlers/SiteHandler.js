@@ -1,4 +1,4 @@
-const FeatureLookup = require('../Sites/FeatureLookup.js');
+const FeatureLookup = require("../Sites/FeatureLookup.js");
 
 module.exports = class SiteHandler {
     constructor(app) {
@@ -79,23 +79,27 @@ module.exports = class SiteHandler {
      * @returns {*}
      */
     getSiteBasic(siteKey) {
-        return !this._sites[siteKey] ? false : {
-            // static properties
-            name: this._sites[siteKey].name,
-            title: this._sites[siteKey].title,
-            description: this._sites[siteKey].description,
-            slogan: this._sites[siteKey].slogan,
-            key: this._sites[siteKey].key,
-            url: this._sites[siteKey].url,
-            supportedExtensions: this._sites[siteKey].supportedExtensions,
-            // all available logos
-            logos: {
-                "png": this._sites[siteKey].logoUrl("png"),
-                "svg": this._sites[siteKey].logoUrl("svg"),
-            },
-            // documentation and comments
-            documentation: this.generateDocumentation(this._sites[siteKey]),
-        };
+        return !this._sites[siteKey]
+            ? false
+            : {
+                  // static properties
+                  name: this._sites[siteKey].name,
+                  title: this._sites[siteKey].title,
+                  description: this._sites[siteKey].description,
+                  slogan: this._sites[siteKey].slogan,
+                  key: this._sites[siteKey].key,
+                  url: this._sites[siteKey].url,
+                  supportedExtensions: this._sites[siteKey].supportedExtensions,
+                  // all available logos
+                  logos: {
+                      png: this._sites[siteKey].logoUrl("png"),
+                      svg: this._sites[siteKey].logoUrl("svg")
+                  },
+                  // documentation and comments
+                  documentation: this.generateDocumentation(
+                      this._sites[siteKey]
+                  )
+              };
     }
 
     /**
@@ -105,10 +109,13 @@ module.exports = class SiteHandler {
      * @returns {string}
      */
     generateDocumentation(site) {
-        let supportedFeatures = site.supportedFeatures.length > 0 ?
-            `### Supported features\n\n` +
-            site.supportedFeatures.map(type => FeatureLookup[type]).join("\n") : "";
+        let supportedFeatures = site.supportedFeatures.length > 0
+            ? `### Supported features\n\n` +
+                  site.supportedFeatures
+                      .map(type => FeatureLookup[type])
+                      .join("\n")
+            : "";
 
         return `## ${site.title}\n${supportedFeatures}`;
     }
-}
+};

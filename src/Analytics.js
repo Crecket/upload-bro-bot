@@ -1,7 +1,7 @@
-const winston = rootRequire('src/Helpers/Logger.js');
+const winston = rootRequire("src/Helpers/Logger.js");
 
 module.exports = class Analytics {
-    constructor(app, collection_name = 'analytics') {
+    constructor(app, collection_name = "analytics") {
         this._app = app;
 
         // store collection we want to use to store analytics data
@@ -15,17 +15,13 @@ module.exports = class Analytics {
      * @param type
      * @param options
      */
-    track(msg, type = 'message', options = {}) {
-        const data = Object.assign(
-            this.defaultMsg,
-            options,
-            {
-                msgId: msg.id,
-                from: msg.from.username,
-                chatType: msg.message ? msg.message.type : 'no-chat',
-                type: type
-            }
-        );
+    track(msg, type = "message", options = {}) {
+        const data = Object.assign(this.defaultMsg, options, {
+            msgId: msg.id,
+            from: msg.from.username,
+            chatType: msg.message ? msg.message.type : "no-chat",
+            type: type
+        });
         this.save(data);
     }
 
@@ -37,17 +33,13 @@ module.exports = class Analytics {
      * @param options
      */
     trackFile(msg, fileType, options = {}) {
-        const data = Object.assign(
-            this.defaultMsg,
-            options,
-            {
-                msgId: msg.id,
-                from: msg.from.username,
-                chatType: msg.chat.type,
-                type: 'file',
-                fileType: fileType
-            }
-        );
+        const data = Object.assign(this.defaultMsg, options, {
+            msgId: msg.id,
+            from: msg.from.username,
+            chatType: msg.chat.type,
+            type: "file",
+            fileType: fileType
+        });
         this.save(data);
     }
 
@@ -74,4 +66,4 @@ module.exports = class Analytics {
             time: new Date()
         };
     }
-}
+};

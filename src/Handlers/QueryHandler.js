@@ -28,4 +28,4 @@ module.exports = class QueryHandler {
     get queryCount() {
         return Object.keys(this._queries).length;
     }
-}
+};

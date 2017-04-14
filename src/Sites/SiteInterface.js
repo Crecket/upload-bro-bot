@@ -10,4 +10,4 @@ module.exports = class SiteInteface {
     sendMessage(chatId, message, options) {
         return this._app._TelegramBot.sendMessage(chatId, message, options);
     }
-}
+};

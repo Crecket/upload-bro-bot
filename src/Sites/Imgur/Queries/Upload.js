@@ -1,18 +1,16 @@
 /* global rootRequire */
 
-const fs = require('fs');
-const path = require('path');
-const Logger = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const Logger = rootRequire("src/Helpers/Logger.js");
 
-const HelperInterface = rootRequire('src/HelperInterface');
+const HelperInterface = rootRequire("src/HelperInterface");
 
-const UploadStartObj = rootRequire('src/Queries/Generic/UploadStart');
-const UploadFinishObj = rootRequire('src/Queries/Generic/UploadFinish');
-const ImgurHelperObj = rootRequire('src/Sites/Imgur/Helper');
+const UploadStartObj = rootRequire("src/Queries/Generic/UploadStart");
+const UploadFinishObj = rootRequire("src/Queries/Generic/UploadFinish");
+const ImgurHelperObj = rootRequire("src/Sites/Imgur/Helper");
 
 module.exports = class Upload extends HelperInterface {
-
-
     constructor(app) {
         super(app);
 
@@ -33,14 +31,15 @@ module.exports = class Upload extends HelperInterface {
     handle(query) {
         // console.log(query);
         return new Promise((resolve, reject) => {
-
             // generic start upload event
             this.UploadStart
-                .handle(query, 'imgur')
+                .handle(query, "imgur")
                 // upload to dropbox
                 .then(resolveResults => this.uploadImgur(resolveResults))
                 // generic finish upload event
-                .then(resolveResults => this.UploadFinish.handle(resolveResults))
+                .then(resolveResults =>
+                    this.UploadFinish.handle(resolveResults)
+                )
                 // final close event
                 .then(resolveResults => {
                     // finished
@@ -62,27 +61,30 @@ module.exports = class Upload extends HelperInterface {
     uploadImgur(resolveResults) {
         return new Promise((resolve, reject) => {
             // upload to google
-            this._ImgurHelper.uploadFile(
-                resolveResults.userInfo,
-                resolveResults.file_location,
-                path.basename(resolveResults.file_location)
-            ).then((upload_result) => {
-                // add new upload location
-                resolveResults.upload_result = upload_result;
+            this._ImgurHelper
+                .uploadFile(
+                    resolveResults.userInfo,
+                    resolveResults.file_location,
+                    path.basename(resolveResults.file_location)
+                )
+                .then(upload_result => {
+                    // add new upload location
+                    resolveResults.upload_result = upload_result;
 
-                // resolve the results
-                resolve(resolveResults);
-            }).catch(err => {
-                // dropbox upload failed
-                reject(err);
+                    // resolve the results
+                    resolve(resolveResults);
+                })
+                .catch(err => {
+                    // dropbox upload failed
+                    reject(err);
 
-                // error result message
-                this.editMessageError({
-                    chat_id: resolveResults.msgInfo.chat_id,
-                    message_id: resolveResults.msgInfo.message_id
+                    // error result message
+                    this.editMessageError({
+                        chat_id: resolveResults.msgInfo.chat_id,
+                        message_id: resolveResults.msgInfo.message_id
+                    });
                 });
-            });
-        })
+        });
     }
 
     /**
@@ -92,5 +94,4 @@ module.exports = class Upload extends HelperInterface {
     get event() {
         return "upload_imgur";
     }
-}
-
+};

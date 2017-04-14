@@ -1,35 +1,35 @@
-const fs = require('fs');
-const path = require('path');
-const http = require('http');
-const spdy = require('spdy');
-const Logger = require('./Helpers/Logger.js');
-const glob = require('glob');
+const fs = require("fs");
+const path = require("path");
+const http = require("http");
+const spdy = require("spdy");
+const Logger = require("./Helpers/Logger.js");
+const glob = require("glob");
 
 // express libs
-const express = require('express');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const MongoStore = require('connect-mongo')(session);
-const passport = require('passport');
-const TelegramStrategy = require('passport-telegram').Strategy;
-const refresh = require('passport-oauth2-refresh');
-const ouch = require('ouch');
-const helmet = require('helmet');
-const compression = require('compression');
-const responseTime = require('response-time');
-const csurf = require('csurf');
+const express = require("express");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const MongoStore = require("connect-mongo")(session);
+const passport = require("passport");
+const TelegramStrategy = require("passport-telegram").Strategy;
+const refresh = require("passport-oauth2-refresh");
+const ouch = require("ouch");
+const helmet = require("helmet");
+const compression = require("compression");
+const responseTime = require("response-time");
+const csurf = require("csurf");
 
 // general routes
-const TelegramRoutes = require('./Routes/TelegramRoutes');
-const GeneralRoutes = require('./Routes/GeneralRoutes');
-const ApiRoutes = require('./Routes/ApiRoutes');
+const TelegramRoutes = require("./Routes/TelegramRoutes");
+const GeneralRoutes = require("./Routes/GeneralRoutes");
+const ApiRoutes = require("./Routes/ApiRoutes");
 
 // useSsl helper
 const useSsl = process.env.EXPRESS_USE_SSL === "true";
 
-module.exports = function (uploadApp) {
-    let app = express()
+module.exports = function(uploadApp) {
+    let app = express();
     let db = uploadApp._Db;
 
     // use ssl?
@@ -38,7 +38,24 @@ module.exports = function (uploadApp) {
             // ca: [''],
             cert: fs.readFileSync(process.env.EXPRESS_SSL_CERT),
             key: fs.readFileSync(process.env.EXPRESS_SSL_KEY),
-            ciphers: ["ECDHE-RSA-AES256-SHA384", "DHE-RSA-AES256-SHA384", "ECDHE-RSA-AES256-SHA256", "DHE-RSA-AES256-SHA256", "ECDHE-RSA-AES128-SHA256", "DHE-RSA-AES128-SHA256", "HIGH", "!aNULL", "!eNULL", "!EXPORT", "!DES", "!RC4", "!MD5", "!PSK", "!SRP", "!CAMELLIA"].join(':'),
+            ciphers: [
+                "ECDHE-RSA-AES256-SHA384",
+                "DHE-RSA-AES256-SHA384",
+                "ECDHE-RSA-AES256-SHA256",
+                "DHE-RSA-AES256-SHA256",
+                "ECDHE-RSA-AES128-SHA256",
+                "DHE-RSA-AES128-SHA256",
+                "HIGH",
+                "!aNULL",
+                "!eNULL",
+                "!EXPORT",
+                "!DES",
+                "!RC4",
+                "!MD5",
+                "!PSK",
+                "!SRP",
+                "!CAMELLIA"
+            ].join(":"),
             honorCipherOrder: true,
             requestCert: false
         };
@@ -53,93 +70,105 @@ module.exports = function (uploadApp) {
     let httpServer = http.createServer(app);
 
     // force ssl
-    app.all('*', (req, res, next) => {
+    app.all("*", (req, res, next) => {
         if (!useSsl || req.secure) {
             return next();
         }
         // check if we need to add a different port
         let extraPort = "";
         if (process.env.EXPRESS_HTTPS_PORT != "443") {
-            extraPort = ":" + process.env.EXPRESS_HTTPS_PORT
+            extraPort = ":" + process.env.EXPRESS_HTTPS_PORT;
         }
 
         // setup the https url
-        let httpsUrl = 'https://' + req.hostname + extraPort + req.url;
+        let httpsUrl = "https://" + req.hostname + extraPort + req.url;
 
         // redirect to https
         res.redirect(httpsUrl);
     });
 
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
 
-    passport.deserializeUser(function (user_id, done) {
-        db.collection('users').findOne({_id: user_id}, {},
-            function (err, user) {
+    passport.deserializeUser(function(user_id, done) {
+        db
+            .collection("users")
+            .findOne({ _id: user_id }, {}, function(err, user) {
                 done(err, user);
-            })
+            });
     });
 
-    let TelegramStrategyObj = new TelegramStrategy({
+    let TelegramStrategyObj = new TelegramStrategy(
+        {
             clientID: process.env.TELEPASS_APPID,
             clientSecret: process.env.TELEPASS_SECRET,
-            callbackURL: process.env.WEBSITE_URL + process.env.TELEPASS_REDIRECT_URI
+            callbackURL: process.env.WEBSITE_URL +
+                process.env.TELEPASS_REDIRECT_URI
         },
-        function (accessToken, refreshToken, profile, done) {
+        function(accessToken, refreshToken, profile, done) {
             // get the users collection
-            let usersCollection = db.collection('users');
+            let usersCollection = db.collection("users");
 
             // check if user exists
-            usersCollection.findOne({_id: profile.id}, {}, function (err, user) {
+            usersCollection.findOne({ _id: profile.id }, {}, function(
+                err,
+                user
+            ) {
                 if (err) {
                     done(err, profile);
                 }
 
                 // site fallback
-                profile.provider_sites = (user) ? user.provider_sites : {};
+                profile.provider_sites = user ? user.provider_sites : {};
 
                 // insert new user
-                usersCollection.updateOne({
-                    _id: profile.id
-                }, {
-                    $set: {
-                        provider: "telegram",
-                        _id: profile.id,
-                        first_name: profile.first_name,
-                        last_name: profile.last_name,
-                        username: profile.username,
-                        avatar: profile.avatar,
-                        accessToken: accessToken,
-                        provider_sites: profile.provider_sites,
-                        refreshToken: refreshToken,
-                    }
-                }, {
-                    upsert: true
-                })
-                    .then((result) => {
+                usersCollection
+                    .updateOne(
+                        {
+                            _id: profile.id
+                        },
+                        {
+                            $set: {
+                                provider: "telegram",
+                                _id: profile.id,
+                                first_name: profile.first_name,
+                                last_name: profile.last_name,
+                                username: profile.username,
+                                avatar: profile.avatar,
+                                accessToken: accessToken,
+                                provider_sites: profile.provider_sites,
+                                refreshToken: refreshToken
+                            }
+                        },
+                        {
+                            upsert: true
+                        }
+                    )
+                    .then(result => {
                         done(null, profile);
                     })
-                    .catch((err) => {
+                    .catch(err => {
                         done(err, profile);
                     });
             });
-        })
+        }
+    );
 
     // use all strategies
     passport.use(TelegramStrategyObj);
     refresh.use(TelegramStrategyObj);
 
     // view renderer setup
-    app.set('views', __dirname + '/Resources/Views');
-    app.set('view engine', 'twig');
-    app.set('cache', true);
-    app.set('view cache', 'cache');
+    app.set("views", __dirname + "/Resources/Views");
+    app.set("view engine", "twig");
+    app.set("cache", true);
+    app.set("view cache", "cache");
 
     // parsers
     app.use(cookieParser());
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
+    app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
     // gzip optimization
     app.use(compression());
@@ -150,21 +179,23 @@ module.exports = function (uploadApp) {
     }
 
     // session handler
-    app.use(session({
-        name: "BRO_ID",
-        secret: process.env.EXPRESS_SESSION_SECRET,
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            secure: true,
-            httpOnly: true,
-            domain: process.env.WEBSITE_DOMAIN
-        },
-        store: new MongoStore({
-            db: db,
-            autoRemove: 'native'
+    app.use(
+        session({
+            name: "BRO_ID",
+            secret: process.env.EXPRESS_SESSION_SECRET,
+            resave: false,
+            saveUninitialized: true,
+            cookie: {
+                secure: true,
+                httpOnly: true,
+                domain: process.env.WEBSITE_DOMAIN
+            },
+            store: new MongoStore({
+                db: db,
+                autoRemove: "native"
+            })
         })
-    }))
+    );
     app.use(passport.initialize());
     app.use(passport.session());
 
@@ -175,7 +206,7 @@ module.exports = function (uploadApp) {
     // app.use(csurf({cookie: true}));
     app.use((request, response, next) => {
         // response.locals.csrftoken = request.csrfToken();
-        response.locals.csrftoken = 'disabled';
+        response.locals.csrftoken = "disabled";
         next();
     });
 
@@ -190,29 +221,32 @@ module.exports = function (uploadApp) {
     // check if we need to set cache handlers and pretty error handlers
     if (process.env.DEBUG) {
         // serve static files
-        app.use(express.static(__dirname + '/../public'));
+        app.use(express.static(__dirname + "/../public"));
 
         // enable pretty error logs
-        app.use(function (err, req, res, next) {
-            (new ouch()).pushHandler(
-                new ouch.handlers.PrettyPageHandler()
-            ).handleException(err, req, res,
-                () => {
-                    Logger.error('Error handled');
+        app.use(function(err, req, res, next) {
+            new ouch()
+                .pushHandler(new ouch.handlers.PrettyPageHandler())
+                .handleException(err, req, res, () => {
+                    Logger.error("Error handled");
                     Logger.error(err);
-                }
-            );
+                });
         });
     } else {
         // enable strong etags
-        app.enable('etag');
+        app.enable("etag");
 
         // serve static files with cache headers
-        app.use(express.static(__dirname + '/../public', {
-            setHeaders: (response, path, stat) => {
-                response.header('Cache-Control', 'public, max-age=' + cacheDuration.MEDIUM);
-            }
-        }));
+        app.use(
+            express.static(__dirname + "/../public", {
+                setHeaders: (response, path, stat) => {
+                    response.header(
+                        "Cache-Control",
+                        "public, max-age=" + cacheDuration.MEDIUM
+                    );
+                }
+            })
+        );
     }
 
     // Default routes
@@ -221,35 +255,40 @@ module.exports = function (uploadApp) {
     ApiRoutes(app, passport, uploadApp);
 
     // find all specific provider routes
-    const ProviderRoutes = glob.sync(__dirname + '/Sites/**/Routes.js');
+    const ProviderRoutes = glob.sync(__dirname + "/Sites/**/Routes.js");
     // load them all with the correct parameters
-    ProviderRoutes.map(providerRoute =>{
+    ProviderRoutes.map(providerRoute => {
         // require the route
         require(providerRoute)(app, passport, uploadApp);
     });
 
     // fall back route
-    app.use('*', (req, res, next) => {
-        res.render('index.twig');
-    })
+    app.use("*", (req, res, next) => {
+        res.render("index.twig");
+    });
 
     // error handler
-    app.use(function (err, req, res, next) {
-        if (err.code !== 'EBADCSRFTOKEN') return next(err)
+    app.use(function(err, req, res, next) {
+        if (err.code !== "EBADCSRFTOKEN") return next(err);
 
         // handle CSRF token errors here
-        res.status(403).json('Invalid CSRF');
-    })
+        res.status(403).json("Invalid CSRF");
+    });
 
     // start listening http
-    httpServer.listen(process.env.EXPRESS_PORT, function () {
+    httpServer.listen(process.env.EXPRESS_PORT, function() {
         // start https
         if (useSsl) {
-            httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
-                Logger.info('Express listening on ' + process.env.EXPRESS_HTTPS_PORT + " and " + process.env.EXPRESS_PORT)
+            httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function() {
+                Logger.info(
+                    "Express listening on " +
+                        process.env.EXPRESS_HTTPS_PORT +
+                        " and " +
+                        process.env.EXPRESS_PORT
+                );
             });
         } else {
-            Logger.info('Express listening on ' + process.env.EXPRESS_PORT)
+            Logger.info("Express listening on " + process.env.EXPRESS_PORT);
         }
     });
 };

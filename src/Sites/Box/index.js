@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const Logger = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const Logger = rootRequire("src/Helpers/Logger.js");
 
-const SiteInteface = require('../SiteInterface.js');
+const SiteInteface = require("../SiteInterface.js");
 
-const UploadObj = rootRequire('src/Sites/Box/Queries/Upload');
+const UploadObj = rootRequire("src/Sites/Box/Queries/Upload");
 // const SearchQueryObj = rootRequire('src/Sites/Box/InlineQueries/SearchQuery');
 
 module.exports = class Box extends SiteInteface {
@@ -90,6 +90,7 @@ module.exports = class Box extends SiteInteface {
         switch (type) {
             case "png":
                 return "/assets/img/box.png";
+
             case "svg":
                 return "/assets/img/box.svg";
         }
@@ -121,7 +122,7 @@ module.exports = class Box extends SiteInteface {
      */
     get supportedFeatures() {
         return ["query_upload"];
+
         // return ["inlineQuery_search", "query_upload"];
     }
-}
-
+};

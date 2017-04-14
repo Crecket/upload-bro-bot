@@ -1,10 +1,10 @@
-const tracer = require('tracer');
+const tracer = require("tracer");
 
 // disable/enable based on enviroment and debug settings
 const DEV = process.env.DEBUG === "true";
 
 // prePreocess
-const preProcess = (data) => {
+const preProcess = data => {
     data.title = data.title.toUpperCase();
     return data;
 };
@@ -15,7 +15,7 @@ const tracerOptions = {
         "{{title}}: {{message}} (in {{file}}:{{line}})",
         {
             info: "{{title}}: {{message}}",
-            warn: "{{title}}: {{timestamp}} {{message}} (in {{file}}:{{line}})",
+            warn: "{{title}}: {{timestamp}} {{message}} (in {{file}}:{{line}})"
             // error: "{{title}}: {{timestamp}} {{message}} (in {{file}}:{{line}})\nCall Stack:\n{{stack}}"
         }
     ],

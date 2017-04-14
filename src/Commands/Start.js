@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const Logger = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const Logger = rootRequire("src/Helpers/Logger.js");
 
-const HelperInterface = rootRequire('src/HelperInterface');
+const HelperInterface = rootRequire("src/HelperInterface");
 
 module.exports = class Start extends HelperInterface {
     constructor(app) {
@@ -17,11 +17,13 @@ module.exports = class Start extends HelperInterface {
      */
     handle(msg) {
         // get the user for this request
-        this._app._UserHelper.getUser(msg.from.id)
-            .then((user_info) => {
+        this._app._UserHelper
+            .getUser(msg.from.id)
+            .then(user_info => {
                 // setup the message
                 var message = "I'm the <b>UploadBro bot</b>. \n";
-                message += "I can help you upload and download files to and from multiple services" +
+                message +=
+                    "I can help you upload and download files to and from multiple services" +
                     " like Google Drive and Dropbox. \n\n" +
                     "Use the <a href='/help'>/help</a> command for more help or " +
                     "use <a href='/login'>/login</a> UploadBro. \n\n" +
@@ -29,12 +31,16 @@ module.exports = class Start extends HelperInterface {
                     "directly ask you for a password!";
 
                 // send the message
-                super.sendMessage(msg.chat.id, message, {
-                    parse_mode: "HTML"
-                }).then((res) => {
-                    // console.log(res);
-                }).catch(Logger.error);
-            }).catch(Logger.error);
+                super
+                    .sendMessage(msg.chat.id, message, {
+                        parse_mode: "HTML"
+                    })
+                    .then(res => {
+                        // console.log(res);
+                    })
+                    .catch(Logger.error);
+            })
+            .catch(Logger.error);
     }
 
     /**
@@ -60,5 +66,4 @@ module.exports = class Start extends HelperInterface {
     get pattern() {
         return /\/start/;
     }
-}
-
+};

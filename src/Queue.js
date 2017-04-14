@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const Logger = require('./Helpers/Logger.js');
+const crypto = require("crypto");
+const Logger = require("./Helpers/Logger.js");
 
 module.exports = class Queue {
     constructor(limit = 10) {
@@ -32,7 +32,7 @@ module.exports = class Queue {
         return new Promise((resolve, reject) => {
             // random key for the queue item
             crypto.randomBytes(24, (err, buffer) => {
-                const key = buffer.toString('hex');
+                const key = buffer.toString("hex");
 
                 // gather info
                 const newQueueItem = {
@@ -40,7 +40,7 @@ module.exports = class Queue {
                     ready: resolve,
                     type: type,
                     key: key
-                }
+                };
 
                 // check if a spot is already available
                 if (this.available()) {
@@ -195,4 +195,4 @@ module.exports = class Queue {
     getActive() {
         return this.active;
     }
-}
+};

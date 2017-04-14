@@ -1,7 +1,7 @@
-var fs = require('fs');
-var path = require('path');
+var fs = require("fs");
+var path = require("path");
 
-var Utils = require('./Helpers/Utils');
+var Utils = require("./Helpers/Utils");
 
 module.exports = class HelperInterface {
     constructor(app) {
@@ -20,7 +20,6 @@ module.exports = class HelperInterface {
         return this._app._TelegramBot.sendMessage(chatId, message, options);
     }
 
-
     /**
      * Download a file with telegram bot
      *
@@ -31,35 +30,35 @@ module.exports = class HelperInterface {
      */
     downloadFile(file_id, chat_id, file_name = false) {
         return new Promise((resolve, reject) => {
-
             // target installation directory
             var directory = __base + "/downloads";
 
             // assert the lower folder exists
-            Utils.ensureFolderExists(directory, '0744').then(() => {
-                // download the file
-                this._app._TelegramBot.downloadFile(
-                    file_id,
-                    directory
-                ).then((finalPath) => {
-                    if (!file_name) {
-                        return resolve(finalPath);
-                    }
-                    // set the target path
-                    var targetName = __base + "/downloads/" + file_name;
-                    // rename the file
-                    fs.rename(finalPath, targetName, (err) => {
-                        if (err) {
-                            reject(err);
-                        } else {
-                            resolve(targetName);
-                        }
-                    });
+            Utils.ensureFolderExists(directory, "0744")
+                .then(() => {
+                    // download the file
+                    this._app._TelegramBot
+                        .downloadFile(file_id, directory)
+                        .then(finalPath => {
+                            if (!file_name) {
+                                return resolve(finalPath);
+                            }
+                            // set the target path
+                            var targetName = __base + "/downloads/" + file_name;
+                            // rename the file
+                            fs.rename(finalPath, targetName, err => {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    resolve(targetName);
+                                }
+                            });
+                        });
                 })
-            }).catch((err) => {
-                reject(err);
-            });
-        })
+                .catch(err => {
+                    reject(err);
+                });
+        });
     }
 
     /**
@@ -78,11 +77,12 @@ module.exports = class HelperInterface {
      * @param options
      */
     editMessageError(options) {
-        this.editMessage("\u{26A0} It looks like something went wrong!", options)
-            .then(() => {
-            })
-            .catch(() => {
-            });
+        this.editMessage(
+            "\u{26A0} It looks like something went wrong!",
+            options
+        )
+            .then(() => {})
+            .catch(() => {});
     }
 
     /**
@@ -93,8 +93,7 @@ module.exports = class HelperInterface {
         var buttonSiteList = [];
 
         // loop through existing provider sites
-        Object.keys(user.provider_sites).map((key) => {
-
+        Object.keys(user.provider_sites).map(key => {
             // check if this site is active right now
             if (this._app._SiteHandler.isActive(key)) {
                 var siteInfo = this._app._SiteHandler.getSiteBasic(key);
@@ -104,7 +103,12 @@ module.exports = class HelperInterface {
                     return;
                 }
 
-                if (!this.verifyExtensions(siteInfo.supportedExtensions, extension)) {
+                if (
+                    !this.verifyExtensions(
+                        siteInfo.supportedExtensions,
+                        extension
+                    )
+                ) {
                     // invalid extension
                     return;
                 }
@@ -115,7 +119,7 @@ module.exports = class HelperInterface {
                     callback_data: "upload_" + key
                 });
             }
-        })
+        });
 
         return buttonSiteList;
     }
@@ -138,4 +142,4 @@ module.exports = class HelperInterface {
             return "." + extension === ext.toLowerCase();
         });
     }
-}
+};

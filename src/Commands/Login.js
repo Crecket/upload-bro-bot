@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const Logger = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const Logger = rootRequire("src/Helpers/Logger.js");
 
-const HelperInterface = rootRequire('src/HelperInterface');
+const HelperInterface = rootRequire("src/HelperInterface");
 
 module.exports = class Login extends HelperInterface {
     constructor(app) {
@@ -17,28 +17,35 @@ module.exports = class Login extends HelperInterface {
      */
     handle(msg) {
         // setup the message
-        var message = "You can login and register services by going to " +
-            "<a href='" + process.env.WEBSITE_URL + "/login'" +
+        var message =
+            "You can login and register services by going to " +
+            "<a href='" +
+            process.env.WEBSITE_URL +
+            "/login'" +
             ">the website.</a> \nWe currently support the follower services: \n";
 
         // generate a list for all our services
         var supportedSites = this._app._SiteHandler.sites;
-        Object.keys(supportedSites).map((key) => {
+        Object.keys(supportedSites).map(key => {
             var tempSite = supportedSites[key];
-            message += " - <a href='" + tempSite.url + "'>" + tempSite.title + "</a>";
+            message +=
+                " - <a href='" + tempSite.url + "'>" + tempSite.title + "</a>";
             message += ": " + tempSite.description;
             message += "\n";
-        })
+        });
 
         // send the message
-        super.sendMessage(msg.chat.id, message, {
-            parse_mode: "HTML",
-            disable_web_page_preview: true
-        }).then((res) => {
-            // console.log(res);
-        }).catch((err) => {
-            Logger.error(err);
-        });
+        super
+            .sendMessage(msg.chat.id, message, {
+                parse_mode: "HTML",
+                disable_web_page_preview: true
+            })
+            .then(res => {
+                // console.log(res);
+            })
+            .catch(err => {
+                Logger.error(err);
+            });
     }
 
     /**
@@ -64,5 +71,4 @@ module.exports = class Login extends HelperInterface {
     get pattern() {
         return /\/login/;
     }
-}
-
+};

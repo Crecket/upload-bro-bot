@@ -1,5 +1,5 @@
-const Dropbox = require('dropbox');
-const Logger = rootRequire('/src/Helpers/Logger.js');
+const Dropbox = require("dropbox");
+const Logger = rootRequire("/src/Helpers/Logger.js");
 
 module.exports = class DropboxHelper {
     constructor(app) {
@@ -14,12 +14,13 @@ module.exports = class DropboxHelper {
     createClient(user_info = false) {
         // default options
         let DropboxOptions = {
-            clientId: process.env.DROPBOX_APP_KEY,
+            clientId: process.env.DROPBOX_APP_KEY
         };
 
         // add the access token
         if (user_info) {
-            DropboxOptions.accessToken = user_info.provider_sites.dropbox.access_token;
+            DropboxOptions.accessToken =
+                user_info.provider_sites.dropbox.access_token;
         }
 
         // Create dropbox object
@@ -38,7 +39,7 @@ module.exports = class DropboxHelper {
         var dbx = this.createClient(user_info);
 
         // return the promise
-        return dbx.filesListFolder({path: path});
+        return dbx.filesListFolder({ path: path });
     }
 
     /**
@@ -56,18 +57,22 @@ module.exports = class DropboxHelper {
             var dbx = this.createClient(user_info);
 
             // options to use in upload
-            var options = Object.assign({
-                path: "",
-                query: file_name.trim(),
-                start: 0,
-                max_results: 25,
-                mode: {
-                    '.tag': "filename"
-                }
-            }, advanced_options);
+            var options = Object.assign(
+                {
+                    path: "",
+                    query: file_name.trim(),
+                    start: 0,
+                    max_results: 25,
+                    mode: {
+                        ".tag": "filename"
+                    }
+                },
+                advanced_options
+            );
 
             // load the files
-            dbx.filesSearch(options)
+            dbx
+                .filesSearch(options)
                 .then(result => resolve(result.matches))
                 .catch(FilesSearchError => reject(FilesSearchError));
         });
@@ -85,14 +90,17 @@ module.exports = class DropboxHelper {
         var dbx = this.createClient(user_info);
 
         // options to use in upload
-        var options = Object.assign({
-            // default options
-            mode: {
-                ".tag": "add"
+        var options = Object.assign(
+            {
+                // default options
+                mode: {
+                    ".tag": "add"
+                },
+                autorename: true,
+                mute: false
             },
-            autorename: true,
-            mute: false,
-        }, newOptions);
+            newOptions
+        );
 
         // return the promise
         return dbx.filesUpload(options);
@@ -110,7 +118,8 @@ module.exports = class DropboxHelper {
             var client = this.createClient(user_info);
 
             // return the info promise
-            client.usersGetCurrentAccount()
+            client
+                .usersGetCurrentAccount()
                 .then(user_info => resolve(user_info))
                 .catch(reject);
         });
@@ -131,7 +140,6 @@ module.exports = class DropboxHelper {
         return client.sharingCreateSharedLink({
             path: path,
             short_url: short
-        })
+        });
     }
-
-}
+};

@@ -1,34 +1,34 @@
 "use strict";
-const TelegramBot = require('node-telegram-bot-api');
-const MongoClient = require('mongodb').MongoClient;
-const fs = require('fs');
-const del = require('del');
-const glob = require('glob');
-const path = require('path');
-const Cacheman = require('cacheman');
-const MongoDbEngine = require('cacheman-mongo');
-const Logger = require('./Helpers/Logger.js');
+const TelegramBot = require("node-telegram-bot-api");
+const MongoClient = require("mongodb").MongoClient;
+const fs = require("fs");
+const del = require("del");
+const glob = require("glob");
+const path = require("path");
+const Cacheman = require("cacheman");
+const MongoDbEngine = require("cacheman-mongo");
+const Logger = require("./Helpers/Logger.js");
 
 // utilities
-let Utils = require('./Helpers/Utils');
+let Utils = require("./Helpers/Utils");
 
 // express server
-let Express = require('./Express');
+let Express = require("./Express");
 
 // handlers and other helpers
-const CommandHandler = require('./Handlers/CommandHandler');
-const SiteHandler = require('./Handlers/SiteHandler');
-const QueryHandler = require('./Handlers/QueryHandler');
-const EventHandlersObj = require('./Handlers/EventHandler');
-const InlineQueryHandlerObj = require('./Handlers/InlineQueryHandler');
-const UserHelperObj = require('./UserHelper');
-const QueueObj = require('./Queue');
-const AnalyticsObj = require('./Analytics');
+const CommandHandler = require("./Handlers/CommandHandler");
+const SiteHandler = require("./Handlers/SiteHandler");
+const QueryHandler = require("./Handlers/QueryHandler");
+const EventHandlersObj = require("./Handlers/EventHandler");
+const InlineQueryHandlerObj = require("./Handlers/InlineQueryHandler");
+const UserHelperObj = require("./UserHelper");
+const QueueObj = require("./Queue");
+const AnalyticsObj = require("./Analytics");
 
 module.exports = class App {
     constructor(token) {
         // Create a new blackjack bot
-        this._TelegramBot = new TelegramBot(token, {polling: true});
+        this._TelegramBot = new TelegramBot(token, { polling: true });
 
         // create a queue object and analytics helper
         this._Queue = new QueueObj(1);
@@ -46,17 +46,17 @@ module.exports = class App {
 
         // connect to mongodb
         this.connectDb()
-            .then((db) => {
+            .then(db => {
                 // store the database
                 this._Db = db;
 
                 // create mongodb cache engine
-                const engine = new MongoDbEngine(db, {collection: 'cache'});
+                const engine = new MongoDbEngine(db, { collection: "cache" });
 
                 // store the cache in the app
-                this._Cache = new Cacheman('uploadbro_cache', {
+                this._Cache = new Cacheman("uploadbro_cache", {
                     engine: engine, // mongodb engine
-                    ttl: 60 * 60, // default ttl
+                    ttl: 60 * 60 // default ttl
                 });
             })
             // load all the commands
@@ -70,11 +70,18 @@ module.exports = class App {
             // clear downloads folder
             .then(() => {
                 return new Promise((resolve, reject) => {
-                    del(['downloads/**', '!downloads', '!downloads/.gitkeep']).then(paths => {
-                        Logger.debug('Cleared downloads folder:\n', paths.join('\n'));
+                    del([
+                        "downloads/**",
+                        "!downloads",
+                        "!downloads/.gitkeep"
+                    ]).then(paths => {
+                        Logger.debug(
+                            "Cleared downloads folder:\n",
+                            paths.join("\n")
+                        );
                         resolve();
                     });
-                })
+                });
             })
             // finish setup
             .then(() => {
@@ -85,7 +92,6 @@ module.exports = class App {
                 Express(this);
             })
             .catch(Logger.error);
-
     }
 
     /**
@@ -97,7 +103,7 @@ module.exports = class App {
         return new Promise((resolve, reject) => {
             // attempt to connect to mongoserver
             MongoClient.connect(process.env.MONGODB_URL)
-                .then((db) => {
+                .then(db => {
                     Logger.info("Connected to " + process.env.MONGODB_URL);
                     resolve(db);
                 })
@@ -112,7 +118,7 @@ module.exports = class App {
      */
     loadWebsites() {
         // Register the websites
-        const Sites = glob.sync(__dirname + '/Sites/*/index.js');
+        const Sites = glob.sync(__dirname + "/Sites/*/index.js");
 
         // load them all with the correct parameters
         Sites.map(Site => {
@@ -123,7 +129,7 @@ module.exports = class App {
             this._SiteHandler.register(new SiteObj(this));
         });
 
-        Logger.debug('Loaded ' + this._SiteHandler.siteCount + " sites");
+        Logger.debug("Loaded " + this._SiteHandler.siteCount + " sites");
         return Promise.resolve();
     }
 
@@ -134,7 +140,7 @@ module.exports = class App {
      */
     loadCommands() {
         // Register the commands
-        const Commands = glob.sync(__dirname + '/Commands/*.js');
+        const Commands = glob.sync(__dirname + "/Commands/*.js");
 
         // load them all with the correct parameters
         Commands.map(Command => {
@@ -145,7 +151,9 @@ module.exports = class App {
             this._CommandHandler.register(new CommandObj(this));
         });
 
-        Logger.debug('Loaded ' + this._CommandHandler.commandCount + " commands");
+        Logger.debug(
+            "Loaded " + this._CommandHandler.commandCount + " commands"
+        );
         return Promise.resolve();
     }
 
@@ -155,7 +163,7 @@ module.exports = class App {
      */
     loadQueries() {
         // Register the commands
-        const Queries = glob.sync(__dirname + '/Queries/*.js');
+        const Queries = glob.sync(__dirname + "/Queries/*.js");
 
         // load them all with the correct parameters
         Queries.map(Query => {
@@ -166,7 +174,7 @@ module.exports = class App {
             this._QueryHandler.register(new QueryObj(this));
         });
 
-        Logger.debug('Loaded ' + this._QueryHandler.queryCount + " queries");
+        Logger.debug("Loaded " + this._QueryHandler.queryCount + " queries");
         return Promise.resolve();
     }
 
@@ -179,8 +187,9 @@ module.exports = class App {
      * @param options
      */
     answerCallbackQuery(id, text = "", alert = false, options = {}) {
-        return this._TelegramBot.answerCallbackQuery(id, text, alert, options)
-            .then((result) => {
+        return this._TelegramBot
+            .answerCallbackQuery(id, text, alert, options)
+            .then(result => {
                 Logger.debug("Responded to query " + id);
             })
             .catch(() => {
@@ -196,47 +205,47 @@ module.exports = class App {
     eventListeners() {
         const fn = this;
         // file messages
-        this._TelegramBot.on('audio', (msg) => {
-            fn._EventHandler.messageFileListener(msg, 'audio');
+        this._TelegramBot.on("audio", msg => {
+            fn._EventHandler.messageFileListener(msg, "audio");
         });
-        this._TelegramBot.on('video', (msg) => {
-            fn._EventHandler.messageFileListener(msg, 'video');
+        this._TelegramBot.on("video", msg => {
+            fn._EventHandler.messageFileListener(msg, "video");
         });
-        this._TelegramBot.on('voice', (msg) => {
-            fn._EventHandler.messageFileListener(msg, 'voice');
+        this._TelegramBot.on("voice", msg => {
+            fn._EventHandler.messageFileListener(msg, "voice");
         });
-        this._TelegramBot.on('photo', (msg) => {
-            fn._EventHandler.messageFileListener(msg, 'photo');
+        this._TelegramBot.on("photo", msg => {
+            fn._EventHandler.messageFileListener(msg, "photo");
         });
-        this._TelegramBot.on('document', (msg) => {
-            fn._EventHandler.messageFileListener(msg, 'document');
+        this._TelegramBot.on("document", msg => {
+            fn._EventHandler.messageFileListener(msg, "document");
         });
 
-        this._TelegramBot.on('group_chat_created', (msg) => {
+        this._TelegramBot.on("group_chat_created", msg => {
             // track event
             // this._Analytics.track('group_chat_created');
-            Logger.debug('group_chat_created', msg);
+            Logger.debug("group_chat_created", msg);
         });
-        this._TelegramBot.on('message', (msg) => {
+        this._TelegramBot.on("message", msg => {
             // track event
             // this._Analytics.track('message');
-            Logger.debug('message', msg);
+            Logger.debug("message", msg);
         });
 
         // callback query listener
-        this._TelegramBot.on('callback_query', (msg) => {
+        this._TelegramBot.on("callback_query", msg => {
             // track event
-            this._Analytics.track(msg, 'callback_query');
+            this._Analytics.track(msg, "callback_query");
             fn._EventHandler.callbackQuery(msg);
         });
 
         // inline query search event
-        this._TelegramBot.on('inline_query', (msg) => {
+        this._TelegramBot.on("inline_query", msg => {
             // track event
-            this._Analytics.track(msg, 'inline_query');
+            this._Analytics.track(msg, "inline_query");
             fn._EventHandler.inlineQuery(msg);
         });
 
         return Promise.resolve();
     }
-}
+};

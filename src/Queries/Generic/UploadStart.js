@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const Logger = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const Logger = rootRequire("src/Helpers/Logger.js");
 
-const HelperInterface = rootRequire('src/HelperInterface');
+const HelperInterface = rootRequire("src/HelperInterface");
 
 module.exports = class UploadStart extends HelperInterface {
     constructor(app) {
@@ -19,10 +19,8 @@ module.exports = class UploadStart extends HelperInterface {
      * @returns {Promise}
      */
     async handle(query, type) {
-
         // global helpers
-        let userInfo,
-            resolveResults;
+        let userInfo, resolveResults;
 
         try {
             // get information about this query user
@@ -40,18 +38,21 @@ module.exports = class UploadStart extends HelperInterface {
                 this.editMessage("\u{1F50E} Checking queue status... 1/4", {
                     chat_id: resolveResults.msgInfo.chat_id,
                     message_id: resolveResults.msgInfo.message_id
-                }).then(resultMessage => {
-                    // store message
-                    resolveResults.resultMessage = resultMessage;
-                    // resolve results
-                    resolve(resolveResults);
-                }).catch(rejectEdit);
+                })
+                    .then(resultMessage => {
+                        // store message
+                        resolveResults.resultMessage = resultMessage;
+                        // resolve results
+                        resolve(resolveResults);
+                    })
+                    .catch(rejectEdit);
             });
 
             // enqueue the upload attempt
             resolveResults = await new Promise((resolve, failed) => {
                 // enqueue this attempt
-                this._app._Queue.enqueue('upload')
+                this._app._Queue
+                    .enqueue("upload")
                     .then(finished => {
                         // save queueKey
                         resolveResults.queueKey = finished.key;
@@ -68,12 +69,14 @@ module.exports = class UploadStart extends HelperInterface {
                 this.editMessage("\u{1F50E} Downloading file... 2/4", {
                     chat_id: resolveResults.msgInfo.chat_id,
                     message_id: resolveResults.msgInfo.message_id
-                }).then(resultMessage => {
-                    // store message
-                    resolveResults.resultMessage = resultMessage;
-                    // resolve results
-                    resolve(resolveResults);
-                }).catch(rejectEdit);
+                })
+                    .then(resultMessage => {
+                        // store message
+                        resolveResults.resultMessage = resultMessage;
+                        // resolve results
+                        resolve(resolveResults);
+                    })
+                    .catch(rejectEdit);
             });
             // download file from telegram
             resolveResults = await this.downloadTelegram(resolveResults);
@@ -84,15 +87,16 @@ module.exports = class UploadStart extends HelperInterface {
                 this.editMessage("\u{1F4BE} Uploading... 3/4", {
                     chat_id: resolveResults.msgInfo.chat_id,
                     message_id: resolveResults.msgInfo.message_id
-                }).then(resultMessage => {
-                    // store message
-                    resolveResults.resultMessage = resultMessage;
+                })
+                    .then(resultMessage => {
+                        // store message
+                        resolveResults.resultMessage = resultMessage;
 
-                    // everything is okay, resolve the info
-                    resolveEdit(resolveResults)
-                }).catch(rejectEdit);
+                        // everything is okay, resolve the info
+                        resolveEdit(resolveResults);
+                    })
+                    .catch(rejectEdit);
             });
-
         } catch (ex) {
             Logger.error(ex);
 
@@ -102,9 +106,9 @@ module.exports = class UploadStart extends HelperInterface {
                 this.editMessageError({
                     chat_id: resolveResults.msgInfo.chat_id,
                     message_id: resolveResults.msgInfo.message_id
-                }).then(_ => {
-                }).catch(_ => {
-                });
+                })
+                    .then(_ => {})
+                    .catch(_ => {});
             }
             return Promise.reject(ex);
         }
@@ -122,19 +126,27 @@ module.exports = class UploadStart extends HelperInterface {
     getUserInfo(query, type) {
         return new Promise((resolve, reject) => {
             // first get user info
-            this._app._UserHelper.getUser(query.from.id)
-                .then((userInfo) => {
+            this._app._UserHelper
+                .getUser(query.from.id)
+                .then(userInfo => {
                     if (!userInfo) {
-                        return resolve("It looks like you're not registered in our system.");
+                        return resolve(
+                            "It looks like you're not registered in our system."
+                        );
                     }
 
                     if (!userInfo.provider_sites[type]) {
-                        return resolve("This service not connected to your account");
+                        return resolve(
+                            "This service not connected to your account"
+                        );
                     }
 
                     // store key to fetch info about file
-                    const storeKey = "upload_" + query.message.chat.id +
-                        "-" + query.message.message_id;
+                    const storeKey =
+                        "upload_" +
+                        query.message.chat.id +
+                        "-" +
+                        query.message.message_id;
 
                     resolve({
                         userInfo: userInfo,
@@ -143,7 +155,7 @@ module.exports = class UploadStart extends HelperInterface {
                     });
                 })
                 .catch(reject);
-        })
+        });
     }
 
     /**
@@ -154,22 +166,24 @@ module.exports = class UploadStart extends HelperInterface {
      */
     checkCache(resolveResults) {
         return new Promise((resolve, reject) => {
-
             // fetch from cache
             this._app._Cache.get(resolveResults.storeKey, (error, msgInfo) => {
                 if (error) {
                     return reject(error);
                 }
                 if (!msgInfo) {
-                    return reject("We couldn't find a file connected to this message. " +
-                        "Try forwarding the file to UploadBro again so he can detect it more easily.", true);
+                    return reject(
+                        "We couldn't find a file connected to this message. " +
+                            "Try forwarding the file to UploadBro again so he can detect it more easily.",
+                        true
+                    );
                 }
                 // resolve the retrieved message info
                 resolveResults.msgInfo = msgInfo;
 
                 resolve(resolveResults);
             });
-        })
+        });
     }
 
     /**
@@ -186,8 +200,8 @@ module.exports = class UploadStart extends HelperInterface {
                 resolveResults.msgInfo.chat_id,
                 resolveResults.msgInfo.file_name
             )
-            // resolve new file location
-                .then((file_location) => {
+                // resolve new file location
+                .then(file_location => {
                     // store file location
                     resolveResults.file_location = file_location;
                     // resolve the new location
@@ -231,7 +245,7 @@ module.exports = class UploadStart extends HelperInterface {
                 resolve({
                     file_contents: file_contents,
                     file_location: file_location
-                })
+                });
             });
         });
     }
@@ -245,13 +259,11 @@ module.exports = class UploadStart extends HelperInterface {
     removeOldFile(file_location) {
         return new Promise((resolve, reject) => {
             // attempt to remove file
-            fs.unlink(file_location, (err) => {
+            fs.unlink(file_location, err => {
                 // not important if it fails
-            })
+            });
 
             resolve();
-        })
+        });
     }
-
-}
-
+};

@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
-const BoxSDK = require('box-node-sdk');
-const Logger = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const axios = require("axios");
+const BoxSDK = require("box-node-sdk");
+const Logger = rootRequire("src/Helpers/Logger.js");
 
 module.exports = class BoxHelper {
     constructor(app) {
@@ -40,24 +40,30 @@ module.exports = class BoxHelper {
         // verify if we got tokens
         if (!tokens) {
             // no tokens set, we can't continue
-            throw new Error('No tokens set');
+            throw new Error("No tokens set");
         }
 
         // get a valid token set
-        let {validTokens, isNew} = await this.getValidToken(tokens);
+        let { validTokens, isNew } = await this.getValidToken(tokens);
 
         if (isNew) {
             // copy the user and prepare to update
             let newUser = {};
             newUser.provider_sites = {};
             // merge existing with new
-            newUser.provider_sites.box = Object.assign({}, user_info.provider_sites.box, validTokens);
+            newUser.provider_sites.box = Object.assign(
+                {},
+                user_info.provider_sites.box,
+                validTokens
+            );
 
             // update the user
-            const success = await this._app._UserHelper.updateUserTokens(newUser)
+            const success = await this._app._UserHelper.updateUserTokens(
+                newUser
+            );
             if (success === false) {
                 // no tokens set, we can't continue
-                throw new Error('Failed to store refreshed tokens');
+                throw new Error("Failed to store refreshed tokens");
             }
         }
 
@@ -66,7 +72,6 @@ module.exports = class BoxHelper {
 
         // create a client with the access token
         return sdk.getBasicClient(validTokens.accessToken);
-
     }
 
     /**
@@ -74,7 +79,9 @@ module.exports = class BoxHelper {
      * @returns {*}
      */
     getToken(user_info) {
-        return user_info.provider_sites.box ? user_info.provider_sites.box : false;
+        return user_info.provider_sites.box
+            ? user_info.provider_sites.box
+            : false;
     }
 
     /**
@@ -83,11 +90,17 @@ module.exports = class BoxHelper {
      * @returns {string}
      */
     getAuthorizationUrl() {
-        return 'https://account.box.com/api/oauth2/authorize' +
-            '?response_type=code' +
-            '&client_id=' + process.env.BOX_CLIENT_ID +
-            '&redirect_uri=' + process.env.WEBSITE_URL + process.env.BOX_REDIRECT_URI +
-            "&state=" + ((new Date()).getTime());
+        return (
+            "https://account.box.com/api/oauth2/authorize" +
+            "?response_type=code" +
+            "&client_id=" +
+            process.env.BOX_CLIENT_ID +
+            "&redirect_uri=" +
+            process.env.WEBSITE_URL +
+            process.env.BOX_REDIRECT_URI +
+            "&state=" +
+            new Date().getTime()
+        );
     }
 
     /**
@@ -102,7 +115,9 @@ module.exports = class BoxHelper {
             const sdk = this.getSdkClient();
 
             // get access token for code
-            sdk.getTokensAuthorizationCodeGrant(code, null,
+            sdk.getTokensAuthorizationCodeGrant(
+                code,
+                null,
                 (err, tokenInfo) => {
                     if (err) {
                         Logger.error(err);
@@ -127,14 +142,19 @@ module.exports = class BoxHelper {
             const sdk = this.getSdkClient();
 
             // attempt to refresh tokens using refresh token
-            sdk.getTokensRefreshGrant(tokens.refreshToken, function (err, tokenInfo) {
+            sdk.getTokensRefreshGrant(tokens.refreshToken, function(
+                err,
+                tokenInfo
+            ) {
                 if (err) {
                     Logger.error(err);
                     return reject(err);
                 }
 
                 // set the expiry date
-                tokenInfo.expiry_date = (new Date()).getTime() + parseInt(tokenInfo.accessTokenTTLMS / 1000);
+                tokenInfo.expiry_date =
+                    new Date().getTime() +
+                    parseInt(tokenInfo.accessTokenTTLMS / 1000);
 
                 // return the tokens
                 resolve(tokenInfo);
@@ -151,16 +171,18 @@ module.exports = class BoxHelper {
     async getValidToken(tokens) {
         return await new Promise((resolve, reject) => {
             // check if access token has expired
-            if (tokens.expiry_date - (new Date()).getTime() >= 0) {
+            if (tokens.expiry_date - new Date().getTime() >= 0) {
                 // not expired, no new tokens
-                resolve({validTokens: tokens});
+                resolve({ validTokens: tokens });
             } else {
                 // attempt to get  new tokens
                 this.refreshAccessToken(tokens)
-                    .then(newTokens => resolve({
-                        validTokens: newTokens,
-                        isNew: true
-                    }))
+                    .then(newTokens =>
+                        resolve({
+                            validTokens: newTokens,
+                            isNew: true
+                        })
+                    )
                     .catch(reject);
             }
         });
@@ -173,7 +195,7 @@ module.exports = class BoxHelper {
      * @param filePath
      * @returns {Promise}
      */
-    async uploadFile(userInfo, filePath, parentFoldId = '0') {
+    async uploadFile(userInfo, filePath, parentFoldId = "0") {
         return await new Promise((resolve, reject) => {
             // create a new ouath client
             this.createOauthClient(userInfo)
@@ -193,11 +215,11 @@ module.exports = class BoxHelper {
                             (err, file) => {
                                 if (!err) return resolve(resolve);
                                 reject(err);
-                            });
+                            }
+                        );
                     });
                 })
                 .catch(reject);
         });
     }
-
-}
+};

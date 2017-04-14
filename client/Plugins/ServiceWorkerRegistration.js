@@ -28,26 +28,6 @@ if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
                             if (process.env.DEBUG) {
                                 // log the contents and create a notifcation
                                 Logger.debug(messageContents);
-
-                                // Notification('ServiceWorkerChanged', messageContents + " Click to reload the page.")
-
-                                //     .then(tempNotification => {
-
-                                //         // Wait for onclick event
-
-                                //         tempNotification.onclick = () => {
-
-                                //             // close the notification
-
-                                //             tempNotification.close();
-
-                                //             // reload the page
-
-                                //             location.reload();
-
-                                //         }
-
-                                //     });
                             }
                             break;
                         }

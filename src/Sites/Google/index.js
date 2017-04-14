@@ -1,10 +1,10 @@
-var fs = require('fs');
-var path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+var fs = require("fs");
+var path = require("path");
+const winston = rootRequire("src/Helpers/Logger.js");
 
-var SiteInteface = require(__base + 'src/Sites/SiteInterface.js');
-var UploadObj = require('./Queries/Upload');
-var SearchQueryObj = require('./InlineQueries/SearchQuery');
+var SiteInteface = require(__base + "src/Sites/SiteInterface.js");
+var UploadObj = require("./Queries/Upload");
+var SearchQueryObj = require("./InlineQueries/SearchQuery");
 
 module.exports = class Google extends SiteInteface {
     constructor(app) {
@@ -32,7 +32,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {string}
      */
     get name() {
-        return 'Google';
+        return "Google";
     }
 
     /**
@@ -41,7 +41,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {string}
      */
     get title() {
-        return 'Google Drive';
+        return "Google Drive";
     }
 
     /**
@@ -50,7 +50,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {string}
      */
     get slogan() {
-        return 'Cloud Storage & File Backup for Photos, Docs & More';
+        return "Cloud Storage & File Backup for Photos, Docs & More";
     }
 
     /**
@@ -59,7 +59,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {string}
      */
     get description() {
-        return 'Cloud Storage & File Backup for Photos, Docs & More';
+        return "Cloud Storage & File Backup for Photos, Docs & More";
     }
 
     /**
@@ -121,5 +121,4 @@ module.exports = class Google extends SiteInteface {
     get supportedFeatures() {
         return ["inlineQuery_search", "query_upload"];
     }
-}
-
+};

@@ -1,19 +1,19 @@
 "use strict";
-const Logger = rootRequire('src/Helpers/Logger.js');
+const Logger = rootRequire("src/Helpers/Logger.js");
 
-const BoxHelper = require('./Helper');
-const UserHelper = require('./../../UserHelper.js');
+const BoxHelper = require("./Helper");
+const UserHelper = require("./../../UserHelper.js");
 
 module.exports = (app, passport, uploadApp) => {
     let BoxHelperObj = new BoxHelper(uploadApp);
     let UserHelperObj = new UserHelper(uploadApp);
 
     // returns a valid oauth url for the client
-    app.post('/login/box', (request, response) => {
+    app.post("/login/box", (request, response) => {
         // return response.redirect('/');
         if (!request.user) {
             // not logged in
-            return response.redirect('/');
+            return response.redirect("/");
         }
 
         // check if we already have data for imgur
@@ -21,7 +21,7 @@ module.exports = (app, passport, uploadApp) => {
             // check if we have a refresh token
             if (request.user.provider_sites.box.refresh_token) {
                 // no need to login for this user
-                return response.redirect('/');
+                return response.redirect("/");
             }
         }
 
@@ -30,7 +30,7 @@ module.exports = (app, passport, uploadApp) => {
     });
 
     // handles the oauth callback
-    app.get('/login/box/callback', function (request, response) {
+    app.get("/login/box/callback", function(request, response) {
         // return response.redirect('/');
         let code = request.query.code;
         let resultRoute = "/new/box";
@@ -42,7 +42,7 @@ module.exports = (app, passport, uploadApp) => {
         } else {
             // get access token for given code
             BoxHelperObj.requestAccessToken(code)
-                .then((result) => {
+                .then(result => {
                     let responseData = result;
 
                     // set new data
@@ -52,14 +52,17 @@ module.exports = (app, passport, uploadApp) => {
                         refreshToken: responseData.refreshToken,
                         accessTokenTTLMS: responseData.accessTokenTTLMS,
                         acquiredAtMS: responseData.acquiredAtMS,
-                        expiry_date: (new Date()).getTime() + parseInt(responseData.accessTokenTTLMS / 1000),
+                        expiry_date: new Date().getTime() +
+                            parseInt(responseData.accessTokenTTLMS / 1000)
                     };
 
                     // create a client to fetch the user info
                     BoxHelperObj.createOauthClient(request.user)
                         .then(BoxClient => {
                             // get user info for current user
-                            BoxClient.users.get("me", null,
+                            BoxClient.users.get(
+                                "me",
+                                null,
                                 (err, currentUser) => {
                                     if (err) {
                                         Logger.error(err);
@@ -68,15 +71,17 @@ module.exports = (app, passport, uploadApp) => {
 
                                     // store the new user info
                                     request.user.provider_sites.box.user_info = currentUser;
-                                    request.user.provider_sites.box.display_name = currentUser.name;
-                                    request.user.provider_sites.box.avatar = currentUser.avatar_url;
+                                    request.user.provider_sites.box.display_name =
+                                        currentUser.name;
+                                    request.user.provider_sites.box.avatar =
+                                        currentUser.avatar_url;
 
                                     // update the tokens for this user
                                     UserHelperObj.updateUserTokens(request.user)
-                                        .then((result) => {
+                                        .then(result => {
                                             response.redirect(resultRoute);
                                         })
-                                        .catch((err) => {
+                                        .catch(err => {
                                             response.redirect(resultRoute);
                                         });
                                 }
@@ -87,11 +92,10 @@ module.exports = (app, passport, uploadApp) => {
                             response.redirect(resultRoute);
                         });
                 })
-                .catch((err) => {
+                .catch(err => {
                     Logger.error(err);
                     response.redirect(resultRoute);
                 });
         }
     });
-
-}
+};

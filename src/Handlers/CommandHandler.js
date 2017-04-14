@@ -15,7 +15,7 @@ module.exports = class CommandHandler {
         this._commands[obj.name] = obj;
 
         // set the event listener
-        this._app._TelegramBot.onText(obj.pattern, obj.handle.bind(this))
+        this._app._TelegramBot.onText(obj.pattern, obj.handle.bind(this));
     }
 
     /**
@@ -37,11 +37,11 @@ module.exports = class CommandHandler {
      * can be used to create the command list for bot father settings
      * @returns {string}
      */
-    get info(){
+    get info() {
         var info = "";
-        Object.keys(this._commands).map((key)=>{
+        Object.keys(this._commands).map(key => {
             info += this._commands[key].info + "\n";
-        })
+        });
         return info;
     }
-}
+};

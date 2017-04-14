@@ -1,12 +1,12 @@
-const fs = require('fs');
-const path = require('path');
-const winston = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const winston = rootRequire("src/Helpers/Logger.js");
 
-const HelperInterface = require(__base + 'src/HelperInterface');
+const HelperInterface = require(__base + "src/HelperInterface");
 
-const UploadStartObj = require(__base + 'src/Queries/Generic/UploadStart');
-const UploadFinishObj = require(__base + 'src/Queries/Generic/UploadFinish');
-const DropboxHelperObj = require(__base + 'src/Sites/Dropbox/Helper');
+const UploadStartObj = require(__base + "src/Queries/Generic/UploadStart");
+const UploadFinishObj = require(__base + "src/Queries/Generic/UploadFinish");
+const DropboxHelperObj = require(__base + "src/Sites/Dropbox/Helper");
 
 module.exports = class Upload extends HelperInterface {
     constructor(app) {
@@ -29,16 +29,17 @@ module.exports = class Upload extends HelperInterface {
     handle(query) {
         // console.log(query);
         return new Promise((resolve, reject) => {
-
             // generic start upload event
             this.UploadStart
-                .handle(query, 'dropbox')
+                .handle(query, "dropbox")
                 // get file contents
                 .then(resolveResults => this.getContents(resolveResults))
                 // upload to dropbox
                 .then(resolveResults => this.uploadDropbox(resolveResults))
                 // generic finish upload event
-                .then(resolveResults => this.UploadFinish.handle(resolveResults))
+                .then(resolveResults =>
+                    this.UploadFinish.handle(resolveResults)
+                )
                 // final close event
                 .then(resolveResults => {
                     // finished
@@ -88,28 +89,32 @@ module.exports = class Upload extends HelperInterface {
     uploadDropbox(resolveResults) {
         return new Promise((resolve, reject) => {
             // upload to dropbox
-            this._DropboxHelper.uploadFile({
-                    path: '/' + path.basename(resolveResults.file_location),
-                    contents: resolveResults.file_contents
-                },
-                resolveResults.userInfo
-            ).then((upload_result) => {
-                // add new upload location
-                resolveResults.upload_result = upload_result;
+            this._DropboxHelper
+                .uploadFile(
+                    {
+                        path: "/" + path.basename(resolveResults.file_location),
+                        contents: resolveResults.file_contents
+                    },
+                    resolveResults.userInfo
+                )
+                .then(upload_result => {
+                    // add new upload location
+                    resolveResults.upload_result = upload_result;
 
-                // resolve the results
-                resolve(resolveResults);
-            }).catch(err => {
-                // dropbox upload failed
-                reject(err);
+                    // resolve the results
+                    resolve(resolveResults);
+                })
+                .catch(err => {
+                    // dropbox upload failed
+                    reject(err);
 
-                // error result message
-                this.editMessageError({
-                    chat_id: resolveResults.msgInfo.chat_id,
-                    message_id: resolveResults.msgInfo.message_id
+                    // error result message
+                    this.editMessageError({
+                        chat_id: resolveResults.msgInfo.chat_id,
+                        message_id: resolveResults.msgInfo.message_id
+                    });
                 });
-            });
-        })
+        });
     }
 
     /**
@@ -119,5 +124,4 @@ module.exports = class Upload extends HelperInterface {
     get event() {
         return "upload_dropbox";
     }
-}
-
+};

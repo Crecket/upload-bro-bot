@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
-const winston = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const axios = require("axios");
+const winston = rootRequire("src/Helpers/Logger.js");
 
 module.exports = class ImgurHelper {
     constructor(app) {
@@ -23,9 +23,9 @@ module.exports = class ImgurHelper {
         }
 
         // create new imgur client and set default values
-        const Imgur = require('imgur-v2');
-        Imgur.setClientId(process.env.IMGUR_CLIENT_ID)
-        Imgur.setAPIUrl('https://api.imgur.com/3/');
+        const Imgur = require("imgur-v2");
+        Imgur.setClientId(process.env.IMGUR_CLIENT_ID);
+        Imgur.setAPIUrl("https://api.imgur.com/3/");
 
         // check if tokens are valid
         return new Promise((resolve, reject) => {
@@ -42,17 +42,20 @@ module.exports = class ImgurHelper {
                         newUser.provider_sites.imgur = newTokens;
 
                         // update the user
-                        this._app._UserHelper.updateUserTokens(newUser)
+                        this._app._UserHelper
+                            .updateUserTokens(newUser)
                             .then(success => {
                                 resolve(Imgur);
-                            }).catch(reject);
+                            })
+                            .catch(reject);
                     } else {
                         // use old tokens, no new tokens have been used
                         Imgur.setAccessToken(tokens.access_token);
                         resolve(Imgur);
                     }
-                }).catch(reject);
-        })
+                })
+                .catch(reject);
+        });
     }
 
     /**
@@ -67,7 +70,6 @@ module.exports = class ImgurHelper {
             // create a new ouath client
             this.createOauthClient(userInfo)
                 .then(imgurClient => {
-
                     // get the contents
                     fs.readFile(filePath, {}, (err, data) => {
                         if (err) {
@@ -76,11 +78,13 @@ module.exports = class ImgurHelper {
                         }
 
                         // A single image
-                        imgurClient.uploadFile(filePath)
-                            .then((json) => resolve(json.data))
+                        imgurClient
+                            .uploadFile(filePath)
+                            .then(json => resolve(json.data))
                             .catch(reject);
                     });
-                }).catch(reject);
+                })
+                .catch(reject);
         });
     }
 
@@ -95,20 +99,27 @@ module.exports = class ImgurHelper {
             // create a new ouath client
             this.createOauthClient(userInfo)
                 .then(imgurClient => {
-                    let accessToken = userInfo.provider_sites.imgur.access_token;
-                    let accountUsername = userInfo.provider_sites.imgur.account_username;
-                    let requestUrl = process.env.IMGUR_API_URL + "account/" + accountUsername + "/images";
+                    let accessToken =
+                        userInfo.provider_sites.imgur.access_token;
+                    let accountUsername =
+                        userInfo.provider_sites.imgur.account_username;
+                    let requestUrl =
+                        process.env.IMGUR_API_URL +
+                        "account/" +
+                        accountUsername +
+                        "/images";
 
                     // do the request
                     axios({
                         url: requestUrl,
                         headers: {
-                            'Authorization': 'Bearer ' + accessToken
+                            Authorization: "Bearer " + accessToken
                         }
                     })
-                        .then((json) => resolve(json.data.data))
+                        .then(json => resolve(json.data.data))
                         .catch(reject);
-                }).catch(reject);
+                })
+                .catch(reject);
         });
     }
 
@@ -119,10 +130,15 @@ module.exports = class ImgurHelper {
      * @returns {string}
      */
     getAuthorizationUrl(response_type = "token") {
-        return "https://api.imgur.com/oauth2/authorize" +
-            "?client_id=" + process.env.IMGUR_CLIENT_ID +
-            "&response_type=" + response_type +
-            "&state=" + ((new Date()).getTime());
+        return (
+            "https://api.imgur.com/oauth2/authorize" +
+            "?client_id=" +
+            process.env.IMGUR_CLIENT_ID +
+            "&response_type=" +
+            response_type +
+            "&state=" +
+            new Date().getTime()
+        );
     }
 
     /**
@@ -134,15 +150,18 @@ module.exports = class ImgurHelper {
     requestAccessToken(code) {
         return new Promise((resolve, reject) => {
             // do api call to get access token for the code
-            axios.post("https://api.imgur.com/oauth2/token", {
-                code: code,
-                client_id: process.env.IMGUR_CLIENT_ID,
-                client_secret: process.env.IMGUR_CLIENT_SECRET,
-                grant_type: 'authorization_code'
-            }).then(resolve).catch(err => {
-                reject(err);
-                winston.error(err);
-            });
+            axios
+                .post("https://api.imgur.com/oauth2/token", {
+                    code: code,
+                    client_id: process.env.IMGUR_CLIENT_ID,
+                    client_secret: process.env.IMGUR_CLIENT_SECRET,
+                    grant_type: "authorization_code"
+                })
+                .then(resolve)
+                .catch(err => {
+                    reject(err);
+                    winston.error(err);
+                });
         });
     }
 
@@ -155,22 +174,28 @@ module.exports = class ImgurHelper {
     refreshAccessToken(tokens) {
         return new Promise((resolve, reject) => {
             // do api call with the refresh token to fetch a new access token
-            axios.post("https://api.imgur.com/oauth2/token", {
-                refresh_token: tokens.refresh_token,
-                client_id: process.env.IMGUR_CLIENT_ID,
-                client_secret: process.env.IMGUR_CLIENT_SECRET,
-                grant_type: 'refresh_token'
-            }).then(result => {
-                let resultData = result.data;
+            axios
+                .post("https://api.imgur.com/oauth2/token", {
+                    refresh_token: tokens.refresh_token,
+                    client_id: process.env.IMGUR_CLIENT_ID,
+                    client_secret: process.env.IMGUR_CLIENT_SECRET,
+                    grant_type: "refresh_token"
+                })
+                .then(result => {
+                    let resultData = result.data;
 
-                // return the new list
-                resolve(Object.assign(resultData, {
-                    expiry_date: (new Date()).getTime() + resultData.expires_in
-                }));
-            }).catch(err => {
-                reject(err);
-                winston.error(err.response);
-            });
+                    // return the new list
+                    resolve(
+                        Object.assign(resultData, {
+                            expiry_date: new Date().getTime() +
+                                resultData.expires_in
+                        })
+                    );
+                })
+                .catch(err => {
+                    reject(err);
+                    winston.error(err.response);
+                });
         });
     }
 
@@ -183,7 +208,7 @@ module.exports = class ImgurHelper {
     getValidToken(tokens) {
         return new Promise((resolve, reject) => {
             // check if access token has expired
-            if (tokens.expiry_date - (new Date()).getTime() >= 0) {
+            if (tokens.expiry_date - new Date().getTime() >= 0) {
                 // not expired, no new tokens
                 resolve(true);
             } else {
@@ -194,5 +219,4 @@ module.exports = class ImgurHelper {
             }
         });
     }
-
-}
+};

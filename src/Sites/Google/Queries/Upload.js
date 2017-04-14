@@ -1,15 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const Logger = rootRequire('src/Helpers/Logger.js');
+const fs = require("fs");
+const path = require("path");
+const Logger = rootRequire("src/Helpers/Logger.js");
 
-const HelperInterface = rootRequire('src/HelperInterface');
+const HelperInterface = rootRequire("src/HelperInterface");
 
-const UploadStartObj = rootRequire('src/Queries/Generic/UploadStart');
-const UploadFinishObj = rootRequire('src/Queries/Generic/UploadFinish');
-const GoogleHelperObj = rootRequire('src/Sites/Google/Helper');
+const UploadStartObj = rootRequire("src/Queries/Generic/UploadStart");
+const UploadFinishObj = rootRequire("src/Queries/Generic/UploadFinish");
+const GoogleHelperObj = rootRequire("src/Sites/Google/Helper");
 
 module.exports = class Upload extends HelperInterface {
-
     constructor(app) {
         super(app);
 
@@ -30,14 +29,15 @@ module.exports = class Upload extends HelperInterface {
     handle(query) {
         // console.log(query);
         return new Promise((resolve, reject) => {
-
             // generic start upload event
             this.UploadStart
-                .handle(query, 'google')
+                .handle(query, "google")
                 // upload to google
                 .then(resolveResults => this.uploadGoogle(resolveResults))
                 // generic finish upload event
-                .then(resolveResults => this.UploadFinish.handle(resolveResults))
+                .then(resolveResults =>
+                    this.UploadFinish.handle(resolveResults)
+                )
                 // final close event
                 .then(resolveResults => {
                     // finished
@@ -59,7 +59,9 @@ module.exports = class Upload extends HelperInterface {
     async uploadGoogle(resolveResults) {
         try {
             // make sure we have a uploadbro folder
-            const folder_id = await this._GoogleHelper.assertUploadFolder(resolveResults.userInfo);
+            const folder_id = await this._GoogleHelper.assertUploadFolder(
+                resolveResults.userInfo
+            );
 
             // store upload results
             resolveResults.upload_result = await this._GoogleHelper.uploadFile(
@@ -87,5 +89,4 @@ module.exports = class Upload extends HelperInterface {
     get event() {
         return "upload_google";
     }
-}
-
+};
