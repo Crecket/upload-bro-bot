@@ -2186,7 +2186,9 @@ exports[`<Dashboard /> matches snapshot without verified user 1`] = `
 </div>
 `;
 
-exports[`<Dashboard /> matches snapshot without verified user and without sites 1`] = `
+exports[
+  `<Dashboard /> matches snapshot without verified user and without sites 1`
+] = `
 <div>
   <div
     style={

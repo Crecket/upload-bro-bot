@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 class TitleBar extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
-    };
+    }
 
     render() {
         return (
@@ -14,7 +14,7 @@ class TitleBar extends React.Component {
                 </h1>
             </div>
         );
-    };
+    }
 }
 
-export default  TitleBar;
+export default TitleBar;

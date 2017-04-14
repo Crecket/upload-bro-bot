@@ -1,6 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ProviderRemove /> empty site list should trigger router push 1`] = `null`;
+exports[
+  `<ProviderRemove /> empty site list should trigger router push 1`
+] = `null`;
 
 exports[`<ProviderRemove /> matches snapshot 1`] = `
 <div
@@ -265,7 +267,9 @@ exports[`<ProviderRemove /> matches snapshot 1`] = `
 </div>
 `;
 
-exports[`<ProviderRemove /> site list with 1 item should fallback to own type in swipe action 1`] = `
+exports[
+  `<ProviderRemove /> site list with 1 item should fallback to own type in swipe action 1`
+] = `
 <div
   className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3"
   style={

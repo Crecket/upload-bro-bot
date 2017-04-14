@@ -979,7 +979,9 @@ exports[`<ProviderBlocks /> matches snapshot with no info 1`] = `
 />
 `;
 
-exports[`<ProviderBlocks /> matches snapshot with no site list and with user list 1`] = `
+exports[
+  `<ProviderBlocks /> matches snapshot with no site list and with user list 1`
+] = `
 <div
   className="row center-xs"
   style={
@@ -990,7 +992,9 @@ exports[`<ProviderBlocks /> matches snapshot with no site list and with user lis
 />
 `;
 
-exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`] = `
+exports[
+  `<ProviderBlocks /> matches snapshot with site list and no user list 1`
+] = `
 <div
   className="row center-xs"
   style={

@@ -1,42 +1,52 @@
-import React from 'react';
-import {connect} from "react-redux";
+import React from "react";
+import { connect } from "react-redux";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
-import store from 'store';
-import TransitionGroup from 'react-transition-group/TransitionGroup';
+import store from "store";
+import TransitionGroup from "react-transition-group/TransitionGroup";
 
 // custom components
-import ComponentLoader from './Sub/ComponentLoader';
-import Logger from '../Helpers/Logger';
+import ComponentLoader from "./Sub/ComponentLoader";
+import Logger from "../Helpers/Logger";
 
 // only allow this in debug enviroment, else return null
 const MainAppbar = ComponentLoader(
-    () => import('./MainAppbar'), () => require.resolveWeak('./MainAppbar'));
+    () => import("./MainAppbar"),
+    () => require.resolveWeak("./MainAppbar")
+);
 // only allow this in debug enviroment, else return null
 const DrawerDebugger = ComponentLoader(
-    () => import('./DrawerDebugger'), () => require.resolveWeak('./DrawerDebugger'));
+    () => import("./DrawerDebugger"),
+    () => require.resolveWeak("./DrawerDebugger")
+);
 
 // Themes
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import LightBlue from '../Themes/LightBlue';
-import Dark from '../Themes/Dark';
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import LightBlue from "../Themes/LightBlue";
+import Dark from "../Themes/Dark";
 
 // navigator fallback for server-side rendering
-const navigatorHelper = (typeof navigator !== "undefined" && navigator.userAgent) ? navigator.userAgent : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
+const navigatorHelper = typeof navigator !== "undefined" && navigator.userAgent
+    ? navigator.userAgent
+    : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
 const ThemesList = {
-    "LightBlue": getMuiTheme(LightBlue, {userAgent: navigatorHelper}),
-    "Dark": getMuiTheme(Dark, {userAgent: navigatorHelper}),
+    LightBlue: getMuiTheme(LightBlue, { userAgent: navigatorHelper }),
+    Dark: getMuiTheme(Dark, { userAgent: navigatorHelper })
 };
 const ThemeListNames = Object.keys(ThemesList);
 
 // redux actions
-import {openModal, closeModal} from "../Actions/modalActions.js";
-import {userUpdate, userLogout, userLoadLocalstorage} from "../Actions/user.js";
-import {siteUpdate, siteLoadLocalstorage} from "../Actions/sites.js";
+import { openModal, closeModal } from "../Actions/modalActions.js";
+import {
+    userUpdate,
+    userLogout,
+    userLoadLocalstorage
+} from "../Actions/user.js";
+import { siteUpdate, siteLoadLocalstorage } from "../Actions/sites.js";
 
 // connect to redux
-@connect((store) => {
+@connect(store => {
     return {
         sites: store.sites.sites,
 
@@ -45,18 +55,17 @@ import {siteUpdate, siteLoadLocalstorage} from "../Actions/sites.js";
 
         modalText: store.modal.message,
         modalTitle: store.modal.title,
-        modalOpen: store.modal.modalOpen,
+        modalOpen: store.modal.modalOpen
     };
 })
 export default class Main extends React.Component {
-
     constructor(props, context) {
         super(props, context);
         this.state = {
             // theme options
-            muiTheme: store.get('theme') || "Dark", // default to dark
+            muiTheme: store.get("theme") || "Dark" // default to dark
         };
-    };
+    }
 
     componentDidMount() {
         // initial localstorage check
@@ -68,7 +77,7 @@ export default class Main extends React.Component {
 
         // fetch site data
         this.props.dispatch(siteUpdate());
-    };
+    }
 
     // =========== Static data =============
 
@@ -88,9 +97,9 @@ export default class Main extends React.Component {
         }
 
         // set the theme and store it
-        this.setState({muiTheme: finalTheme}, () => {
-            store.set('theme', finalTheme);
-        })
+        this.setState({ muiTheme: finalTheme }, () => {
+            store.set("theme", finalTheme);
+        });
     };
 
     // open the general modal
@@ -113,29 +122,40 @@ export default class Main extends React.Component {
 
     render() {
         // get the children pages and give them some default props
-        const mainBody = React.Children.map(this.props.children, (child) => {
-                return React.cloneElement(child, {
-                    key: (child.props.route.path + JSON.stringify(child.props.params)),
-                    initialCheck: this.props.initialCheck,
-                    user_info: this.props.user_info,
-                    sites: this.props.sites,
-                    theme: ThemesList[this.state.muiTheme],
-                    updateUser: this.updateUser,
-                    openModalHelper: this.openModalHelper,
-                    closeModalHelper: this.closeModalHelper
-                });
-            }
-        );
+        const mainBody = React.Children.map(this.props.children, child => {
+            return React.cloneElement(child, {
+                key: child.props.route.path +
+                    JSON.stringify(child.props.params),
+                initialCheck: this.props.initialCheck,
+                user_info: this.props.user_info,
+                sites: this.props.sites,
+                theme: ThemesList[this.state.muiTheme],
+                updateUser: this.updateUser,
+                openModalHelper: this.openModalHelper,
+                closeModalHelper: this.closeModalHelper
+            });
+        });
 
         return (
             <MuiThemeProvider muiTheme={ThemesList[this.state.muiTheme]}>
-                <div className={"container-fluid react-root " + this.state.muiTheme} style={{
-                    backgroundColor: ThemesList[this.state.muiTheme].rawTheme.palette.appBackgroundColor
-                }}>
+                <div
+                    className={
+                        "container-fluid react-root " + this.state.muiTheme
+                    }
+                    style={{
+                        backgroundColor: ThemesList[this.state.muiTheme]
+                            .rawTheme.palette.appBackgroundColor
+                    }}
+                >
                     <div className={"row center-xs"}>
                         <div className="col-xs-12 col-md-12 col-lg-10">
-                            <div className="box"
-                                 style={{paddingBottom: 30, position: 'relative'}}>
+                            <div
+                                className="box"
+                                style={{
+                                    paddingBottom: 30,
+                                    position: "relative"
+                                }}
+                            >
                                 <Dialog
                                     title={this.props.modalTitle}
                                     actions={[
@@ -144,7 +164,7 @@ export default class Main extends React.Component {
                                             primary={true}
                                             keyboardFocused={true}
                                             onTouchTap={this.closeModalHelper}
-                                        />,
+                                        />
                                     ]}
                                     modal={false}
                                     open={this.props.modalOpen}
@@ -170,6 +190,6 @@ export default class Main extends React.Component {
                     </div>
                 </div>
             </MuiThemeProvider>
-        )
-    };
+        );
+    }
 }

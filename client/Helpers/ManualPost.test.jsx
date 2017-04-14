@@ -1,10 +1,9 @@
 "use strict";
-const ManualPost = require('./ManualPost');
+const ManualPost = require("./ManualPost");
 
-describe('#ManualPost', () => {
-    it('returns a callable function', () => {
-        const f = ManualPost('/');
+describe("#ManualPost", () => {
+    it("returns a callable function", () => {
+        const f = ManualPost("/");
         f();
     });
 });
-

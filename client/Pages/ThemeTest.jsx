@@ -1,12 +1,12 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from "react";
 import Helmet from "react-helmet";
-import muiThemeable from 'material-ui/styles/muiThemeable';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import withWidth, {SMALL} from 'material-ui/utils/withWidth';
-import typography from 'material-ui/styles/typography';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import ClearFix from 'material-ui/internal/ClearFix';
-import DevicesIcon from 'material-ui/svg-icons/action/important-devices';
+import muiThemeable from "material-ui/styles/muiThemeable";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import withWidth, { SMALL } from "material-ui/utils/withWidth";
+import typography from "material-ui/styles/typography";
+import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
+import ClearFix from "material-ui/internal/ClearFix";
+import DevicesIcon from "material-ui/svg-icons/action/important-devices";
 
 import {
     Checkbox,
@@ -27,91 +27,96 @@ import {
     Tab,
     TextField,
     TimePicker,
-    Toggle,
-} from 'material-ui';
+    Toggle
+} from "material-ui";
 
 class ThemesPage extends Component {
     static propTypes = {
         muiTheme: PropTypes.object,
         onChangeMuiTheme: PropTypes.func,
-        width: PropTypes.number.isRequired,
+        width: PropTypes.number.isRequired
     };
 
     state = {
         dialogOpen: false,
         snackbarOpen: false,
-        drawerOpen: false,
+        drawerOpen: false
     };
 
     componentWillMount() {
         this.setState({
-            valueTabs: this.props.muiTheme.name || 'light',
+            valueTabs: this.props.muiTheme.name || "light"
         });
     }
 
     getStyles() {
-        const {
-            muiTheme,
-            width,
-        } = this.props;
+        const { muiTheme, width } = this.props;
 
         const canvasColor = muiTheme.baseTheme.palette.canvasColor;
         const borderColor = muiTheme.baseTheme.palette.borderColor;
         const styles = {
             group: {
-                float: 'left',
-                width: width === SMALL ? '100%' : '33%',
-                marginTop: '16px',
-                padding: '0 50px',
-                boxSizing: 'border-box',
+                float: "left",
+                width: width === SMALL ? "100%" : "33%",
+                marginTop: "16px",
+                padding: "0 50px",
+                boxSizing: "border-box"
             },
             groupSlider: {
-                marginTop: '0px',
-                width: '100%',
+                marginTop: "0px",
+                width: "100%"
             },
             container: {
-                marginBottom: '16px',
-                minHeight: '24px',
-                textAlign: 'left',
+                marginBottom: "16px",
+                minHeight: "24px",
+                textAlign: "left"
             },
             containerCentered: {
-                textAlign: 'center',
+                textAlign: "center"
             },
             paper: {
-                height: '100px',
-                width: '100px',
-                margin: '0 auto',
-                marginBottom: '64px',
+                height: "100px",
+                width: "100px",
+                margin: "0 auto",
+                marginBottom: "64px"
             },
             textfield: {
-                width: '100%',
+                width: "100%"
             },
             slider: {
-                marginTop: '0px',
-                marginBottom: '0px',
+                marginTop: "0px",
+                marginBottom: "0px"
             },
             title: {
-                fontSize: '20px',
-                lineHeight: '28px',
-                paddingTop: '19px',
-                marginBottom: '13px',
-                letterSpacing: '0',
+                fontSize: "20px",
+                lineHeight: "28px",
+                paddingTop: "19px",
+                marginBottom: "13px",
+                letterSpacing: "0",
                 fontWeight: typography.fontWeightMedium,
-                color: typography.textDarkBlack,
+                color: typography.textDarkBlack
             },
             liveExamplePaper: {
                 backgroundColor: canvasColor,
                 marginBottom: 32,
-                overflow: 'hidden',
+                overflow: "hidden"
             },
             bottomBorderWrapper: {
                 borderBottom: `1px solid ${borderColor}`,
-                paddingBottom: '10px',
-            },
+                paddingBottom: "10px"
+            }
         };
 
-        styles.containerCentered = Object.assign({}, styles.container, styles.containerCentered);
-        styles.groupSlider = Object.assign({}, styles.group, styles.groupSlider);
+        styles.containerCentered = Object.assign(
+            {},
+            styles.container,
+            styles.containerCentered
+        );
+        styles.groupSlider = Object.assign(
+            {},
+            styles.group,
+            styles.groupSlider
+        );
 
         return styles;
     }
@@ -123,16 +128,16 @@ class ThemesPage extends Component {
             <ClearFix>
                 <div style={styles.group}>
                     <div style={styles.containerCentered}>
-                        <DevicesIcon/>
+                        <DevicesIcon />
                     </div>
                     <div style={styles.containerCentered}>
-                        <RaisedButton label="Secondary" secondary={true}/>
+                        <RaisedButton label="Secondary" secondary={true} />
                     </div>
                     <div style={styles.containerCentered}>
-                        <RaisedButton label="Primary" primary={true}/>
+                        <RaisedButton label="Primary" primary={true} />
                     </div>
                     <div style={styles.containerCentered}>
-                        <RaisedButton label="Default"/>
+                        <RaisedButton label="Default" />
                     </div>
                 </div>
                 <div style={styles.group}>
@@ -154,14 +159,8 @@ class ThemesPage extends Component {
                             name="shipSpeed"
                             defaultSelected="usd"
                         >
-                            <RadioButton
-                                value="usd"
-                                label="USD"
-                            />
-                            <RadioButton
-                                value="euro"
-                                label="Euro"
-                            />
+                            <RadioButton value="usd" label="USD" />
+                            <RadioButton value="euro" label="Euro" />
                             <RadioButton
                                 value="mxn"
                                 label="MXN"
@@ -170,10 +169,7 @@ class ThemesPage extends Component {
                         </RadioButtonGroup>
                     </div>
                     <div style={styles.container}>
-                        <Toggle
-                            name="toggleName1"
-                            label="toggle"
-                        />
+                        <Toggle name="toggleName1" label="toggle" />
                         <Toggle
                             name="toggleName2"
                             label="disabled toggle"
@@ -182,7 +178,7 @@ class ThemesPage extends Component {
                         />
                     </div>
                 </div>
-                <div style={Object.assign({}, styles.group, {marginTop: 0})}>
+                <div style={Object.assign({}, styles.group, { marginTop: 0 })}>
                     <div style={styles.container}>
                         <TextField
                             id="field1"
@@ -195,31 +191,39 @@ class ThemesPage extends Component {
                             id="field2"
                             hintText="Landscape Dialog"
                             mode="landscape"
-                            style={{width: '100%'}}
+                            style={{ width: "100%" }}
                         />
                     </div>
                     <div style={styles.container}>
                         <TimePicker
                             id="timepickerkey"
                             key="timepickerkey"
-                            autoOk={true}/>
+                            autoOk={true}
+                        />
                     </div>
                     <div style={styles.container}>
-                        <DropDownMenu value={3} style={{width: '100%'}}>
-                            <MenuItem value={1} primaryText={'Never'}/>
-                            <MenuItem value={2} primaryText={'Every Night'}/>
-                            <MenuItem value={3} primaryText={'Weeknights'}/>
-                            <MenuItem value={4} primaryText={'Weekends'}/>
-                            <MenuItem value={5} primaryText={'Weekly'}/>
+                        <DropDownMenu value={3} style={{ width: "100%" }}>
+                            <MenuItem value={1} primaryText={"Never"} />
+                            <MenuItem value={2} primaryText={"Every Night"} />
+                            <MenuItem value={3} primaryText={"Weeknights"} />
+                            <MenuItem value={4} primaryText={"Weekends"} />
+                            <MenuItem value={5} primaryText={"Weekly"} />
                         </DropDownMenu>
                     </div>
                 </div>
                 <div style={styles.groupSlider}>
-                    <Slider style={styles.slider} name="slider2" defaultValue={0.5}/>
+                    <Slider
+                        style={styles.slider}
+                        name="slider2"
+                        defaultValue={0.5}
+                    />
                 </div>
                 <div style={styles.group}>
                     <div style={styles.containerCentered}>
-                        <FlatButton label="View Dialog" onTouchTap={this.handleTouchTapDialog}/>
+                        <FlatButton
+                            label="View Dialog"
+                            onTouchTap={this.handleTouchTapDialog}
+                        />
                         <Dialog
                             open={this.state.dialogOpen}
                             title="Dialog With Standard Actions"
@@ -234,11 +238,11 @@ class ThemesPage extends Component {
                                     label="Submit"
                                     onTouchTap={this.handleRequestCloseDialog}
                                     primary={true}
-                                />,
+                                />
                             ]}
                             onRequestClose={this.handleRequestCloseDialog}
                         >
-                            The actions in this window are created from tan array of element's that&#39;s passed in.
+                            The actions in this window are created from tan array of element's that's passed in.
                         </Dialog>
                     </div>
                 </div>
@@ -249,7 +253,8 @@ class ThemesPage extends Component {
                             label="View Drawer"
                         />
                         <Drawer
-                            open={this.state.drawerOpen} docked={false}
+                            open={this.state.drawerOpen}
+                            docked={false}
                             onRequestChange={this.handleRequestChangeDrawer}
                         >
                             <MenuItem>Menu Item</MenuItem>
@@ -276,10 +281,10 @@ class ThemesPage extends Component {
         );
     }
 
-    handleChangeTabs = (valueTabs) => {
+    handleChangeTabs = valueTabs => {
         let newMuiTheme = null;
 
-        if (valueTabs === 'light') {
+        if (valueTabs === "light") {
             newMuiTheme = getMuiTheme();
         } else {
             newMuiTheme = getMuiTheme(darkBaseTheme);
@@ -288,7 +293,7 @@ class ThemesPage extends Component {
         newMuiTheme.name = valueTabs;
 
         this.setState({
-            valueTabs: valueTabs,
+            valueTabs: valueTabs
         });
 
         this.props.onChangeMuiTheme(newMuiTheme);
@@ -301,14 +306,8 @@ class ThemesPage extends Component {
                     value={this.state.valueTabs}
                     onChange={this.handleChangeTabs}
                 >
-                    <Tab
-                        label="Light Theme (Default)"
-                        value="light"
-                    />
-                    <Tab
-                        label="Dark Theme"
-                        value="dark"
-                    />
+                    <Tab label="Light Theme (Default)" value="light" />
+                    <Tab label="Dark Theme" value="dark" />
                 </Tabs>
                 {this.getComponentGroup()}
             </div>
@@ -317,37 +316,37 @@ class ThemesPage extends Component {
 
     handleTouchTapDrawer = () => {
         this.setState({
-            drawerOpen: true,
+            drawerOpen: true
         });
     };
 
-    handleRequestChangeDrawer = (open) => {
+    handleRequestChangeDrawer = open => {
         this.setState({
-            drawerOpen: open,
+            drawerOpen: open
         });
     };
 
     handleTouchTapDialog = () => {
         this.setState({
-            dialogOpen: true,
+            dialogOpen: true
         });
     };
 
     handleRequestCloseDialog = () => {
         this.setState({
-            dialogOpen: false,
+            dialogOpen: false
         });
     };
 
     handleTouchTapSnackbar = () => {
         this.setState({
-            snackbarOpen: true,
+            snackbarOpen: true
         });
     };
 
     handleRequestCloseSnackbar = () => {
         this.setState({
-            snackbarOpen: false,
+            snackbarOpen: false
         });
     };
 
@@ -360,7 +359,9 @@ class ThemesPage extends Component {
                     <title>{`UploadBroBot - Theme test`}</title>
                 </Helmet>
                 <Paper style={styles.liveExamplePaper}>
-                    <ClearFix style={styles.liveExampleBlock}>{this.getThemeExamples()}</ClearFix>
+                    <ClearFix style={styles.liveExampleBlock}>
+                        {this.getThemeExamples()}
+                    </ClearFix>
                 </Paper>
             </div>
         );

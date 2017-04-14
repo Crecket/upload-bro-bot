@@ -1,7 +1,7 @@
-import {applyMiddleware, createStore} from "redux";
+import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import promise from "redux-promise-middleware";
-import {createLogger} from 'redux-logger';
+import { createLogger } from "redux-logger";
 
 // fetch all reducers as a bundle
 import reducer from "./Reducers/index.js";
@@ -10,10 +10,14 @@ import reducer from "./Reducers/index.js";
 let middleware;
 if (process.env.DEBUG === true) {
     // create middleware with logger
-    middleware = applyMiddleware(promise(), thunk, createLogger({
-        collapsed: true,
-        timestamp: false,
-    }));
+    middleware = applyMiddleware(
+        promise(),
+        thunk,
+        createLogger({
+            collapsed: true,
+            timestamp: false
+        })
+    );
 } else {
     // default middleware
     middleware = applyMiddleware(promise(), thunk);

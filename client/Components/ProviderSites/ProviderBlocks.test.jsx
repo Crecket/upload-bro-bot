@@ -1,46 +1,58 @@
 "use strict";
 
-import React from 'react';
-import renderer from 'react-test-renderer';
-import {shallow} from 'enzyme';
+import React from "react";
+import renderer from "react-test-renderer";
+import { shallow } from "enzyme";
 
-import Wrapper from '../../TestHelpers/Wrapper.jsx';
-import ProviderBlocks from'./ProviderBlocks.jsx';
+import Wrapper from "../../TestHelpers/Wrapper.jsx";
+import ProviderBlocks from "./ProviderBlocks.jsx";
 
-const siteTestList = require('../../TestHelpers/Data/api-get_providers.json');
-const userInfoList = require('../../TestHelpers/Data/api-get_user.json');
+const siteTestList = require("../../TestHelpers/Data/api-get_providers.json");
+const userInfoList = require("../../TestHelpers/Data/api-get_user.json");
 
-describe('<ProviderBlocks />', () => {
-    it('matches snapshot', () => {
+describe("<ProviderBlocks />", () => {
+    it("matches snapshot", () => {
         const tree = renderer.create(
-            <Wrapper><ProviderBlocks provider_sites={siteTestList}
-                                     user_provider_sites={userInfoList.provider_sites}/></Wrapper>
+            <Wrapper>
+                <ProviderBlocks
+                    provider_sites={siteTestList}
+                    user_provider_sites={userInfoList.provider_sites}
+                />
+            </Wrapper>
         );
         expect(tree).toMatchSnapshot();
     });
 
-    it('matches snapshot with no site list and with user list', () => {
+    it("matches snapshot with no site list and with user list", () => {
         const tree = renderer.create(
-            <Wrapper><ProviderBlocks provider_sites={{}}
-                                     user_provider_sites={userInfoList.provider_sites}/></Wrapper>
+            <Wrapper>
+                <ProviderBlocks
+                    provider_sites={{}}
+                    user_provider_sites={userInfoList.provider_sites}
+                />
+            </Wrapper>
         );
         expect(tree).toMatchSnapshot();
     });
 
-    it('matches snapshot with site list and no user list', () => {
+    it("matches snapshot with site list and no user list", () => {
         const tree = renderer.create(
-            <Wrapper><ProviderBlocks provider_sites={siteTestList}
-                                     user_provider_sites={{}}/></Wrapper>
+            <Wrapper>
+                <ProviderBlocks
+                    provider_sites={siteTestList}
+                    user_provider_sites={{}}
+                />
+            </Wrapper>
         );
         expect(tree).toMatchSnapshot();
     });
 
-    it('matches snapshot with no info', () => {
+    it("matches snapshot with no info", () => {
         const tree = renderer.create(
-            <Wrapper><ProviderBlocks provider_sites={{}}
-                                     user_provider_sites={{}}/></Wrapper>
+            <Wrapper>
+                <ProviderBlocks provider_sites={{}} user_provider_sites={{}} />
+            </Wrapper>
         );
         expect(tree).toMatchSnapshot();
     });
-
 });

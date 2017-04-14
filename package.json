@@ -14,6 +14,7 @@
     "sw": "cross-env RUN_HELPER=1 node webpack/SWHelper.js",
     "release": "fly update:production",
     "fly-restart": "fly restart:production",
+    "prettify": "prettier --write \"client/**/*.{js,jsx}\" --tab-width 4",
     "pm2": "pm2 start pm2.json"
   },
   "engines": {

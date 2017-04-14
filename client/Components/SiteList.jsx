@@ -1,20 +1,20 @@
-import React from 'react';
-import muiThemeable from 'material-ui/styles/muiThemeable';
+import React from "react";
+import muiThemeable from "material-ui/styles/muiThemeable";
 
-import PaperHelper from './Sub/PaperHelper';
+import PaperHelper from "./Sub/PaperHelper";
 import TitleBar from "./Sub/TitleBar";
-import Center from './Sub/Center';
+import Center from "./Sub/Center";
 
 const styles = {
     wrapper: {
         marginTop: 30
     },
     box: {
-        margin: 'auto',
+        margin: "auto",
         marginTop: 10,
         minHeight: 145,
         padding: 5,
-        textAlign: 'center'
+        textAlign: "center"
     },
     logo: {
         height: 90
@@ -25,7 +25,7 @@ class SiteList extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
-    };
+    }
 
     renderFeature(key, site) {
         return (
@@ -35,7 +35,10 @@ class SiteList extends React.Component {
 
                         <div className="col-xs-12 col-sm-4">
                             <Center>
-                                <img style={styles.logo} src={site.logos['svg']}/>
+                                <img
+                                    style={styles.logo}
+                                    src={site.logos["svg"]}
+                                />
                             </Center>
                         </div>
 
@@ -53,7 +56,7 @@ class SiteList extends React.Component {
     }
 
     render() {
-        const siteComponents = Object.keys(this.props.sites).map((key) => {
+        const siteComponents = Object.keys(this.props.sites).map(key => {
             return this.renderFeature(key, this.props.sites[key]);
         });
 
@@ -71,7 +74,7 @@ class SiteList extends React.Component {
                 </div>
             </div>
         );
-    };
+    }
 }
 
 export default muiThemeable()(SiteList);

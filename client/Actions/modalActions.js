@@ -1,6 +1,6 @@
 export function openModal(message, title) {
     return {
-        type: 'MODAL_OPEN',
+        type: "MODAL_OPEN",
         payload: {
             message: message,
             title: title
@@ -9,7 +9,6 @@ export function openModal(message, title) {
 }
 export function closeModal() {
     return {
-        type: 'MODAL_CLOSE'
+        type: "MODAL_CLOSE"
     };
 }
-

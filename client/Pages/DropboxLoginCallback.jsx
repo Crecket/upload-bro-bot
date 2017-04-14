@@ -1,28 +1,28 @@
 import React from "react";
 import Helmet from "react-helmet";
 import Paper from "material-ui/Paper";
-import CircularProgress from 'material-ui/CircularProgress';
-import Check from 'material-ui/svg-icons/navigation/check';
-import Error from 'material-ui/svg-icons/alert/error';
-import {red500, green800} from 'material-ui/styles/colors';
-import {browserHistory}  from 'react-router';
-import axios from 'axios';
+import CircularProgress from "material-ui/CircularProgress";
+import Check from "material-ui/svg-icons/navigation/check";
+import Error from "material-ui/svg-icons/alert/error";
+import { red500, green800 } from "material-ui/styles/colors";
+import { browserHistory } from "react-router";
+import axios from "axios";
 
-import Utils from '../Helpers/Utils';
+import Utils from "../Helpers/Utils";
 
 const styles = {
     inputs: {
-        width: '100%',
+        width: "100%"
     },
     paperWrapper: {
         marginTop: 40,
-        textAlign: 'center'
+        textAlign: "center"
     },
     paper: {
-        width: '100%',
+        width: "100%",
         padding: 20,
-        textAlign: 'center',
-        display: 'inline-block',
+        textAlign: "center",
+        display: "inline-block"
     },
     checkIcon: {
         width: 60,
@@ -43,7 +43,7 @@ class DropboxLoginCallback extends React.Component {
             loading: true,
             error: false
         };
-    };
+    }
 
     componentDidMount() {
         this.sendTokens();
@@ -51,8 +51,9 @@ class DropboxLoginCallback extends React.Component {
 
     sendTokens = () => {
         // send the post request
-        axios.post("/login/dropbox/callback", Utils.getHashParams())
-            .then((result) => {
+        axios
+            .post("/login/dropbox/callback", Utils.getHashParams())
+            .then(result => {
                 this.setState({
                     loading: false
                 });
@@ -62,46 +63,53 @@ class DropboxLoginCallback extends React.Component {
 
                 setTimeout(() => {
                     // send home after waiting a while
-                    browserHistory.push('/');
+                    browserHistory.push("/");
                 }, 1000);
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error(error);
                 this.setState({
                     error: true
                 });
                 setTimeout(() => {
                     // send home after waiting a while
-                    browserHistory.push('/');
+                    browserHistory.push("/");
                 }, 1000);
-            })
-    }
-
+            });
+    };
 
     render() {
-        var icon = <CircularProgress color="rgb(28, 142, 215)" size={80} thickness={6}/>;
+        var icon = (
+            <CircularProgress
+                color="rgb(28, 142, 215)"
+                size={80}
+                thickness={6}
+            />
+        );
 
         if (this.state.error) {
             icon = (
                 <h3>
-                    <Error style={styles.errorIcon}/>
-                    <br/>
+                    <Error style={styles.errorIcon} />
+                    <br />
                     Something went wrong
                 </h3>
-            )
+            );
         } else if (!this.state.loading) {
             icon = (
                 <h3>
-                    <Check style={styles.checkIcon}/>
-                    <br/>
+                    <Check style={styles.checkIcon} />
+                    <br />
                     Connected your Dropbox account
                 </h3>
-            )
+            );
         }
 
         return (
-            <div style={styles.paperWrapper}
-                 className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+            <div
+                style={styles.paperWrapper}
+                className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3"
+            >
                 <Helmet>
                     <title>{`UploadBroBot - Dropbox Login`}</title>
                 </Helmet>
@@ -111,7 +119,7 @@ class DropboxLoginCallback extends React.Component {
                 </Paper>
             </div>
         );
-    };
+    }
 }
 
 export default DropboxLoginCallback;

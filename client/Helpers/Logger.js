@@ -1,4 +1,4 @@
-const log = require('loglevel');
+const log = require("loglevel");
 
 // set logging level based on env
 log.setLevel(process.env.DEBUG === "true" ? "trace" : "warn");

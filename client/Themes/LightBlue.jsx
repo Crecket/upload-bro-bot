@@ -1,15 +1,21 @@
 import {
-    grey100, grey300, grey500,
-    white, darkBlack, fullBlack,
-    blue300, blue700,
-    indigo500, indigo700,
-} from 'material-ui/styles/colors';
-import {fade} from 'material-ui/utils/colorManipulator';
-import spacing from 'material-ui/styles/spacing';
+    grey100,
+    grey300,
+    grey500,
+    white,
+    darkBlack,
+    fullBlack,
+    blue300,
+    blue700,
+    indigo500,
+    indigo700
+} from "material-ui/styles/colors";
+import { fade } from "material-ui/utils/colorManipulator";
+import spacing from "material-ui/styles/spacing";
 
 export default {
     spacing: spacing,
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: "Roboto, sans-serif",
     borderRadius: 2,
     palette: {
         primary1Color: indigo500,
@@ -27,7 +33,6 @@ export default {
         pickerHeaderColor: blue700,
         clockCircleColor: fade(darkBlack, 0.07),
         shadowColor: fullBlack,
-        appBackgroundColor: white,
+        appBackgroundColor: white
     }
 };
-

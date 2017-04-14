@@ -1,32 +1,32 @@
 import React from "react";
 import Helmet from "react-helmet";
-import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from "material-ui/RaisedButton";
 
 // custom components
-import ManualPost from '../Helpers/ManualPost';
-import PaperHelper from '../Components/Sub/PaperHelper.jsx';
-import ForceLogin from '../Helpers/ForceLogin.jsx';
+import ManualPost from "../Helpers/ManualPost";
+import PaperHelper from "../Components/Sub/PaperHelper.jsx";
+import ForceLogin from "../Helpers/ForceLogin.jsx";
 
 // make sync
-import FeatureList from '../Components/FeatureList.jsx';
-import YoutubePreview from '../Components/YoutubePreview.jsx';
-import SiteList from '../Components/SiteList.jsx';
+import FeatureList from "../Components/FeatureList.jsx";
+import YoutubePreview from "../Components/YoutubePreview.jsx";
+import SiteList from "../Components/SiteList.jsx";
 
 const styles = {
     centerBox: {
-        alignContent: 'center',
-        alignItems: 'center',
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
-        justifyContent: 'center'
+        alignContent: "center",
+        alignItems: "center",
+        boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "nowrap",
+        justifyContent: "center"
     },
     notLoggedIn: {
-        textAlign: 'center',
+        textAlign: "center",
         minHeight: 200
     }
-}
+};
 
 export default class Home extends React.Component {
     constructor(props, context) {
@@ -48,16 +48,19 @@ export default class Home extends React.Component {
                 <Helmet>
                     <title>{`UploadBroBot - Home`}</title>
                 </Helmet>
-                <PaperHelper style={Object.assign(styles.notLoggedIn, styles.centerBox)}>
+                <PaperHelper
+                    style={Object.assign(styles.notLoggedIn, styles.centerBox)}
+                >
                     <RaisedButton
-                        onClick={ManualPost('/login/telegram')}
+                        onClick={ManualPost("/login/telegram")}
                         primary={true}
-                        label="Login with Telegram"/>
+                        label="Login with Telegram"
+                    />
                 </PaperHelper>
 
-                <FeatureList/>
-                <SiteList sites={this.props.sites}/>
-                <YoutubePreview/>
+                <FeatureList />
+                <SiteList sites={this.props.sites} />
+                <YoutubePreview />
             </div>
         );
     }

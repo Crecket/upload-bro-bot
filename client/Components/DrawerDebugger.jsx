@@ -1,10 +1,10 @@
-import React from 'react';
-import AppBar from 'material-ui/AppBar';
-import MenuItem from 'material-ui/MenuItem';
-import Drawer from 'material-ui/Drawer';
-import TextField from 'material-ui/TextField';
+import React from "react";
+import AppBar from "material-ui/AppBar";
+import MenuItem from "material-ui/MenuItem";
+import Drawer from "material-ui/Drawer";
+import TextField from "material-ui/TextField";
 
-import Logger from '../Helpers/Logger';
+import Logger from "../Helpers/Logger";
 
 class DrawerDebugger extends React.Component {
     constructor(props, context) {
@@ -12,35 +12,40 @@ class DrawerDebugger extends React.Component {
         this.state = {
             open: false
         };
-    };
+    }
 
     componentDidMount() {
-        if (!process.env.DEBUG)return null;
+        if (!process.env.DEBUG) return null;
 
-        window.drawerDebugger = process.env.DEBUG ? this.toggleDrawer : () => {
-        };
+        window.drawerDebugger = process.env.DEBUG
+            ? this.toggleDrawer
+            : () => {};
+
         // Logger.debug(this.props.theme);
     }
 
     toggleDrawer = () => {
-        this.setState({open: !this.state.open});
-    }
+        this.setState({ open: !this.state.open });
+    };
 
     render() {
-        if (!process.env.DEBUG)return null;
+        if (!process.env.DEBUG) return null;
 
         return (
             <Drawer open={this.state.open}>
-                <AppBar title="AppBar" onClick={this.toggleDrawer}/>
+                <AppBar title="AppBar" onClick={this.toggleDrawer} />
                 <TextField
-                    key="input" name="asdfaf123" ref="asdfaf123"
+                    key="input"
+                    name="asdfaf123"
+                    ref="asdfaf123"
                     hintText="Hint Text"
                     floatingLabelText="Fixed Floating Label Text"
                     floatingLabelFixed={true}
-                /><br />
+                />
+                <br />
             </Drawer>
         );
-    };
+    }
 }
 
 export default DrawerDebugger;

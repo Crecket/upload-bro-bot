@@ -11,7 +11,10 @@ module.exports = (title, message, options = {}) => {
         // quick helper function to combine the options and send it
         const createNotification = () => {
             // return the notification
-            return new Notification(title, Object.assign({}, defaultOptions, options));
+            return new Notification(
+                title,
+                Object.assign({}, defaultOptions, options)
+            );
         };
 
         // detect if notification is supported
@@ -22,9 +25,9 @@ module.exports = (title, message, options = {}) => {
         // request permission
         if (Notification.permission !== "granted") {
             // request permission from the user
-            Notification.requestPermission((permission) => {
+            Notification.requestPermission(permission => {
                 // store the permission
-                if (!('permission' in Notification)) {
+                if (!("permission" in Notification)) {
                     Notification.permission = permission;
                 }
                 // create the notification if we have permission
@@ -41,4 +44,4 @@ module.exports = (title, message, options = {}) => {
             resolve(createNotification());
         }
     });
-}
+};

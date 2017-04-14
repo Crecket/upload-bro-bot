@@ -1,4 +1,4 @@
-import IsLoggedin from './IsLoggedin.jsx';
+import IsLoggedin from "./IsLoggedin.jsx";
 
 /**
  * if requiresLogin === true, user has to be logged in or will be redirected
@@ -22,18 +22,18 @@ export default (props, requiresLogin = true) => {
             if (requiresLogin === false && props.initialCheck) {
                 // user is logged in when he shouldn't be, redirect to home
                 if (currentLocation !== "/dashboard") {
-                    props.router.push('/dashboard');
+                    props.router.push("/dashboard");
                 }
             }
         } else {
             if (requiresLogin === true) {
                 // user is not logged in when he should be, redirect to home
                 if (currentLocation !== "/") {
-                    props.router.push('/');
+                    props.router.push("/");
                 }
             }
         }
     }
 
     return IsLoggedinResult;
-}
+};

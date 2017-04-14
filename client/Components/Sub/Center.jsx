@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const styles = {
     flexContainerStyle: {
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
     }
 };
 
@@ -13,7 +13,7 @@ class Center extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
-    };
+    }
 
     render() {
         return (
@@ -21,7 +21,7 @@ class Center extends React.Component {
                 {this.props.children}
             </div>
         );
-    };
+    }
 }
 
-export default  Center;
+export default Center;
