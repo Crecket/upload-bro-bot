@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack --debug --watch --progress --colors",
-    "dev-no-sw": "cross-env NODE_ENV=development DISABLE_STATIC=1 webpack --debug --watch --progress --colors",
+    "dev-sw": "cross-env NODE_ENV=development DISABLE_STATIC=1 webpack --debug --watch --progress --colors",
     "build": "cross-env NODE_ENV=production webpack --progress --colors",
     "build-silent": "cross-env NODE_ENV=production webpack",
     "start": "cross-env NODE_ENV=development nodemon app.js",
