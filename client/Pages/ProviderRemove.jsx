@@ -49,10 +49,6 @@ export default class ProviderRemove extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        // bind events
-        this._onSwipeMove = this.onSwipeMove.bind(this);
-        this._onSwipeEnd = this.onSwipeEnd.bind(this);
-
         this.state = {
             loadingState: "nope",
             error: false,
