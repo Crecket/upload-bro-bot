@@ -27,7 +27,9 @@ describe("<DropboxLoginCallback />", () => {
     it("matches snapshot without verified user", () => {
         const tree = renderer.create(
             <Wrapper>
-                <DropboxLoginCallback sites={siteInfoList} user_info={false} />
+                <DropboxLoginCallback
+                    sites={siteInfoList}
+                    user_info={false}/>
             </Wrapper>
         );
         expect(tree).toMatchSnapshot();
@@ -36,7 +38,9 @@ describe("<DropboxLoginCallback />", () => {
     it("matches snapshot without verified user and without sites", () => {
         const tree = renderer.create(
             <Wrapper>
-                <DropboxLoginCallback sites={{}} user_info={false} />
+                <DropboxLoginCallback
+                    sites={{}}
+                    user_info={false}/>
             </Wrapper>
         );
         expect(tree).toMatchSnapshot();
