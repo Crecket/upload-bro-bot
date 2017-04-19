@@ -25,10 +25,12 @@ const UserHelperObj = require("./UserHelper");
 const QueueObj = require("./Queue");
 const AnalyticsObj = require("./Analytics");
 
-module.exports = class App {
-    constructor(token) {
+module.exports = class UploadBro {
+    constructor() {
         // Create a new blackjack bot
-        this._TelegramBot = new TelegramBot(token, { polling: true });
+        this._TelegramBot = new TelegramBot(process.env.TELEGRAM_TOKEN, {
+            polling: true
+        });
 
         // create a queue object and analytics helper
         this._Queue = new QueueObj(1);
@@ -43,55 +45,54 @@ module.exports = class App {
         this._QueryHandler = new QueryHandler(this);
         this._EventHandler = new EventHandlersObj(this);
         this._InlineQueryHandler = new InlineQueryHandlerObj(this);
+    }
 
-        // connect to mongodb
-        this.connectDb()
-            .then(db => {
-                // store the database
-                this._Db = db;
+    async start() {
+        try {
+            // connect to mongodb
+            const db = await this.connectDb();
+            // store the database
+            this._Db = db;
 
-                // create mongodb cache engine
-                const engine = new MongoDbEngine(db, { collection: "cache" });
+            // create mongodb cache engine
+            const engine = new MongoDbEngine(db, { collection: "cache" });
 
-                // store the cache in the app
-                this._Cache = new Cacheman("uploadbro_cache", {
-                    engine: engine, // mongodb engine
-                    ttl: 60 * 60 // default ttl
-                });
-            })
-            // load all the commands
-            .then(this.loadCommands.bind(this))
-            // setup dropbox handler
-            .then(this.loadWebsites.bind(this))
-            // load all the queries
-            .then(this.loadQueries.bind(this))
-            // start the event listeners
-            .then(this.eventListeners.bind(this))
-            // clear downloads folder
-            .then(() => {
-                return new Promise((resolve, reject) => {
-                    del([
-                        "downloads/**",
-                        "!downloads",
-                        "!downloads/.gitkeep"
-                    ]).then(paths => {
-                        Logger.debug(
-                            "Cleared downloads folder:\n",
-                            paths.join("\n")
-                        );
-                        resolve();
-                    });
-                });
-            })
-            // finish setup
-            .then(() => {
-                // finished loading everything
-                Logger.debug("Loaded the following commands:");
-                Logger.debug(this._CommandHandler.info);
-                // start express listener
-                Express(this);
-            })
-            .catch(Logger.error);
+            // store the cache in the app
+            this._Cache = new Cacheman("uploadbro_cache", {
+                engine: engine, // mongodb engine
+                ttl: 60 * 60 // default ttl
+            });
+
+            // load default commands
+            await this.loadCommands();
+
+            // load websites and their queries/commands
+            await this.loadWebsites();
+
+            // load default queries
+            await this.loadQueries();
+
+            // setup event listeners
+            await this.eventListeners();
+
+            // clear the downloads folder
+            const paths = await del([
+                "downloads/**",
+                "!downloads",
+                "!downloads/.gitkeep"
+            ]);
+            Logger.debug("Cleared downloads folder:\n", paths.join("\n"));
+
+            // finished loading everything
+            Logger.debug(
+                `Loaded the following commands:\n\n${this._CommandHandler.info}\n`
+            );
+
+            // start express listener
+            Express(this);
+        } catch (ex) {
+            Logger.error(ex);
+        }
     }
 
     /**
@@ -99,16 +100,15 @@ module.exports = class App {
      *
      * @returns {Promise}
      */
-    connectDb() {
-        return new Promise((resolve, reject) => {
-            // attempt to connect to mongoserver
-            MongoClient.connect(process.env.MONGODB_URL)
-                .then(db => {
-                    Logger.info("Connected to " + process.env.MONGODB_URL);
-                    resolve(db);
-                })
-                .catch(reject);
-        });
+    async connectDb() {
+        // attempt to connect to mongoserver
+        const db = await MongoClient.connect(process.env.MONGODB_URL);
+
+        // log connection status
+        Logger.info("Connected to " + process.env.MONGODB_URL);
+
+        // return the connection
+        return db;
     }
 
     /**
@@ -116,7 +116,7 @@ module.exports = class App {
      *
      * @returns {Promise.<T>}
      */
-    loadWebsites() {
+    async loadWebsites() {
         // Register the websites
         const Sites = glob.sync(__dirname + "/Sites/*/index.js");
 
@@ -130,7 +130,6 @@ module.exports = class App {
         });
 
         Logger.debug("Loaded " + this._SiteHandler.siteCount + " sites");
-        return Promise.resolve();
     }
 
     /**
@@ -138,7 +137,7 @@ module.exports = class App {
      *
      * @returns {Promise.<T>}
      */
-    loadCommands() {
+    async loadCommands() {
         // Register the commands
         const Commands = glob.sync(__dirname + "/Commands/*.js");
 
@@ -154,14 +153,13 @@ module.exports = class App {
         Logger.debug(
             "Loaded " + this._CommandHandler.commandCount + " commands"
         );
-        return Promise.resolve();
     }
 
     /**
      * Load event handlers for callback_query
      * @returns {Promise.<T>}
      */
-    loadQueries() {
+    async loadQueries() {
         // Register the commands
         const Queries = glob.sync(__dirname + "/Queries/*.js");
 
@@ -175,7 +173,6 @@ module.exports = class App {
         });
 
         Logger.debug("Loaded " + this._QueryHandler.queryCount + " queries");
-        return Promise.resolve();
     }
 
     /**
@@ -202,7 +199,7 @@ module.exports = class App {
      *
      * @returns {Promise.<T>}
      */
-    eventListeners() {
+    async eventListeners() {
         const fn = this;
         // file messages
         this._TelegramBot.on("audio", msg => {
@@ -245,7 +242,5 @@ module.exports = class App {
             this._Analytics.track(msg, "inline_query");
             fn._EventHandler.inlineQuery(msg);
         });
-
-        return Promise.resolve();
     }
 };

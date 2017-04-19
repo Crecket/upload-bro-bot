@@ -105,7 +105,7 @@
     "react": "^15.5.4",
     "react-addons-test-utils": "15.5.1",
     "react-dom": "15.5.4",
-    "react-easy-swipe": "^0.0.8",
+    "react-easy-swipe": "^0.0.9",
     "react-easy-transition": "^1.2.4",
     "react-helmet": "^5.0.2",
     "react-loadable": "^3.2.2",
