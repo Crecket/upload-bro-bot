@@ -6,19 +6,15 @@ import store from "store";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 
 // custom components
-import ComponentLoader from "./Sub/ComponentLoader";
+// import ComponentLoader from "./Sub/ComponentLoader";
+import MainAppbar from "./MainAppbar";
 import Logger from "../Helpers/Logger";
 
 // only allow this in debug enviroment, else return null
-const MainAppbar = ComponentLoader(
-    () => import("./MainAppbar"),
-    () => require.resolveWeak("./MainAppbar")
-);
-// only allow this in debug enviroment, else return null
-const DrawerDebugger = ComponentLoader(
-    () => import("./DrawerDebugger"),
-    () => require.resolveWeak("./DrawerDebugger")
-);
+// const MainAppbar = ComponentLoader(
+//     () => import("./MainAppbar"),
+//     () => require.resolveWeak("./MainAppbar")
+// );
 
 // Themes
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
@@ -173,15 +169,12 @@ export default class Main extends React.Component {
                                     {this.props.modalText}
                                 </Dialog>
 
-                                {/*<DrawerDebugger theme={ThemesList[this.state.muiTheme]}/>*/}
-
                                 <MainAppbar
+                                    dispatch={this.props.dispatch}
                                     setTheme={this.setTheme}
                                     currentTheme={this.state.muiTheme}
                                     themeList={ThemeListNames}
                                     user_info={this.props.user_info}
-                                    updateStaticData={this.updateStaticData}
-                                    logoutUser={this.logoutUser}
                                 />
 
                                 <TransitionGroup>{mainBody}</TransitionGroup>
