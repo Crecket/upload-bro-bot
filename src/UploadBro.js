@@ -33,7 +33,7 @@ module.exports = class UploadBro {
         });
 
         // create a queue object and analytics helper
-        this._Queue = new QueueObj(1);
+        this._Queue = new QueueObj(5);
         this._Analytics = new AnalyticsObj(this);
 
         // user helper object
@@ -55,7 +55,7 @@ module.exports = class UploadBro {
             this._Db = db;
 
             // create mongodb cache engine
-            const engine = new MongoDbEngine(db, { collection: "cache" });
+            const engine = new MongoDbEngine(db, {collection: "cache"});
 
             // store the cache in the app
             this._Cache = new Cacheman("uploadbro_cache", {
@@ -202,21 +202,11 @@ module.exports = class UploadBro {
     async eventListeners() {
         const fn = this;
         // file messages
-        this._TelegramBot.on("audio", msg => {
-            fn._EventHandler.messageFileListener(msg, "audio");
-        });
-        this._TelegramBot.on("video", msg => {
-            fn._EventHandler.messageFileListener(msg, "video");
-        });
-        this._TelegramBot.on("voice", msg => {
-            fn._EventHandler.messageFileListener(msg, "voice");
-        });
-        this._TelegramBot.on("photo", msg => {
-            fn._EventHandler.messageFileListener(msg, "photo");
-        });
-        this._TelegramBot.on("document", msg => {
-            fn._EventHandler.messageFileListener(msg, "document");
-        });
+        this._TelegramBot.on("audio", msg => fn._EventHandler.messageFileListener(msg, "audio"));
+        this._TelegramBot.on("video", msg => fn._EventHandler.messageFileListener(msg, "video"));
+        this._TelegramBot.on("voice", msg => fn._EventHandler.messageFileListener(msg, "voice"));
+        this._TelegramBot.on("photo", msg => fn._EventHandler.messageFileListener(msg, "photo"));
+        this._TelegramBot.on("document", msg => fn._EventHandler.messageFileListener(msg, "document"));
 
         this._TelegramBot.on("group_chat_created", msg => {
             // track event

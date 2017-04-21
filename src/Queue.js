@@ -13,8 +13,8 @@ module.exports = class Queue {
         // contains the interval object to keep track of the queue
         this.timer = false;
 
-        // expire active items after 5 seconds
-        this.expireTimeMs = 5000;
+        // expire active items after 10 seconds
+        this.expireTimeMs = 10000;
         // speed at which the timer runs
         this.timeSpeedMs = 150;
 
