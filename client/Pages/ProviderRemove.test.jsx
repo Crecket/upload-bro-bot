@@ -42,7 +42,7 @@ describe("<ProviderRemove />", () => {
         expect(tree).toMatchSnapshot();
     });
 
-    it("short swipe event does not trigger router push event", () => {
+    it("short swipe to right event does not trigger router push event", () => {
         // mock router push function
         const routerPush = jest.fn();
 
@@ -55,7 +55,27 @@ describe("<ProviderRemove />", () => {
         );
 
         // trigger on swipe move/end event
-        wrapper.instance().onSwipeMove({ x: 100 });
+        wrapper.instance().onSwipeMove({ x: 10 });
+        wrapper.instance().onSwipeEnd();
+
+        // router push should've bene called
+        expect(routerPush).toHaveBeenCalledTimes(0);
+    });
+
+    it("short swipe to left event does not trigger router push event", () => {
+        // mock router push function
+        const routerPush = jest.fn();
+
+        //create component and save as json
+        const wrapper = shallow(
+            <ProviderRemove
+                {...defaultTestProps}
+                router={{ push: routerPush }}
+            />
+        );
+
+        // trigger on swipe move/end event
+        wrapper.instance().onSwipeMove({ x: -10 });
         wrapper.instance().onSwipeEnd();
 
         // router push should've bene called
@@ -145,81 +165,47 @@ describe("<ProviderRemove />", () => {
     it("test removal request with false response (removal was declind/failed)", () => {
         expect(true).toBe(true);
 
-        // // mock router push function
+        /*
+        // mock router push function
+        const routerPush = jest.fn();
+        const updateUser = jest.fn();
 
-        // const routerPush = jest.fn();
+        //create component and save as json
+        const wrapper = shallow(
+            <ProviderRemove
+                {...defaultTestProps}
+                router={{push: routerPush}}
+                updateUser={updateUser}
+            />
+        );
 
-        // const updateUser = jest.fn();
+        wrapper.instance().setState({loadingState: "loading"});
 
-        //
+        return new Promise((resolve, reject) => {
+            // trigger remove click
+            wrapper.instance().removeProvider();
 
-        // //create component and save as json
+            // wait for a request to the moxios instance
+            moxios.wait(() => {
+                // respond to the most recent respondWith
+                moxios.requests
+                    .mostRecent()
+                    .respondWith({
+                        status: 200,
+                        response: false
+                    })
+                    .then(() => {
+                        // redux action should've been called
+                        // expect(routerPush).toHaveBeenCalled();
+                        expect(updateUser).toHaveBeenCalled();
 
-        // const wrapper = shallow(
+                        // resolve the test
+                        resolve();
+                    }).catch(reject);
 
-        //     <ProviderRemove
-
-        //         {...defaultTestProps}
-
-        //         router={{push: routerPush}}
-
-        //         updateUser={updateUser}
-
-        //     />
-
-        // );
-
-        //
-
-        // wrapper.instance().setState({loadingState: "loading"});
-
-        //
-
-        // return new Promise((resolve, reject) => {
-
-        //     // trigger remove click
-
-        //     wrapper.instance().removeProvider();
-
-        //
-
-        //     // wait for a request to the moxios instance
-
-        //     moxios.wait(() => {
-
-        //         // respond to the most recent respondWith
-
-        //         moxios.requests.mostRecent()
-
-        //             .respondWith({
-
-        //                 status: 200,
-
-        //                 response: false
-
-        //             })
-
-        //             .then(() => {
-
-        //                 // redux action should've been called
-
-        //                 // expect(routerPush).toHaveBeenCalled();
-
-        //                 expect(updateUser).toHaveBeenCalled();
-
-        //
-
-        //                 // resolve the test
-
-        //                 resolve();
-
-        //             }).catch(reject);
-
-        //
-
-        //     });
-
-        // }).catch(console.log);
+            });
+        }).catch(console.log);
+        //*/
     });
 
     it("test removal request returns error and is handled", () => {

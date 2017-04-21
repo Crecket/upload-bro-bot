@@ -116,11 +116,14 @@ export default class ProviderRemove extends React.Component {
         // update swipe amount in state
         this.setState({ swipeAmount: position.x });
     }
+
     onSwipeEnd(event) {
-        if (this.state.swipeAmount >= 140) {
+        Logger.debug(this.state.swipeAmount);
+
+        if (this.state.swipeAmount >= 50) {
             // move to right
             this.props.router.push("/remove/" + this.state.nextSite);
-        } else if (this.state.swipeAmount <= -140) {
+        } else if (this.state.swipeAmount <= -50) {
             // move to left
             this.props.router.push("/remove/" + this.state.previousSite);
         }
