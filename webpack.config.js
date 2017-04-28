@@ -19,6 +19,9 @@ const OUTPUT_DIR = "assets/dist/";
 // env variable check
 const DEV = process.env.NODE_ENV !== "production";
 
+// holds the cache in dev mode
+let cacheObject = {};
+
 let config = {
     entry: {
         // React app
@@ -47,6 +50,8 @@ let config = {
     },
     // devtool for source maps
     devtool: DEV ? "source-map" : false,
+    // cache for building
+    cache: DEV ? cacheObject : false,
     plugins: [
         // stop emit if we get errors
         new webpack.NoEmitOnErrorsPlugin(),
@@ -91,14 +96,18 @@ let config = {
             filename: OUTPUT_DIR + "commons.js",
             // minimum shared locations before being added
             minChunks: 2
-        })
+        }),
+        // ignore moment locales
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],
     module: {
         rules: [
             {
                 test: /\.jsx?$/,
+                exclude: /(node_modules|bower_components)/,
+                include: /(src|client)/,
                 use: [{
-                    loader: "babel-loader"
+                    loader: "babel-loader?cacheDirectory"
                 }]
             },
             {
