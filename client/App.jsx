@@ -1,12 +1,13 @@
 import React from "react";
 import { Provider } from "react-redux";
+import { Router, browserHistory } from "react-router";
 
 // injection, required for materialze tap events
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
 // main app
-import Router from "./Router.jsx";
+import Routes from "./Routes.jsx";
 import Store from "./Store.jsx";
 
 export default class App extends React.Component {
@@ -17,8 +18,9 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <Provider store={Store}>
-                <Router />
+            <Provider store={Store()}>
+                <Router routes={Routes}
+                        history={browserHistory} />
             </Provider>
         );
     }

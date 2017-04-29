@@ -24,4 +24,6 @@ if (process.env.DEBUG === true) {
 }
 
 //return the store
-export default createStore(reducer, middleware);
+export default (initialValues = {}) => {
+    return createStore(reducer, initialValues, middleware);
+};
