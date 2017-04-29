@@ -1,6 +1,8 @@
 import React from "react";
+import { StaticRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
 import { shallow } from "enzyme";
+
 
 import LoadingScreen from "./LoadingScreen.jsx";
 

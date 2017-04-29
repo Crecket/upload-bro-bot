@@ -36,7 +36,7 @@ export default class ProviderBlock extends React.Component {
     }
 
     render() {
-        let BlockBtn;
+        let BlockBtn = null;
         if (this.props.userSiteInfo) {
             // user is logged into this site
             BlockBtn = (

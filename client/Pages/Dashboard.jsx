@@ -7,6 +7,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
 import PaperHelper from "../Components/Sub/PaperHelper";
 import ForceLogin from "../Helpers/ForceLogin";
+import Logger from "../Helpers/Logger";
 
 const styles = {
     loggedIn: {

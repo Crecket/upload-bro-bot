@@ -4,8 +4,9 @@ import RaisedButton from "material-ui/RaisedButton";
 
 // custom components
 import ManualPost from "../Helpers/ManualPost";
-import PaperHelper from "../Components/Sub/PaperHelper.jsx";
-import ForceLogin from "../Helpers/ForceLogin.jsx";
+import PaperHelper from "../Components/Sub/PaperHelper";
+import ForceLogin from "../Helpers/ForceLogin";
+import Logger from "../Helpers/Logger";
 
 // make sync
 import FeatureList from "../Components/FeatureList.jsx";
@@ -32,6 +33,12 @@ export default class Home extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
+    }
+
+    // this component is about to enter
+    componentWillEnter(callback) {
+        callback();
+        Logger.debug('willEnter')
     }
 
     componentDidMount() {

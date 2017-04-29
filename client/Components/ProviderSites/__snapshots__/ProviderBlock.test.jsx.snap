@@ -143,8 +143,10 @@ exports[`<ProviderBlock /> matches snapshot with both site and user info 1`] = `
       Gregory Goijaerts
       <br />
       <a
+        className={undefined}
+        href="/remove/google"
         onClick={[Function]}
-        style={Object {}}
+        style={undefined}
       >
         <div
           className={undefined}
@@ -376,8 +378,10 @@ exports[`<ProviderBlock /> matches snapshot without site info 1`] = `
       Gregory Goijaerts
       <br />
       <a
+        className={undefined}
+        href="/remove/undefined"
         onClick={[Function]}
-        style={Object {}}
+        style={undefined}
       >
         <div
           className={undefined}

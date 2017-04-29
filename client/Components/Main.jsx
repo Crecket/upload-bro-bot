@@ -1,20 +1,35 @@
 import React from "react";
+import store from "store";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
-import store from "store";
+import { Route, Switch } from "react-router-dom";
 import TransitionGroup from "react-transition-group/TransitionGroup";
 
 // custom components
-// import ComponentLoader from "./Sub/ComponentLoader";
 import MainAppbar from "./MainAppbar";
 import Logger from "../Helpers/Logger";
+import FadesIn from "../Components/Transitions/FadesIn";
+import ComponentLoader from "./Sub/ComponentLoader";
 
-// only allow this in debug enviroment, else return null
-// const MainAppbar = ComponentLoader(
-//     () => import("./MainAppbar"),
-//     () => require.resolveWeak("./MainAppbar")
-// );
+// pages
+// import Home from "./Pages/Home.jsx";
+// import Dashboard from "./Pages/Dashboard.jsx";
+// import ThemeTest from "./Pages/ThemeTest.jsx";
+// import ProviderLogin from "./Pages/ProviderLogin.jsx";
+// import ProviderRemove from "./Pages/ProviderRemove.jsx";
+// import DropboxLoginCallback from "./Pages/DropboxLoginCallback.jsx";
+// import NotFound from "./Pages/NotFound.jsx";
+const Home = ComponentLoader(() => import("../Pages/Home"));
+const Dashboard = ComponentLoader(() => import("../Pages/Dashboard"));
+const ThemeTest = ComponentLoader(() => import("../Pages/ThemeTest"));
+const ProviderLogin = ComponentLoader(() => import("../Pages/ProviderLogin"));
+const ProviderRemove = ComponentLoader(() => import("../Pages/ProviderRemove"));
+const DropboxLoginCallback = ComponentLoader(() =>
+    import("../Pages/DropboxLoginCallback")
+);
+const NotFound = ComponentLoader(() => import("../Pages/NotFound"));
 
 // Themes
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
@@ -42,19 +57,8 @@ import {
 import { siteUpdate, siteLoadLocalstorage } from "../Actions/sites.js";
 
 // connect to redux
-@connect(store => {
-    return {
-        sites: store.sites.sites,
 
-        user_info: store.user.user_info,
-        initialCheck: store.user.initialCheck,
-
-        modalText: store.modal.message,
-        modalTitle: store.modal.title,
-        modalOpen: store.modal.modalOpen
-    };
-})
-export default class Main extends React.Component {
+class Main extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -117,20 +121,17 @@ export default class Main extends React.Component {
     };
 
     render() {
-        // get the children pages and give them some default props
-        const mainBody = React.Children.map(this.props.children, child => {
-            return React.cloneElement(child, {
-                key: child.props.route.path +
-                    JSON.stringify(child.props.params),
-                initialCheck: this.props.initialCheck,
-                user_info: this.props.user_info,
-                sites: this.props.sites,
-                theme: ThemesList[this.state.muiTheme],
-                updateUser: this.updateUser,
-                openModalHelper: this.openModalHelper,
-                closeModalHelper: this.closeModalHelper
-            });
-        });
+        // generate a list of props we want to give to the children
+        const childProps = {
+            key: this.props.location.pathname,
+            initialCheck: this.props.initialCheck,
+            user_info: this.props.user_info,
+            sites: this.props.sites,
+            theme: ThemesList[this.state.muiTheme],
+            updateUser: this.updateUser,
+            openModalHelper: this.openModalHelper,
+            closeModalHelper: this.closeModalHelper
+        };
 
         return (
             <MuiThemeProvider muiTheme={ThemesList[this.state.muiTheme]}>
@@ -177,7 +178,92 @@ export default class Main extends React.Component {
                                     user_info={this.props.user_info}
                                 />
 
-                                <TransitionGroup>{mainBody}</TransitionGroup>
+                                <Route
+                                    render={({ location }) => (
+                                        <TransitionGroup>
+                                            <Switch
+                                                key={location.key}
+                                                location={location}
+                                            >
+                                                <Route
+                                                    exact
+                                                    path="/"
+                                                    render={({ ...props }) => (
+                                                        <Home
+                                                            {...props}
+                                                            {...childProps}
+                                                        />
+                                                    )}
+                                                />
+
+                                                <Route
+                                                    path="/dashboard"
+                                                    render={({ ...props }) => {
+                                                        const Component = FadesIn(
+                                                            Dashboard
+                                                        );
+                                                        return (
+                                                            <Component
+                                                                {...props}
+                                                                {...childProps}
+                                                            />
+                                                        );
+                                                    }}
+                                                />
+                                                <Route
+                                                    path="/remove/:type"
+                                                    render={({ ...props }) => {
+                                                        const Component = FadesIn(
+                                                            ProviderRemove
+                                                        );
+                                                        return (
+                                                            <Component
+                                                                {...props}
+                                                                {...childProps}
+                                                            />
+                                                        );
+                                                    }}
+                                                />
+                                                <Route
+                                                    path="/theme"
+                                                    render={({ ...props }) => (
+                                                        <ThemeTest
+                                                            {...props}
+                                                            {...childProps}
+                                                        />
+                                                    )}
+                                                />
+                                                <Route
+                                                    path="/new/:type"
+                                                    render={({ ...props }) => (
+                                                        <ProviderLogin
+                                                            {...props}
+                                                            {...childProps}
+                                                        />
+                                                    )}
+                                                />
+                                                <Route
+                                                    path="/login/dropbox/callback"
+                                                    render={({ ...props }) => (
+                                                        <DropboxLoginCallback
+                                                            {...props}
+                                                            {...childProps}
+                                                        />
+                                                    )}
+                                                />
+
+                                                {/*<Route*/}
+                                                {/*render={({...props}) => (*/}
+                                                {/*<NotFound*/}
+                                                {/*{...props}*/}
+                                                {/*{...childProps}*/}
+                                                {/*/>*/}
+                                                {/*)}*/}
+                                                {/*/>*/}
+                                            </Switch>
+                                        </TransitionGroup>
+                                    )}
+                                />
                             </div>
                         </div>
                     </div>
@@ -186,3 +272,17 @@ export default class Main extends React.Component {
         );
     }
 }
+export default withRouter(
+    connect(store => {
+        return {
+            sites: store.sites.sites,
+
+            user_info: store.user.user_info,
+            initialCheck: store.user.initialCheck,
+
+            modalText: store.modal.message,
+            modalTitle: store.modal.title,
+            modalOpen: store.modal.modalOpen
+        };
+    })(Main)
+);

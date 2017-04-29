@@ -1,8 +1,9 @@
 "use strict";
 
 import React from "react";
+import { StaticRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
-import {shallow} from "enzyme";
+import { shallow } from "enzyme";
 import moxios from "moxios";
 
 import Wrapper from "../TestHelpers/Wrapper.jsx";
@@ -16,18 +17,20 @@ const siteBoxInfo = require("../TestHelpers/Data/api-get_provider_box.json");
 // const siteGoogleInfo = require('../TestHelpers/Data/api-get_provider_google.json');
 
 const defaultTestProps = {
-    params: {type: "google"},
+    match: {
+        params: { type: "google" }
+    },
     sites: siteInfoList,
     user_info: userInfoList
 };
 
 describe("<ProviderRemove />", () => {
-    beforeEach(function () {
+    beforeEach(function() {
         // import and pass your custom axios instance to this method
         moxios.install();
     });
 
-    afterEach(function () {
+    afterEach(function() {
         // import and pass your custom axios instance to this method
         moxios.uninstall();
     });
@@ -35,9 +38,11 @@ describe("<ProviderRemove />", () => {
     it("matches snapshot", () => {
         //create component and save as json
         const component = renderer.create(
-            <Wrapper>
-                <ProviderRemove {...defaultTestProps} />
-            </Wrapper>
+            <StaticRouter>
+                <Wrapper>
+                    <ProviderRemove {...defaultTestProps} />
+                </Wrapper>
+            </StaticRouter>
         );
         let tree = component.toJSON();
         expect(tree).toMatchSnapshot();
@@ -49,14 +54,16 @@ describe("<ProviderRemove />", () => {
 
         //create component and save as json
         const wrapper = shallow(
-            <ProviderRemove
-                {...defaultTestProps}
-                router={{push: routerPush}}
-            />
+            <StaticRouter>
+                <ProviderRemove
+                    {...defaultTestProps}
+                    router={{ push: routerPush }}
+                />
+            </StaticRouter>
         );
 
         // trigger on swipe move/end event
-        wrapper.instance().onSwipeMove({x: 10});
+        wrapper.instance().onSwipeMove({ x: 10 });
         wrapper.instance().onSwipeEnd();
 
         // router push should've bene called
@@ -69,14 +76,16 @@ describe("<ProviderRemove />", () => {
 
         //create component and save as json
         const wrapper = shallow(
-            <ProviderRemove
-                {...defaultTestProps}
-                router={{push: routerPush}}
-            />
+            <StaticRouter>
+                <ProviderRemove
+                    {...defaultTestProps}
+                    router={{ push: routerPush }}
+                />
+            </StaticRouter>
         );
 
         // trigger on swipe move/end event
-        wrapper.instance().onSwipeMove({x: -10});
+        wrapper.instance().onSwipeMove({ x: -10 });
         wrapper.instance().onSwipeEnd();
 
         // router push should've bene called
@@ -89,14 +98,16 @@ describe("<ProviderRemove />", () => {
 
         //create component and save as json
         const wrapper = shallow(
-            <ProviderRemove
-                {...defaultTestProps}
-                router={{push: routerPush}}
-            />
+            <StaticRouter>
+                <ProviderRemove
+                    {...defaultTestProps}
+                    router={{ push: routerPush }}
+                />
+            </StaticRouter>
         );
 
         // trigger on swipe move/end event
-        wrapper.instance().onSwipeMove({x: 200});
+        wrapper.instance().onSwipeMove({ x: 200 });
         wrapper.instance().onSwipeEnd();
 
         // router push should've been called
@@ -109,14 +120,16 @@ describe("<ProviderRemove />", () => {
 
         //create component and save as json
         const wrapper = shallow(
-            <ProviderRemove
-                {...defaultTestProps}
-                router={{push: routerPush}}
-            />
+            <StaticRouter>
+                <ProviderRemove
+                    {...defaultTestProps}
+                    router={{ push: routerPush }}
+                />
+            </StaticRouter>
         );
 
         // trigger on swipe move/end event
-        wrapper.instance().onSwipeMove({x: -200});
+        wrapper.instance().onSwipeMove({ x: -200 });
         wrapper.instance().onSwipeEnd();
 
         // router push should've been called
@@ -130,15 +143,17 @@ describe("<ProviderRemove />", () => {
 
         //create component and save as json
         const wrapper = shallow(
-            <ProviderRemove
-                {...defaultTestProps}
-                router={{push: routerPush}}
-                updateUser={updateUser}
-            />
+            <StaticRouter>
+                <ProviderRemove
+                    {...defaultTestProps}
+                    router={{ push: routerPush }}
+                    updateUser={updateUser}
+                />
+            </StaticRouter>
         );
 
         // set loading state
-        wrapper.instance().setState({loadingState: "loading"});
+        wrapper.instance().setState({ loadingState: "loading" });
 
         return new Promise((resolve, reject) => {
             // trigger remove click
@@ -170,15 +185,17 @@ describe("<ProviderRemove />", () => {
 
         //create component and save as json
         const wrapper = shallow(
-            <ProviderRemove
-                {...defaultTestProps}
-                router={{push: routerPush}}
-                updateUser={updateUser}
-            />
+            <StaticRouter>
+                <ProviderRemove
+                    {...defaultTestProps}
+                    router={{ push: routerPush }}
+                    updateUser={updateUser}
+                />
+            </StaticRouter>
         );
 
         // set loading state
-        wrapper.instance().setState({loadingState: "loading"});
+        wrapper.instance().setState({ loadingState: "loading" });
 
         return new Promise((resolve, reject) => {
             // trigger remove click
@@ -212,11 +229,13 @@ describe("<ProviderRemove />", () => {
 
         //create component and save as json
         const wrapper = shallow(
-            <ProviderRemove
-                {...defaultTestProps}
-                router={{push: routerPush}}
-                updateUser={updateUser}
-            />
+            <StaticRouter>
+                <ProviderRemove
+                    {...defaultTestProps}
+                    router={{ push: routerPush }}
+                    updateUser={updateUser}
+                />
+            </StaticRouter>
         );
 
         return new Promise((resolve, reject) => {
@@ -255,9 +274,14 @@ describe("<ProviderRemove />", () => {
 
         //create component and save as json
         const component = renderer.create(
-            <Wrapper>
-                <ProviderRemove {...newProps} router={{push: routerPush}}/>
-            </Wrapper>
+            <StaticRouter>
+                <Wrapper>
+                    <ProviderRemove
+                        {...newProps}
+                        router={{ push: routerPush }}
+                    />
+                </Wrapper>
+            </StaticRouter>
         );
         let tree = component.toJSON();
         expect(tree).toMatchSnapshot();
@@ -272,15 +296,20 @@ describe("<ProviderRemove />", () => {
 
         // create new prop clone without sites
         const newProps = Object.assign({}, defaultTestProps, {
-            sites: {box: siteBoxInfo},
-            params: {type: "box"}
+            sites: { box: siteBoxInfo },
+            params: { type: "box" }
         });
 
         //create component and save as json
         const component = renderer.create(
-            <Wrapper>
-                <ProviderRemove {...newProps} router={{push: routerPush}}/>
-            </Wrapper>
+            <StaticRouter>
+                <Wrapper>
+                    <ProviderRemove
+                        {...newProps}
+                        router={{ push: routerPush }}
+                    />
+                </Wrapper>
+            </StaticRouter>
         );
         let tree = component.toJSON();
         expect(tree).toMatchSnapshot();

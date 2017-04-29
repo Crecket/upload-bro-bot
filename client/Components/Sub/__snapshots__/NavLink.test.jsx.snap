@@ -2,6 +2,8 @@
 
 exports[`<NavLink /> matches snapshot 1`] = `
 <a
+  className="active"
+  href="/"
   onClick={[Function]}
   style={Object {}}
 />
@@ -9,6 +11,8 @@ exports[`<NavLink /> matches snapshot 1`] = `
 
 exports[`<NavLink /> matches snapshot with children 1`] = `
 <a
+  className="active"
+  href="/"
   onClick={[Function]}
   style={Object {}}
 >

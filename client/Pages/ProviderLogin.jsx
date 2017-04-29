@@ -71,7 +71,7 @@ export default class ProviderLogin extends React.Component {
             if (
                 this.props.user_info &&
                 this.props.user_info.provider_sites &&
-                this.props.user_info.provider_sites[this.props.params.type]
+                this.props.user_info.provider_sites[this.props.match.params.type]
             ) {
                 loginStatusResult = (
                     <h3>
@@ -79,7 +79,7 @@ export default class ProviderLogin extends React.Component {
                         <br />
                         Successfully logged in to your
                         {" "}
-                        {Utils.ucfirst(this.props.params.type)}
+                        {Utils.ucfirst(this.props.match.params.type)}
                         {" "}
                         account!
                     </h3>
@@ -102,7 +102,7 @@ export default class ProviderLogin extends React.Component {
             >
                 <Helmet>
                     <title
-                    >{`UploadBroBot - ${this.props.params.type} Login`}</title>
+                    >{`UploadBroBot - ${this.props.match.params.type} Login`}</title>
                 </Helmet>
                 <Paper style={styles.paper}>
 

@@ -1,10 +1,9 @@
 // modules/NavLink.js
 import React from "react";
-import { Link } from "react-router";
-import createReactClass from "create-react-class";
+import { NavLink } from "react-router-dom";
 
-export default createReactClass({
+export default class NavLinkHelper extends React.Component {
     render() {
-        return <Link {...this.props} activeClassName="active" />;
+        return <NavLink {...this.props} activeClassName="active" />;
     }
-});
+};

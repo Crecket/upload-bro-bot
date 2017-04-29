@@ -151,8 +151,10 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
         Gregory Goijaerts
         <br />
         <a
+          className={undefined}
+          href="/remove/box"
           onClick={[Function]}
-          style={Object {}}
+          style={undefined}
         >
           <div
             className={undefined}
@@ -390,8 +392,10 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
         Gregory Goijaerts
         <br />
         <a
+          className={undefined}
+          href="/remove/dropbox"
           onClick={[Function]}
-          style={Object {}}
+          style={undefined}
         >
           <div
             className={undefined}
@@ -629,8 +633,10 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
         Gregory Goijaerts
         <br />
         <a
+          className={undefined}
+          href="/remove/google"
           onClick={[Function]}
-          style={Object {}}
+          style={undefined}
         >
           <div
             className={undefined}
@@ -868,8 +874,10 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
         Crecket
         <br />
         <a
+          className={undefined}
+          href="/remove/imgur"
           onClick={[Function]}
-          style={Object {}}
+          style={undefined}
         >
           <div
             className={undefined}
@@ -979,9 +987,7 @@ exports[`<ProviderBlocks /> matches snapshot with no info 1`] = `
 />
 `;
 
-exports[
-  `<ProviderBlocks /> matches snapshot with no site list and with user list 1`
-] = `
+exports[`<ProviderBlocks /> matches snapshot with no site list and with user list 1`] = `
 <div
   className="row center-xs"
   style={
@@ -992,9 +998,7 @@ exports[
 />
 `;
 
-exports[
-  `<ProviderBlocks /> matches snapshot with site list and no user list 1`
-] = `
+exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`] = `
 <div
   className="row center-xs"
   style={

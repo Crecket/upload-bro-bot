@@ -64,7 +64,7 @@ export default class ProviderRemove extends React.Component {
 
         // ensure we have more than 1 site type
         if (siteKeys.length > 1) {
-            const siteIndex = siteKeys.indexOf(this.props.params.type);
+            const siteIndex = siteKeys.indexOf(this.props.match.params.type);
 
             // on previous-site event go here
             const previousIndex = siteIndex > 0
@@ -86,15 +86,15 @@ export default class ProviderRemove extends React.Component {
         } else {
             // fallback to own type since we don't have more than 1 site
             this.setState({
-                nextSite: this.props.params.type,
-                previousSite: this.props.params.type
+                nextSite: this.props.match.params.type,
+                previousSite: this.props.match.params.type
             });
         }
     }
 
     componentWillMount() {
         // check if provider is available
-        if (!this.props.sites[this.props.params.type]) {
+        if (!this.props.sites[this.props.match.params.type]) {
             // cancel and go to dashbaord
             this.props.router.push("/dashboard");
         }
@@ -133,7 +133,7 @@ export default class ProviderRemove extends React.Component {
 
     // do api call to remove this provider from account
     removeProvider = () => {
-        let providerType = this.props.params.type;
+        let providerType = this.props.match.params.type;
 
         // set loading state
         this.setState({ loadingState: "loading" });
@@ -166,10 +166,10 @@ export default class ProviderRemove extends React.Component {
 
     render() {
         // check if provider is available
-        if (!this.props.sites[this.props.params.type]) {
+        if (!this.props.sites[this.props.match.params.type]) {
             return null;
         }
-        const providerTitle = this.props.sites[this.props.params.type].title;
+        const providerTitle = this.props.sites[this.props.match.params.type].title;
 
         let removeDiv = (
             <div className="row around-xs">
@@ -183,7 +183,7 @@ export default class ProviderRemove extends React.Component {
                 <div className="col-xs-12">
                     <img
                         src={
-                            this.props.sites[this.props.params.type].logos[
+                            this.props.sites[this.props.match.params.type].logos[
                                 "svg"
                             ]
                         }

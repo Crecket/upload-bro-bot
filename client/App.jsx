@@ -1,13 +1,15 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { Router, browserHistory } from "react-router";
+import {Provider} from "react-redux";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 
 // injection, required for materialze tap events
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
-// main app
-import Routes from "./RoutesAsync.jsx";
+// main wrapper component
+import Main from "./Components/Main.jsx";
+
+// the redux store
 import Store from "./Store.jsx";
 
 export default class App extends React.Component {
@@ -19,8 +21,9 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={Store()}>
-                <Router routes={Routes}
-                        history={browserHistory} />
+                <BrowserRouter>
+                    <Main/>
+                </BrowserRouter>
             </Provider>
         );
     }
