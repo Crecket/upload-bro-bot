@@ -2,7 +2,7 @@ import React from "react";
 import { Router, browserHistory } from "react-router";
 
 // main wrapper
-import Routes from "./Routes";
+import Routes from "./RoutesSync";
 
 // router react component
 export default class CustomRouter extends React.Component {
@@ -10,7 +10,6 @@ export default class CustomRouter extends React.Component {
         super(props, context);
         this.state = {};
     }
-
     render() {
         return <Router routes={Routes}
                        history={browserHistory} />;

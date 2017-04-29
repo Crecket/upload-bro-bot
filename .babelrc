@@ -8,6 +8,13 @@
     "react-html-attrs",
     "transform-decorators-legacy",
     [
+      "react-loadable/babel",
+      {
+        "server": true,
+        "webpack": true
+      }
+    ],
+    [
       "transform-runtime",
       {
         "helpers": false,

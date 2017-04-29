@@ -1,14 +1,14 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { Router, browserHistory, createMemoryHistory } from "react-router";
-const renderToString = require("react-dom/server");
+const renderToString = require("react-dom/server").renderToString;
 
 // injection, required for materialze tap events
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
 // main app
-import Routes from "../../Client/Routes.jsx";
+import Routes from "../../client/RoutesSync.jsx";
 import Store from "../../Client/Store.jsx";
 
 module.exports = (UploadBro, User, Location) => {
