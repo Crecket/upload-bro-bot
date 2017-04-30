@@ -48,7 +48,7 @@ describe("<ProviderRemove />", () => {
         expect(tree).toMatchSnapshot();
     });
 
-    it("short swipe to right event does not trigger router push event", () => {
+    it("123 short swipe to right event does not trigger router push event", () => {
         // mock router push function
         const routerPush = jest.fn();
 
@@ -62,9 +62,15 @@ describe("<ProviderRemove />", () => {
             </StaticRouter>
         );
 
+        const ProviderRemoveWrapper = wrapper.find(ProviderRemove)
+
         // trigger on swipe move/end event
-        wrapper.instance().onSwipeMove({ x: 10 });
-        wrapper.instance().onSwipeEnd();
+        ProviderRemoveWrapper.simulate('mousemove',{
+            pageX: 1000
+        });
+        ProviderRemoveWrapper.simulate('mouseup');
+        // ProviderRemoveWrapper.onSwipeMove({ x: 10 });
+        // ProviderRemoveWrapper.onSwipeEnd();
 
         // router push should've bene called
         expect(routerPush).toHaveBeenCalledTimes(0);
@@ -84,9 +90,11 @@ describe("<ProviderRemove />", () => {
             </StaticRouter>
         );
 
+        const ProviderRemoveWrapper = wrapper.find(ProviderRemove).instance();
+
         // trigger on swipe move/end event
-        wrapper.instance().onSwipeMove({ x: -10 });
-        wrapper.instance().onSwipeEnd();
+        ProviderRemoveWrapper.onSwipeMove({ x: -10 });
+        ProviderRemoveWrapper.onSwipeEnd();
 
         // router push should've bene called
         expect(routerPush).toHaveBeenCalledTimes(0);
@@ -106,9 +114,11 @@ describe("<ProviderRemove />", () => {
             </StaticRouter>
         );
 
+        const ProviderRemoveWrapper = wrapper.find(ProviderRemove).instance();
+
         // trigger on swipe move/end event
-        wrapper.instance().onSwipeMove({ x: 200 });
-        wrapper.instance().onSwipeEnd();
+        ProviderRemoveWrapper.onSwipeMove({ x: 200 });
+        ProviderRemoveWrapper.onSwipeEnd();
 
         // router push should've been called
         expect(routerPush).toHaveBeenCalled();
@@ -128,9 +138,11 @@ describe("<ProviderRemove />", () => {
             </StaticRouter>
         );
 
+        const ProviderRemoveWrapper = wrapper.find(ProviderRemove).instance();
+
         // trigger on swipe move/end event
-        wrapper.instance().onSwipeMove({ x: -200 });
-        wrapper.instance().onSwipeEnd();
+        ProviderRemoveWrapper.onSwipeMove({ x: -200 });
+        ProviderRemoveWrapper.onSwipeEnd();
 
         // router push should've been called
         expect(routerPush).toHaveBeenCalled();
@@ -152,12 +164,15 @@ describe("<ProviderRemove />", () => {
             </StaticRouter>
         );
 
+        const ProviderRemoveWrapper = wrapper.find(ProviderRemove);
+
         // set loading state
-        wrapper.instance().setState({ loadingState: "loading" });
+        ProviderRemoveWrapper.setState({ loadingState: "loading" });
 
         return new Promise((resolve, reject) => {
             // trigger remove click
-            wrapper.instance().removeProvider();
+            ProviderRemoveWrapper.removeProvider();
+            // wait for axios request
             moxios.wait(() => {
                 moxios.requests
                     .mostRecent()
@@ -194,12 +209,15 @@ describe("<ProviderRemove />", () => {
             </StaticRouter>
         );
 
+        const ProviderRemoveWrapper = wrapper.find(ProviderRemove);
+
         // set loading state
-        wrapper.instance().setState({ loadingState: "loading" });
+        ProviderRemoveWrapper.setState({ loadingState: "loading" });
 
         return new Promise((resolve, reject) => {
             // trigger remove click
-            wrapper.instance().removeProvider();
+            ProviderRemoveWrapper.removeProvider();
+
             // trigger remove click
             moxios.wait(() => {
                 moxios.requests
@@ -238,9 +256,11 @@ describe("<ProviderRemove />", () => {
             </StaticRouter>
         );
 
+        const ProviderRemoveWrapper = wrapper.find(ProviderRemove);
+
         return new Promise((resolve, reject) => {
             // trigger remove click
-            wrapper.instance().removeProvider();
+            ProviderRemoveWrapper.removeProvider();
 
             // wait for a request to the moxios instance
             moxios.wait(() => {
@@ -289,6 +309,7 @@ describe("<ProviderRemove />", () => {
         // router push should've been called
         expect(routerPush).toHaveBeenCalled();
     });
+
 
     it("site list with 1 item should fallback to own type in swipe action", () => {
         // mock router push function
