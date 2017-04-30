@@ -5,15 +5,21 @@ import { withRouter } from "react-router";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import { Route, Switch } from "react-router-dom";
-import TransitionGroup from "react-transition-group/TransitionGroup";
 
 // custom components
 import MainAppbar from "./MainAppbar";
 import Logger from "../Helpers/Logger";
-import FadesIn from "../Components/Transitions/FadesIn";
 import ComponentLoader from "./Sub/ComponentLoader";
 
-// pages
+// route helpers
+import PrivateRoute from "./Sub/PrivateRoute";
+import PublicRoute from "./Sub/PublicRoute";
+
+// transition components
+// import TransitionGroup from "react-transition-group/TransitionGroup";
+// import FadesIn from "../Components/Transitions/FadesIn";
+// const FadesInSwitch = FadesIn(Switch);
+
 // import Home from "./Pages/Home.jsx";
 // import Dashboard from "./Pages/Dashboard.jsx";
 // import ThemeTest from "./Pages/ThemeTest.jsx";
@@ -23,9 +29,9 @@ import ComponentLoader from "./Sub/ComponentLoader";
 // import NotFound from "./Pages/NotFound.jsx";
 const Home = ComponentLoader(() => import("../Pages/Home"));
 const Dashboard = ComponentLoader(() => import("../Pages/Dashboard"));
+const ProviderRemove = ComponentLoader(() => import("../Pages/ProviderRemove"));
 const ThemeTest = ComponentLoader(() => import("../Pages/ThemeTest"));
 const ProviderLogin = ComponentLoader(() => import("../Pages/ProviderLogin"));
-const ProviderRemove = ComponentLoader(() => import("../Pages/ProviderRemove"));
 const DropboxLoginCallback = ComponentLoader(() =>
     import("../Pages/DropboxLoginCallback")
 );
@@ -178,90 +184,88 @@ class Main extends React.Component {
                                     user_info={this.props.user_info}
                                 />
 
+                                {/*<TransitionGroup></TransitionGroup>*/}
+
                                 <Route
                                     render={({ location }) => (
-                                        <TransitionGroup>
-                                            <Switch
-                                                key={location.key}
-                                                location={location}
-                                            >
-                                                <Route
-                                                    exact
-                                                    path="/"
-                                                    render={({ ...props }) => (
-                                                        <Home
-                                                            {...props}
-                                                            {...childProps}
-                                                        />
-                                                    )}
-                                                />
+                                        <Switch
+                                            key={location.key}
+                                            location={location}
+                                        >
+                                            <PublicRoute
+                                                exact
+                                                path="/"
+                                                render={props => (
+                                                    <Home
+                                                        {...props}
+                                                        {...childProps}
+                                                    />
+                                                )}
+                                            />
 
-                                                <Route
-                                                    path="/dashboard"
-                                                    render={({ ...props }) => {
-                                                        const Component = FadesIn(
-                                                            Dashboard
-                                                        );
-                                                        return (
-                                                            <Component
-                                                                {...props}
-                                                                {...childProps}
-                                                            />
-                                                        );
-                                                    }}
-                                                />
-                                                <Route
-                                                    path="/remove/:type"
-                                                    render={({ ...props }) => {
-                                                        const Component = FadesIn(
-                                                            ProviderRemove
-                                                        );
-                                                        return (
-                                                            <Component
-                                                                {...props}
-                                                                {...childProps}
-                                                            />
-                                                        );
-                                                    }}
-                                                />
-                                                <Route
-                                                    path="/theme"
-                                                    render={({ ...props }) => (
-                                                        <ThemeTest
+                                            <PrivateRoute
+                                                user_info={this.props.user_info}
+                                                path="/dashboard"
+                                                render={props => {
+                                                    return (
+                                                        <Dashboard
                                                             {...props}
                                                             {...childProps}
                                                         />
-                                                    )}
-                                                />
-                                                <Route
-                                                    path="/new/:type"
-                                                    render={({ ...props }) => (
-                                                        <ProviderLogin
+                                                    );
+                                                }}
+                                            />
+                                            <PrivateRoute
+                                                user_info={this.props.user_info}
+                                                path="/remove/:type"
+                                                render={props => {
+                                                    return (
+                                                        <ProviderRemove
                                                             {...props}
                                                             {...childProps}
                                                         />
-                                                    )}
-                                                />
-                                                <Route
-                                                    path="/login/dropbox/callback"
-                                                    render={({ ...props }) => (
-                                                        <DropboxLoginCallback
-                                                            {...props}
-                                                            {...childProps}
-                                                        />
-                                                    )}
-                                                />
+                                                    );
+                                                }}
+                                            />
+                                            <PrivateRoute
+                                                path="/theme"
+                                                render={props => (
+                                                    <ThemeTest
+                                                        {...props}
+                                                        {...childProps}
+                                                    />
+                                                )}
+                                            />
+                                            <PrivateRoute
+                                                user_info={this.props.user_info}
+                                                path="/new/:type"
+                                                render={props => (
+                                                    <ProviderLogin
+                                                        {...props}
+                                                        {...childProps}
+                                                    />
+                                                )}
+                                            />
+                                            <PrivateRoute
+                                                user_info={this.props.user_info}
+                                                path="/login/dropbox/callback"
+                                                render={props => (
+                                                    <DropboxLoginCallback
+                                                        {...props}
+                                                        {...childProps}
+                                                    />
+                                                )}
+                                            />
 
-                                                {/*<Route*/}
-                                                {/*render={({...props}) => (*/}
-                                                {/*<NotFound*/}
-                                                {/*{...props}*/}
-                                                {/*{...childProps}*/}
-                                                {/*/>*/}
-                                                {/*)}*/}
-                                                {/*/>*/}
-                                            </Switch>
-                                        </TransitionGroup>
+                                            <Route
+                                                render={props => (
+                                                    <NotFound
+                                                        {...props}
+                                                        {...childProps}
+                                                    />
+                                                )}
+                                            />
+                                        </Switch>
                                     )}
                                 />
                             </div>

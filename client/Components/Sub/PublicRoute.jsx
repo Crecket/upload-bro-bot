@@ -5,6 +5,7 @@ export default ({ component: Component, ...rest }) => {
     // if we have a render function, use it
     // else return a new function which returns the component
     const componentHandler = rest.render ? rest.render : props => Component;
+    console.log(!rest.user_info);
     return (
         <Route
             {...rest}
@@ -13,7 +14,7 @@ export default ({ component: Component, ...rest }) => {
                     ? componentHandler(props)
                     : <Redirect
                           to={{
-                              pathname: "/",
+                              pathname: "/dashboard",
                               state: { from: props.location }
                           }}
                       />)}

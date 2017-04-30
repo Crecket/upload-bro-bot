@@ -48,7 +48,7 @@ describe("<ProviderRemove />", () => {
         expect(tree).toMatchSnapshot();
     });
 
-    it("123 short swipe to right event does not trigger router push event", () => {
+    it("short swipe to right event does not trigger router push event", () => {
         // mock router push function
         const routerPush = jest.fn();
 
@@ -62,7 +62,7 @@ describe("<ProviderRemove />", () => {
             </StaticRouter>
         );
 
-        const ProviderRemoveWrapper = wrapper.find(ProviderRemove)
+        const ProviderRemoveWrapper = wrapper.find(ProviderRemove);
 
         // trigger on swipe move/end event
         ProviderRemoveWrapper.simulate('mousemove',{

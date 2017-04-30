@@ -1,19 +1,22 @@
+"use strict";
 import React from "react";
 import { findDOMNode } from "react-dom";
-import { TweenLite, Sine, Power2 } from "gsap";
+import { TweenLite, Power2 } from "gsap";
+import GSAPEnchancer from "react-gsap-enhancer";
 
 // returns fade up animation
 function makeFadesIn(Component, options = { duration: 0.5 }) {
+    // the actual component
     return class FadesIn extends React.Component {
-        static get propTypes() {
-            key: Component.name;
-        }
-
         // this component is about to enter
         componentWillEnter(callback) {
-            const el = findDOMNode(this);
+            // make sure we get the correct node
+            const el = findDOMNode(this.refs.fadesInComponentRef);
+            if(!el) return callback();
+
+            // trigger the animation using gsap
             TweenLite.fromTo(
-                el,
+                this.refs.fadesInComponentRef,
                 options.duration,
                 {
                     scaleX: 0.75,
@@ -32,7 +35,11 @@ function makeFadesIn(Component, options = { duration: 0.5 }) {
 
         // this component is about to leave, just hide it for now
         componentWillLeave(callback) {
-            const el = findDOMNode(this);
+            // make sure we get the correct dom node
+            const el = findDOMNode(this.refs.fadesInComponentRef);
+            if (!el) return callback();
+
+            // just hide the component
             TweenLite.to(el, 0, {
                 opacity: 0,
                 onComplete: callback
@@ -40,7 +47,7 @@ function makeFadesIn(Component, options = { duration: 0.5 }) {
         }
 
         render() {
-            return <Component {...this.props} />;
+            return <Component ref="fadesInComponentRef" {...this.props} />;
         }
     };
 }

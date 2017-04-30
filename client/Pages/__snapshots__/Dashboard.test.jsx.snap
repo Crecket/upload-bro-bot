@@ -177,8 +177,10 @@ exports[`<Dashboard /> matches snapshot with verified user 1`] = `
             Gregory Goijaerts
             <br />
             <a
+              className={undefined}
+              href="/remove/box"
               onClick={[Function]}
-              style={Object {}}
+              style={undefined}
             >
               <div
                 className={undefined}
@@ -416,8 +418,10 @@ exports[`<Dashboard /> matches snapshot with verified user 1`] = `
             Gregory Goijaerts
             <br />
             <a
+              className={undefined}
+              href="/remove/dropbox"
               onClick={[Function]}
-              style={Object {}}
+              style={undefined}
             >
               <div
                 className={undefined}
@@ -655,8 +659,10 @@ exports[`<Dashboard /> matches snapshot with verified user 1`] = `
             Gregory Goijaerts
             <br />
             <a
+              className={undefined}
+              href="/remove/google"
               onClick={[Function]}
-              style={Object {}}
+              style={undefined}
             >
               <div
                 className={undefined}
@@ -894,8 +900,10 @@ exports[`<Dashboard /> matches snapshot with verified user 1`] = `
             Crecket
             <br />
             <a
+              className={undefined}
+              href="/remove/imgur"
               onClick={[Function]}
-              style={Object {}}
+              style={undefined}
             >
               <div
                 className={undefined}
@@ -2186,9 +2194,7 @@ exports[`<Dashboard /> matches snapshot without verified user 1`] = `
 </div>
 `;
 
-exports[
-  `<Dashboard /> matches snapshot without verified user and without sites 1`
-] = `
+exports[`<Dashboard /> matches snapshot without verified user and without sites 1`] = `
 <div>
   <div
     style={
