@@ -4,7 +4,7 @@ import renderer from "react-test-renderer";
 import { shallow } from "enzyme";
 
 
-import LoadingScreen from "./LoadingScreen.jsx";
+import LoadingScreen from "./Loader.jsx";
 
 describe("<LoadingScreen />", () => {
     it("matches default snapshot", () => {

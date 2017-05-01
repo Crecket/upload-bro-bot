@@ -1,7 +1,7 @@
 const tracer = require("tracer");
 
 // disable/enable based on enviroment and debug settings
-const DEV = process.env.DEBUG === "true";
+const DEV = process.env.DEBUG !== "false";
 
 // prePreocess
 const preProcess = data => {

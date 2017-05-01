@@ -3,45 +3,29 @@ import store from "store";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import Dialog from "material-ui/Dialog";
+import Snackbar from "material-ui/Snackbar";
 import FlatButton from "material-ui/FlatButton";
-import { Route, Switch } from "react-router-dom";
+// import { Route, Switch } from "react-router-dom";
 
 // custom components
 import MainAppbar from "./MainAppbar";
 import Logger from "../Helpers/Logger";
-import ComponentLoader from "./Sub/ComponentLoader";
+// import ComponentLoader from "./Sub/ComponentLoader";
 
 // route helpers
-import PrivateRoute from "./Sub/PrivateRoute";
-import PublicRoute from "./Sub/PublicRoute";
+// import PrivateRoute from "./Sub/PrivateRoute";
+// import PublicRoute from "./Sub/PublicRoute";
 
 // transition components
 // import TransitionGroup from "react-transition-group/TransitionGroup";
 // import FadesIn from "../Components/Transitions/FadesIn";
 // const FadesInSwitch = FadesIn(Switch);
 
-// import Home from "./Pages/Home.jsx";
-// import Dashboard from "./Pages/Dashboard.jsx";
-// import ThemeTest from "./Pages/ThemeTest.jsx";
-// import ProviderLogin from "./Pages/ProviderLogin.jsx";
-// import ProviderRemove from "./Pages/ProviderRemove.jsx";
-// import DropboxLoginCallback from "./Pages/DropboxLoginCallback.jsx";
-// import NotFound from "./Pages/NotFound.jsx";
-const Home = ComponentLoader(() => import("../Pages/Home"));
-const Dashboard = ComponentLoader(() => import("../Pages/Dashboard"));
-const ProviderRemove = ComponentLoader(() => import("../Pages/ProviderRemove"));
-const ThemeTest = ComponentLoader(() => import("../Pages/ThemeTest"));
-const ProviderLogin = ComponentLoader(() => import("../Pages/ProviderLogin"));
-const DropboxLoginCallback = ComponentLoader(() =>
-    import("../Pages/DropboxLoginCallback")
-);
-const NotFound = ComponentLoader(() => import("../Pages/NotFound"));
-
 // Themes
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import LightBlue from "../Themes/LightBlue";
-import Dark from "../Themes/Dark";
+// import Dark from "../Themes/Dark";
 
 // navigator fallback for server-side rendering
 const navigatorHelper = typeof navigator !== "undefined" && navigator.userAgent
@@ -49,17 +33,18 @@ const navigatorHelper = typeof navigator !== "undefined" && navigator.userAgent
     : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
 const ThemesList = {
     LightBlue: getMuiTheme(LightBlue, { userAgent: navigatorHelper }),
-    Dark: getMuiTheme(Dark, { userAgent: navigatorHelper })
+    // Dark: getMuiTheme(Dark, { userAgent: navigatorHelper }),
 };
 const ThemeListNames = Object.keys(ThemesList);
 
 // redux actions
-import { openModal, closeModal } from "../Actions/modalActions.js";
 import {
     userUpdate,
     userLogout,
     userLoadLocalstorage
 } from "../Actions/user.js";
+import { openModal, closeModal } from "../Actions/modal.js";
+import { openSnackbar, closeSnackbar } from "../Actions/snackbar.js";
 import { siteUpdate, siteLoadLocalstorage } from "../Actions/sites.js";
 
 // connect to redux
@@ -69,7 +54,7 @@ class Main extends React.Component {
         super(props, context);
         this.state = {
             // theme options
-            muiTheme: store.get("theme") || "Dark" // default to dark
+            muiTheme: store.get("theme") || "LightBlue" // default to dark
         };
     }
 
@@ -83,6 +68,9 @@ class Main extends React.Component {
 
         // fetch site data
         this.props.dispatch(siteUpdate());
+
+        // hack to allow service worker registration to access this
+        window.showSnackbar = this.openSnackbarHelper;
     }
 
     // =========== Static data =============
@@ -90,7 +78,7 @@ class Main extends React.Component {
     // change the theme
     setTheme = (theme = false) => {
         // default theme
-        let finalTheme = "Dark";
+        let finalTheme = "LightBlue";
         if (theme && typeof ThemesList[theme] !== "undefined") {
             finalTheme = theme;
         } else {
@@ -112,10 +100,17 @@ class Main extends React.Component {
     openModalHelper = (message, title) => {
         this.props.dispatch(openModal(message, title));
     };
-
-    // close the general modal
     closeModalHelper = () => {
         this.props.dispatch(closeModal());
+    };
+
+    // open/close the general snackbar
+    openSnackbarHelper = (message, duration = 4000) => {
+        this.props.dispatch(openSnackbar(message, duration));
+    };
+
+    closeSnackbarHelper = () => {
+        this.props.dispatch(closeSnackbar());
     };
 
     // update current user info
@@ -129,15 +124,29 @@ class Main extends React.Component {
     render() {
         // generate a list of props we want to give to the children
         const childProps = {
+            // uniqueness
             key: this.props.location.pathname,
+
+            // user specific stuff
             initialCheck: this.props.initialCheck,
             user_info: this.props.user_info,
-            sites: this.props.sites,
-            theme: ThemesList[this.state.muiTheme],
             updateUser: this.updateUser,
+
+            // site list
+            sites: this.props.sites,
+
+            // theme list
+            theme: ThemesList[this.state.muiTheme],
+
+            // modal and snackbar helpers
             openModalHelper: this.openModalHelper,
-            closeModalHelper: this.closeModalHelper
+            closeModalHelper: this.closeModalHelper,
+            openSnackbarHelper: this.openSnackbarHelper,
+            closeSnackbarHelper: this.closeSnackbarHelper
         };
+
+        // get the component from the props
+        const RouteComponent = this.props.routesComponent;
 
         return (
             <MuiThemeProvider muiTheme={ThemesList[this.state.muiTheme]}>
@@ -175,6 +184,14 @@ class Main extends React.Component {
                                 >
                                     {this.props.modalText}
                                 </Dialog>
+                                <Snackbar
+                                    open={this.props.snackbarOpen}
+                                    message={this.props.snackbarMessage}
+                                    autoHideDuration={
+                                        this.props.snackbarDuration
+                                    }
+                                    onRequestClose={this.closeSnackbarHelper}
+                                />
 
                                 <MainAppbar
                                     dispatch={this.props.dispatch}
@@ -184,90 +201,9 @@ class Main extends React.Component {
                                     user_info={this.props.user_info}
                                 />
 
-                                {/*<TransitionGroup></TransitionGroup>*/}
-
-                                <Route
-                                    render={({ location }) => (
-                                        <Switch
-                                            key={location.key}
-                                            location={location}
-                                        >
-                                            <PublicRoute
-                                                exact
-                                                path="/"
-                                                render={props => (
-                                                    <Home
-                                                        {...props}
-                                                        {...childProps}
-                                                    />
-                                                )}
-                                            />
-
-                                            <PrivateRoute
-                                                user_info={this.props.user_info}
-                                                path="/dashboard"
-                                                render={props => {
-                                                    return (
-                                                        <Dashboard
-                                                            {...props}
-                                                            {...childProps}
-                                                        />
-                                                    );
-                                                }}
-                                            />
-                                            <PrivateRoute
-                                                user_info={this.props.user_info}
-                                                path="/remove/:type"
-                                                render={props => {
-                                                    return (
-                                                        <ProviderRemove
-                                                            {...props}
-                                                            {...childProps}
-                                                        />
-                                                    );
-                                                }}
-                                            />
-                                            <PrivateRoute
-                                                path="/theme"
-                                                render={props => (
-                                                    <ThemeTest
-                                                        {...props}
-                                                        {...childProps}
-                                                    />
-                                                )}
-                                            />
-                                            <PrivateRoute
-                                                user_info={this.props.user_info}
-                                                path="/new/:type"
-                                                render={props => (
-                                                    <ProviderLogin
-                                                        {...props}
-                                                        {...childProps}
-                                                    />
-                                                )}
-                                            />
-                                            <PrivateRoute
-                                                user_info={this.props.user_info}
-                                                path="/login/dropbox/callback"
-                                                render={props => (
-                                                    <DropboxLoginCallback
-                                                        {...props}
-                                                        {...childProps}
-                                                    />
-                                                )}
-                                            />
-
-                                            <Route
-                                                render={props => (
-                                                    <NotFound
-                                                        {...props}
-                                                        {...childProps}
-                                                    />
-                                                )}
-                                            />
-                                        </Switch>
-                                    )}
-                                />
+                                <RouteComponent
+                                    user_info={this.props.user_info}
+                                    childProps={childProps}/>
                             </div>
                         </div>
                     </div>
@@ -286,7 +222,11 @@ export default withRouter(
 
             modalText: store.modal.message,
             modalTitle: store.modal.title,
-            modalOpen: store.modal.modalOpen
+            modalOpen: store.modal.modalOpen,
+
+            snackbarMessage: store.snackbar.message,
+            snackbarDuration: store.snackbar.duration,
+            snackbarOpen: store.snackbar.snackbarOpen
         };
     })(Main)
 );

@@ -9,7 +9,6 @@ if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
         .then(function(reg) {
             reg.onupdatefound = function() {
                 var installingWorker = reg.installing;
-
                 // on change listener
                 installingWorker.onstatechange = function() {
                     // check the state change type
@@ -19,16 +18,15 @@ if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
                             // differentiate between a new worker and first install
                             if (navigator.serviceWorker.controller) {
                                 messageContents =
-                                    "New or updated content is available.";
+                                    "Content was updated and is now available offline.";
                             } else {
                                 messageContents =
                                     "Content is now available offline!";
                             }
-                            // if debug mode is enabled log this
-                            if (process.env.DEBUG) {
-                                // log the contents and create a notifcation
-                                Logger.debug(messageContents);
-                            }
+                            // log the contents and create a notifcation
+                            Logger.debug(messageContents);
+                            if (window.showSnackbar)
+                                window.showSnackbar(messageContents);
                             break;
                         }
 

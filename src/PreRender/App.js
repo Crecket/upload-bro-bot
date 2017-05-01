@@ -1,14 +1,19 @@
 import React from "react";
+import {StaticRouter} from 'react-router-dom';
+import {renderToString} from 'react-dom/server';
 import { Provider } from "react-redux";
-import { Router, browserHistory, createMemoryHistory } from "react-router";
-const renderToString = require("react-dom/server").renderToString;
 
 // injection, required for materialze tap events
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
-// main app
-import Routes from "../../client/RoutesSync.jsx";
+// the server route polyfill which renders the app shell
+import RoutesServer from "../../client/RoutesServer.jsx";
+
+// main app wrapper
+import Main from "../../client/Components/Main.jsx";
+
+// the store
 import Store from "../../Client/Store.jsx";
 
 module.exports = (UploadBro, User, Location) => {
@@ -24,8 +29,9 @@ module.exports = (UploadBro, User, Location) => {
 
     return renderToString(
         <Provider store={Store(modifiedState)}>
-            <Router routes={Routes}
-                    history={createMemoryHistory(Location)} />
+            <StaticRouter location={Location}>
+                <Main routesComponent={RoutesServer}/>
+            </StaticRouter>
         </Provider>
     );
 };

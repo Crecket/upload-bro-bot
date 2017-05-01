@@ -6,7 +6,6 @@ import RaisedButton from "material-ui/RaisedButton";
 // custom components
 import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
 import PaperHelper from "../Components/Sub/PaperHelper";
-import ForceLogin from "../Helpers/ForceLogin";
 import Logger from "../Helpers/Logger";
 
 const styles = {
@@ -21,14 +20,6 @@ export default class Dashboard extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
-    }
-
-    componentDidMount() {
-        ForceLogin(this.props, true);
-    }
-
-    componentDidUpdate() {
-        ForceLogin(this.props, true);
     }
 
     render() {
