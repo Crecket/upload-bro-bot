@@ -16,7 +16,7 @@ import Loader from './Components/Sub/Loader';
 // import NotFound from "./Pages/NotFound.jsx";
 
 // router react component
-export default class CustomRouter extends React.Component {
+export default class RoutesServer extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};

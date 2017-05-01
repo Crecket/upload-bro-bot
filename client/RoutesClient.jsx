@@ -6,7 +6,7 @@ import ComponentLoader from "./Components/Sub/ComponentLoader";
 import PrivateRoute from "./Components/Sub/PrivateRoute";
 import PublicRoute from "./Components/Sub/PublicRoute";
 
-// asyncl oad the pages
+// async load the pages
 const Home = ComponentLoader(() => import("./Pages/Home"), true);
 const Dashboard = ComponentLoader(() => import("./Pages/Dashboard"), true);
 const ProviderRemove = ComponentLoader(
@@ -25,7 +25,7 @@ const DropboxLoginCallback = ComponentLoader(
 const NotFound = ComponentLoader(() => import("./Pages/NotFound"));
 
 // router react component
-export default class CustomRouter extends React.Component {
+export default class RoutesClient extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {};
