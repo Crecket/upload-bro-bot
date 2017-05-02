@@ -5,21 +5,10 @@ import { withRouter } from "react-router";
 import Dialog from "material-ui/Dialog";
 import Snackbar from "material-ui/Snackbar";
 import FlatButton from "material-ui/FlatButton";
-// import { Route, Switch } from "react-router-dom";
 
 // custom components
 import MainAppbar from "./MainAppbar";
 import Logger from "../Helpers/Logger";
-// import ComponentLoader from "./Sub/ComponentLoader";
-
-// route helpers
-// import PrivateRoute from "./Sub/PrivateRoute";
-// import PublicRoute from "./Sub/PublicRoute";
-
-// transition components
-// import TransitionGroup from "react-transition-group/TransitionGroup";
-// import FadesIn from "../Components/Transitions/FadesIn";
-// const FadesInSwitch = FadesIn(Switch);
 
 // Themes
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
@@ -54,7 +43,7 @@ class Main extends React.Component {
         super(props, context);
         this.state = {
             // theme options
-            muiTheme: store.get("theme") || "LightBlue" // default to dark
+            muiTheme: /*store.get("theme") ||*/ "LightBlue"
         };
     }
 
@@ -83,7 +72,7 @@ class Main extends React.Component {
             finalTheme = theme;
         } else {
             // no custom value given or value does not exist, just toggle between dark and light
-            if (this.state.muiTheme === "LightBlue") {
+            if (this.state.muiTheme === "LightBlue" &&  ThemesList["Dark"]) {
                 finalTheme = "Dark";
             } else {
                 finalTheme = "LightBlue";

@@ -34,9 +34,10 @@ exports[`<MainAppbar /> matches snapshot with verified user 1`] = `
       }
     }
   >
-    <button
+    <a
+      className="active"
       disabled={false}
-      href={undefined}
+      href="/dashboard"
       onBlur={[Function]}
       onClick={[Function]}
       onFocus={[Function]}
@@ -73,7 +74,6 @@ exports[`<MainAppbar /> matches snapshot with verified user 1`] = `
         }
       }
       tabIndex={0}
-      type="button"
     >
       <div
         onMouseDown={[Function]}
@@ -93,7 +93,7 @@ exports[`<MainAppbar /> matches snapshot with verified user 1`] = `
           }
         />
       </div>
-    </button>
+    </a>
   </div>
   <h1
     onTouchTap={[Function]}
@@ -223,13 +223,6 @@ exports[`<MainAppbar /> matches snapshot with verified user 1`] = `
       />
     </div>
   </div>
-  <div
-    style={
-      Object {
-        "display": "none",
-      }
-    }
-  />
 </div>
 `;
 
@@ -267,9 +260,10 @@ exports[`<MainAppbar /> matches snapshot without verified user 1`] = `
       }
     }
   >
-    <button
+    <a
+      className="active"
       disabled={false}
-      href={undefined}
+      href="/dashboard"
       onBlur={[Function]}
       onClick={[Function]}
       onFocus={[Function]}
@@ -306,7 +300,6 @@ exports[`<MainAppbar /> matches snapshot without verified user 1`] = `
         }
       }
       tabIndex={0}
-      type="button"
     >
       <div
         onMouseDown={[Function]}
@@ -326,7 +319,7 @@ exports[`<MainAppbar /> matches snapshot without verified user 1`] = `
           }
         />
       </div>
-    </button>
+    </a>
   </div>
   <h1
     onTouchTap={[Function]}
@@ -456,12 +449,5 @@ exports[`<MainAppbar /> matches snapshot without verified user 1`] = `
       />
     </div>
   </div>
-  <div
-    style={
-      Object {
-        "display": "none",
-      }
-    }
-  />
 </div>
 `;

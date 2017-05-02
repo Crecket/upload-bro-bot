@@ -5767,7 +5767,7 @@ react-test-renderer@^15.5.4:
     fbjs "^0.8.9"
     object-assign "^4.1.0"
 
-react-transition-group@^1.1.1:
+react-transition-group@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.1.2.tgz#374cd778070f74b0a658045fc532edfd471ad836"
   dependencies:

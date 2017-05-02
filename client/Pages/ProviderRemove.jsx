@@ -1,11 +1,12 @@
 import React from "react";
 import Helmet from "react-helmet";
+import {Redirect}from 'react-router-dom';
 import Paper from "material-ui/Paper";
 import CircularProgress from "material-ui/CircularProgress";
 import RaisedButton from "material-ui/RaisedButton";
 import Check from "material-ui/svg-icons/navigation/check";
 import Error from "material-ui/svg-icons/alert/error";
-import { red500, red800, green800 } from "material-ui/styles/colors";
+import {red500, red800, green800} from "material-ui/styles/colors";
 import Swipe from "react-easy-swipe";
 import axios from "axios";
 
@@ -50,6 +51,7 @@ export default class ProviderRemove extends React.Component {
         super(props, context);
 
         this.state = {
+            redirect: false,
             loadingState: "nope",
             error: false,
             nextSite: false,
@@ -96,7 +98,7 @@ export default class ProviderRemove extends React.Component {
         // check if provider is available
         if (!this.props.sites[this.props.match.params.type]) {
             // cancel and go to dashbaord
-            this.props.router.push("/dashboard");
+            this.setState({redirect: "/dashboard"});
         }
     }
 
@@ -114,7 +116,7 @@ export default class ProviderRemove extends React.Component {
     // swipe events for mobile
     onSwipeMove(position, event) {
         // update swipe amount in state
-        this.setState({ swipeAmount: position.x });
+        this.setState({swipeAmount: position.x});
     }
 
     onSwipeEnd(event) {
@@ -122,13 +124,13 @@ export default class ProviderRemove extends React.Component {
 
         if (this.state.swipeAmount >= 50) {
             // move to right
-            this.props.router.push("/remove/" + this.state.nextSite);
+            this.setState({redirect: "/remove/" + this.state.nextSite});
         } else if (this.state.swipeAmount <= -50) {
             // move to left
-            this.props.router.push("/remove/" + this.state.previousSite);
+            this.setState({redirect: "/remove/" + this.state.previousSite});
         }
         // reset swipe amount
-        this.setState({ swipeAmount: 0 });
+        this.setState({swipeAmount: 0});
     }
 
     // do api call to remove this provider from account
@@ -136,7 +138,7 @@ export default class ProviderRemove extends React.Component {
         let providerType = this.props.match.params.type;
 
         // set loading state
-        this.setState({ loadingState: "loading" });
+        this.setState({loadingState: "loading"});
 
         // send our hashtag data
         axios
@@ -144,27 +146,29 @@ export default class ProviderRemove extends React.Component {
             .then(result => {
                 if (result.data) {
                     // update state
-                    this.setState({ loadingState: "removed" });
+                    this.setState({loadingState: "removed"});
 
                     // update the current user
                     this.props.updateUser();
                 } else {
-                    this.setState({ error: true });
+                    this.setState({error: true});
                 }
                 setTimeout(() => {
-                    this.props.router.push("/dashboard");
+                    this.setState({redirect: "/dashboard"});
                 }, 2000);
             })
             .catch(error => {
                 // Logger.error(error);
-                this.setState({ error: true });
+                this.setState({error: true});
                 setTimeout(() => {
-                    this.props.router.push("/dashboard");
+                    this.setState({redirect: "/dashboard"});
                 }, 2000);
             });
     };
 
     render() {
+        if (this.state.redirect) <Redirect to={this.state.redirect}/>;
+
         // check if provider is available
         if (!this.props.sites[this.props.match.params.type]) {
             return null;
@@ -185,7 +189,7 @@ export default class ProviderRemove extends React.Component {
                         src={
                             this.props.sites[this.props.match.params.type].logos[
                                 "svg"
-                            ]
+                                ]
                         }
                         style={styles.img}
                     />
@@ -213,7 +217,7 @@ export default class ProviderRemove extends React.Component {
         if (this.state.error) {
             removeDiv = (
                 <h3>
-                    <Error style={styles.errorIcon} />
+                    <Error style={styles.errorIcon}/>
                     <br />
                     Something went wrong
                 </h3>
@@ -239,7 +243,7 @@ export default class ProviderRemove extends React.Component {
         } else if (this.state.loadingState === "removed") {
             removeDiv = (
                 <h3>
-                    <Check style={styles.checkIcon} />
+                    <Check style={styles.checkIcon}/>
                     <br />
                     Removed your {providerTitle} account
                 </h3>

@@ -21,6 +21,10 @@
     "node": ">=7.8.0"
   },
   "jest": {
+    "modulePathIgnorePatterns": [
+      "/public",
+      "/downloads"
+    ],
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$",
     "testPathIgnorePatterns": [
       "/node_modules/",

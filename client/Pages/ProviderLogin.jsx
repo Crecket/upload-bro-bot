@@ -1,11 +1,11 @@
 import React from "react";
 import Helmet from "react-helmet";
+import {Redirect} from 'react-router-dom';
 import Paper from "material-ui/Paper";
 import Check from "material-ui/svg-icons/navigation/check";
 import CircularProgress from "material-ui/CircularProgress";
 import Error from "material-ui/svg-icons/alert/error";
-import { red500, green800 } from "material-ui/styles/colors";
-import { browserHistory } from "react-router";
+import {red500, green800} from "material-ui/styles/colors";
 
 import Utils from "../Helpers/Utils";
 import Logger from "../Helpers/Logger";
@@ -46,16 +46,20 @@ const styles = {
 export default class ProviderLogin extends React.Component {
     constructor(props, context) {
         super(props, context);
-        this.state = {};
+        this.state = {
+            redirect: false
+        };
     }
 
     componentDidMount() {
         setTimeout(() => {
-            browserHistory.push("/dashboard");
+            this.setState({redirect: '/dashboard'});
         }, 2000);
     }
 
     render() {
+        if (this.state.redirect) <Redirect to={this.state.redirect}/>;
+
         // default to loading screen
         let loginStatusResult = (
             <CircularProgress
@@ -75,7 +79,7 @@ export default class ProviderLogin extends React.Component {
             ) {
                 loginStatusResult = (
                     <h3>
-                        <Check style={styles.checkIcon} />
+                        <Check style={styles.checkIcon}/>
                         <br />
                         Successfully logged in to your
                         {" "}
@@ -87,7 +91,7 @@ export default class ProviderLogin extends React.Component {
             } else {
                 loginStatusResult = (
                     <h3>
-                        <Error style={styles.errorIcon} />
+                        <Error style={styles.errorIcon}/>
                         <br />
                         Something went wrong
                     </h3>
