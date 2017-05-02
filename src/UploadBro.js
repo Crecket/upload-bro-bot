@@ -55,7 +55,7 @@ module.exports = class UploadBro {
             this._Db = db;
 
             // create mongodb cache engine
-            const engine = new MongoDbEngine(db, {collection: "cache"});
+            const engine = new MongoDbEngine(db, { collection: "cache" });
 
             // store the cache in the app
             this._Cache = new Cacheman("uploadbro_cache", {
@@ -81,7 +81,7 @@ module.exports = class UploadBro {
                 "!downloads",
                 "!downloads/.gitkeep"
             ]);
-            Logger.debug("Cleared downloads folder:\n", paths.join("\n"));
+            Logger.debug(["Cleared downloads folder:\n", paths.join("\n")]);
 
             // finished loading everything
             Logger.debug(
@@ -202,21 +202,31 @@ module.exports = class UploadBro {
     async eventListeners() {
         const fn = this;
         // file messages
-        this._TelegramBot.on("audio", msg => fn._EventHandler.messageFileListener(msg, "audio"));
-        this._TelegramBot.on("video", msg => fn._EventHandler.messageFileListener(msg, "video"));
-        this._TelegramBot.on("voice", msg => fn._EventHandler.messageFileListener(msg, "voice"));
-        this._TelegramBot.on("photo", msg => fn._EventHandler.messageFileListener(msg, "photo"));
-        this._TelegramBot.on("document", msg => fn._EventHandler.messageFileListener(msg, "document"));
+        this._TelegramBot.on("audio", msg =>
+            fn._EventHandler.messageFileListener(msg, "audio")
+        );
+        this._TelegramBot.on("video", msg =>
+            fn._EventHandler.messageFileListener(msg, "video")
+        );
+        this._TelegramBot.on("voice", msg =>
+            fn._EventHandler.messageFileListener(msg, "voice")
+        );
+        this._TelegramBot.on("photo", msg =>
+            fn._EventHandler.messageFileListener(msg, "photo")
+        );
+        this._TelegramBot.on("document", msg =>
+            fn._EventHandler.messageFileListener(msg, "document")
+        );
 
         this._TelegramBot.on("group_chat_created", msg => {
             // track event
             // this._Analytics.track('group_chat_created');
-            Logger.debug("group_chat_created", msg);
+            Logger.debug(["group_chat_created", msg]);
         });
         this._TelegramBot.on("message", msg => {
             // track event
             // this._Analytics.track('message');
-            Logger.debug("message", msg);
+            Logger.debug(["message", msg]);
         });
 
         // callback query listener
