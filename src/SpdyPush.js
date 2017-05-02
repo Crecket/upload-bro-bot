@@ -27,32 +27,30 @@ class PushHandler {
         this.response = response;
     }
 
-    /**
-     * @param pushEvents
-     * @returns {Promise.<*>}
-     */
-    sendFiles = async pushEvents => {
-        // if this isn't spdy, return false
-        if (!this.request.isSpdy) return false;
+    sendFiles(pushEvents) {
+        return new Promise(resolve => {
+            // if this isn't spdy, return false
+            if (!this.request.isSpdy) return false;
 
-        // check if sw-precache parameter is set, dont add push events if it is
-        if (this.request.query["_sw-precache"]) return false;
+            // check if sw-precache parameter is set, dont add push events if it is
+            if (this.request.query["_sw-precache"]) return false;
 
-        Logger.debug('Pushing file');
+            Logger.debug("Pushing file");
 
-        // loop through all the push events we want ot send
-        const PromiseList = pushEvents.map(pushEvent => {
-            // we want to use this push event
-            return this.push(
-                pushEvent.target_url,
-                pushEvent.target_file,
-                pushEvent.options
-            );
+            // loop through all the push events we want ot send
+            const PromiseList = pushEvents.map(pushEvent => {
+                // we want to use this push event
+                return this.push(
+                    pushEvent.target_url,
+                    pushEvent.target_file,
+                    pushEvent.options
+                );
+            });
+
+            // wait for all of them to finish
+            Promise.all(PromiseList).then(resolve);
         });
-
-        // wait for all of them to finish
-        return await Promise.all(PromiseList);
-    };
+    }
 
     /**
      * @param target_url
@@ -60,39 +58,46 @@ class PushHandler {
      * @param options
      * @returns {Promise.<void>}
      */
-    push = async (target_url, target_file, options = {}) => {
-        try {
-            // create the push event with the target and options
-            const stream = this.response.push(
-                // start push stream to target url
-                target_url,
-                // combine new options with default options
-                Object.assign({}, defaultPushHeaders, options)
-            );
-
-            // get the file contents
-            const file_contents = await new Promise(resolve => {
-                fs.readFile(path.resolve(target_file), (err, result) =>
-                    resolve(result)
+    push(target_url, target_file, options = {}) {
+        return new Promise(resolve => {
+            try {
+                // create the push event with the target and options
+                const stream = this.response.push(
+                    // start push stream to target url
+                    target_url,
+                    // combine new options with default options
+                    Object.assign({}, defaultPushHeaders, options)
                 );
-            });
 
-            // get the file contents
-            const gzipped_contents = await new Promise(resolve => {
-                zlib.gzip(file_contents, (err, result) => resolve(result));
-            });
+                new Promise(resolve => {
+                    // get the file contents
+                    fs.readFile(path.resolve(target_file), (err, result) =>
+                        resolve(result)
+                    );
+                })
+                    .then(file_contents => {
+                        // gzip the file contents
+                        return new Promise(resolve => {
+                            zlib.gzip(file_contents, (err, result) =>
+                                resolve(result)
+                            );
+                        });
+                    })
+                    .then(gzipped_contents => {
+                        // create a read stream from file system and send the content
+                        stream.end(gzipped_contents);
 
-            // create a read stream from file system and send the content
-            stream.end(gzipped_contents);
-
-            // error handler
-            stream.on("error", function(err) {
-                Logger.error(err);
-            });
-        } catch (ex) {
-            Logger.error(ex);
-        }
-    };
+                        // error handler
+                        stream.on("error", function(err) {
+                            Logger.error(err);
+                        });
+                    })
+                    .catch(Logger.error);
+            } catch (ex) {
+                Logger.error(ex);
+            }
+        });
+    }
 }
 
 module.exports = PushHandler;

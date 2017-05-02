@@ -1,12 +1,16 @@
 "use strict";
 
-import Logger from "../Helpers/Logger";
-import SpdyPush from "../SpdyPush";
+let PreRender = () => {};
+if(process.env.ENABLE_SSR === "true"){
+    // only load babel-register if we have ssr
+    require("babel-register");
 
-// only require the pre-render file if it is enabled
-const PreRender = process.env.ENABLE_SSR === "true"
-    ? require("../PreRender")
-    : () => {};
+    // only load pre-Render if ssr is enabled
+    PreRender = require("../PreRender");
+}
+
+const Logger = require("../Helpers/Logger");
+// const SpdyPush = require("../SpdyPush");
 
 const doPrerender = (uploadApp, req) => {
     if (process.env.ENABLE_SSR !== "true") {

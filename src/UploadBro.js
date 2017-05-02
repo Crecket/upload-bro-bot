@@ -105,7 +105,7 @@ module.exports = class UploadBro {
         const db = await MongoClient.connect(process.env.MONGODB_URL);
 
         // log connection status
-        Logger.info("Connected to " + process.env.MONGODB_URL);
+        Logger.debug("Connected to " + process.env.MONGODB_URL);
 
         // return the connection
         return db;

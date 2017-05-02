@@ -1,7 +1,6 @@
 "use strict";
 // load env config
 require('dotenv').config();
-require("babel-register");
 const Logger = require('./src/Helpers/Logger');
 
 // unhandledrejection listener
