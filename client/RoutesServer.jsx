@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
+import {CSSTransitionGroup} from "react-transition-group";
 
 // route helpers
 // import PrivateRoute from "./Components/Sub/PrivateRoute";
@@ -21,42 +22,51 @@ export default class RoutesServer extends React.Component {
         super(props, context);
         this.state = {};
     }
+
     render() {
         return (
             <Route
-                render={({ location }) => (
-                    <Switch
-                        key={location.key}
-                        location={location}
+                render={({location}) => (
+                    <CSSTransitionGroup
+                        transitionName="fade"
+                        transitionAppear={true}
+                        transitionAppearTimeout={300}
+                        transitionLeave={false}
+                        transitionEnterTimeout={300}
                     >
-                        <Route
-                            exact
-                            path="/"
-                            component={Loader}
-                        />
-                        <Route
-                            path="/theme"
-                            component={Loader}
-                        />
-                        <Route
-                            path="/dashboard"
-                            component={Loader}
-                        />
-                        <Route
-                            path="/remove/:type"
-                            component={Loader}
-                        />
-                        <Route
-                            path="/new/:type"
-                            component={Loader}
-                        />
-                        <Route
-                            path="/login/dropbox/callback"
-                            component={Loader}
-                        />
+                        <Switch
+                            key={location.key}
+                            location={location}
+                        >
+                            <Route
+                                exact
+                                path="/"
+                                component={Loader}
+                            />
+                            <Route
+                                path="/theme"
+                                component={Loader}
+                            />
+                            <Route
+                                path="/dashboard"
+                                component={Loader}
+                            />
+                            <Route
+                                path="/remove/:type"
+                                component={Loader}
+                            />
+                            <Route
+                                path="/new/:type"
+                                component={Loader}
+                            />
+                            <Route
+                                path="/login/dropbox/callback"
+                                component={Loader}
+                            />
 
-                        <Route component={Loader}/>
-                    </Switch>
+                            <Route component={Loader}/>
+                        </Switch>
+                    </CSSTransitionGroup>
                 )}
             />
         );

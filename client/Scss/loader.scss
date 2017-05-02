@@ -62,3 +62,16 @@
     transition: all 0.3s 1s ease-out;
   }
 }
+
+// css transition animation
+.fade-enter,
+.fade-appear {
+  opacity: 0;
+}
+.fade-enter.fade-enter-active,
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
+
+
