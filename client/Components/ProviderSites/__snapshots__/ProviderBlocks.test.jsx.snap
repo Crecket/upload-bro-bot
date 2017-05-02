@@ -37,7 +37,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
               "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
                      0 3px 10px rgba(0, 0, 0, 0.23)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "muiPrepared": true,
@@ -68,7 +68,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#303F9F",
+                "backgroundColor": "#3f51b5",
                 "border": 10,
                 "borderRadius": "50%",
                 "boxSizing": "border-box",
@@ -161,12 +161,12 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0,0,0,0)",
-                "backgroundColor": "#353535",
+                "backgroundColor": "#ffffff",
                 "borderRadius": 2,
                 "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                        0 1px 4px rgba(0, 0, 0, 0.12)",
                 "boxSizing": "border-box",
-                "color": "#ffffff",
+                "color": "rgba(0, 0, 0, 0.87)",
                 "display": "inline-block",
                 "fontFamily": "Roboto, sans-serif",
                 "minWidth": 88,
@@ -194,7 +194,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
               style={
                 Object {
                   "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                  "backgroundColor": "#303F9F",
+                  "backgroundColor": "#3f51b5",
                   "border": 10,
                   "borderRadius": 2,
                   "boxSizing": "border-box",
@@ -278,7 +278,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
               "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
                      0 3px 10px rgba(0, 0, 0, 0.23)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "muiPrepared": true,
@@ -309,7 +309,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#303F9F",
+                "backgroundColor": "#3f51b5",
                 "border": 10,
                 "borderRadius": "50%",
                 "boxSizing": "border-box",
@@ -402,12 +402,12 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0,0,0,0)",
-                "backgroundColor": "#353535",
+                "backgroundColor": "#ffffff",
                 "borderRadius": 2,
                 "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                        0 1px 4px rgba(0, 0, 0, 0.12)",
                 "boxSizing": "border-box",
-                "color": "#ffffff",
+                "color": "rgba(0, 0, 0, 0.87)",
                 "display": "inline-block",
                 "fontFamily": "Roboto, sans-serif",
                 "minWidth": 88,
@@ -435,7 +435,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
               style={
                 Object {
                   "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                  "backgroundColor": "#303F9F",
+                  "backgroundColor": "#3f51b5",
                   "border": 10,
                   "borderRadius": 2,
                   "boxSizing": "border-box",
@@ -519,7 +519,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
               "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
                      0 3px 10px rgba(0, 0, 0, 0.23)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "muiPrepared": true,
@@ -550,7 +550,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#303F9F",
+                "backgroundColor": "#3f51b5",
                 "border": 10,
                 "borderRadius": "50%",
                 "boxSizing": "border-box",
@@ -643,12 +643,12 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0,0,0,0)",
-                "backgroundColor": "#353535",
+                "backgroundColor": "#ffffff",
                 "borderRadius": 2,
                 "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                        0 1px 4px rgba(0, 0, 0, 0.12)",
                 "boxSizing": "border-box",
-                "color": "#ffffff",
+                "color": "rgba(0, 0, 0, 0.87)",
                 "display": "inline-block",
                 "fontFamily": "Roboto, sans-serif",
                 "minWidth": 88,
@@ -676,7 +676,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
               style={
                 Object {
                   "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                  "backgroundColor": "#303F9F",
+                  "backgroundColor": "#3f51b5",
                   "border": 10,
                   "borderRadius": 2,
                   "boxSizing": "border-box",
@@ -760,7 +760,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
               "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
                      0 3px 10px rgba(0, 0, 0, 0.23)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "muiPrepared": true,
@@ -791,7 +791,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#303F9F",
+                "backgroundColor": "#3f51b5",
                 "border": 10,
                 "borderRadius": "50%",
                 "boxSizing": "border-box",
@@ -884,12 +884,12 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0,0,0,0)",
-                "backgroundColor": "#353535",
+                "backgroundColor": "#ffffff",
                 "borderRadius": 2,
                 "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                        0 1px 4px rgba(0, 0, 0, 0.12)",
                 "boxSizing": "border-box",
-                "color": "#ffffff",
+                "color": "rgba(0, 0, 0, 0.87)",
                 "display": "inline-block",
                 "fontFamily": "Roboto, sans-serif",
                 "minWidth": 88,
@@ -917,7 +917,7 @@ exports[`<ProviderBlocks /> matches snapshot 1`] = `
               style={
                 Object {
                   "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                  "backgroundColor": "#303F9F",
+                  "backgroundColor": "#3f51b5",
                   "border": 10,
                   "borderRadius": 2,
                   "boxSizing": "border-box",
@@ -1035,7 +1035,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
               "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
                      0 3px 10px rgba(0, 0, 0, 0.23)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "muiPrepared": true,
@@ -1066,7 +1066,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#303F9F",
+                "backgroundColor": "#3f51b5",
                 "border": 10,
                 "borderRadius": "50%",
                 "boxSizing": "border-box",
@@ -1152,12 +1152,12 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
           style={
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
-              "backgroundColor": "#353535",
+              "backgroundColor": "#ffffff",
               "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "minWidth": 88,
@@ -1185,7 +1185,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#448AFF",
+                "backgroundColor": "#64b5f6",
                 "border": 10,
                 "borderRadius": 2,
                 "boxSizing": "border-box",
@@ -1268,7 +1268,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
               "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
                      0 3px 10px rgba(0, 0, 0, 0.23)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "muiPrepared": true,
@@ -1299,7 +1299,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#303F9F",
+                "backgroundColor": "#3f51b5",
                 "border": 10,
                 "borderRadius": "50%",
                 "boxSizing": "border-box",
@@ -1385,12 +1385,12 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
           style={
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
-              "backgroundColor": "#353535",
+              "backgroundColor": "#ffffff",
               "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "minWidth": 88,
@@ -1418,7 +1418,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#448AFF",
+                "backgroundColor": "#64b5f6",
                 "border": 10,
                 "borderRadius": 2,
                 "boxSizing": "border-box",
@@ -1501,7 +1501,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
               "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
                      0 3px 10px rgba(0, 0, 0, 0.23)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "muiPrepared": true,
@@ -1532,7 +1532,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#303F9F",
+                "backgroundColor": "#3f51b5",
                 "border": 10,
                 "borderRadius": "50%",
                 "boxSizing": "border-box",
@@ -1618,12 +1618,12 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
           style={
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
-              "backgroundColor": "#353535",
+              "backgroundColor": "#ffffff",
               "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "minWidth": 88,
@@ -1651,7 +1651,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#448AFF",
+                "backgroundColor": "#64b5f6",
                 "border": 10,
                 "borderRadius": 2,
                 "boxSizing": "border-box",
@@ -1734,7 +1734,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
               "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
                      0 3px 10px rgba(0, 0, 0, 0.23)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "muiPrepared": true,
@@ -1765,7 +1765,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#303F9F",
+                "backgroundColor": "#3f51b5",
                 "border": 10,
                 "borderRadius": "50%",
                 "boxSizing": "border-box",
@@ -1851,12 +1851,12 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
           style={
             Object {
               "WebkitTapHighlightColor": "rgba(0,0,0,0)",
-              "backgroundColor": "#353535",
+              "backgroundColor": "#ffffff",
               "borderRadius": 2,
               "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
                      0 1px 4px rgba(0, 0, 0, 0.12)",
               "boxSizing": "border-box",
-              "color": "#ffffff",
+              "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
               "fontFamily": "Roboto, sans-serif",
               "minWidth": 88,
@@ -1884,7 +1884,7 @@ exports[`<ProviderBlocks /> matches snapshot with site list and no user list 1`]
             style={
               Object {
                 "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
-                "backgroundColor": "#448AFF",
+                "backgroundColor": "#64b5f6",
                 "border": 10,
                 "borderRadius": 2,
                 "boxSizing": "border-box",

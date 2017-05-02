@@ -24,8 +24,7 @@ export default props => {
     return (
         <IconMenu
             open={props.open}
-            onRequestClose={props.togglePopover}
-            onTouchTap={props.togglePopover}
+            onRequestChange={props.setMenuState}
             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
             targetOrigin={{ horizontal: "right", vertical: "bottom" }}
             anchorOrigin={{ horizontal: "right", vertical: "top" }}
@@ -42,7 +41,7 @@ export default props => {
                     onClick={ManualPost("/login/telegram")}
                 />}
             <MenuItem
-                id="theme-changer-menuitem"
+                id="theme-changer-menu-item"
                 primaryText="Change Theme"
                 rightIcon={<PaletteIcon />}
                 menuItems={MenuItems}

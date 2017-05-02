@@ -6,12 +6,12 @@ exports[`<MainAppbar /> matches snapshot with verified user 1`] = `
   style={
     Object {
       "WebkitTapHighlightColor": "rgba(0,0,0,0)",
-      "backgroundColor": "#303F9F",
+      "backgroundColor": "#3f51b5",
       "borderRadius": "0px",
       "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
              0 1px 4px rgba(0, 0, 0, 0.12)",
       "boxSizing": "border-box",
-      "color": "#ffffff",
+      "color": "rgba(0, 0, 0, 0.87)",
       "display": "flex",
       "fontFamily": "Roboto, sans-serif",
       "muiPrepared": true,
@@ -196,7 +196,7 @@ exports[`<MainAppbar /> matches snapshot with verified user 1`] = `
             onMouseLeave={[Function]}
             style={
               Object {
-                "color": "#ffffff",
+                "color": "rgba(0, 0, 0, 0.87)",
                 "display": "inline-block",
                 "fill": "currentColor",
                 "height": 24,
@@ -232,12 +232,12 @@ exports[`<MainAppbar /> matches snapshot without verified user 1`] = `
   style={
     Object {
       "WebkitTapHighlightColor": "rgba(0,0,0,0)",
-      "backgroundColor": "#303F9F",
+      "backgroundColor": "#3f51b5",
       "borderRadius": "0px",
       "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
              0 1px 4px rgba(0, 0, 0, 0.12)",
       "boxSizing": "border-box",
-      "color": "#ffffff",
+      "color": "rgba(0, 0, 0, 0.87)",
       "display": "flex",
       "fontFamily": "Roboto, sans-serif",
       "muiPrepared": true,
@@ -422,7 +422,7 @@ exports[`<MainAppbar /> matches snapshot without verified user 1`] = `
             onMouseLeave={[Function]}
             style={
               Object {
-                "color": "#ffffff",
+                "color": "rgba(0, 0, 0, 0.87)",
                 "display": "inline-block",
                 "fill": "currentColor",
                 "height": 24,

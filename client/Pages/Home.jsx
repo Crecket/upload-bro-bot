@@ -34,12 +34,6 @@ export default class Home extends React.Component {
         this.state = {};
     }
 
-    // this component is about to enter
-    componentWillEnter(callback) {
-        callback();
-        Logger.debug('willEnter')
-    }
-
     render() {
         return (
             <div>
