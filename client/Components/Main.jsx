@@ -48,6 +48,7 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
+        Logger.debug(this)
         // initial localstorage check
         this.props.dispatch(userLoadLocalstorage());
         this.props.dispatch(siteLoadLocalstorage());
