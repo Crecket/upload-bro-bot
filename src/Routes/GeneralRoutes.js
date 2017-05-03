@@ -46,17 +46,19 @@ module.exports = (app, passport, uploadApp) => {
         // polyfill pushhandler result since its buggy for now
         const PushHandlerResult = Promise.resolve();
 
-        // create new push handler
+        // // create new push handler
         // const PushHandler = new SpdyPush(req, res);
         // // start sendFiles event for files which are always requested for this route
         // const PushHandlerResult = PushHandler.sendFiles([
         //     {
         //         target_url: "/assets/dist/app.js",
         //         target_file: `${__dirname}/../../public/assets/dist/app.js`
-        //     }, {
+        //     },
+        //     {
         //         target_url: "/assets/dist/commons.js",
         //         target_file: `${__dirname}/../../public/assets/dist/commons.js`
-        //     }, {
+        //     },
+        //     {
         //         target_url: "/assets/dist/sw-register.js",
         //         target_file: `${__dirname}/../../public/assets/dist/sw-register.js`
         //     }

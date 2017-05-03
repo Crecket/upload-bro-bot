@@ -27,6 +27,12 @@ class PushHandler {
         this.response = response;
     }
 
+    /**
+     * Send multiple files with the request
+     *
+     * @param pushEvents
+     * @returns {Promise}
+     */
     sendFiles(pushEvents) {
         return new Promise(resolve => {
             // if this isn't spdy, return false
@@ -69,33 +75,61 @@ class PushHandler {
                     Object.assign({}, defaultPushHeaders, options)
                 );
 
-                new Promise(resolve => {
-                    // get the file contents
-                    fs.readFile(path.resolve(target_file), (err, result) =>
-                        resolve(result)
-                    );
-                })
-                    .then(file_contents => {
-                        // gzip the file contents
-                        return new Promise(resolve => {
-                            zlib.gzip(file_contents, (err, result) =>
-                                resolve(result)
-                            );
-                        });
-                    })
-                    .then(gzipped_contents => {
-                        // create a read stream from file system and send the content
-                        stream.end(gzipped_contents);
+                // error handler
+                stream.on("error", function(err) {
+                    Logger.error(err);
+                });
 
-                        // error handler
-                        stream.on("error", function(err) {
-                            Logger.error(err);
-                        });
-                    })
+                // get file contents
+                this.getFileContents(target_file)
+                    // gzip the file contents
+                    .then(file_contents => this._compressFile)
+                    // end the stream with the file contents
+                    .then(gzipped_contents => stream.end(gzipped_contents))
+                    // error handler
                     .catch(Logger.error);
             } catch (ex) {
                 Logger.error(ex);
             }
+        });
+    }
+
+    /**
+     * @param target_url
+     * @param target_file
+     * @param options
+     * @returns {Promise.<void>}
+     */
+    push(target_url, target_file, options = {}) {
+        return new Promise(resolve => {
+            // default error handler
+            const defaultErr = (err) =>{
+                Logger.error(err);
+                resolve();
+            }
+
+            // create the push event with the target and options
+            const pushstream = this.response.push(
+                // start push stream to target url
+                target_url,
+                // combine new options with default options
+                Object.assign({}, defaultPushHeaders, options)
+            );
+            pushstream.on("error", err => defaultErr);
+
+            // get a read stream for the file location
+            const filestream = fs.createReadStream(target_file);
+            filestream.on("error", err => defaultErr);
+
+            // create a gzip stream to pipe with
+            const gzip = zlib.createGzip();
+            gzip.on("error", err => defaultErr);
+
+            // pipe the filestream through gzip into the pushstream
+            filestream.pipe(gzip).pipe(pushstream);
+
+            // handle the finish event
+            pushstream.on("finish", resolve);
         });
     }
 }
