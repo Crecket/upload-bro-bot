@@ -14,7 +14,7 @@ import RoutesServer from "../../client/RoutesServer.jsx";
 import Main from "../../client/Components/Main.jsx";
 
 // the store
-import Store from "../../Client/Store.jsx";
+import Store from "../../client/Store.jsx";
 
 module.exports = (UploadBro, User, Location) => {
     let modifiedState = Object.assign({},  {
