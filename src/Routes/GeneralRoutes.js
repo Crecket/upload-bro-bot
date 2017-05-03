@@ -1,7 +1,7 @@
 "use strict";
 
 let PreRender = () => {};
-if(process.env.ENABLE_SSR === "true"){
+if (process.env.ENABLE_SSR === "true") {
     // only load babel-register if we have ssr
     require("babel-register");
 
@@ -12,6 +12,11 @@ if(process.env.ENABLE_SSR === "true"){
 const Logger = require("../Helpers/Logger");
 // const SpdyPush = require("../SpdyPush");
 
+/**
+ * @param uploadApp
+ * @param req
+ * @returns {Promise.<boolean>}
+ */
 const doPrerender = (uploadApp, req) => {
     if (process.env.ENABLE_SSR !== "true") {
         // just instantly resolve false
@@ -25,6 +30,8 @@ const doPrerender = (uploadApp, req) => {
         );
         // catch errors for this
         PreRenderResults.catch(Logger.error);
+
+        return PreRenderResults;
     }
 };
 
@@ -39,26 +46,24 @@ module.exports = (app, passport, uploadApp) => {
         // polyfill pushhandler result since its buggy for now
         const PushHandlerResult = Promise.resolve();
 
-        // // create new push handler
+        // create new push handler
         // const PushHandler = new SpdyPush(req, res);
         // // start sendFiles event for files which are always requested for this route
         // const PushHandlerResult = PushHandler.sendFiles([
         //     {
         //         target_url: "/assets/dist/app.js",
         //         target_file: `${__dirname}/../../public/assets/dist/app.js`
-        //     },
-        //     {
+        //     }, {
         //         target_url: "/assets/dist/commons.js",
         //         target_file: `${__dirname}/../../public/assets/dist/commons.js`
-        //     },
-        //     {
+        //     }, {
         //         target_url: "/assets/dist/sw-register.js",
         //         target_file: `${__dirname}/../../public/assets/dist/sw-register.js`
         //     }
         // ]);
-        //
-        // // catch errors for this
-        // PushHandlerResult.catch(Logger.error);
+
+        // catch errors for this
+        PushHandlerResult.catch(Logger.error);
 
         Promise.all([PreRenderResults, PushHandlerResult])
             // we only bother with the html results
