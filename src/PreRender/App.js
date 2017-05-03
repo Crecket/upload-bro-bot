@@ -17,6 +17,10 @@ import Main from "../../client/Components/Main.jsx";
 import Store from "../../client/Store.jsx";
 
 module.exports = (UploadBro, User, Location) => {
+    console.log("======");
+    console.log(Location);
+    console.log(Object.keys(UploadBro));
+    console.log(Object.keys(UploadBro._SiteHandler));
     let modifiedState = Object.assign({},  {
         sites: Object.assign({},  {
             sites: UploadBro._SiteHandler.siteList,

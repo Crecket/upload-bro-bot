@@ -36,8 +36,6 @@ import { openModal, closeModal } from "../Actions/modal.js";
 import { openSnackbar, closeSnackbar } from "../Actions/snackbar.js";
 import { siteUpdate, siteLoadLocalstorage } from "../Actions/sites.js";
 
-// connect to redux
-
 class Main extends React.Component {
     constructor(props, context) {
         super(props, context);

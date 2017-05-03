@@ -81,7 +81,6 @@ module.exports = class UploadBro {
                 "!downloads",
                 "!downloads/.gitkeep"
             ]);
-            Logger.debug(["Cleared downloads folder:\n", paths.join("\n")]);
 
             // finished loading everything
             Logger.debug(

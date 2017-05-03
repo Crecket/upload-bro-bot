@@ -40,6 +40,7 @@ export default class RoutesClient extends React.Component {
                             <PublicRoute
                                 exact
                                 path="/"
+                                user_info={this.props.user_info}
                                 render={props => (
                                     <Home
                                         {...props}

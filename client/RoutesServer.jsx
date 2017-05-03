@@ -39,7 +39,10 @@ export default class RoutesServer extends React.Component {
                                 exact
                                 path="/"
                                 render={props => {
-                                    return <Home {...props}/>;
+                                    return <Home
+                                        {...props}
+                                        {...this.props.childProps}
+                                    />;
                                 }}
                             />
                             <Route path="/theme" component={Loader} />
