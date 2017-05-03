@@ -7,7 +7,7 @@ import {getMuiTheme, muiThemeable} from "material-ui/styles";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 // the theme we want to include in our context
-import LightBlue from "../Themes/LightBlue.jsx";
+import LightBlue from "../../Themes/LightBlue.jsx";
 
 // navigator fallback for server-side rendering
 const navigatorHelper =

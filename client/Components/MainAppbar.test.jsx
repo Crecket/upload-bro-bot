@@ -1,7 +1,7 @@
 "use strict";
 
 import React from "react";
-import { Shallow, Mount, Renderer } from "../TestHelpers/WithContext";
+import { Shallow, Mount, Renderer } from "../Helpers/Test/WithContext";
 
 // selector components
 // import MainAppbarPopover from "./Sub/MainAppbarPopover";
@@ -12,7 +12,7 @@ injectTapEventPlugin();
 
 import MainAppbar from "./MainAppbar.jsx";
 
-const userInfoList = require("../TestHelpers/Data/api-get_user.json");
+const userInfoList = require("../Helpers/Test/Data/api-get_user.json");
 
 describe("<MainAppbar />", () => {
     it("matches snapshot with verified user", () => {

@@ -2,11 +2,11 @@
 
 import React from "react";
 
-import { Renderer } from "../../TestHelpers/WithContext";
+import { Shallow, Renderer } from "../../Helpers/Test/WithContext";
 import ProviderBlocks from "./ProviderBlocks.jsx";
 
-const siteTestList = require("../../TestHelpers/Data/api-get_providers.json");
-const userInfoList = require("../../TestHelpers/Data/api-get_user.json");
+const siteTestList = require("../../Helpers/Test/Data/api-get_providers.json");
+const userInfoList = require("../../Helpers/Test/Data/api-get_user.json");
 
 describe("<ProviderBlocks />", () => {
     it("matches snapshot", () => {

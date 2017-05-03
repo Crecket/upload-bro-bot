@@ -1,6 +1,5 @@
-"use strict";
 import React from "react";
-import { Shallow, Renderer } from "../../TestHelpers/WithContext";
+import { Shallow, Mount, Renderer } from "../../Helpers/Test/WithContext";
 import PaperHelper from "./PaperHelper.jsx";
 
 describe("<PaperHelper />", () => {

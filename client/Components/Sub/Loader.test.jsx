@@ -1,5 +1,5 @@
 import React from "react";
-import { Renderer } from "../../TestHelpers/WithContext";
+import { Shallow, Renderer } from "../../Helpers/Test/WithContext";
 
 
 import LoadingScreen from "./Loader.jsx";
@@ -12,7 +12,6 @@ describe("<LoadingScreen />", () => {
 
     it("throws an error for giving invalid loading tpye", () => {
         expect(() => {
-            "use strict";
             const tree = Renderer(
                 <LoadingScreen loadingType="invalid-type-123" />
             );

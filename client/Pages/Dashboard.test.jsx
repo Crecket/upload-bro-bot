@@ -1,12 +1,12 @@
 "use strict";
 
 import React from "react";
-import { Renderer } from "../TestHelpers/WithContext";
+import { Renderer } from "../Helpers/Test/WithContext";
 
 import Dashboard from "./Dashboard.jsx";
 
-const userInfoList = require("../TestHelpers/Data/api-get_user.json");
-const siteInfoList = require("../TestHelpers/Data/api-get_providers.json");
+const userInfoList = require("../Helpers/Test/Data/api-get_user.json");
+const siteInfoList = require("../Helpers/Test/Data/api-get_providers.json");
 
 describe("<Dashboard />", () => {
     it("matches snapshot with verified user", () => {

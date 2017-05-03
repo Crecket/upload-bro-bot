@@ -42,9 +42,10 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
 
     // generate a list of all the server-side views
     const ServerViews = glob.sync("src/Resources/Views/**/*.twig");
+    const PageComponents = glob.sync("src/Resources/Views/**/*.twig");
 
     // a list of client-side dependencies whic hare always required
-    const GeneralClientDependencies = [
+    const GlobalClientComponents = [
         CLIENT_DIR + "/Components/Sub/Loader.jsx",
         CLIENT_DIR + "/Components/Sub/TitleBar.jsx",
         CLIENT_DIR + "/Components/Sub/NavLink.jsx",
@@ -53,8 +54,12 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
         CLIENT_DIR + "/Store.jsx"
     ];
 
-    // these should be used for all dynamic lists
-    const dynamicDependencies = ServerViews.concat(GeneralClientDependencies);
+    // combine these views since these are always required
+    const globalList = [
+        ...PageComponents,
+        ...ServerViews,
+        ...GlobalClientComponents
+    ];
 
     // write the precache file
     swPrecache.write(
@@ -63,12 +68,11 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
             staticFileGlobs: staticFiles,
             stripPrefix: PUBLIC_DIR,
             dynamicUrlToDependencies: {
-                "/": dynamicDependencies.concat([
-                    CLIENT_DIR + "/Pages/Home.jsx"
-                ]),
-                "/dashboard": dynamicDependencies.concat([
+                "/": [...globalList, CLIENT_DIR + "/Pages/Home.jsx"],
+                "/dashboard": [
+                    ...globalList,
                     CLIENT_DIR + "/Pages/Dashboard.jsx"
-                ])
+                ]
             },
             navigateFallback: "/",
             navigateFallbackWhitelist: [/\/remove\/.+/, /\/new\/.+/],
