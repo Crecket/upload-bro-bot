@@ -10,7 +10,6 @@ const CLIENT_DIR = "client";
 const SWHelper = (customFilesList = false, DEBUG = true) => {
     // default static files
     let staticFiles = [
-        "https://fonts.googleapis.com/css?family=Roboto:300,400,500",
         // general important files
         "/robots.txt",
         "/manifest.json",
@@ -72,25 +71,35 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
                 ])
             },
             navigateFallback: "/",
-            navigateFallbackWhitelist: [
-                /\/remove\/.+/,
-                /\/new\/.+/
-            ],
+            navigateFallbackWhitelist: [/\/remove\/.+/, /\/new\/.+/],
             runtimeCaching: [
                 {
-                    urlPattern: /\/login\/telegram.+/,
-                    handler: "networkFirst"
-                },
-                {
+                    // dont cache api requests
                     urlPattern: /\/api/,
                     handler: "networkOnly"
                 },
                 {
-                    urlPattern: /[.]?(js|css|json|html|map)/,
+                    //
+                    urlPattern: /https:\/\/www\.google-analytics\.com.*/,
+                    handler: "networkOnly"
+                },
+                {
+                    // try network first but fallback to showing the cached page when offline
+                    urlPattern: /\/login\/telegram.+/,
                     handler: "networkFirst"
                 },
                 {
-                    urlPattern: /[.]?(png|jpg|svg|gif|jpeg|woff|woff2|ttf|eot)/,
+                    // for debug purposes we want to load maps from network first when we can
+                    urlPattern: /[.]?(map)/,
+                    handler: "networkFirst"
+                },
+                {
+                    urlPattern: /[.]?(html|js|css|json|png|jpg|svg|gif|jpeg|woff|woff2|ttf|eot)/,
+                    handler: "cacheFirst"
+                },
+                {
+                    // fonts don't update and we don't want it delaying our app
+                    urlPattern: /https:\/\/fonts\.googleapis\.com\/.*/,
                     handler: "cacheFirst"
                 }
             ]
