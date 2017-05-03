@@ -8,14 +8,43 @@ import PrivateRoute from "./Components/Sub/PrivateRoute";
 import PublicRoute from "./Components/Sub/PublicRoute";
 
 // load the pages
-// const Home = Cl(() => import("./Pages/Home"), true);
-import Home from './Pages/Home';
-const Dashboard = Cl(() => import("./Pages/Dashboard"), true);
-const ProviderRemove = Cl(() => import("./Pages/ProviderRemove"), true);
-const ThemeTest = Cl(() => import("./Pages/ThemeTest"), true);
-const ProviderLogin = Cl(() => import("./Pages/ProviderLogin"), true);
-const DropboxLoginCb = Cl(() => import("./Pages/DropboxLoginCallback"), true);
-const NotFound = Cl(() => import("./Pages/NotFound"));
+// const Home = Cl(() => import(/* webpackChunkName: "page" */ "./Pages/Home"), true);
+import Home from "./Pages/Home";
+const Dashboard = Cl(
+    () => import(/* webpackChunkName: "page" */ "./Pages/Dashboard"),
+    true
+);
+const ProviderRemove = Cl(
+    () =>
+        import(
+            /* webpackChunkName: "providerremove" */ "./Pages/ProviderRemove"
+        ),
+    true
+);
+const ThemeTest = Cl(
+    () =>
+        import(
+            /* webpackChunkName: "themetest" */ "./Pages/ThemeTest"
+        ),
+    true
+);
+const ProviderLogin = Cl(
+    () =>
+        import(
+            /* webpackChunkName: "providerlogin" */ "./Pages/ProviderLogin"
+        ),
+    true
+);
+const DropboxLoginCb = Cl(
+    () =>
+        import(
+            /* webpackChunkName: "dropboxlogin" */ "./Pages/DropboxLoginCallback"
+        ),
+    true
+);
+const NotFound = Cl(() =>
+    import(/* webpackChunkName: "notfound" */ "./Pages/NotFound")
+);
 
 // https://reacttraining.com/react-router/web/api/Route/render-func for transitions
 
@@ -103,6 +132,9 @@ export default class RoutesClient extends React.Component {
                                     />
                                 )}
                             />
+
+                            {/* a empty path we use for fallback routes in the service worker*/}
+                            <Route path="/shell" render={props => null} />
 
                             <Route
                                 render={props => (

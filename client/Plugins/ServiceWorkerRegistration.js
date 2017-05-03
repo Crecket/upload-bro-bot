@@ -1,27 +1,39 @@
 const Logger = require("./../Helpers/Logger");
-const Notification = require("./../Helpers/Notification");
+
+// polyfill the trigger update
+window.triggerUpdate = () => false;
 
 // check if service workers are supported
 if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
     // load the service worker
     navigator.serviceWorker
         .register("/sw.js")
-        .then(function(reg) {
-            reg.onupdatefound = function() {
-                var installingWorker = reg.installing;
+        .then(registration => {
+            // manually trigger a service worker update
+            window.triggerUpdate = () => {
+                registration.update();
+                return true;
+            };
+
+            // onupdate event listener
+            registration.onupdatefound = function () {
+                var installingWorker = registration.installing;
                 // on change listener
-                installingWorker.onstatechange = function() {
+                installingWorker.onstatechange = () => {
                     // check the state change type
                     switch (installingWorker.state) {
                         case "installed": {
                             let messageContents = "";
                             // differentiate between a new worker and first install
                             if (navigator.serviceWorker.controller) {
+
+                                navigator.serviceWorker.controller.postMessage("hi");
+
                                 messageContents =
-                                    "Content was updated and is now available offline.";
+                                    "The page has been updated and is now available offline!";
                             } else {
                                 messageContents =
-                                    "Content is now available offline!";
+                                    "The page has been saved and is now available offline!";
                             }
                             // log the contents and create a notifcation
                             Logger.debug(messageContents);
@@ -40,7 +52,7 @@ if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
                 };
             };
         })
-        .catch(function(e) {
+        .catch(e => {
             Logger.error("Error during service worker registration:", e);
         });
 }

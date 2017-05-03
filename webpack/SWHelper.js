@@ -42,24 +42,19 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
 
     // generate a list of all the server-side views
     const ServerViews = glob.sync("src/Resources/Views/**/*.twig");
-    const PageComponents = glob.sync("src/Resources/Views/**/*.twig");
 
     // a list of client-side dependencies whic hare always required
     const GlobalClientComponents = [
-        CLIENT_DIR + "/Components/Sub/Loader.jsx",
-        CLIENT_DIR + "/Components/Sub/TitleBar.jsx",
-        CLIENT_DIR + "/Components/Sub/NavLink.jsx",
-        CLIENT_DIR + "/Components/MainAppbar.jsx",
-        CLIENT_DIR + "/Components/Main.jsx",
-        CLIENT_DIR + "/Store.jsx"
+        `${CLIENT_DIR}/Components/Sub/Loader.jsx`,
+        `${CLIENT_DIR}/Components/Sub/TitleBar.jsx`,
+        `${CLIENT_DIR}/Components/Sub/NavLink.jsx`,
+        `${CLIENT_DIR}/Components/MainAppbar.jsx`,
+        `${CLIENT_DIR}/Components/Main.jsx`,
+        `${CLIENT_DIR}/Store.jsx`
     ];
 
     // combine these views since these are always required
-    const globalList = [
-        ...PageComponents,
-        ...ServerViews,
-        ...GlobalClientComponents
-    ];
+    const globalList = [...ServerViews, ...GlobalClientComponents];
 
     // write the precache file
     swPrecache.write(
@@ -67,15 +62,31 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
         {
             staticFileGlobs: staticFiles,
             stripPrefix: PUBLIC_DIR,
+            // extra scripts we want to import into the service worker
+            importScripts: [
+                `assets/dist/sw-custom.js`
+            ],
+            // dynamic routes and their linked dependencies
             dynamicUrlToDependencies: {
-                "/": [...globalList, CLIENT_DIR + "/Pages/Home.jsx"],
+                "/": [...globalList, `${CLIENT_DIR}/Pages/Home.jsx`],
                 "/dashboard": [
                     ...globalList,
-                    CLIENT_DIR + "/Pages/Dashboard.jsx"
-                ]
+                    `${CLIENT_DIR}/Pages/Dashboard.jsx`
+                ],
+                "/remove/:type": [
+                    ...globalList,
+                    `${CLIENT_DIR}/Pages/ProviderRemove.jsx`
+                ],
+                "/new/:type": [
+                    ...globalList,
+                    `${CLIENT_DIR}/Pages/ProviderLogin.jsx`
+                ],
+                "/shell": globalList
             },
-            navigateFallback: "/",
-            navigateFallbackWhitelist: [/\/remove\/.+/, /\/new\/.+/],
+            // fallback certain routes to the /shell page
+            navigateFallback: "/shell",
+            navigateFallbackWhitelist: ["/some-non-existant-whitelist"],
+            // runtimeCaching which matches patterns and applices the specific handlers
             runtimeCaching: [
                 {
                     // dont cache api requests

@@ -33,12 +33,13 @@ let config = {
         "css-app": SRC_DIR + "/css-app.js",
         // Service worker registration
         "sw-register": SRC_DIR + "/Plugins/ServiceWorkerRegistration.js",
+        "sw-custom": SRC_DIR + "/Plugins/ServiceWorkerCustom.js",
     },
     output: {
         path: BUILD_DIR,
         filename: OUTPUT_DIR + "[name].js",
         publicPath: process.env.WEBSITE_URL + "/",
-        chunkFilename: OUTPUT_DIR + "[chunkhash].bundle.js"
+        chunkFilename: OUTPUT_DIR + "[name].[chunkhash].bundle.js"
     },
     resolve: {
         extensions: [".jsx", ".scss", ".js", ".json", ".css"],
