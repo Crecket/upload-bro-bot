@@ -25,6 +25,7 @@ const styles = {
         right: 0
     },
     block: {
+        display: 'flex',
         marginBottom: 20
     }
 };

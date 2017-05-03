@@ -147,7 +147,7 @@ class Main extends React.Component {
                     }}
                 >
                     <div className={"row center-xs"}>
-                        <div className="col-xs-12 col-md-12 col-lg-10">
+                        <div className="col-md-12 col-lg-10">
                             <div
                                 className="box"
                                 style={{

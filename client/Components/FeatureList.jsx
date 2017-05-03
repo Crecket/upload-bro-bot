@@ -15,10 +15,12 @@ const styles = {
         marginTop: 30
     },
     box: {
-        margin: "auto",
         marginTop: 10,
         padding: 5,
         textAlign: "center"
+    },
+    colwrapper: {
+        display: "flex"
     },
     icon: {
         height: 60,
@@ -34,7 +36,8 @@ class FeatureList extends React.Component {
 
     renderFeature(key, icon, title, description) {
         return (
-            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3" key={key}>
+            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3" key={key}
+                 style={styles.colwrapper}>
                 <PaperHelper className="box" style={styles.box}>
                     <div className="row">
 
