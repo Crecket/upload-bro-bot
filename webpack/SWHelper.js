@@ -79,7 +79,7 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
                     handler: "networkOnly"
                 },
                 {
-                    //
+                    // don't cache google analytics
                     urlPattern: /https:\/\/www\.google-analytics\.com.*/,
                     handler: "networkOnly"
                 },

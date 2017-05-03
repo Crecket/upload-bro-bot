@@ -7,14 +7,17 @@ import Cl from "./Components/Sub/ComponentLoader";
 import PrivateRoute from "./Components/Sub/PrivateRoute";
 import PublicRoute from "./Components/Sub/PublicRoute";
 
-// async load the pages
-const Home = Cl(() => import("./Pages/Home"), true);
+// load the pages
+// const Home = Cl(() => import("./Pages/Home"), true);
+import Home from './Pages/Home';
 const Dashboard = Cl(() => import("./Pages/Dashboard"), true);
 const ProviderRemove = Cl(() => import("./Pages/ProviderRemove"), true);
 const ThemeTest = Cl(() => import("./Pages/ThemeTest"), true);
 const ProviderLogin = Cl(() => import("./Pages/ProviderLogin"), true);
 const DropboxLoginCb = Cl(() => import("./Pages/DropboxLoginCallback"), true);
 const NotFound = Cl(() => import("./Pages/NotFound"));
+
+// https://reacttraining.com/react-router/web/api/Route/render-func for transitions
 
 // router react component
 export default class RoutesClient extends React.Component {
