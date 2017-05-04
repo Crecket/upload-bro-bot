@@ -1,3 +1,4 @@
+const fs = require("fs");
 const del = require("del");
 const glob = require("glob");
 const swPrecache = require("sw-precache");
@@ -56,6 +57,9 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
     // combine these views since these are always required
     const globalList = [...ServerViews, ...GlobalClientComponents];
 
+    // get last modified timestamp for our custom script
+    const swCustomStat = fs.statSync(`${PUBLIC_DIR}/sw-custom.js`);
+
     // write the precache file
     swPrecache.write(
         PUBLIC_DIR + "/sw.js",
@@ -63,9 +67,7 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
             staticFileGlobs: staticFiles,
             stripPrefix: PUBLIC_DIR,
             // extra scripts we want to import into the service worker
-            importScripts: [
-                `assets/dist/sw-custom.js`
-            ],
+            importScripts: [`/sw-custom.js?v=${swCustomStat.mtime.getTime()}`],
             // dynamic routes and their linked dependencies
             dynamicUrlToDependencies: {
                 "/": [...globalList, `${CLIENT_DIR}/Pages/Home.jsx`],
@@ -73,19 +75,11 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
                     ...globalList,
                     `${CLIENT_DIR}/Pages/Dashboard.jsx`
                 ],
-                "/remove/:type": [
-                    ...globalList,
-                    `${CLIENT_DIR}/Pages/ProviderRemove.jsx`
-                ],
-                "/new/:type": [
-                    ...globalList,
-                    `${CLIENT_DIR}/Pages/ProviderLogin.jsx`
-                ],
                 "/shell": globalList
             },
             // fallback certain routes to the /shell page
             navigateFallback: "/shell",
-            navigateFallbackWhitelist: ["/some-non-existant-whitelist"],
+            navigateFallbackWhitelist: [/^\/remove\/:type/, /^\/new\/:type/],
             // runtimeCaching which matches patterns and applices the specific handlers
             runtimeCaching: [
                 {

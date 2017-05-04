@@ -58,6 +58,18 @@ class Main extends React.Component {
 
         // hack to allow service worker registration to access this
         window.showSnackbar = this.openSnackbarHelper;
+
+        if (navigator.serviceWorker.controller) {
+            // window.sendSwMessage(
+            //     {
+            //         type: "REFRESH_CACHE",
+            //         url: `/hi-der`
+            //     },
+            //     message => {
+            //         console.log(message.data);
+            //     }
+            // );
+        }
     }
 
     // =========== Static data =============
@@ -147,7 +159,7 @@ class Main extends React.Component {
                     }}
                 >
                     <div className={"row center-xs"}>
-                        <div className="col-md-12 col-lg-10">
+                        <div className="col-xs-12 col-lg-10">
                             <div
                                 className="box"
                                 style={{

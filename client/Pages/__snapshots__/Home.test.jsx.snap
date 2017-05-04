@@ -175,6 +175,11 @@ exports[`<Home /> matches snapshot 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -188,7 +193,6 @@ exports[`<Home /> matches snapshot 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "margin": "auto",
               "marginTop": 10,
               "muiPrepared": true,
               "padding": 5,
@@ -253,6 +257,11 @@ exports[`<Home /> matches snapshot 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -266,7 +275,6 @@ exports[`<Home /> matches snapshot 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "margin": "auto",
               "marginTop": 10,
               "muiPrepared": true,
               "padding": 5,
@@ -331,6 +339,11 @@ exports[`<Home /> matches snapshot 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -344,7 +357,6 @@ exports[`<Home /> matches snapshot 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "margin": "auto",
               "marginTop": 10,
               "muiPrepared": true,
               "padding": 5,
@@ -409,6 +421,11 @@ exports[`<Home /> matches snapshot 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -422,7 +439,6 @@ exports[`<Home /> matches snapshot 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "margin": "auto",
               "marginTop": 10,
               "muiPrepared": true,
               "padding": 5,
@@ -1012,6 +1028,11 @@ exports[`<Home /> matches snapshot without sites 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -1025,7 +1046,6 @@ exports[`<Home /> matches snapshot without sites 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "margin": "auto",
               "marginTop": 10,
               "muiPrepared": true,
               "padding": 5,
@@ -1090,6 +1110,11 @@ exports[`<Home /> matches snapshot without sites 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -1103,7 +1128,6 @@ exports[`<Home /> matches snapshot without sites 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "margin": "auto",
               "marginTop": 10,
               "muiPrepared": true,
               "padding": 5,
@@ -1168,6 +1192,11 @@ exports[`<Home /> matches snapshot without sites 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -1181,7 +1210,6 @@ exports[`<Home /> matches snapshot without sites 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "margin": "auto",
               "marginTop": 10,
               "muiPrepared": true,
               "padding": 5,
@@ -1246,6 +1274,11 @@ exports[`<Home /> matches snapshot without sites 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -1259,7 +1292,6 @@ exports[`<Home /> matches snapshot without sites 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "margin": "auto",
               "marginTop": 10,
               "muiPrepared": true,
               "padding": 5,
