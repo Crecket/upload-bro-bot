@@ -16,8 +16,7 @@ const styles = {
     },
     box: {
         marginTop: 10,
-        marginLeft: "auto",
-        marginRight: "auto",
+        width: "100%",
         padding: 5,
         textAlign: "center"
     },

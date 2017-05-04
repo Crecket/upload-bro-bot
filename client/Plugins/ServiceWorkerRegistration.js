@@ -1,39 +1,16 @@
 const Logger = require("./../Helpers/Logger");
+import {
+    sendSwMessage,
+    clearSw,
+    refreshSw
+} from "./../Helpers/ServiceWorkerConnect";
 
-/**
- * Sends a message to the service worker
- * @param message
- */
-const sendSwMessage = (message, callback = () => {}) => {
-    if (navigator.serviceWorker.controller) {
-        // create a new message channel for bi-directional communication
-        const messageChannel = new MessageChannel();
-
-        // set callback for onmessage listener
-        messageChannel.port1.onmessage = callback;
-
-        // post the message to the service worker
-        navigator.serviceWorker.controller.postMessage(message, [
-            messageChannel.port2
-        ]);
-    }
-};
-
-window.sendSwMessage = sendSwMessage;
-window.clearSw = () => {
-    sendSwMessage({ type: "CLEAR_ALL" }, message =>
-        console.debug(message.data)
-    );
-};
-window.clearSw = path => {
-    sendSwMessage(
-        {
-            type: "REFRESH_CACHE",
-            url: path
-        },
-        message => console.debug(message.data)
-    );
-};
+// expose the functions to the window in DEBUG mode
+if (process.env.DEBUG) {
+    window.sendSwMessage = sendSwMessage;
+    window.clearSw = clearSw;
+    window.refreshSw = refreshSw;
+}
 
 // check if service workers are supported
 if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
@@ -41,6 +18,11 @@ if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
     navigator.serviceWorker
         .register("/sw.js")
         .then(registration => {
+            // expose the service worker registration to window in DEBUG mode
+            if (process.env.DEBUG) {
+                window.swRegistration = registration;
+            }
+
             // onupdate event listener
             registration.onupdatefound = function() {
                 var installingWorker = registration.installing;
