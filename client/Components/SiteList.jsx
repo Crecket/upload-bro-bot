@@ -10,9 +10,8 @@ const styles = {
         marginTop: 30
     },
     box: {
-        margin: "auto",
+        width: "100%",
         marginTop: 10,
-        minHeight: 145,
         padding: 5,
         textAlign: "center"
     },

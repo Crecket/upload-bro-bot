@@ -70,7 +70,13 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
             importScripts: [`/sw-custom.js?v=${swCustomStat.mtime.getTime()}`],
             // dynamic routes and their linked dependencies
             dynamicUrlToDependencies: {
-                "/": [...globalList, `${CLIENT_DIR}/Pages/Home.jsx`],
+                "/": [
+                    ...globalList,
+                    `${CLIENT_DIR}/Pages/Home.jsx`,
+                    `${CLIENT_DIR}/Components/YoutubePreview.jsx`,
+                    `${CLIENT_DIR}/Components/FeatureList.jsx`,
+                    `${CLIENT_DIR}/Components/SiteList.jsx`
+                ],
                 "/dashboard": [
                     ...globalList,
                     `${CLIENT_DIR}/Pages/Dashboard.jsx`
