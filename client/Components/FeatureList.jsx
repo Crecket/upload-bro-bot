@@ -1,11 +1,11 @@
 import React from "react";
+import Paper from "material-ui/Paper";
 import muiThemeable from "material-ui/styles/muiThemeable";
 import CloudUploadIcon from "material-ui/svg-icons/file/cloud-upload";
 import SearchIcon from "material-ui/svg-icons/action/search";
 import GroupIcon from "material-ui/svg-icons/social/group";
 import DesktopWindowsIcon from "material-ui/svg-icons/hardware/desktop-windows";
 
-import PaperHelper from "./Sub/PaperHelper";
 import TitleBar from "./Sub/TitleBar";
 import Center from "./Sub/Center";
 
@@ -38,7 +38,7 @@ class FeatureList extends React.Component {
         return (
             <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3" key={key}
                  style={styles.colwrapper}>
-                <PaperHelper className="box" style={styles.box}>
+                <Paper className="box" style={styles.box}>
                     <div className="row">
 
                         <div className="col-xs-12 col-sm-4">
@@ -55,7 +55,7 @@ class FeatureList extends React.Component {
                         </div>
 
                     </div>
-                </PaperHelper>
+                </Paper>
             </div>
         );
     }
@@ -103,11 +103,11 @@ class FeatureList extends React.Component {
             <div style={styles.wrapper}>
                 <div className="row center-xs">
                     <div className="col-xs-12">
-                        <PaperHelper className="box">
+                        <Paper className="box">
                             <TitleBar>
                                 Features
                             </TitleBar>
-                        </PaperHelper>
+                        </Paper>
                     </div>
                     {featureComponents}
                 </div>

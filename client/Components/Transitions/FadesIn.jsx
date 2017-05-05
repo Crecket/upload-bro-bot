@@ -1,21 +1,34 @@
-"use strict";
 import React from "react";
-import {findDOMNode} from "react-dom";
-import {Power2, TweenLite} from "gsap";
+import { findDOMNode } from "react-dom";
+import { Power2, TweenLite } from "gsap";
 
-// returns fade up animation
-function makeFadesIn(Component, options = {duration: 0.5}) {
-    // the actual component
+/**
+ * Returns a FadesIn wrapped component
+ *
+ * @param Component - the component that should be wrapped
+ * @param options   - optional options
+ * @returns {FadesIn}
+ */
+function makeFadesIn(Component, options = { duration: 0.5 }) {
+    /**
+     * The actual wrapper component
+     */
     return class FadesIn extends React.Component {
-        // this component is about to enter
+        /**
+         * Lifecycle function which is called by TransitionGroup once this component is about to enter
+         *
+         * @param callback
+         * @returns {*}
+         */
         componentWillEnter(callback) {
-            // make sure we get the correct node
-            const el = findDOMNode(this.refs.fadesInComponentRef);
+            // get the current dom node
+            const el = findDOMNode(this);
+            // fallback to instant transition
             if (!el) return callback();
 
             // trigger the animation using gsap
             TweenLite.fromTo(
-                this.refs.fadesInComponentRef,
+                el,
                 options.duration,
                 {
                     scaleX: 0.75,
@@ -32,10 +45,16 @@ function makeFadesIn(Component, options = {duration: 0.5}) {
             );
         }
 
-        // this component is about to leave, just hide it for now
+        /**
+         * Lifecycle function which is called by TransitionGroup once this component is about to leave
+         *
+         * @param callback
+         * @returns {*}
+         */
         componentWillLeave(callback) {
-            // make sure we get the correct dom node
-            const el = findDOMNode(this.refs.fadesInComponentRef);
+            // get the current dom node
+            const el = findDOMNode(this);
+            // fallback to instant transition
             if (!el) return callback();
 
             // just hide the component
@@ -46,12 +65,17 @@ function makeFadesIn(Component, options = {duration: 0.5}) {
         }
 
         render() {
-            return <Component ref="fadesInComponentRef" {...this.props} />;
+            return <Component {...this.props} />;
         }
     };
 }
 
-// helper function to parse options from fadeup call
+/**
+ * Helper function to parse options from fadeup call
+ *
+ * @param Component
+ * @returns {*}
+ */
 function fadesIn(Component) {
     return typeof arguments[0] === "function"
         ? makeFadesIn(arguments[0])

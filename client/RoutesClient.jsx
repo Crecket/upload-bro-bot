@@ -1,13 +1,17 @@
 import React from "react";
-import {Route, Switch} from "react-router-dom";
-import {CSSTransitionGroup} from "react-transition-group";
+import { Route, Switch } from "react-router-dom";
+import TransitionGroup from "react-transition-group/TransitionGroup";
+
 import Cl from "./Components/Sub/ComponentLoader";
-// route helpers
+import FadesIn from "./Components/Transitions/FadesIn";
 import PrivateRoute from "./Components/Sub/PrivateRoute";
 import PublicRoute from "./Components/Sub/PublicRoute";
+const FadesInSwitch = FadesIn(Switch);
+
 // load the pages
-// const Home = Cl(() => import(/* webpackChunkName: "page" */ "./Pages/Home"), true);
 import Home from "./Pages/Home";
+
+// const Home = Cl(() => import(/* webpackChunkName: "page" */ "./Pages/Home"), true);
 const Dashboard = Cl(
     () => import(/* webpackChunkName: "dashboard" */ "./Pages/Dashboard"),
     true
@@ -16,35 +20,28 @@ const ProviderRemove = Cl(
     () =>
         import(
             /* webpackChunkName: "providerremove" */ "./Pages/ProviderRemove"
-            ),
+        ),
     true
 );
 const ThemeTest = Cl(
-    () =>
-        import(
-            /* webpackChunkName: "themetest" */ "./Pages/ThemeTest"
-            ),
+    () => import(/* webpackChunkName: "themetest" */ "./Pages/ThemeTest"),
     true
 );
 const ProviderLogin = Cl(
     () =>
-        import(
-            /* webpackChunkName: "providerlogin" */ "./Pages/ProviderLogin"
-            ),
+        import(/* webpackChunkName: "providerlogin" */ "./Pages/ProviderLogin"),
     true
 );
 const DropboxLoginCb = Cl(
     () =>
         import(
             /* webpackChunkName: "dropboxlogin" */ "./Pages/DropboxLoginCallback"
-            ),
+        ),
     true
 );
 const NotFound = Cl(() =>
     import(/* webpackChunkName: "notfound" */ "./Pages/NotFound")
 );
-
-// https://reacttraining.com/react-router/web/api/Route/render-func for transitions
 
 // router react component
 export default class RoutesClient extends React.Component {
@@ -56,15 +53,12 @@ export default class RoutesClient extends React.Component {
     render() {
         return (
             <Route
-                render={({location}) => (
-                    <CSSTransitionGroup
-                        transitionName="fade"
-                        transitionAppear={true}
-                        transitionAppearTimeout={300}
-                        transitionLeave={false}
-                        transitionEnterTimeout={300}
-                    >
-                        <Switch key={location.key} location={location}>
+                render={wrapperProps => (
+                    <TransitionGroup>
+                        <FadesInSwitch
+                            key={wrapperProps.location.key}
+                            location={wrapperProps.location}
+                        >
                             <PublicRoute
                                 exact
                                 path="/"
@@ -133,7 +127,7 @@ export default class RoutesClient extends React.Component {
                             />
 
                             {/* a empty path we use for fallback routes in the service worker*/}
-                            <Route path="/shell" render={props => null}/>
+                            <Route path="/shell" render={props => null} />
 
                             <Route
                                 render={props => (
@@ -143,8 +137,8 @@ export default class RoutesClient extends React.Component {
                                     />
                                 )}
                             />
-                        </Switch>
-                    </CSSTransitionGroup>
+                        </FadesInSwitch>
+                    </TransitionGroup>
                 )}
             />
         );

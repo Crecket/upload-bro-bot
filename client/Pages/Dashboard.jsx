@@ -1,10 +1,10 @@
 import React from "react";
 import Helmet from "react-helmet";
 import RaisedButton from "material-ui/RaisedButton";
+import Paper from "material-ui/Paper";
 // import Markdown from 'react-markdown';
 // custom components
 import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
-import PaperHelper from "../Components/Sub/PaperHelper";
 
 const styles = {
     loggedIn: {
@@ -26,7 +26,7 @@ export default class Dashboard extends React.Component {
                 <Helmet>
                     <title>{`UploadBroBot - Dashboard`}</title>
                 </Helmet>
-                <PaperHelper style={styles.loggedIn}>
+                <Paper style={styles.loggedIn}>
                     You're logged in as:<br />
                     {this.props.user_info.first_name}
                     {" "}
@@ -61,7 +61,7 @@ export default class Dashboard extends React.Component {
                     {/*</div>*/}
 
                     {/*<LoadingScreen/>*/}
-                </PaperHelper>
+                </Paper>
             </div>
         );
     }

@@ -1,9 +1,9 @@
 import React from "react";
 import Helmet from "react-helmet";
 import RaisedButton from "material-ui/RaisedButton";
+import Paper from "material-ui/Paper";
 // custom components
 import ManualPost from "../Helpers/ManualPost";
-import PaperHelper from "../Components/Sub/PaperHelper";
 // make sync
 import FeatureList from "../Components/FeatureList.jsx";
 import YoutubePreview from "../Components/YoutubePreview.jsx";
@@ -37,7 +37,7 @@ export default class Home extends React.Component {
                 <Helmet>
                     <title>{`UploadBroBot - Home`}</title>
                 </Helmet>
-                <PaperHelper
+                <Paper
                     style={Object.assign(styles.notLoggedIn, styles.centerBox)}
                 >
                     <RaisedButton
@@ -45,7 +45,7 @@ export default class Home extends React.Component {
                         primary={true}
                         label="Login with Telegram"
                     />
-                </PaperHelper>
+                </Paper>
 
                 <FeatureList />
                 <SiteList sites={this.props.sites}/>

@@ -2,7 +2,7 @@ import React from "react";
 import YouTube from "react-youtube";
 import PlayArrow from "material-ui/svg-icons/av/play-arrow";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import PaperHelper from "./Sub/PaperHelper";
+import Paper from "material-ui/Paper";
 import TitleBar from "./Sub/TitleBar";
 
 const styles = {
@@ -61,12 +61,12 @@ export default class YoutubePreview extends React.Component {
 
         return (
             <div style={styles.wrapper}>
-                <PaperHelper>
+                <Paper>
                     <TitleBar>
                         File upload preview
                     </TitleBar>
                     {VideoPreview}
-                </PaperHelper>
+                </Paper>
             </div>
         );
     }

@@ -1,7 +1,6 @@
 import React from "react";
 import muiThemeable from "material-ui/styles/muiThemeable";
-
-import PaperHelper from "./Sub/PaperHelper";
+import Paper from "material-ui/Paper";
 import TitleBar from "./Sub/TitleBar";
 
 const styles = {
@@ -40,7 +39,7 @@ class SiteList extends React.Component {
                 style={styles.boxWrapper}
                 key={key}
             >
-                <PaperHelper className="box" style={styles.box}>
+                <Paper className="box" style={styles.box}>
                     <div className="row" style={styles.contentRow}>
                         <img style={styles.logo} src={site.logos["svg"]} />
                         <div className="col-xs-12 col-sm-8">
@@ -50,7 +49,7 @@ class SiteList extends React.Component {
                             </div>
                         </div>
                     </div>
-                </PaperHelper>
+                </Paper>
             </div>
         );
     }
@@ -64,11 +63,11 @@ class SiteList extends React.Component {
             <div style={styles.wrapper}>
                 <div className="row center-xs">
                     <div className="col-xs-12">
-                        <PaperHelper className="box">
+                        <Paper className="box">
                             <TitleBar>
                                 Supported Services
                             </TitleBar>
-                        </PaperHelper>
+                        </Paper>
                     </div>
                     {siteComponents}
                 </div>
