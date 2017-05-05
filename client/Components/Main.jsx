@@ -1,10 +1,11 @@
 import React from "react";
 import store from "store";
-import {connect} from "react-redux";
-import {withRouter} from "react-router";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import Dialog from "material-ui/Dialog";
 import Snackbar from "material-ui/Snackbar";
 import FlatButton from "material-ui/FlatButton";
+import Perf from "react-addons-perf";
 // custom components
 import MainAppbar from "./MainAppbar";
 // Themes
@@ -12,10 +13,14 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import LightBlue from "../Themes/LightBlue";
 // redux actions
-import {userLoadLocalstorage, userLogout, userUpdate} from "../Actions/user.js";
-import {closeModal, openModal} from "../Actions/modal.js";
-import {closeSnackbar, openSnackbar} from "../Actions/snackbar.js";
-import {siteLoadLocalstorage, siteUpdate} from "../Actions/sites.js";
+import {
+    userLoadLocalstorage,
+    userLogout,
+    userUpdate
+} from "../Actions/user.js";
+import { closeModal, openModal } from "../Actions/modal.js";
+import { closeSnackbar, openSnackbar } from "../Actions/snackbar.js";
+import { siteLoadLocalstorage, siteUpdate } from "../Actions/sites.js";
 // import Dark from "../Themes/Dark";
 
 // navigator fallback for server-side rendering
@@ -23,7 +28,8 @@ const navigatorHelper = typeof navigator !== "undefined" && navigator.userAgent
     ? navigator.userAgent
     : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
 const ThemesList = {
-    LightBlue: getMuiTheme(LightBlue, {userAgent: navigatorHelper}),
+    LightBlue: getMuiTheme(LightBlue, { userAgent: navigatorHelper })
+
     // Dark: getMuiTheme(Dark, { userAgent: navigatorHelper }),
 };
 const ThemeListNames = Object.keys(ThemesList);
@@ -50,18 +56,6 @@ class Main extends React.Component {
 
         // hack to allow service worker registration to access this
         window.showSnackbar = this.openSnackbarHelper;
-
-        if (navigator.serviceWorker.controller) {
-            // window.sendSwMessage(
-            //     {
-            //         type: "REFRESH_CACHE",
-            //         url: `/hi-der`
-            //     },
-            //     message => {
-            //         console.log(message.data);
-            //     }
-            // );
-        }
     }
 
     // =========== Static data =============
@@ -82,7 +76,7 @@ class Main extends React.Component {
         }
 
         // set the theme and store it
-        this.setState({muiTheme: finalTheme}, () => {
+        this.setState({ muiTheme: finalTheme }, () => {
             store.set("theme", finalTheme);
         });
     };
@@ -99,7 +93,6 @@ class Main extends React.Component {
     openSnackbarHelper = (message, duration = 4000) => {
         this.props.dispatch(openSnackbar(message, duration));
     };
-
     closeSnackbarHelper = () => {
         this.props.dispatch(closeSnackbar());
     };
@@ -194,7 +187,8 @@ class Main extends React.Component {
 
                                 <RouteComponent
                                     user_info={this.props.user_info}
-                                    childProps={childProps}/>
+                                    childProps={childProps}
+                                />
                             </div>
                         </div>
                     </div>
