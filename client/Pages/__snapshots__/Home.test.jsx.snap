@@ -510,7 +510,7 @@ exports[`<Home /> matches snapshot 1`] = `
   <div
     style={
       Object {
-        "marginTop": 30,
+        "marginTop": 10,
       }
     }
   >
@@ -548,6 +548,11 @@ exports[`<Home /> matches snapshot 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -561,7 +566,7 @@ exports[`<Home /> matches snapshot 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "marginTop": 10,
+              "marginTop": 5,
               "muiPrepared": true,
               "padding": 5,
               "textAlign": "center",
@@ -572,30 +577,22 @@ exports[`<Home /> matches snapshot 1`] = `
         >
           <div
             className="row"
+            style={
+              Object {
+                "alignItems": "center",
+                "height": "100%",
+                "justifyContent": "center",
+              }
+            }
           >
-            <div
-              className="col-xs-12 col-sm-4"
-            >
-              <div
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "display": "flex",
-                    "height": "100%",
-                    "justifyContent": "center",
-                  }
+            <img
+              src="/assets/img/box.svg"
+              style={
+                Object {
+                  "height": 90,
                 }
-              >
-                <img
-                  src="/assets/img/box.svg"
-                  style={
-                    Object {
-                      "height": 90,
-                    }
-                  }
-                />
-              </div>
-            </div>
+              }
+            />
             <div
               className="col-xs-12 col-sm-8"
             >
@@ -613,6 +610,11 @@ exports[`<Home /> matches snapshot 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -626,7 +628,7 @@ exports[`<Home /> matches snapshot 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "marginTop": 10,
+              "marginTop": 5,
               "muiPrepared": true,
               "padding": 5,
               "textAlign": "center",
@@ -637,30 +639,22 @@ exports[`<Home /> matches snapshot 1`] = `
         >
           <div
             className="row"
+            style={
+              Object {
+                "alignItems": "center",
+                "height": "100%",
+                "justifyContent": "center",
+              }
+            }
           >
-            <div
-              className="col-xs-12 col-sm-4"
-            >
-              <div
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "display": "flex",
-                    "height": "100%",
-                    "justifyContent": "center",
-                  }
+            <img
+              src="/assets/img/dropbox.svg"
+              style={
+                Object {
+                  "height": 90,
                 }
-              >
-                <img
-                  src="/assets/img/dropbox.svg"
-                  style={
-                    Object {
-                      "height": 90,
-                    }
-                  }
-                />
-              </div>
-            </div>
+              }
+            />
             <div
               className="col-xs-12 col-sm-8"
             >
@@ -678,6 +672,11 @@ exports[`<Home /> matches snapshot 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -691,7 +690,7 @@ exports[`<Home /> matches snapshot 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "marginTop": 10,
+              "marginTop": 5,
               "muiPrepared": true,
               "padding": 5,
               "textAlign": "center",
@@ -702,30 +701,22 @@ exports[`<Home /> matches snapshot 1`] = `
         >
           <div
             className="row"
+            style={
+              Object {
+                "alignItems": "center",
+                "height": "100%",
+                "justifyContent": "center",
+              }
+            }
           >
-            <div
-              className="col-xs-12 col-sm-4"
-            >
-              <div
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "display": "flex",
-                    "height": "100%",
-                    "justifyContent": "center",
-                  }
+            <img
+              src="/assets/img/google.svg"
+              style={
+                Object {
+                  "height": 90,
                 }
-              >
-                <img
-                  src="/assets/img/google.svg"
-                  style={
-                    Object {
-                      "height": 90,
-                    }
-                  }
-                />
-              </div>
-            </div>
+              }
+            />
             <div
               className="col-xs-12 col-sm-8"
             >
@@ -743,6 +734,11 @@ exports[`<Home /> matches snapshot 1`] = `
       </div>
       <div
         className="col-xs-12 col-sm-6 col-md-4"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
       >
         <div
           className="box"
@@ -756,7 +752,7 @@ exports[`<Home /> matches snapshot 1`] = `
               "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "fontFamily": "Roboto, sans-serif",
-              "marginTop": 10,
+              "marginTop": 5,
               "muiPrepared": true,
               "padding": 5,
               "textAlign": "center",
@@ -767,30 +763,22 @@ exports[`<Home /> matches snapshot 1`] = `
         >
           <div
             className="row"
+            style={
+              Object {
+                "alignItems": "center",
+                "height": "100%",
+                "justifyContent": "center",
+              }
+            }
           >
-            <div
-              className="col-xs-12 col-sm-4"
-            >
-              <div
-                style={
-                  Object {
-                    "alignItems": "center",
-                    "display": "flex",
-                    "height": "100%",
-                    "justifyContent": "center",
-                  }
+            <img
+              src="/assets/img/imgur.svg"
+              style={
+                Object {
+                  "height": 90,
                 }
-              >
-                <img
-                  src="/assets/img/imgur.svg"
-                  style={
-                    Object {
-                      "height": 90,
-                    }
-                  }
-                />
-              </div>
-            </div>
+              }
+            />
             <div
               className="col-xs-12 col-sm-8"
             >
@@ -835,7 +823,7 @@ exports[`<Home /> matches snapshot 1`] = `
         className="row center-xs"
       >
         <h1>
-          Quick preview
+          File upload preview
         </h1>
       </div>
       <div
@@ -845,75 +833,113 @@ exports[`<Home /> matches snapshot 1`] = `
           }
         }
       >
-        <svg
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onTouchTap={[Function]}
+        <div
+          className={undefined}
           style={
             Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "transparent",
+              "borderRadius": "50%",
+              "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
+                     0 3px 10px rgba(0, 0, 0, 0.23)",
+              "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
-              "fill": "currentColor",
-              "height": 24,
-              "minWidth": 40,
+              "fontFamily": "Roboto, sans-serif",
               "muiPrepared": true,
               "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
-              "userSelect": "none",
-              "width": 24,
             }
           }
-          viewBox="0 0 24 24"
         >
-          <path
-            d="M8 5v14l11-7z"
-          />
-        </svg>
-        <svg
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onTouchTap={[Function]}
-          style={
-            Object {
-              "color": "rgba(0, 0, 0, 0.87)",
-              "display": "inline-block",
-              "fill": "currentColor",
-              "height": 24,
-              "minWidth": 40,
-              "muiPrepared": true,
-              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
-              "userSelect": "none",
-              "width": 24,
+          <button
+            disabled={false}
+            href={undefined}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchStart={[Function]}
+            onTouchTap={[Function]}
+            style={
+              Object {
+                "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+                "backgroundColor": "#3f51b5",
+                "border": 10,
+                "borderRadius": "50%",
+                "boxSizing": "border-box",
+                "cursor": "pointer",
+                "display": "inline-block",
+                "fontFamily": "Roboto, sans-serif",
+                "fontSize": "inherit",
+                "fontWeight": "inherit",
+                "height": 56,
+                "margin": 0,
+                "muiPrepared": true,
+                "outline": "none",
+                "overflow": "hidden",
+                "padding": 0,
+                "position": "relative",
+                "textAlign": "center",
+                "textDecoration": "none",
+                "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                "verticalAlign": "bottom",
+                "width": 56,
+                "zIndex": 1,
+              }
             }
-          }
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"
-          />
-        </svg>
-        <svg
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onTouchTap={[Function]}
-          style={
-            Object {
-              "color": "rgba(0, 0, 0, 0.87)",
-              "display": "inline-block",
-              "fill": "currentColor",
-              "height": 24,
-              "minWidth": 40,
-              "muiPrepared": true,
-              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
-              "userSelect": "none",
-              "width": 24,
-            }
-          }
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-          />
-        </svg>
+            tabIndex={0}
+            type="button"
+          >
+            <div
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+            >
+              <div
+                style={
+                  Object {
+                    "muiPrepared": true,
+                    "top": 0,
+                    "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  onTouchTap={[Function]}
+                  style={
+                    Object {
+                      "color": "#ffffff",
+                      "display": "inline-block",
+                      "fill": "#ffffff",
+                      "height": 56,
+                      "lineHeight": "56px",
+                      "minWidth": 40,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 24,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 5v14l11-7z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1430,7 +1456,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
   <div
     style={
       Object {
-        "marginTop": 30,
+        "marginTop": 10,
       }
     }
   >
@@ -1495,7 +1521,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
         className="row center-xs"
       >
         <h1>
-          Quick preview
+          File upload preview
         </h1>
       </div>
       <div
@@ -1505,75 +1531,113 @@ exports[`<Home /> matches snapshot without sites 1`] = `
           }
         }
       >
-        <svg
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onTouchTap={[Function]}
+        <div
+          className={undefined}
           style={
             Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "transparent",
+              "borderRadius": "50%",
+              "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
+                     0 3px 10px rgba(0, 0, 0, 0.23)",
+              "boxSizing": "border-box",
               "color": "rgba(0, 0, 0, 0.87)",
               "display": "inline-block",
-              "fill": "currentColor",
-              "height": 24,
-              "minWidth": 40,
+              "fontFamily": "Roboto, sans-serif",
               "muiPrepared": true,
               "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
-              "userSelect": "none",
-              "width": 24,
             }
           }
-          viewBox="0 0 24 24"
         >
-          <path
-            d="M8 5v14l11-7z"
-          />
-        </svg>
-        <svg
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onTouchTap={[Function]}
-          style={
-            Object {
-              "color": "rgba(0, 0, 0, 0.87)",
-              "display": "inline-block",
-              "fill": "currentColor",
-              "height": 24,
-              "minWidth": 40,
-              "muiPrepared": true,
-              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
-              "userSelect": "none",
-              "width": 24,
+          <button
+            disabled={false}
+            href={undefined}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchStart={[Function]}
+            onTouchTap={[Function]}
+            style={
+              Object {
+                "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+                "backgroundColor": "#3f51b5",
+                "border": 10,
+                "borderRadius": "50%",
+                "boxSizing": "border-box",
+                "cursor": "pointer",
+                "display": "inline-block",
+                "fontFamily": "Roboto, sans-serif",
+                "fontSize": "inherit",
+                "fontWeight": "inherit",
+                "height": 56,
+                "margin": 0,
+                "muiPrepared": true,
+                "outline": "none",
+                "overflow": "hidden",
+                "padding": 0,
+                "position": "relative",
+                "textAlign": "center",
+                "textDecoration": "none",
+                "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                "verticalAlign": "bottom",
+                "width": 56,
+                "zIndex": 1,
+              }
             }
-          }
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"
-          />
-        </svg>
-        <svg
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onTouchTap={[Function]}
-          style={
-            Object {
-              "color": "rgba(0, 0, 0, 0.87)",
-              "display": "inline-block",
-              "fill": "currentColor",
-              "height": 24,
-              "minWidth": 40,
-              "muiPrepared": true,
-              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
-              "userSelect": "none",
-              "width": 24,
-            }
-          }
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
-          />
-        </svg>
+            tabIndex={0}
+            type="button"
+          >
+            <div
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+            >
+              <div
+                style={
+                  Object {
+                    "muiPrepared": true,
+                    "top": 0,
+                    "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  onTouchTap={[Function]}
+                  style={
+                    Object {
+                      "color": "#ffffff",
+                      "display": "inline-block",
+                      "fill": "#ffffff",
+                      "height": 56,
+                      "lineHeight": "56px",
+                      "minWidth": 40,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 24,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 5v14l11-7z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   </div>
