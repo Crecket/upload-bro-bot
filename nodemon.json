@@ -9,11 +9,17 @@
   ],
   "watch": [
     "src/*",
-    "client/Router.jsx",
+    "client/Pages/*",
+    "client/Themes/*",
+    "client/Components/*",
+    "client/Actions/*",
+    "client/Reducers/*",
+    "client/RouterClient.jsx",
+    "client/RouterServer.jsx",
     "client/Store.jsx",
     "app.js"
   ],
-  "ext": "js json twig",
+  "ext": "js jsx json twig",
   "env": {
     "NODE_ENV": "development"
   }

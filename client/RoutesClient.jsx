@@ -9,7 +9,7 @@ import PublicRoute from "./Components/Sub/PublicRoute";
 // const Home = Cl(() => import(/* webpackChunkName: "page" */ "./Pages/Home"), true);
 import Home from "./Pages/Home";
 const Dashboard = Cl(
-    () => import(/* webpackChunkName: "page" */ "./Pages/Dashboard"),
+    () => import(/* webpackChunkName: "dashboard" */ "./Pages/Dashboard"),
     true
 );
 const ProviderRemove = Cl(

@@ -1,6 +1,6 @@
 import React from "react";
-import {Provider} from "react-redux";
-import {BrowserRouter} from "react-router-dom";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 // injection, required for materialze tap events
 import injectTapEventPlugin from "react-tap-event-plugin";
 // the client route polyfill which renders the app shell
@@ -21,7 +21,7 @@ export default class App extends React.Component {
         return (
             <Provider store={Store()}>
                 <BrowserRouter>
-                    <Main routesComponent={RoutesClient}/>
+                    <Main routesComponent={RoutesClient} />
                 </BrowserRouter>
             </Provider>
         );

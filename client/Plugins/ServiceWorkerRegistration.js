@@ -1,9 +1,5 @@
 const Logger = require("./../Helpers/Logger");
-import {
-    clearSw,
-    refreshSw,
-    sendSwMessage
-} from "./../Helpers/ServiceWorkerConnect";
+import {clearSw, refreshSw, sendSwMessage} from "./../Helpers/ServiceWorkerConnect";
 
 // expose the functions to the window in DEBUG mode
 if (process.env.DEBUG) {
@@ -24,7 +20,7 @@ if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
             }
 
             // onupdate event listener
-            registration.onupdatefound = function() {
+            registration.onupdatefound = function () {
                 var installingWorker = registration.installing;
                 // on change listener
                 installingWorker.onstatechange = () => {

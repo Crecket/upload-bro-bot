@@ -1,8 +1,7 @@
 import React from "react";
 import YouTube from "react-youtube";
 import PlayArrow from "material-ui/svg-icons/av/play-arrow";
-import PlayArrow1 from "material-ui/svg-icons/av/play-circle-filled";
-import PlayArrow2 from "material-ui/svg-icons/av/play-circle-outline";
+import FloatingActionButton from "material-ui/FloatingActionButton";
 import PaperHelper from "./Sub/PaperHelper";
 import TitleBar from "./Sub/TitleBar";
 
@@ -34,25 +33,31 @@ export default class YoutubePreview extends React.Component {
     }
 
     onPlay = () => {
-        this.setState({visible: true});
+        this.setState({ visible: true });
     };
 
     render() {
-        const videoPreview = this.state.visible
-            ? <div className="fluidMedia">
-                <YouTube videoId="FsN-6xlfoz4" opts={opts}/>
+        // the fadein enabled video wrapper
+        const VideoContainer = (
+            <div className="fluidMedia" key="videopreview">
+                <YouTube videoId="FsN-6xlfoz4" opts={opts} />
             </div>
-            : <div style={styles.playWrapper}>
-                <PlayArrow style={styles.playIcon} onTouchTap={this.onPlay}/>
-                <PlayArrow1
-                    style={styles.playIcon}
-                    onTouchTap={this.onPlay}
-                />
-                <PlayArrow2
-                    style={styles.playIcon}
-                    onTouchTap={this.onPlay}
-                />
-            </div>;
+        );
+
+        // the buttons
+        const PlayButtons = (
+            <div style={styles.playWrapper} key="playbuttons">
+                <FloatingActionButton>
+                    <PlayArrow
+                        style={styles.playIcon}
+                        onTouchTap={this.onPlay}
+                    />
+                </FloatingActionButton>
+            </div>
+        );
+
+        // show buttons or play buttons
+        const VideoPreview = this.state.visible ? VideoContainer : PlayButtons;
 
         return (
             <div style={styles.wrapper}>
@@ -60,7 +65,7 @@ export default class YoutubePreview extends React.Component {
                     <TitleBar>
                         Quick preview
                     </TitleBar>
-                    {videoPreview}
+                    {VideoPreview}
                 </PaperHelper>
             </div>
         );

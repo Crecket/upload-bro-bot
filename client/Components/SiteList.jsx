@@ -3,17 +3,24 @@ import muiThemeable from "material-ui/styles/muiThemeable";
 
 import PaperHelper from "./Sub/PaperHelper";
 import TitleBar from "./Sub/TitleBar";
-import Center from "./Sub/Center";
 
 const styles = {
     wrapper: {
-        marginTop: 30
+        marginTop: 10
+    },
+    contentRow: {
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%"
     },
     box: {
         width: "100%",
-        marginTop: 10,
+        marginTop: 5,
         padding: 5,
         textAlign: "center"
+    },
+    boxWrapper: {
+        display: "flex"
     },
     logo: {
         height: 90
@@ -28,26 +35,20 @@ class SiteList extends React.Component {
 
     renderFeature(key, site) {
         return (
-            <div className="col-xs-12 col-sm-6 col-md-4" key={key}>
+            <div
+                className="col-xs-12 col-sm-6 col-md-4"
+                style={styles.boxWrapper}
+                key={key}
+            >
                 <PaperHelper className="box" style={styles.box}>
-                    <div className="row">
-
-                        <div className="col-xs-12 col-sm-4">
-                            <Center>
-                                <img
-                                    style={styles.logo}
-                                    src={site.logos["svg"]}
-                                />
-                            </Center>
-                        </div>
-
+                    <div className="row" style={styles.contentRow}>
+                        <img style={styles.logo} src={site.logos["svg"]} />
                         <div className="col-xs-12 col-sm-8">
                             <div className="box">
                                 <h3>{site.title}</h3>
                                 {site.slogan}
                             </div>
                         </div>
-
                     </div>
                 </PaperHelper>
             </div>
