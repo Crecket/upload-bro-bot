@@ -55,9 +55,9 @@ module.exports = class SwPrecache {
         afterEmitFiles = [];
 
         // Explore each chunk (build output):
-        compilation.chunks.forEach(function(chunk) {
+        compilation.chunks.forEach(function (chunk) {
             // Explore each module within the chunk (built inputs):
-            chunk.files.forEach(function(file) {
+            chunk.files.forEach(function (file) {
                 // push this file to the list
                 afterEmitFiles.push(PUBLIC_DIR + "/" + file);
             });
