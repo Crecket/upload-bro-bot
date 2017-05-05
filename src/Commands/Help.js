@@ -23,7 +23,8 @@ module.exports = class Help extends HelperInterface {
             .sendMessage(msg.chat.id, message, {
                 parse_mode: "HTML"
             })
-            .then(res => {})
+            .then(res => {
+            })
             .catch(Logger.error);
     }
 

@@ -1,18 +1,17 @@
 "use strict";
 import React from "react";
-import { findDOMNode } from "react-dom";
-import { TweenLite, Power2 } from "gsap";
-import GSAPEnchancer from "react-gsap-enhancer";
+import {findDOMNode} from "react-dom";
+import {Power2, TweenLite} from "gsap";
 
 // returns fade up animation
-function makeFadesIn(Component, options = { duration: 0.5 }) {
+function makeFadesIn(Component, options = {duration: 0.5}) {
     // the actual component
     return class FadesIn extends React.Component {
         // this component is about to enter
         componentWillEnter(callback) {
             // make sure we get the correct node
             const el = findDOMNode(this.refs.fadesInComponentRef);
-            if(!el) return callback();
+            if (!el) return callback();
 
             // trigger the animation using gsap
             TweenLite.fromTo(

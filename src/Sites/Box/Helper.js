@@ -44,7 +44,7 @@ module.exports = class BoxHelper {
         }
 
         // get a valid token set
-        let { validTokens, isNew } = await this.getValidToken(tokens);
+        let {validTokens, isNew} = await this.getValidToken(tokens);
 
         if (isNew) {
             // copy the user and prepare to update
@@ -142,10 +142,8 @@ module.exports = class BoxHelper {
             const sdk = this.getSdkClient();
 
             // attempt to refresh tokens using refresh token
-            sdk.getTokensRefreshGrant(tokens.refreshToken, function(
-                err,
-                tokenInfo
-            ) {
+            sdk.getTokensRefreshGrant(tokens.refreshToken, function (err,
+                                                                     tokenInfo) {
                 if (err) {
                     Logger.error(err);
                     return reject(err);
@@ -173,7 +171,7 @@ module.exports = class BoxHelper {
             // check if access token has expired
             if (tokens.expiry_date - new Date().getTime() >= 0) {
                 // not expired, no new tokens
-                resolve({ validTokens: tokens });
+                resolve({validTokens: tokens});
             } else {
                 // attempt to get  new tokens
                 this.refreshAccessToken(tokens)

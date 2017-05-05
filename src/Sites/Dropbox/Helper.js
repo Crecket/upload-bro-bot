@@ -39,7 +39,7 @@ module.exports = class DropboxHelper {
         var dbx = this.createClient(user_info);
 
         // return the promise
-        return dbx.filesListFolder({ path: path });
+        return dbx.filesListFolder({path: path});
     }
 
     /**

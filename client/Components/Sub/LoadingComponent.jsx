@@ -1,7 +1,7 @@
 import React from "react";
 import Logger from "../../Helpers/Logger";
 
-export default ({ isLoading, pastDelay, error }) => {
+export default ({isLoading, pastDelay, error}) => {
     if (isLoading && pastDelay) {
         return null;
     } else if (error && !isLoading) {

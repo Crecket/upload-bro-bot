@@ -2,11 +2,9 @@ import React from "react";
 import Helmet from "react-helmet";
 import RaisedButton from "material-ui/RaisedButton";
 // import Markdown from 'react-markdown';
-
 // custom components
 import ProviderBlocks from "../Components/ProviderSites/ProviderBlocks";
 import PaperHelper from "../Components/Sub/PaperHelper";
-import Logger from "../Helpers/Logger";
 
 const styles = {
     loggedIn: {
@@ -51,7 +49,7 @@ export default class Dashboard extends React.Component {
                                 icon={
                                     <img
                                         src="/assets/img/telegram.svg"
-                                        style={{ width: 32 }}
+                                        style={{width: 32}}
                                     />
                                 }
                             />

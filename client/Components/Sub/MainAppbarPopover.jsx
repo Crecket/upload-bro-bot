@@ -26,8 +26,8 @@ export default props => {
             open={props.open}
             onRequestChange={props.setMenuState}
             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            targetOrigin={{ horizontal: "right", vertical: "bottom" }}
-            anchorOrigin={{ horizontal: "right", vertical: "top" }}
+            targetOrigin={{horizontal: "right", vertical: "bottom"}}
+            anchorOrigin={{horizontal: "right", vertical: "top"}}
         >
             {props.loggedIn
                 ? <MenuItem

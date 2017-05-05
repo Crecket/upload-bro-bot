@@ -30,7 +30,7 @@ module.exports = (app, passport, uploadApp) => {
     });
 
     // handles the oauth callback
-    app.get("/login/box/callback", function(request, response) {
+    app.get("/login/box/callback", function (request, response) {
         // return response.redirect('/');
         let code = request.query.code;
         let resultRoute = "/new/box";
@@ -53,7 +53,7 @@ module.exports = (app, passport, uploadApp) => {
                         accessTokenTTLMS: responseData.accessTokenTTLMS,
                         acquiredAtMS: responseData.acquiredAtMS,
                         expiry_date: new Date().getTime() +
-                            parseInt(responseData.accessTokenTTLMS / 1000)
+                        parseInt(responseData.accessTokenTTLMS / 1000)
                     };
 
                     // create a client to fetch the user info

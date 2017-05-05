@@ -1,19 +1,21 @@
 import React from "react";
 import store from "store";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
+import {connect} from "react-redux";
+import {withRouter} from "react-router";
 import Dialog from "material-ui/Dialog";
 import Snackbar from "material-ui/Snackbar";
 import FlatButton from "material-ui/FlatButton";
-
 // custom components
 import MainAppbar from "./MainAppbar";
-import Logger from "../Helpers/Logger";
-
 // Themes
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import LightBlue from "../Themes/LightBlue";
+// redux actions
+import {userLoadLocalstorage, userLogout, userUpdate} from "../Actions/user.js";
+import {closeModal, openModal} from "../Actions/modal.js";
+import {closeSnackbar, openSnackbar} from "../Actions/snackbar.js";
+import {siteLoadLocalstorage, siteUpdate} from "../Actions/sites.js";
 // import Dark from "../Themes/Dark";
 
 // navigator fallback for server-side rendering
@@ -21,20 +23,10 @@ const navigatorHelper = typeof navigator !== "undefined" && navigator.userAgent
     ? navigator.userAgent
     : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
 const ThemesList = {
-    LightBlue: getMuiTheme(LightBlue, { userAgent: navigatorHelper }),
+    LightBlue: getMuiTheme(LightBlue, {userAgent: navigatorHelper}),
     // Dark: getMuiTheme(Dark, { userAgent: navigatorHelper }),
 };
 const ThemeListNames = Object.keys(ThemesList);
-
-// redux actions
-import {
-    userUpdate,
-    userLogout,
-    userLoadLocalstorage
-} from "../Actions/user.js";
-import { openModal, closeModal } from "../Actions/modal.js";
-import { openSnackbar, closeSnackbar } from "../Actions/snackbar.js";
-import { siteUpdate, siteLoadLocalstorage } from "../Actions/sites.js";
 
 class Main extends React.Component {
     constructor(props, context) {
@@ -82,7 +74,7 @@ class Main extends React.Component {
             finalTheme = theme;
         } else {
             // no custom value given or value does not exist, just toggle between dark and light
-            if (this.state.muiTheme === "LightBlue" &&  ThemesList["Dark"]) {
+            if (this.state.muiTheme === "LightBlue" && ThemesList["Dark"]) {
                 finalTheme = "Dark";
             } else {
                 finalTheme = "LightBlue";
@@ -90,7 +82,7 @@ class Main extends React.Component {
         }
 
         // set the theme and store it
-        this.setState({ muiTheme: finalTheme }, () => {
+        this.setState({muiTheme: finalTheme}, () => {
             store.set("theme", finalTheme);
         });
     };

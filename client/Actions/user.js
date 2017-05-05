@@ -34,7 +34,7 @@ export function userUpdate() {
 
 export function userLoadLocalstorage() {
     userSetInfo(store.get("user_info") || false);
-    return { type: "USER_LOAD_LOCALSTORAGE" };
+    return {type: "USER_LOAD_LOCALSTORAGE"};
 }
 
 export function userLogout() {
@@ -46,20 +46,20 @@ export function userLogout() {
                 store.remove("user_info");
 
                 // send user logout event
-                dispatch({ type: "USER_LOGOUT" });
+                dispatch({type: "USER_LOGOUT"});
             })
             .catch(Logger.error);
     };
 }
 
 export function userLoading() {
-    return { type: "USER_IS_LOADING" };
+    return {type: "USER_IS_LOADING"};
 }
 
 export function userNotLoading() {
-    return { type: "USER_IS_NOT_LOADING" };
+    return {type: "USER_IS_NOT_LOADING"};
 }
 
 export function userInitialCHeck() {
-    return { type: "USER_INITIAL_CHECK" };
+    return {type: "USER_INITIAL_CHECK"};
 }

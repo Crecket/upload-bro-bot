@@ -1,12 +1,10 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import { CSSTransitionGroup } from "react-transition-group";
+import {Route, Switch} from "react-router-dom";
+import {CSSTransitionGroup} from "react-transition-group";
 import Cl from "./Components/Sub/ComponentLoader";
-
 // route helpers
 import PrivateRoute from "./Components/Sub/PrivateRoute";
 import PublicRoute from "./Components/Sub/PublicRoute";
-
 // load the pages
 // const Home = Cl(() => import(/* webpackChunkName: "page" */ "./Pages/Home"), true);
 import Home from "./Pages/Home";
@@ -18,28 +16,28 @@ const ProviderRemove = Cl(
     () =>
         import(
             /* webpackChunkName: "providerremove" */ "./Pages/ProviderRemove"
-        ),
+            ),
     true
 );
 const ThemeTest = Cl(
     () =>
         import(
             /* webpackChunkName: "themetest" */ "./Pages/ThemeTest"
-        ),
+            ),
     true
 );
 const ProviderLogin = Cl(
     () =>
         import(
             /* webpackChunkName: "providerlogin" */ "./Pages/ProviderLogin"
-        ),
+            ),
     true
 );
 const DropboxLoginCb = Cl(
     () =>
         import(
             /* webpackChunkName: "dropboxlogin" */ "./Pages/DropboxLoginCallback"
-        ),
+            ),
     true
 );
 const NotFound = Cl(() =>
@@ -54,10 +52,11 @@ export default class RoutesClient extends React.Component {
         super(props, context);
         this.state = {};
     }
+
     render() {
         return (
             <Route
-                render={({ location }) => (
+                render={({location}) => (
                     <CSSTransitionGroup
                         transitionName="fade"
                         transitionAppear={true}
@@ -134,7 +133,7 @@ export default class RoutesClient extends React.Component {
                             />
 
                             {/* a empty path we use for fallback routes in the service worker*/}
-                            <Route path="/shell" render={props => null} />
+                            <Route path="/shell" render={props => null}/>
 
                             <Route
                                 render={props => (

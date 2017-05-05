@@ -77,10 +77,10 @@ module.exports = class SearchQuery extends HelperInterface {
                                     url: shareUrl,
                                     input_message_content: {
                                         message_text: "<a href='" +
-                                            shareUrl +
-                                            "'>" +
-                                            file.meta_data.name +
-                                            "</a>",
+                                        shareUrl +
+                                        "'>" +
+                                        file.meta_data.name +
+                                        "</a>",
                                         parse_mode: "HTML"
                                     }
                                 };

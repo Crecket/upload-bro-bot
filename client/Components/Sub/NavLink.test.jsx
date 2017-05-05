@@ -1,11 +1,11 @@
 import React from "react";
-import { Mount, Renderer } from "../../Helpers/Test/WithContext";
+import {Mount, Renderer} from "../../Helpers/Test/WithContext";
 
 import NavLink from "./NavLink.jsx";
 
 describe("<NavLink />", () => {
     it("matches snapshot", () => {
-        const tree = Renderer(<NavLink to="/" />);
+        const tree = Renderer(<NavLink to="/"/>);
         expect(tree).toMatchSnapshot();
     });
 

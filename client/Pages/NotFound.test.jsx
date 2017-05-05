@@ -1,7 +1,7 @@
 "use strict";
 import React from "react";
 
-import { Shallow, Renderer } from "../Helpers/Test/WithContext";
+import {Renderer} from "../Helpers/Test/WithContext";
 import NotFound from "./NotFound.jsx";
 
 describe("<NotFound />", () => {

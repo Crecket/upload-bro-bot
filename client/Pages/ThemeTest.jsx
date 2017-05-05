@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import muiThemeable from "material-ui/styles/muiThemeable";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
-import withWidth, { SMALL } from "material-ui/utils/withWidth";
+import withWidth, {SMALL} from "material-ui/utils/withWidth";
 import typography from "material-ui/styles/typography";
 import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
 import ClearFix from "material-ui/internal/ClearFix";
@@ -13,19 +13,18 @@ import {
     Checkbox,
     DatePicker,
     Dialog,
+    Drawer,
     DropDownMenu,
     FlatButton,
-    FloatingActionButton,
-    Drawer,
     MenuItem,
     Paper,
     RadioButton,
     RadioButtonGroup,
     RaisedButton,
-    Snackbar,
     Slider,
-    Tabs,
+    Snackbar,
     Tab,
+    Tabs,
     TextField,
     TimePicker,
     Toggle
@@ -51,7 +50,7 @@ class ThemesPage extends Component {
     }
 
     getStyles() {
-        const { muiTheme, width } = this.props;
+        const {muiTheme, width} = this.props;
 
         const canvasColor = muiTheme.baseTheme.palette.canvasColor;
         const borderColor = muiTheme.baseTheme.palette.borderColor;
@@ -132,13 +131,13 @@ class ThemesPage extends Component {
                         <DevicesIcon />
                     </div>
                     <div style={styles.containerCentered}>
-                        <RaisedButton label="Secondary" secondary={true} />
+                        <RaisedButton label="Secondary" secondary={true}/>
                     </div>
                     <div style={styles.containerCentered}>
-                        <RaisedButton label="Primary" primary={true} />
+                        <RaisedButton label="Primary" primary={true}/>
                     </div>
                     <div style={styles.containerCentered}>
-                        <RaisedButton label="Default" />
+                        <RaisedButton label="Default"/>
                     </div>
                 </div>
                 <div style={styles.group}>
@@ -160,8 +159,8 @@ class ThemesPage extends Component {
                             name="shipSpeed"
                             defaultSelected="usd"
                         >
-                            <RadioButton value="usd" label="USD" />
-                            <RadioButton value="euro" label="Euro" />
+                            <RadioButton value="usd" label="USD"/>
+                            <RadioButton value="euro" label="Euro"/>
                             <RadioButton
                                 value="mxn"
                                 label="MXN"
@@ -170,7 +169,7 @@ class ThemesPage extends Component {
                         </RadioButtonGroup>
                     </div>
                     <div style={styles.container}>
-                        <Toggle name="toggleName1" label="toggle" />
+                        <Toggle name="toggleName1" label="toggle"/>
                         <Toggle
                             name="toggleName2"
                             label="disabled toggle"
@@ -179,7 +178,7 @@ class ThemesPage extends Component {
                         />
                     </div>
                 </div>
-                <div style={Object.assign({}, styles.group, { marginTop: 0 })}>
+                <div style={Object.assign({}, styles.group, {marginTop: 0})}>
                     <div style={styles.container}>
                         <TextField
                             id="field1"
@@ -192,7 +191,7 @@ class ThemesPage extends Component {
                             id="field2"
                             hintText="Landscape Dialog"
                             mode="landscape"
-                            style={{ width: "100%" }}
+                            style={{width: "100%"}}
                         />
                     </div>
                     <div style={styles.container}>
@@ -203,12 +202,12 @@ class ThemesPage extends Component {
                         />
                     </div>
                     <div style={styles.container}>
-                        <DropDownMenu value={3} style={{ width: "100%" }}>
-                            <MenuItem value={1} primaryText={"Never"} />
-                            <MenuItem value={2} primaryText={"Every Night"} />
-                            <MenuItem value={3} primaryText={"Weeknights"} />
-                            <MenuItem value={4} primaryText={"Weekends"} />
-                            <MenuItem value={5} primaryText={"Weekly"} />
+                        <DropDownMenu value={3} style={{width: "100%"}}>
+                            <MenuItem value={1} primaryText={"Never"}/>
+                            <MenuItem value={2} primaryText={"Every Night"}/>
+                            <MenuItem value={3} primaryText={"Weeknights"}/>
+                            <MenuItem value={4} primaryText={"Weekends"}/>
+                            <MenuItem value={5} primaryText={"Weekly"}/>
                         </DropDownMenu>
                     </div>
                 </div>
@@ -307,8 +306,8 @@ class ThemesPage extends Component {
                     value={this.state.valueTabs}
                     onChange={this.handleChangeTabs}
                 >
-                    <Tab label="Light Theme (Default)" value="light" />
-                    <Tab label="Dark Theme" value="dark" />
+                    <Tab label="Light Theme (Default)" value="light"/>
+                    <Tab label="Dark Theme" value="dark"/>
                 </Tabs>
                 {this.getComponentGroup()}
             </div>

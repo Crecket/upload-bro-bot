@@ -9,7 +9,7 @@ class NotFound extends React.Component {
 
     render() {
         return (
-            <div style={{ textAlign: "center", marginTop: 40 }}>
+            <div style={{textAlign: "center", marginTop: 40}}>
                 <Helmet>
                     <title>{`UploadBroBot - 404 Not Found`}</title>
                 </Helmet>

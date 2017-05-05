@@ -16,9 +16,9 @@ module.exports = class UserHelper {
             // update provider sites
             usersCollection
                 .updateOne(
-                    { _id: user._id },
+                    {_id: user._id},
                     {
-                        $set: { provider_sites: user.provider_sites }
+                        $set: {provider_sites: user.provider_sites}
                     }
                 )
                 .then(resolve)
@@ -38,7 +38,7 @@ module.exports = class UserHelper {
 
             // update provider sites
             usersCollection
-                .findOne({ _id: user_id })
+                .findOne({_id: user_id})
                 .then(resolve)
                 .catch(reject);
         });

@@ -1,8 +1,8 @@
 const Logger = require("./../Helpers/Logger");
 import {
-    sendSwMessage,
     clearSw,
-    refreshSw
+    refreshSw,
+    sendSwMessage
 } from "./../Helpers/ServiceWorkerConnect";
 
 // expose the functions to the window in DEBUG mode

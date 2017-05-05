@@ -1,12 +1,9 @@
 import React from "react";
 import Helmet from "react-helmet";
 import RaisedButton from "material-ui/RaisedButton";
-
 // custom components
 import ManualPost from "../Helpers/ManualPost";
 import PaperHelper from "../Components/Sub/PaperHelper";
-import Logger from "../Helpers/Logger";
-
 // make sync
 import FeatureList from "../Components/FeatureList.jsx";
 import YoutubePreview from "../Components/YoutubePreview.jsx";
@@ -51,7 +48,7 @@ export default class Home extends React.Component {
                 </PaperHelper>
 
                 <FeatureList />
-                <SiteList sites={this.props.sites} />
+                <SiteList sites={this.props.sites}/>
                 <YoutubePreview />
             </div>
         );

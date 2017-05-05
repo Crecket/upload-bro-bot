@@ -1,14 +1,13 @@
 import React from "react";
 import Helmet from "react-helmet";
-import {Redirect} from 'react-router-dom';
+import {Redirect} from "react-router-dom";
 import Paper from "material-ui/Paper";
 import Check from "material-ui/svg-icons/navigation/check";
 import CircularProgress from "material-ui/CircularProgress";
 import Error from "material-ui/svg-icons/alert/error";
-import {red500, green800} from "material-ui/styles/colors";
+import {green800, red500} from "material-ui/styles/colors";
 
 import Utils from "../Helpers/Utils";
-import Logger from "../Helpers/Logger";
 
 const styles = {
     img: {

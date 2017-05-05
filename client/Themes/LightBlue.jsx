@@ -1,16 +1,16 @@
 import {
+    blue300,
+    blue700,
+    darkBlack,
+    fullBlack,
     grey100,
     grey300,
     grey500,
-    white,
-    darkBlack,
-    fullBlack,
-    blue300,
-    blue700,
     indigo500,
-    indigo700
+    indigo700,
+    white
 } from "material-ui/styles/colors";
-import { fade } from "material-ui/utils/colorManipulator";
+import {fade} from "material-ui/utils/colorManipulator";
 import spacing from "material-ui/styles/spacing";
 
 export default {

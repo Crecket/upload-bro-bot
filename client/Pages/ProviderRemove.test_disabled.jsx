@@ -1,13 +1,12 @@
 "use strict";
 
 import React from "react";
-import { StaticRouter } from "react-router-dom";
+import {StaticRouter} from "react-router-dom";
 import renderer from "react-test-renderer";
-import { shallow } from "enzyme";
+import {shallow} from "enzyme";
 import moxios from "moxios";
 
 import Wrapper from "../TestHelpers/Wrapper.jsx";
-import Logger from "../Helpers/Logger";
 import ProviderRemove from "./ProviderRemove.jsx";
 
 // pre-loaded info from json
@@ -18,19 +17,19 @@ const siteBoxInfo = require("../TestHelpers/Data/api-get_provider_box.json");
 
 const defaultTestProps = {
     match: {
-        params: { type: "google" }
+        params: {type: "google"}
     },
     sites: siteInfoList,
     user_info: userInfoList
 };
 
 describe("<ProviderRemove />", () => {
-    beforeEach(function() {
+    beforeEach(function () {
         // import and pass your custom axios instance to this method
         moxios.install();
     });
 
-    afterEach(function() {
+    afterEach(function () {
         // import and pass your custom axios instance to this method
         moxios.uninstall();
     });
@@ -57,7 +56,7 @@ describe("<ProviderRemove />", () => {
             <StaticRouter>
                 <ProviderRemove
                     {...defaultTestProps}
-                    router={{ push: routerPush }}
+                    router={{push: routerPush}}
                 />
             </StaticRouter>
         );
@@ -65,7 +64,7 @@ describe("<ProviderRemove />", () => {
         const ProviderRemoveWrapper = wrapper.find(ProviderRemove);
 
         // trigger on swipe move/end event
-        ProviderRemoveWrapper.simulate('mousemove',{
+        ProviderRemoveWrapper.simulate('mousemove', {
             pageX: 1000
         });
         ProviderRemoveWrapper.simulate('mouseup');
@@ -85,7 +84,7 @@ describe("<ProviderRemove />", () => {
             <StaticRouter>
                 <ProviderRemove
                     {...defaultTestProps}
-                    router={{ push: routerPush }}
+                    router={{push: routerPush}}
                 />
             </StaticRouter>
         );
@@ -93,7 +92,7 @@ describe("<ProviderRemove />", () => {
         const ProviderRemoveWrapper = wrapper.find(ProviderRemove).instance();
 
         // trigger on swipe move/end event
-        ProviderRemoveWrapper.onSwipeMove({ x: -10 });
+        ProviderRemoveWrapper.onSwipeMove({x: -10});
         ProviderRemoveWrapper.onSwipeEnd();
 
         // router push should've bene called
@@ -109,7 +108,7 @@ describe("<ProviderRemove />", () => {
             <StaticRouter>
                 <ProviderRemove
                     {...defaultTestProps}
-                    router={{ push: routerPush }}
+                    router={{push: routerPush}}
                 />
             </StaticRouter>
         );
@@ -117,7 +116,7 @@ describe("<ProviderRemove />", () => {
         const ProviderRemoveWrapper = wrapper.find(ProviderRemove).instance();
 
         // trigger on swipe move/end event
-        ProviderRemoveWrapper.onSwipeMove({ x: 200 });
+        ProviderRemoveWrapper.onSwipeMove({x: 200});
         ProviderRemoveWrapper.onSwipeEnd();
 
         // router push should've been called
@@ -133,7 +132,7 @@ describe("<ProviderRemove />", () => {
             <StaticRouter>
                 <ProviderRemove
                     {...defaultTestProps}
-                    router={{ push: routerPush }}
+                    router={{push: routerPush}}
                 />
             </StaticRouter>
         );
@@ -141,7 +140,7 @@ describe("<ProviderRemove />", () => {
         const ProviderRemoveWrapper = wrapper.find(ProviderRemove).instance();
 
         // trigger on swipe move/end event
-        ProviderRemoveWrapper.onSwipeMove({ x: -200 });
+        ProviderRemoveWrapper.onSwipeMove({x: -200});
         ProviderRemoveWrapper.onSwipeEnd();
 
         // router push should've been called
@@ -158,7 +157,7 @@ describe("<ProviderRemove />", () => {
             <StaticRouter>
                 <ProviderRemove
                     {...defaultTestProps}
-                    router={{ push: routerPush }}
+                    router={{push: routerPush}}
                     updateUser={updateUser}
                 />
             </StaticRouter>
@@ -167,7 +166,7 @@ describe("<ProviderRemove />", () => {
         const ProviderRemoveWrapper = wrapper.find(ProviderRemove);
 
         // set loading state
-        ProviderRemoveWrapper.setState({ loadingState: "loading" });
+        ProviderRemoveWrapper.setState({loadingState: "loading"});
 
         return new Promise((resolve, reject) => {
             // trigger remove click
@@ -203,7 +202,7 @@ describe("<ProviderRemove />", () => {
             <StaticRouter>
                 <ProviderRemove
                     {...defaultTestProps}
-                    router={{ push: routerPush }}
+                    router={{push: routerPush}}
                     updateUser={updateUser}
                 />
             </StaticRouter>
@@ -212,7 +211,7 @@ describe("<ProviderRemove />", () => {
         const ProviderRemoveWrapper = wrapper.find(ProviderRemove);
 
         // set loading state
-        ProviderRemoveWrapper.setState({ loadingState: "loading" });
+        ProviderRemoveWrapper.setState({loadingState: "loading"});
 
         return new Promise((resolve, reject) => {
             // trigger remove click
@@ -250,7 +249,7 @@ describe("<ProviderRemove />", () => {
             <StaticRouter>
                 <ProviderRemove
                     {...defaultTestProps}
-                    router={{ push: routerPush }}
+                    router={{push: routerPush}}
                     updateUser={updateUser}
                 />
             </StaticRouter>
@@ -298,7 +297,7 @@ describe("<ProviderRemove />", () => {
                 <Wrapper>
                     <ProviderRemove
                         {...newProps}
-                        router={{ push: routerPush }}
+                        router={{push: routerPush}}
                     />
                 </Wrapper>
             </StaticRouter>
@@ -317,8 +316,8 @@ describe("<ProviderRemove />", () => {
 
         // create new prop clone without sites
         const newProps = Object.assign({}, defaultTestProps, {
-            sites: { box: siteBoxInfo },
-            params: { type: "box" }
+            sites: {box: siteBoxInfo},
+            params: {type: "box"}
         });
 
         //create component and save as json
@@ -327,7 +326,7 @@ describe("<ProviderRemove />", () => {
                 <Wrapper>
                     <ProviderRemove
                         {...newProps}
-                        router={{ push: routerPush }}
+                        router={{push: routerPush}}
                     />
                 </Wrapper>
             </StaticRouter>

@@ -70,10 +70,10 @@ module.exports = class SearchQuery extends HelperInterface {
                                     url: file.webViewLink,
                                     input_message_content: {
                                         message_text: "<a href='" +
-                                            fileUrl +
-                                            "'>" +
-                                            file.name +
-                                            "</a>",
+                                        fileUrl +
+                                        "'>" +
+                                        file.name +
+                                        "</a>",
                                         parse_mode: "HTML"
                                     }
                                 };

@@ -4,7 +4,8 @@ import Logger from "./Logger";
  * Sends a message to the service worker
  * @param message
  */
-export const sendSwMessage = (message, callback = () => {}) => {
+export const sendSwMessage = (message, callback = () => {
+}) => {
     if (navigator.serviceWorker.controller) {
         // create a new message channel for bi-directional communication
         const messageChannel = new MessageChannel();
@@ -23,7 +24,7 @@ export const sendSwMessage = (message, callback = () => {}) => {
  * clear all service worker cache
  */
 export const clearSw = () => {
-    sendSwMessage({ type: "CLEAR_ALL" }, message => {
+    sendSwMessage({type: "CLEAR_ALL"}, message => {
         Logger.debug("CLEAR_ALL response: ", message.data);
         // if we have a swRegistration unregister it to avoid warnings
         if (window.swRegistration) {

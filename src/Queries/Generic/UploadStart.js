@@ -107,8 +107,10 @@ module.exports = class UploadStart extends HelperInterface {
                     chat_id: resolveResults.msgInfo.chat_id,
                     message_id: resolveResults.msgInfo.message_id
                 })
-                    .then(_ => {})
-                    .catch(_ => {});
+                    .then(_ => {
+                    })
+                    .catch(_ => {
+                    });
             }
             return Promise.reject(ex);
         }
@@ -174,7 +176,7 @@ module.exports = class UploadStart extends HelperInterface {
                 if (!msgInfo) {
                     return reject(
                         "We couldn't find a file connected to this message. " +
-                            "Try forwarding the file to UploadBro again so he can detect it more easily.",
+                        "Try forwarding the file to UploadBro again so he can detect it more easily.",
                         true
                     );
                 }
@@ -200,7 +202,7 @@ module.exports = class UploadStart extends HelperInterface {
                 resolveResults.msgInfo.chat_id,
                 resolveResults.msgInfo.file_name
             )
-                // resolve new file location
+            // resolve new file location
                 .then(file_location => {
                     // store file location
                     resolveResults.file_location = file_location;

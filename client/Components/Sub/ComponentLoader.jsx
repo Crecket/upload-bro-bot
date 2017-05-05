@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import Loadable from "react-loadable";
 import LoadingComponent from "./LoadingComponent.jsx";
 import Loader from "./Loader.jsx";

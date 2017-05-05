@@ -55,7 +55,7 @@ module.exports = class UploadBro {
             this._Db = db;
 
             // create mongodb cache engine
-            const engine = new MongoDbEngine(db, { collection: "cache" });
+            const engine = new MongoDbEngine(db, {collection: "cache"});
 
             // store the cache in the app
             this._Cache = new Cacheman("uploadbro_cache", {

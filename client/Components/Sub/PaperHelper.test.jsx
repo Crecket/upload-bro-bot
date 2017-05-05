@@ -1,5 +1,5 @@
 import React from "react";
-import { Shallow, Mount, Renderer } from "../../Helpers/Test/WithContext";
+import {Renderer, Shallow} from "../../Helpers/Test/WithContext";
 import PaperHelper from "./PaperHelper.jsx";
 
 describe("<PaperHelper />", () => {

@@ -1,12 +1,13 @@
 "use strict";
 /* eslint-disable */
-require('dotenv').config();
+require("dotenv").config();
 
 // dependencies
 const path = require("path");
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+    .BundleAnalyzerPlugin;
 
 // custom extension
 const SWPlugin = require("./webpack/SWPlugin");
@@ -25,14 +26,14 @@ let cacheObject = {};
 let config = {
     entry: {
         // React app
-        "app": [
+        app: [
             "babel-polyfill", // promise polyfill
             SRC_DIR + "/react-app.jsx" // actual app
         ],
         // App css code
         "css-app": SRC_DIR + "/css-app.js",
         // Service worker registration
-        "sw-register": SRC_DIR + "/Plugins/ServiceWorkerRegistration.js",
+        "sw-register": SRC_DIR + "/Plugins/ServiceWorkerRegistration.js"
     },
     output: {
         path: BUILD_DIR,
@@ -45,7 +46,7 @@ let config = {
         modules: [
             "node_modules",
             path.resolve(__dirname, "./node_modules"),
-            path.resolve(__dirname, "./src"),
+            path.resolve(__dirname, "./src")
         ]
     },
     // devtool for source maps
@@ -69,23 +70,25 @@ let config = {
         new BundleAnalyzerPlugin({
             openAnalyzer: false,
             // create a server for the watcher or a static file for production enviroments
-            analyzerMode: 'static',
+            analyzerMode: "static",
             // output outside of the public folder
-            reportFilename: '../webpack.report.html',
+            reportFilename: "../webpack.report.html",
             /**
              * stats file for analyzer - use with:
              * @see https://alexkuz.github.io/stellar-webpack/
              * @see https://alexkuz.github.io/webpack-chart/
              */
             generateStatsFile: false,
-            statsFilename: '../webpack.stats.json'
+            statsFilename: "../webpack.stats.json"
         }),
         // SwPrecachePlugin,
         new webpack.DefinePlugin({
-            "PRODUCTION_MODE": JSON.stringify(!DEV),
-            "DEVELOPMENT_MODE": JSON.stringify(DEV),
+            PRODUCTION_MODE: JSON.stringify(!DEV),
+            DEVELOPMENT_MODE: JSON.stringify(DEV),
             "process.env.DEBUG": JSON.stringify(DEV),
-            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
+            "process.env.NODE_ENV": JSON.stringify(
+                process.env.NODE_ENV || "development"
+            ),
             "process.env.WEBPACK_MODE": JSON.stringify(true)
         }),
         // split up common code into commons file
@@ -106,9 +109,11 @@ let config = {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
                 include: /(src|client)/,
-                use: [{
-                    loader: "babel-loader?cacheDirectory"
-                }]
+                use: [
+                    {
+                        loader: "babel-loader?cacheDirectory"
+                    }
+                ]
             },
             {
                 test: /\.css$/,
@@ -126,21 +131,23 @@ let config = {
             }
         ]
     }
-}
+};
 
 if (!DEV) {
     // production only plugins
 
     // uglify plugin
-    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        minimize: true,
-        comments: false,
-        compress: {
-            warnings: false,
-            drop_console: true
-        }
-    }));
+    config.plugins.push(
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            minimize: true,
+            comments: false,
+            compress: {
+                warnings: false,
+                drop_console: true
+            }
+        })
+    );
 } else {
     // development only plugins
 }

@@ -1,30 +1,27 @@
 "use strict";
 
 import React from "react";
-import { Shallow, Mount, Renderer } from "../Helpers/Test/WithContext";
-
+import {Mount, Renderer} from "../Helpers/Test/WithContext";
 // selector components
 // import MainAppbarPopover from "./Sub/MainAppbarPopover";
-
 // injection, required for materialze tap events
 import injectTapEventPlugin from "react-tap-event-plugin";
-injectTapEventPlugin();
-
 import MainAppbar from "./MainAppbar.jsx";
+injectTapEventPlugin();
 
 const userInfoList = require("../Helpers/Test/Data/api-get_user.json");
 
 describe("<MainAppbar />", () => {
     it("matches snapshot with verified user", () => {
         const tree = Renderer(
-            <MainAppbar themeList={["LightBlue"]} user_info={userInfoList} />
+            <MainAppbar themeList={["LightBlue"]} user_info={userInfoList}/>
         );
         expect(tree).toMatchSnapshot();
     });
 
     it("matches snapshot without verified user", () => {
         const tree = Renderer(
-            <MainAppbar themeList={["LightBlue"]} user_info={false} />
+            <MainAppbar themeList={["LightBlue"]} user_info={false}/>
         );
         expect(tree).toMatchSnapshot();
     });
@@ -50,7 +47,8 @@ describe("<MainAppbar />", () => {
 
         // show the theme list
         ThemeSelectorMenuItem.props().onItemTouchTap({
-            persist: () => {}
+            persist: () => {
+            }
         });
 
         // attempt to click the menu item

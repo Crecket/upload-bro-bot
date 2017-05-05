@@ -7,7 +7,7 @@ const Logger = require("../Logger.js");
 describe("Logger", () => {
     describe("preProcess()", () => {
         it("should return uppercase version", () => {
-            const processResult = Logger.preProcess({ title: "ab" });
+            const processResult = Logger.preProcess({title: "ab"});
             expect(processResult).toHaveProperty("title", "AB");
         });
     });

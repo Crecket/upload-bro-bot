@@ -131,7 +131,8 @@ module.exports = class EventHandlers extends HelperInterface {
                     parse_mode: "HTML",
                     disable_notification: true
                 })
-                .then(resulting_message => {})
+                .then(resulting_message => {
+                })
                 .catch(winston.error);
             return;
         }
@@ -154,11 +155,11 @@ module.exports = class EventHandlers extends HelperInterface {
                             .sendMessage(
                                 msg.from.id,
                                 "Do you want to upload this file? \n" +
-                                    "Filename: " +
-                                    file.file_name +
-                                    " \n" +
-                                    "Filesize: " +
-                                    filesize(file.file_size),
+                                "Filename: " +
+                                file.file_name +
+                                " \n" +
+                                "Filesize: " +
+                                filesize(file.file_size),
                                 {
                                     reply_markup: {
                                         inline_keyboard: [

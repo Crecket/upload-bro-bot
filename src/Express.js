@@ -28,7 +28,7 @@ const ApiRoutes = require("./Routes/ApiRoutes");
 // useSsl helper
 const useSsl = process.env.EXPRESS_USE_SSL === "true";
 
-module.exports = function(uploadApp) {
+module.exports = function (uploadApp) {
     let app = express();
     let db = uploadApp._Db;
 
@@ -87,14 +87,14 @@ module.exports = function(uploadApp) {
         res.redirect(httpsUrl);
     });
 
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function (user, done) {
         done(null, user.id);
     });
 
-    passport.deserializeUser(function(user_id, done) {
+    passport.deserializeUser(function (user_id, done) {
         db
             .collection("users")
-            .findOne({ _id: user_id }, {}, function(err, user) {
+            .findOne({_id: user_id}, {}, function (err, user) {
                 done(err, user);
             });
     });
@@ -104,17 +104,15 @@ module.exports = function(uploadApp) {
             clientID: process.env.TELEPASS_APPID,
             clientSecret: process.env.TELEPASS_SECRET,
             callbackURL: process.env.WEBSITE_URL +
-                process.env.TELEPASS_REDIRECT_URI
+            process.env.TELEPASS_REDIRECT_URI
         },
-        function(accessToken, refreshToken, profile, done) {
+        function (accessToken, refreshToken, profile, done) {
             // get the users collection
             let usersCollection = db.collection("users");
 
             // check if user exists
-            usersCollection.findOne({ _id: profile.id }, {}, function(
-                err,
-                user
-            ) {
+            usersCollection.findOne({_id: profile.id}, {}, function (err,
+                                                                     user) {
                 if (err) {
                     done(err, profile);
                 }
@@ -168,7 +166,7 @@ module.exports = function(uploadApp) {
     // parsers
     app.use(cookieParser());
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+    app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
 
     // gzip optimization
     app.use(compression());
@@ -224,7 +222,7 @@ module.exports = function(uploadApp) {
         app.use(express.static(__dirname + "/../public"));
 
         // enable pretty error logs
-        app.use(function(err, req, res, next) {
+        app.use(function (err, req, res, next) {
             new ouch()
                 .pushHandler(new ouch.handlers.PrettyPageHandler())
                 .handleException(err, req, res, () => {
@@ -268,7 +266,7 @@ module.exports = function(uploadApp) {
     });
 
     // error handler
-    app.use(function(err, req, res, next) {
+    app.use(function (err, req, res, next) {
         if (err.code !== "EBADCSRFTOKEN") return next(err);
 
         // handle CSRF token errors here
@@ -276,15 +274,15 @@ module.exports = function(uploadApp) {
     });
 
     // start listening http
-    httpServer.listen(process.env.EXPRESS_PORT, function() {
+    httpServer.listen(process.env.EXPRESS_PORT, function () {
         // start https
         if (useSsl) {
-            httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function() {
+            httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
                 Logger.debug(
                     "Express listening on " +
-                        process.env.EXPRESS_HTTPS_PORT +
-                        " and " +
-                        process.env.EXPRESS_PORT
+                    process.env.EXPRESS_HTTPS_PORT +
+                    " and " +
+                    process.env.EXPRESS_PORT
                 );
             });
         } else {

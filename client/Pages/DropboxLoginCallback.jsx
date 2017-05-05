@@ -4,8 +4,8 @@ import Paper from "material-ui/Paper";
 import CircularProgress from "material-ui/CircularProgress";
 import Check from "material-ui/svg-icons/navigation/check";
 import Error from "material-ui/svg-icons/alert/error";
-import { red500, green800 } from "material-ui/styles/colors";
-import { browserHistory } from "react-router";
+import {green800, red500} from "material-ui/styles/colors";
+import {browserHistory} from "react-router";
 import axios from "axios";
 
 import Utils from "../Helpers/Utils";
@@ -91,7 +91,7 @@ class DropboxLoginCallback extends React.Component {
         if (this.state.error) {
             icon = (
                 <h3>
-                    <Error style={styles.errorIcon} />
+                    <Error style={styles.errorIcon}/>
                     <br />
                     Something went wrong
                 </h3>
@@ -99,7 +99,7 @@ class DropboxLoginCallback extends React.Component {
         } else if (!this.state.loading) {
             icon = (
                 <h3>
-                    <Check style={styles.checkIcon} />
+                    <Check style={styles.checkIcon}/>
                     <br />
                     Connected your Dropbox account
                 </h3>

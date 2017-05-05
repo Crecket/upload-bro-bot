@@ -13,7 +13,7 @@ const styles = {
     playIcon: {
         minWidth: 40
     },
-    playWrapper:{
+    playWrapper: {
         minHeight: 120
     }
 };
@@ -34,19 +34,25 @@ export default class YoutubePreview extends React.Component {
     }
 
     onPlay = () => {
-        this.setState({ visible: true });
+        this.setState({visible: true});
     };
 
     render() {
         const videoPreview = this.state.visible
             ? <div className="fluidMedia">
-                  <YouTube videoId="FsN-6xlfoz4" opts={opts} />
-              </div>
+                <YouTube videoId="FsN-6xlfoz4" opts={opts}/>
+            </div>
             : <div style={styles.playWrapper}>
-                  <PlayArrow style={styles.playIcon} onTouchTap={this.onPlay} />
-                  <PlayArrow1 style={styles.playIcon} onTouchTap={this.onPlay} />
-                  <PlayArrow2 style={styles.playIcon} onTouchTap={this.onPlay} />
-              </div>;
+                <PlayArrow style={styles.playIcon} onTouchTap={this.onPlay}/>
+                <PlayArrow1
+                    style={styles.playIcon}
+                    onTouchTap={this.onPlay}
+                />
+                <PlayArrow2
+                    style={styles.playIcon}
+                    onTouchTap={this.onPlay}
+                />
+            </div>;
 
         return (
             <div style={styles.wrapper}>

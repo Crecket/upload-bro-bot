@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Shallow, Renderer } from "../../Helpers/Test/WithContext";
+import {Renderer} from "../../Helpers/Test/WithContext";
 import ProviderBlocks from "./ProviderBlocks.jsx";
 
 const siteTestList = require("../../Helpers/Test/Data/api-get_providers.json");
@@ -41,7 +41,7 @@ describe("<ProviderBlocks />", () => {
 
     it("matches snapshot with no info", () => {
         const tree = Renderer(
-            <ProviderBlocks provider_sites={{}} user_provider_sites={{}} />
+            <ProviderBlocks provider_sites={{}} user_provider_sites={{}}/>
         );
         expect(tree).toMatchSnapshot();
     });

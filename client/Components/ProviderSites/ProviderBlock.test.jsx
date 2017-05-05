@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Renderer } from "../../Helpers/Test/WithContext";
+import {Renderer} from "../../Helpers/Test/WithContext";
 import ProviderBlock from "./ProviderBlock.jsx";
 
 const siteTestList = require("../../Helpers/Test/Data/api-get_providers.json");

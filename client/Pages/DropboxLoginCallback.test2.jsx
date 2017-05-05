@@ -5,10 +5,10 @@ import renderer from "react-test-renderer";
 
 import Wrapper from "../TestHelpers/Wrapper.jsx";
 import DropboxLoginCallback from "./DropboxLoginCallback.jsx";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
 
 const userInfoList = require("../TestHelpers/Data/api-get_user.json");
 const siteInfoList = require("../TestHelpers/Data/api-get_providers.json");
-import getMuiTheme from "material-ui/styles/getMuiTheme";
 const muiTheme = getMuiTheme();
 
 describe("<DropboxLoginCallback />", () => {

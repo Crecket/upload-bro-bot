@@ -1,11 +1,9 @@
-export default function reducer(
-    state = {
-        message: "",
-        title: "",
-        modalOpen: false
-    },
-    action
-) {
+export default function reducer(state = {
+                                    message: "",
+                                    title: "",
+                                    modalOpen: false
+                                },
+                                action) {
     switch (action.type) {
         case "MODAL_OPEN":
             return {

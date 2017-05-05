@@ -1,6 +1,7 @@
 "use strict";
 
-let PreRender = () => {};
+let PreRender = () => {
+};
 if (process.env.ENABLE_SSR === "true") {
     // only load babel-register if we have ssr
     require("babel-register");
@@ -68,7 +69,7 @@ module.exports = (app, passport, uploadApp) => {
         PushHandlerResult.catch(Logger.error);
 
         Promise.all([PreRenderResults, PushHandlerResult])
-            // we only bother with the html results
+        // we only bother with the html results
             .then(([preRenderedHtml]) => {
                 // set a cache header since we want to make sure this is up-to-date if the client
                 // does not have a cached version in the service worker

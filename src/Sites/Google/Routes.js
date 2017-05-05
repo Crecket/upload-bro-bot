@@ -71,7 +71,7 @@ module.exports = (app, passport, uploadApp) => {
     });
 
     // handles the oauth callback
-    app.get("/login/google/callback", function(request, response) {
+    app.get("/login/google/callback", function (request, response) {
         var code = request.query.code;
 
         let resultRoute = "/new/google";
@@ -85,7 +85,7 @@ module.exports = (app, passport, uploadApp) => {
             GoogleHelper.createOauthClient()
                 .then(authclient => {
                     // get token using new code
-                    authclient.getToken(code, function(err, tokens) {
+                    authclient.getToken(code, function (err, tokens) {
                         if (err) {
                             response.redirect(resultRoute);
                             return;

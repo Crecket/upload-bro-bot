@@ -1,11 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {shallow, mount} from "enzyme";
+import {mount, shallow} from "enzyme";
 import renderer from "react-test-renderer";
-import {MemoryRouter, StaticRouter} from "react-router-dom";
-import {getMuiTheme, muiThemeable} from "material-ui/styles";
+import {MemoryRouter} from "react-router-dom";
+import {getMuiTheme} from "material-ui/styles";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-
 // the theme we want to include in our context
 import LightBlue from "../../Themes/LightBlue.jsx";
 

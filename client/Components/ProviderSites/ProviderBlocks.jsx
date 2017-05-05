@@ -1,7 +1,6 @@
 import React from "react";
 
 import ProviderBlock from "./ProviderBlock.jsx";
-import Logger from "../../Helpers/Logger";
 
 const styles = {
     container: {
@@ -30,7 +29,7 @@ export default class ProviderBlocks extends React.Component {
 
             // fallback to empty list
             let userSiteInfo = this.props.user_provider_sites &&
-                this.props.user_provider_sites[siteInfo.key]
+            this.props.user_provider_sites[siteInfo.key]
                 ? this.props.user_provider_sites[siteInfo.key]
                 : false;
 

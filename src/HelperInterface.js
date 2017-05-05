@@ -81,8 +81,10 @@ module.exports = class HelperInterface {
             "\u{26A0} It looks like something went wrong!",
             options
         )
-            .then(() => {})
-            .catch(() => {});
+            .then(() => {
+            })
+            .catch(() => {
+            });
     }
 
     /**

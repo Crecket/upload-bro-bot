@@ -1,7 +1,5 @@
-import {
-    white,
-} from "material-ui/styles/colors";
-import { fade } from "material-ui/utils/colorManipulator";
+import {white} from "material-ui/styles/colors";
+import {fade} from "material-ui/utils/colorManipulator";
 import spacing from "material-ui/styles/spacing";
 
 export default {
