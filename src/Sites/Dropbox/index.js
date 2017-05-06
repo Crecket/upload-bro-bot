@@ -1,29 +1,32 @@
 const fs = require("fs");
 const path = require("path");
-const SiteInteface = require(__base + "src/Sites/SiteInterface.js");
+const SiteInteface = require("../SiteInterface");
 
 // queries and commands
-const SearchQueryObj = require(__base +
-    "src/Sites/Dropbox/InlineQueries/SearchQuery");
-const UploadObj = require(__base + "src/Sites/Dropbox/Queries/Upload");
+const SearchQueryObj = require("./InlineQueries/SearchQuery");
+const UploadObj = require("./Queries/Upload");
 
 module.exports = class Dropbox extends SiteInteface {
-    constructor(app) {
-        super();
-
+    constructor(app, register = true) {
+        super(app);
         this._app = app;
+
+        // on false, commands aren't registered by default
+        this._register = register;
     }
 
     /**
      * Load all commands for this website
+     * @returns {Promise.<T>}
      */
     register() {
-        // register commands
-        this._app._QueryHandler.register(new UploadObj(this._app));
+        if(this._register) {
+            // register commands
+            this._app._QueryHandler.register(new UploadObj(this._app));
 
-        // register inline queries
-        // this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
-
+            // register inline queries
+            // this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
+        }
         return Promise.resolve();
     }
 

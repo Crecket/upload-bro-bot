@@ -1,29 +1,34 @@
 const fs = require("fs");
 const path = require("path");
-const winston = rootRequire("src/Helpers/Logger.js");
-
-const SiteInteface = rootRequire("src/Sites/SiteInterface.js");
-
-const UploadObj = rootRequire("src/Sites/Imgur/Queries/Upload");
-const SearchQueryObj = rootRequire("src/Sites/Imgur/InlineQueries/SearchQuery");
+const Logger = require("../../Helpers/Logger");
+const SiteInteface = require("../SiteInterface.js");
+const UploadObj = require("./Queries/Upload");
+const SearchQueryObj = require("./InlineQueries/SearchQuery");
 
 module.exports = class Imgur extends SiteInteface {
-    constructor(app) {
+    constructor(app, register = true) {
         super(app);
-
         this._app = app;
+
+        // on false, commands aren't registered by default
+        this._register = register;
     }
 
     /**
      * Load all commands for this website
+     *
+     * @returns {Promise.<T>}
      */
     register() {
-        // register commands
-        this._app._QueryHandler.register(new UploadObj(this._app));
+        if (this._register) {
+            // register commands
+            this._app._QueryHandler.register(new UploadObj(this._app));
 
-        // register inline queries
-        this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
-
+            // register inline queries
+            this._app._InlineQueryHandler.register(
+                new SearchQueryObj(this._app)
+            );
+        }
         return Promise.resolve();
     }
 

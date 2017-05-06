@@ -1,12 +1,10 @@
 const fs = require("fs");
 const path = require("path");
-const winston = rootRequire("src/Helpers/Logger.js");
-
-const HelperInterface = require(__base + "src/HelperInterface");
-
-const UploadStartObj = require(__base + "src/Queries/Generic/UploadStart");
-const UploadFinishObj = require(__base + "src/Queries/Generic/UploadFinish");
-const DropboxHelperObj = require(__base + "src/Sites/Dropbox/Helper");
+const Logger = require("../../../Helpers/Logger");
+const HelperInterface = require("../../../HelperInterface");
+const UploadStartObj = require("../../../Queries/Generic/UploadStart");
+const UploadFinishObj = require("../../../Queries/Generic/UploadFinish");
+const DropboxHelperObj = require("../Helper");
 
 module.exports = class Upload extends HelperInterface {
     constructor(app) {

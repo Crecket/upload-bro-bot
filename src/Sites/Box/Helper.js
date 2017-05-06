@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
 const BoxSDK = require("box-node-sdk");
-const Logger = rootRequire("src/Helpers/Logger.js");
 
 module.exports = class BoxHelper {
     constructor(app) {

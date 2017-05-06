@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
-const winston = rootRequire("src/Helpers/Logger.js");
+const Logger = require("../../Helpers/Logger");
 
 module.exports = class ImgurHelper {
     constructor(app) {
@@ -160,7 +160,7 @@ module.exports = class ImgurHelper {
                 .then(resolve)
                 .catch(err => {
                     reject(err);
-                    winston.error(err);
+                    Logger.error(err);
                 });
         });
     }
@@ -194,7 +194,7 @@ module.exports = class ImgurHelper {
                 })
                 .catch(err => {
                     reject(err);
-                    winston.error(err.response);
+                    Logger.error(err.response);
                 });
         });
     }

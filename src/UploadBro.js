@@ -9,10 +9,13 @@ const Cacheman = require("cacheman");
 const MongoDbEngine = require("cacheman-mongo");
 const Logger = require("./Helpers/Logger.js");
 
+// polyfill shortcut
+const polyFill = () =>{};
+
 // utilities
 let Utils = require("./Helpers/Utils");
 
-// express server
+// require the express server and routes
 let Express = require("./Express");
 
 // handlers and other helpers
@@ -26,11 +29,14 @@ const QueueObj = require("./Queue");
 const AnalyticsObj = require("./Analytics");
 
 module.exports = class UploadBro {
-    constructor() {
-        // Create a new blackjack bot
-        this._TelegramBot = new TelegramBot(process.env.TELEGRAM_TOKEN, {
-            polling: true
-        });
+    /**
+     * @param onlineMode - in onlineMode, connections to external services are actived
+     */
+    constructor(onlineMode = true) {
+        /**
+         * if set to True, no external connections will be made
+         */
+        this.onlineMode = onlineMode;
 
         // create a queue object and analytics helper
         this._Queue = new QueueObj(5);
@@ -49,19 +55,39 @@ module.exports = class UploadBro {
 
     async start() {
         try {
-            // connect to mongodb
-            const db = await this.connectDb();
-            // store the database
-            this._Db = db;
+            // default to onlineMode
+            if (this.onlineMode !== false) {
+                // Create a new blackjack bot
+                this._TelegramBot = new TelegramBot(
+                    process.env.TELEGRAM_TOKEN,
+                    {
+                        polling: true
+                    }
+                );
 
-            // create mongodb cache engine
-            const engine = new MongoDbEngine(db, {collection: "cache"});
+                // connect to mongodb
+                const db = await this.connectDb();
 
-            // store the cache in the app
-            this._Cache = new Cacheman("uploadbro_cache", {
-                engine: engine, // mongodb engine
-                ttl: 60 * 60 // default ttl
-            });
+                // store the database
+                this._Db = db;
+
+                // create mongodb cache engine
+                const engine = new MongoDbEngine(db, { collection: "cache" });
+
+                // store the cache in the app
+                this._Cache = new Cacheman("uploadbro_cache", {
+                    engine: engine, // mongodb engine
+                    ttl: 60 * 60 // default ttl
+                });
+            } else {
+                // polyfill these, this should not trigger a error
+                this._TelegramBot = {
+                    onText: polyFill,
+                    on: polyFill
+                };
+                this._Db = null;
+                this._Cache = new Cacheman("uploadbro_memory_cache");
+            }
 
             // load default commands
             await this.loadCommands();
@@ -87,8 +113,11 @@ module.exports = class UploadBro {
                 `Loaded the following commands:\n\n${this._CommandHandler.info}\n`
             );
 
-            // start express listener
-            Express(this);
+            // default to onlineMode
+            if (this.onlineMode !== false) {
+                // start express listener
+                Express(this);
+            }
         } catch (ex) {
             Logger.error(ex);
         }
@@ -125,10 +154,12 @@ module.exports = class UploadBro {
             const SiteObj = require(Site);
 
             // require the index file and set the file handler
-            this._SiteHandler.register(new SiteObj(this));
+            this._SiteHandler.register(
+                new SiteObj(this, this._registerDefault)
+            );
         });
 
-        Logger.debug("Loaded " + this._SiteHandler.siteCount + " sites");
+        Logger.debug(`Loaded ${this._SiteHandler.siteCount} sites`);
     }
 
     /**
@@ -146,12 +177,12 @@ module.exports = class UploadBro {
             const CommandObj = require(Command);
 
             // require the index file and set the file handler
-            this._CommandHandler.register(new CommandObj(this));
+            this._CommandHandler.register(
+                new CommandObj(this, this._registerDefault)
+            );
         });
 
-        Logger.debug(
-            "Loaded " + this._CommandHandler.commandCount + " commands"
-        );
+        Logger.debug(`Loaded ${this._CommandHandler.commandCount} commands`);
     }
 
     /**
@@ -168,10 +199,12 @@ module.exports = class UploadBro {
             const QueryObj = require(Query);
 
             // require the index file and set the file handler
-            this._QueryHandler.register(new QueryObj(this));
+            this._QueryHandler.register(
+                new QueryObj(this, this._registerDefault)
+            );
         });
 
-        Logger.debug("Loaded " + this._QueryHandler.queryCount + " queries");
+        Logger.debug(`Loaded ${this._QueryHandler.queryCount} queries`);
     }
 
     /**

@@ -1,28 +1,34 @@
 var fs = require("fs");
 var path = require("path");
-const winston = rootRequire("src/Helpers/Logger.js");
+const Logger = require("../../Helpers/Logger");
 
-var SiteInteface = require(__base + "src/Sites/SiteInterface.js");
-var UploadObj = require("./Queries/Upload");
-var SearchQueryObj = require("./InlineQueries/SearchQuery");
+const SiteInteface = require("../SiteInterface");
+const UploadObj = require("./Queries/Upload");
+const SearchQueryObj = require("./InlineQueries/SearchQuery");
 
 module.exports = class Google extends SiteInteface {
-    constructor(app) {
+    constructor(app, register = true) {
         super(app);
-
         this._app = app;
+
+        // on false, commands aren't registered by default
+        this._register = register;
     }
 
     /**
      * Load all commands for this website
+     * @returns {Promise.<T>}
      */
     register() {
-        // register commands
-        this._app._QueryHandler.register(new UploadObj(this._app));
+        if (this._register) {
+            // register commands
+            this._app._QueryHandler.register(new UploadObj(this._app));
 
-        // register inline queries
-        this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
-
+            // register inline queries
+            this._app._InlineQueryHandler.register(
+                new SearchQueryObj(this._app)
+            );
+        }
         return Promise.resolve();
     }
 

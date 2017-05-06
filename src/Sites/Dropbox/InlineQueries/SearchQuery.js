@@ -1,10 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const mime = require("mime");
-const Logger = rootRequire("src/Helpers/Logger.js");
-
-const HelperInterface = rootRequire("src/HelperInterface");
-const DropboxHelperObj = rootRequire("src/Sites/Dropbox/Helper");
+const Logger = require("../../../Helpers/Logger.js");
+const HelperInterface = require("../../../HelperInterface");
+const DropboxHelperObj = require("../../../Sites/Dropbox/Helper");
 
 module.exports = class SearchQuery extends HelperInterface {
     constructor(app) {

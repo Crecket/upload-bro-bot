@@ -1,8 +1,8 @@
 const mime = require("mime");
 const path = require("path");
 const filesize = require("filesize");
-const winston = rootRequire("src/Helpers/Logger.js");
-const HelperInterface = rootRequire("src/HelperInterface");
+const Logger = require("..//Helpers/Logger.js");
+const HelperInterface = require("../HelperInterface");
 
 module.exports = class EventHandlers extends HelperInterface {
     constructor(app) {
@@ -32,12 +32,12 @@ module.exports = class EventHandlers extends HelperInterface {
                     return this._app
                         .answerCallbackQuery(query.id, message)
                         .then(res => {
-                            // winston.debug(res);
+                            // Logger.debug(res);
                         })
-                        .catch(err => winston.error(err));
+                        .catch(err => Logger.error(err));
                 })
                 .catch(error => {
-                    winston.error(error);
+                    Logger.error(error);
 
                     // answer the query with the error
                     return this._app
@@ -46,18 +46,18 @@ module.exports = class EventHandlers extends HelperInterface {
                             "It looks like something went wrong."
                         )
                         .then(res => {
-                            // winston.debug(res);
+                            // Logger.debug(res);
                         })
-                        .catch(err => winston.error(err));
+                        .catch(err => Logger.error(err));
                 });
         } else {
             // answer the query taht we couldn't find the command
             this._app
                 .answerCallbackQuery(query.id, "We couldn't find this command.")
                 .then(res => {
-                    // winston.debug(res);
+                    // Logger.debug(res);
                 })
-                .catch(err => winston.error(err));
+                .catch(err => Logger.error(err));
         }
     }
 
@@ -109,7 +109,7 @@ module.exports = class EventHandlers extends HelperInterface {
             file.file_type = "voice";
         } else {
             // invalid file type
-            winston.debug(file);
+            Logger.debug(file);
             return;
         }
         // get the file extension
@@ -133,7 +133,7 @@ module.exports = class EventHandlers extends HelperInterface {
                 })
                 .then(resulting_message => {
                 })
-                .catch(winston.error);
+                .catch(Logger.error);
             return;
         }
 
@@ -198,11 +198,11 @@ module.exports = class EventHandlers extends HelperInterface {
                                     },
                                     60 * 60 * 24 * 30, // store for 1 month
                                     (err, result_cache) => {
-                                        if (err) winston.error(err);
+                                        if (err) Logger.error(err);
                                     }
                                 );
                             })
-                            .catch(winston.error);
+                            .catch(Logger.error);
                     } else {
                         // warn the user that we don't have any providers for them yet
                         var message =
@@ -216,13 +216,13 @@ module.exports = class EventHandlers extends HelperInterface {
                             .then(resulting_message => {
                                 // don't care
                             })
-                            .catch(winston.error);
+                            .catch(Logger.error);
                     }
                 } else {
                     // nothing to do, this user isn't registered
                 }
             })
-            .catch(winston.error);
+            .catch(Logger.error);
     }
 
     /**
@@ -267,9 +267,9 @@ module.exports = class EventHandlers extends HelperInterface {
                             .then(result => {
                                 // success
                             })
-                            .catch(err => winston.error(err));
+                            .catch(err => Logger.error(err));
                     })
-                    .catch(err => winston.error(err));
+                    .catch(err => Logger.error(err));
             }
         });
     }

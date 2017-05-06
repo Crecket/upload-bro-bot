@@ -8,11 +8,11 @@ process.on('unhandledRejection', (reason, promise) => {
     Logger.error(reason);
 });
 
-// Fix route
-global.__base = __dirname + '/';
-global.rootRequire = function (name) {
-    return require(__dirname + '/' + name);
-}
+// // Fix route
+// global.__base = __dirname + '/';
+// global.rootRequire = function (name) {
+//     return require(__dirname + '/' + name);
+// }
 
 // Load the app
 const UploadBro = require('./src/UploadBro');

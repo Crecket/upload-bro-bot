@@ -1,8 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const winston = rootRequire("src/Helpers/Logger.js");
-
-var HelperInterface = rootRequire("src/HelperInterface");
+const Logger = require("../Helpers/Logger.js");
+const HelperInterface = require("../HelperInterface");
 
 module.exports = class ScanChat extends HelperInterface {
     constructor(app) {
@@ -23,11 +22,11 @@ module.exports = class ScanChat extends HelperInterface {
                 .getUpdates()
                 .bind(this)
                 .then(res => {
-                    winston.info(res);
+                    Logger.info(res);
                     resolve(query.id);
                 })
                 .catch(err => {
-                    winston.error("getUpdates error", err);
+                    Logger.error("getUpdates error", err);
                     reject(query.id);
                 });
         });

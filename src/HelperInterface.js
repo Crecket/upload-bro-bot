@@ -1,6 +1,5 @@
 var fs = require("fs");
 var path = require("path");
-
 var Utils = require("./Helpers/Utils");
 
 module.exports = class HelperInterface {
@@ -31,7 +30,7 @@ module.exports = class HelperInterface {
     downloadFile(file_id, chat_id, file_name = false) {
         return new Promise((resolve, reject) => {
             // target installation directory
-            var directory = __base + "/downloads";
+            var directory = path.resolve(`${__dirname}/../downloads`);
 
             // assert the lower folder exists
             Utils.ensureFolderExists(directory, "0744")
@@ -44,7 +43,9 @@ module.exports = class HelperInterface {
                                 return resolve(finalPath);
                             }
                             // set the target path
-                            var targetName = __base + "/downloads/" + file_name;
+                            var targetName = path.resolve(
+                                `${__dirname}/../downloads/${file_name}`
+                            );
                             // rename the file
                             fs.rename(finalPath, targetName, err => {
                                 if (err) {
@@ -81,10 +82,8 @@ module.exports = class HelperInterface {
             "\u{26A0} It looks like something went wrong!",
             options
         )
-            .then(() => {
-            })
-            .catch(() => {
-            });
+            .then(() => {})
+            .catch(() => {});
     }
 
     /**

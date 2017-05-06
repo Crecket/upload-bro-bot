@@ -1,6 +1,5 @@
 "use strict";
-const Logger = rootRequire("src/Helpers/Logger.js");
-
+const Logger = require("../../Helpers/Logger");
 const BoxHelper = require("./Helper");
 const UserHelper = require("./../../UserHelper.js");
 

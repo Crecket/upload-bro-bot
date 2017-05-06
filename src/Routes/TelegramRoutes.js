@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const mime = require("mime");
-const winston = rootRequire("src/Helpers/Logger.js");
+const Logger = require("../Helpers/Logger.js");
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;

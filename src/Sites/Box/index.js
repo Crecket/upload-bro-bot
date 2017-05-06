@@ -1,10 +1,8 @@
 const fs = require("fs");
 const path = require("path");
-const Logger = rootRequire("src/Helpers/Logger.js");
-
+const Logger = require("../../Helpers/Logger.js");
 const SiteInteface = require("../SiteInterface.js");
-
-const UploadObj = rootRequire("src/Sites/Box/Queries/Upload");
+const UploadObj = require("./Queries/Upload");
 // const SearchQueryObj = rootRequire('src/Sites/Box/InlineQueries/SearchQuery');
 
 module.exports = class Box extends SiteInteface {

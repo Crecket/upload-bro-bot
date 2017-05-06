@@ -1,10 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const mime = require("mime");
-const winston = rootRequire("src/Helpers/Logger.js");
-
+const Logger = require("../../Helpers/Logger");
 const DropboxHelperObj = require("./Helper");
-const UserHelperObj = require(__base + "src/UserHelper.js");
+const UserHelperObj = require("../../UserHelper");
 
 module.exports = (app, passport, uploadApp) => {
     var db = uploadApp._Db;
@@ -88,7 +87,7 @@ module.exports = (app, passport, uploadApp) => {
                             response.json(true);
                         })
                         .catch(err => {
-                            winston.error(err);
+                            Logger.error(err);
                             response.status(500).json({error: err});
                         });
                 })

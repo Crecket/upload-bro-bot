@@ -1,4 +1,4 @@
-const Logger = rootRequire("src/Helpers/Logger.js");
+const Logger = require("../Helpers/Logger.js");
 
 module.exports = (app, passport, uploadApp) => {
     // fetch info for all providers

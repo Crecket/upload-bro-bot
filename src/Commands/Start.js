@@ -1,8 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const Logger = rootRequire("src/Helpers/Logger.js");
-
-const HelperInterface = rootRequire("src/HelperInterface");
+const Logger = require("../Helpers/Logger");
+const HelperInterface = require("../HelperInterface");
 
 module.exports = class Start extends HelperInterface {
     constructor(app) {

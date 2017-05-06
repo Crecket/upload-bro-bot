@@ -1,14 +1,10 @@
-/* global rootRequire */
-
 const fs = require("fs");
 const path = require("path");
-const Logger = rootRequire("src/Helpers/Logger.js");
-
-const HelperInterface = rootRequire("src/HelperInterface");
-
-const UploadStartObj = rootRequire("src/Queries/Generic/UploadStart");
-const UploadFinishObj = rootRequire("src/Queries/Generic/UploadFinish");
-const ImgurHelperObj = rootRequire("src/Sites/Imgur/Helper");
+const Logger = require("../../../Helpers/Logger");
+const HelperInterface = require("../../../HelperInterface");
+const UploadStartObj = require("../../../Queries/Generic/UploadStart");
+const UploadFinishObj = require("../../../Queries/Generic/UploadFinish");
+const ImgurHelperObj = require("../Helper");
 
 module.exports = class Upload extends HelperInterface {
     constructor(app) {

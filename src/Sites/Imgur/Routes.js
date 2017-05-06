@@ -1,10 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const mime = require("mime");
-const winston = rootRequire("src/Helpers/Logger.js");
 
 const ImgurHelperObj = require("./Helper");
-const UserHelperObj = rootRequire("src/UserHelper.js");
+const UserHelperObj = require("../../UserHelper");
 
 module.exports = (app, passport, uploadApp) => {
     let db = uploadApp._Db;

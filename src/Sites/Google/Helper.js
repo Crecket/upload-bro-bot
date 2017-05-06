@@ -2,7 +2,7 @@ const fs = require("fs");
 const mime = require("mime");
 const path = require("path");
 const google = require("googleapis");
-const Logger = rootRequire("src/Helpers/Logger.js");
+const Logger = require("../../Helpers/Logger");
 const OAuth2 = google.auth.OAuth2;
 
 module.exports = class GoogleHelper {

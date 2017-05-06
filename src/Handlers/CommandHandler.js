@@ -1,6 +1,6 @@
 module.exports = class CommandHandler {
-    constructor(app) {
-        this._app = app;
+    constructor(UploadBro) {
+        this._UploadBro = UploadBro;
 
         this._commands = {};
     }
@@ -15,7 +15,7 @@ module.exports = class CommandHandler {
         this._commands[obj.name] = obj;
 
         // set the event listener
-        this._app._TelegramBot.onText(obj.pattern, obj.handle.bind(this));
+        this._UploadBro._TelegramBot.onText(obj.pattern, obj.handle.bind(this));
     }
 
     /**

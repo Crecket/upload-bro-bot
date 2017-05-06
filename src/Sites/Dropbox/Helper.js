@@ -1,5 +1,5 @@
 const Dropbox = require("dropbox");
-const Logger = rootRequire("/src/Helpers/Logger.js");
+const Logger = require("../../Helpers/Logger");
 
 module.exports = class DropboxHelper {
     constructor(app) {

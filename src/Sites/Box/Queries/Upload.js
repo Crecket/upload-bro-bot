@@ -1,11 +1,9 @@
 const fs = require("fs");
 const path = require("path");
-const Logger = rootRequire("src/Helpers/Logger.js");
-
-const HelperInterface = rootRequire("src/HelperInterface");
-
-const UploadStart = rootRequire("src/Queries/Generic/UploadStart");
-const UploadFinish = rootRequire("src/Queries/Generic/UploadFinish");
+const Logger = require("../../../Helpers/Logger");
+const HelperInterface = require("../../../HelperInterface");
+const UploadStart = require("../../../Queries/Generic/UploadStart");
+const UploadFinish = require("../../../Queries/Generic/UploadFinish");
 const BoxHelper = require("../Helper");
 
 module.exports = class Upload extends HelperInterface {

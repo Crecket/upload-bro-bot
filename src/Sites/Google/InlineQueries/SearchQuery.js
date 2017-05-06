@@ -1,11 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const mime = require("mime");
-const Logger = rootRequire("src/Helpers/Logger.js");
-
-const HelperInterface = rootRequire("src/HelperInterface");
-
-const GoogleHelperObj = rootRequire("src/Sites/Google/Helper");
+const Logger = require("../../../Helpers/Logger");
+const HelperInterface = require("../../../HelperInterface");
+const GoogleHelperObj = require("../../../Sites/Google/Helper");
 
 module.exports = class SearchQuery extends HelperInterface {
     constructor(app) {
