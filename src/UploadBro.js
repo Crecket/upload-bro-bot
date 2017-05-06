@@ -10,7 +10,7 @@ const MongoDbEngine = require("cacheman-mongo");
 const Logger = require("./Helpers/Logger.js");
 
 // polyfill shortcut
-const polyFill = () =>{};
+const polyFill = () => {};
 
 // utilities
 let Utils = require("./Helpers/Utils");
@@ -109,7 +109,7 @@ module.exports = class UploadBro {
             ]);
 
             // finished loading everything
-            Logger.debug(
+            Logger.trace(
                 `Loaded the following commands:\n\n${this._CommandHandler.info}\n`
             );
 
@@ -133,7 +133,7 @@ module.exports = class UploadBro {
         const db = await MongoClient.connect(process.env.MONGODB_URL);
 
         // log connection status
-        Logger.debug("Connected to " + process.env.MONGODB_URL);
+        Logger.trace("Connected to " + process.env.MONGODB_URL);
 
         // return the connection
         return db;
@@ -159,7 +159,7 @@ module.exports = class UploadBro {
             );
         });
 
-        Logger.debug(`Loaded ${this._SiteHandler.siteCount} sites`);
+        Logger.trace(`Loaded ${this._SiteHandler.siteCount} sites`);
     }
 
     /**
@@ -182,7 +182,7 @@ module.exports = class UploadBro {
             );
         });
 
-        Logger.debug(`Loaded ${this._CommandHandler.commandCount} commands`);
+        Logger.trace(`Loaded ${this._CommandHandler.commandCount} commands`);
     }
 
     /**
@@ -204,7 +204,7 @@ module.exports = class UploadBro {
             );
         });
 
-        Logger.debug(`Loaded ${this._QueryHandler.queryCount} queries`);
+        Logger.trace(`Loaded ${this._QueryHandler.queryCount} queries`);
     }
 
     /**
@@ -219,10 +219,10 @@ module.exports = class UploadBro {
         return this._TelegramBot
             .answerCallbackQuery(id, text, alert, options)
             .then(result => {
-                Logger.debug("Responded to query " + id);
+                Logger.trace("Responded to query " + id);
             })
             .catch(() => {
-                Logger.debug("Failed to respond to query " + id);
+                Logger.trace("Failed to respond to query " + id);
             });
     }
 
@@ -253,12 +253,12 @@ module.exports = class UploadBro {
         this._TelegramBot.on("group_chat_created", msg => {
             // track event
             // this._Analytics.track('group_chat_created');
-            Logger.debug(["group_chat_created", msg]);
+            Logger.trace(["group_chat_created", msg]);
         });
         this._TelegramBot.on("message", msg => {
             // track event
             // this._Analytics.track('message');
-            Logger.debug(["message", msg]);
+            Logger.trace(["message", msg]);
         });
 
         // callback query listener

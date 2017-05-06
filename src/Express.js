@@ -278,7 +278,7 @@ module.exports = function (uploadApp) {
         // start https
         if (useSsl) {
             httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
-                Logger.debug(
+                Logger.trace(
                     "Express listening on " +
                     process.env.EXPRESS_HTTPS_PORT +
                     " and " +
@@ -286,7 +286,7 @@ module.exports = function (uploadApp) {
                 );
             });
         } else {
-            Logger.debug("Express listening on " + process.env.EXPRESS_PORT);
+            Logger.trace("Express listening on " + process.env.EXPRESS_PORT);
         }
     });
 };

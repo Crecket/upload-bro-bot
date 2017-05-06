@@ -16,11 +16,13 @@ const tracerOptions = {
         {
             info: "{{title}}: {{message}}",
             warn: "{{title}}: {{timestamp}} {{message}} (in {{file}}:{{line}})"
+
             // error: "{{title}}: {{timestamp}} {{message}} (in {{file}}:{{line}})\nCall Stack:\n{{stack}}"
         }
     ],
     dateformat: "HH:MM:ss.L",
-    level: DEV ? "trace" : "error",
+    // trace is only enabled in dev mode
+    level: process.env.TRACE ? "trace" : DEV ? "debug" : "error",
     preprocess: preProcess
 };
 
