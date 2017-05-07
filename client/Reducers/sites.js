@@ -1,10 +1,12 @@
 const store = require("store");
 
-export default (state = {
-                    sites: store.get("sites") || [],
-                    loading: false
-                },
-                action) => {
+export default (
+    state = {
+        sites: store.get("sites") || [],
+        loading: false
+    },
+    action
+) => {
     switch (action.type) {
         case "SITE_SET_INFO":
             // update local storage
