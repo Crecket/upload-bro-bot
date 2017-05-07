@@ -11,7 +11,24 @@ import snackbarReducers, {
     defaultState as defaultSnackbarState
 } from "./snackbar";
 
+import globalReducer from "./index";
+
 describe("reducers", () => {
+    describe("global provider", () => {
+        it("should return the expected combined state from all reducers", () => {
+            // the reducer index should combine all reducers into a single state
+            const globalState = {
+                modal: { ...defaultModalState },
+                sites: { ...defaultSitesState },
+                user: { ...defaultUserState },
+                snackbar: { ...defaultSnackbarState }
+            };
+
+            // a empty state and no action should return the expected global state ojbect
+            expect(globalReducer(undefined, {})).toEqual(globalState);
+        });
+    });
+
     describe("modal", () => {
         it("should return a state with an open modal", () => {
             // the expected new state
@@ -215,7 +232,6 @@ describe("reducers", () => {
                 })
             ).toEqual(defaultUserState);
         });
-
 
         it("should return a user state with an initialcheck completed status", () => {
             // the expected new state
