@@ -3,14 +3,13 @@ const store = require("store");
 //get default value
 const user_info = store.get("user_info");
 
-export default (
-    state = {
-        user_info: user_info || false,
-        loading: false,
-        initialCheck: false
-    },
-    action
-) => {
+export const defaultState = {
+    user_info: user_info || false,
+    loading: false,
+    initialCheck: false
+};
+
+export default (state = defaultState, action) => {
     switch (action.type) {
         case "USER_SET_INFO":
             // update local storage
