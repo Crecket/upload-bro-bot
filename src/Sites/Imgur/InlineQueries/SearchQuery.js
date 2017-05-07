@@ -49,7 +49,7 @@ module.exports = class SearchQuery extends HelperInterface {
                     this._ImgurHelper
                         .imageList(user_info)
                         .then(file_results => {
-                            Logger.debug(file_results);
+                            Logger.trace(file_results);
 
                             var resultList = [];
                             file_results.map((file, key) => {

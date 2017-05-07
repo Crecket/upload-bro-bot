@@ -13,4 +13,4 @@ const UploadBro = require('./src/UploadBro');
 const App = new UploadBro();
 
 // start Uploadbro
-App.start().then(Logger.debug).catch(Logger.error);
+App.start().then().catch(Logger.error);

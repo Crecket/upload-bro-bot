@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const http = require("http");
 const spdy = require("spdy");
-const Logger = require("./Helpers/Logger.js");
+const Logger = require("./Helpers/Logger");
 const glob = require("glob");
 
 // express libs

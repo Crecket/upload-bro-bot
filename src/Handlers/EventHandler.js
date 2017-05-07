@@ -32,7 +32,7 @@ module.exports = class EventHandlers extends HelperInterface {
                     return this._app
                         .answerCallbackQuery(query.id, message)
                         .then(res => {
-                            // Logger.debug(res);
+                            // Logger.trace(res);
                         })
                         .catch(err => Logger.error(err));
                 })
@@ -46,7 +46,7 @@ module.exports = class EventHandlers extends HelperInterface {
                             "It looks like something went wrong."
                         )
                         .then(res => {
-                            // Logger.debug(res);
+                            // Logger.trace(res);
                         })
                         .catch(err => Logger.error(err));
                 });
@@ -55,7 +55,7 @@ module.exports = class EventHandlers extends HelperInterface {
             this._app
                 .answerCallbackQuery(query.id, "We couldn't find this command.")
                 .then(res => {
-                    // Logger.debug(res);
+                    // Logger.trace(res);
                 })
                 .catch(err => Logger.error(err));
         }
@@ -109,7 +109,7 @@ module.exports = class EventHandlers extends HelperInterface {
             file.file_type = "voice";
         } else {
             // invalid file type
-            Logger.debug(file);
+            Logger.trace(file);
             return;
         }
         // get the file extension

@@ -43,11 +43,11 @@ module.exports = (app, passport, uploadApp) => {
             uploadApp._UserHelper
                 .updateUserTokens(request.user)
                 .then(result => {
-                    Logger.debug("success");
+                    Logger.trace("success");
                     response.json(true);
                 })
                 .catch(err => {
-                    Logger.debug("failed1");
+                    Logger.trace("failed1");
                     response.status(500).json(false);
                 });
         } else {

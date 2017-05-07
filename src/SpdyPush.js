@@ -41,7 +41,7 @@ class PushHandler {
             // check if sw-precache parameter is set, dont add push events if it is
             if (this.request.query["_sw-precache"]) return false;
 
-            Logger.debug("Pushing file");
+            Logger.trace("Pushing file");
 
             // loop through all the push events we want ot send
             const PromiseList = pushEvents.map(pushEvent => {
