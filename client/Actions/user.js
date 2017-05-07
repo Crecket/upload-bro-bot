@@ -27,7 +27,7 @@ export function userUpdate() {
             .catch(err => {
                 // finish initial check
                 dispatch(userInitialCHeck());
-                Logger.error(err);
+                Logger.trace(err);
             });
     };
 }
@@ -39,6 +39,7 @@ export function userLoadLocalstorage() {
 
 export function userLogout() {
     return dispatch => {
+        dispatch({type: "USER_LOGOUT_REQUEST"});
         axios
             .post("/logout")
             .then(() => {
@@ -48,7 +49,7 @@ export function userLogout() {
                 // send user logout event
                 dispatch({type: "USER_LOGOUT"});
             })
-            .catch(Logger.error);
+            .catch(Logger.trace);
     };
 }
 

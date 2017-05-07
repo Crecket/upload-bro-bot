@@ -23,7 +23,8 @@ export function siteUpdate() {
                 dispatch(siteNotLoading());
             })
             .catch(err => {
-                Logger.error(err);
+                Logger.trace(err);
+                dispatch(siteNotLoading());
             });
     };
 }

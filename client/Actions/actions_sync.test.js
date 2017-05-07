@@ -1,3 +1,5 @@
+jest.mock("store");
+
 import * as modalActions from "./modal";
 import * as sitesActions from "./sites";
 import * as snackbarActions from "./snackbar";
@@ -5,6 +7,13 @@ import * as userActions from "./user";
 
 describe("actions synchronous", () => {
     describe("user", () => {
+        it("should create a user load from localstorage action", () => {
+            const expected = {
+                type: "USER_LOAD_LOCALSTORAGE"
+            };
+            expect(userActions.userLoadLocalstorage()).toEqual(expected);
+        });
+
         it("should create a user is now loading action", () => {
             const expected = {
                 type: "USER_IS_LOADING"
@@ -39,6 +48,7 @@ describe("actions synchronous", () => {
                 expected
             );
         });
+
     });
 
     describe("sites", () => {

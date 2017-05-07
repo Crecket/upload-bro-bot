@@ -6,6 +6,7 @@ cache:
   directories:
     - node_modules
 script:
+  - sudo cp .env.example .env
   - npm run test
   - npm run build
 #services:
