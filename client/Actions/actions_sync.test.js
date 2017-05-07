@@ -52,6 +52,13 @@ describe("actions synchronous", () => {
     });
 
     describe("sites", () => {
+        it("should create a sites load from localstorage action", () => {
+            const expected = {
+                type: "SITE_LOAD_LOCALSTORAGE"
+            };
+            expect(sitesActions.siteLoadLocalstorage()).toEqual(expected);
+        });
+
         it("should create a sites are now loading action", () => {
             const expected = {
                 type: "SITE_IS_LOADING"

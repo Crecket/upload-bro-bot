@@ -43,7 +43,6 @@ describe("actions asynchronous", () => {
                 { type: "USER_IS_NOT_LOADING" },
                 { type: "USER_INITIAL_CHECK" }
             ];
-            const expectedState = { user: { user_info: false } };
 
             // create a new mock store to handle action
             const store = MockStore(storeState);
@@ -63,8 +62,10 @@ describe("actions asynchronous", () => {
                     .then(() => {
                         // initial check should be set and user is no longer loading
                         expect(store.getActions()).toEqual(expectedActions);
-                        expect(store.getState()).toEqual(expectedState);
                         done();
+                    })
+                    .catch(err => {
+                        throw new Error(err);
                     });
             });
         });
@@ -74,7 +75,6 @@ describe("actions asynchronous", () => {
                 { type: "USER_IS_LOADING" },
                 { type: "USER_INITIAL_CHECK" }
             ];
-            const expectedState = { user: { user_info: false } };
 
             // create a new mock store to handle action
             const store = MockStore(storeState);
@@ -94,8 +94,10 @@ describe("actions asynchronous", () => {
                     .then(() => {
                         // initial check should be set and user is no longer loading
                         expect(store.getActions()).toEqual(expectedActions);
-                        expect(store.getState()).toEqual(expectedState);
                         done();
+                    })
+                    .catch(err => {
+                        throw new Error(err);
                     });
             });
         });
@@ -105,7 +107,6 @@ describe("actions asynchronous", () => {
                 { type: "USER_LOGOUT_REQUEST" },
                 { type: "USER_LOGOUT" }
             ];
-            const expectedState = { user: { user_info: false } };
 
             // create a new mock store to handle action
             const store = MockStore(storeState);
@@ -125,8 +126,10 @@ describe("actions asynchronous", () => {
                     .then(() => {
                         // initial check should be set and user is no longer loading
                         expect(store.getActions()).toEqual(expectedActions);
-                        expect(store.getState()).toEqual(expectedState);
                         done();
+                    })
+                    .catch(err => {
+                        throw new Error(err);
                     });
             });
         });
@@ -145,41 +148,81 @@ describe("actions asynchronous", () => {
         };
         // initial test state
         const storeState = {
-            user: {
-                user_info: false
+            sites: {
+                sites: {},
+                loading: false
             }
         };
 
         it("should create a updates sites action which calls the api", () => {
-            const expectedActions = [
-                { type: "USER_LOGOUT_REQUEST" },
-                { type: "USER_LOGOUT" }
-            ];
-            const expectedState = { user: { user_info: false } };
+            return new Promise((resolve, reject) => {
+                const siteList = {
+                    google: {
+                        test: true
+                    }
+                };
+                // expected actions
+                const expectedActions = [
+                    { type: "SITE_IS_LOADING" },
+                    { type: "SITE_SET_INFO", payload: { sites: siteList } },
+                    { type: "SITE_IS_NOT_LOADING" }
+                ];
 
-            // create a new mock store to handle action
-            const store = MockStore(storeState);
+                // create a new mock store to handle action
+                const store = MockStore(storeState);
 
-            // dispatch the user logout event
-            store.dispatch(sitesActions.siteUpdate());
+                // dispatch the user logout event
+                store.dispatch(sitesActions.siteUpdate());
 
-            // wait for a request
-            moxios.wait(() => {
-                // get the most recent request and respond to it
-                moxios.requests
-                    .mostRecent()
-                    .respondWith({
-                        status: 200,
-                        response: true
-                    })
-                    .then(() => {
-                        // initial check should be set and user is no longer loading
-                        // expect(store.getActions()).toEqual(expectedActions);
-                        // expect(store.getState()).toEqual(expectedState);
-                        console.log(store.getActions());
-                        console.log(store.getState());
-                        done();
-                    });
+                // wait for a request
+                moxios.wait(() => {
+                    // get the most recent request and respond to it
+                    moxios.requests
+                        .mostRecent()
+                        .respondWith({
+                            status: 200,
+                            response: siteList
+                        })
+                        .then(() => {
+                            // initial check should be set and user is no longer loading
+                            expect(store.getActions()).toEqual(expectedActions);
+                            resolve();
+                        })
+                        .catch(reject);
+                });
+            });
+        });
+
+        it("should create a updates sites action which fails to call the api", () => {
+            return new Promise((resolve, reject) => {
+                // expected actions
+                const expectedActions = [
+                    { type: "SITE_IS_LOADING" },
+                    { type: "SITE_IS_NOT_LOADING" }
+                ];
+
+                // create a new mock store to handle action
+                const store = MockStore(storeState);
+
+                // dispatch the user logout event
+                store.dispatch(sitesActions.siteUpdate());
+
+                // wait for a request
+                moxios.wait(() => {
+                    // get the most recent request and respond to it
+                    moxios.requests
+                        .mostRecent()
+                        .respondWith({
+                            status: 500,
+                            response: null
+                        })
+                        .then(() => {
+                            // initial check should be set and user is no longer loading
+                            expect(store.getActions()).toEqual(expectedActions);
+                            resolve();
+                        })
+                        .catch(reject);
+                });
             });
         });
     });
