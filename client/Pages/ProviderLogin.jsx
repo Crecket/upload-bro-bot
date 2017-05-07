@@ -57,7 +57,7 @@ export default class ProviderLogin extends React.Component {
     }
 
     render() {
-        if (this.state.redirect) <Redirect to={this.state.redirect}/>;
+        if (this.state.redirect) return <Redirect to={this.state.redirect}/>;
 
         // default to loading screen
         let loginStatusResult = (

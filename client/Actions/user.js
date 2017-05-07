@@ -16,7 +16,7 @@ export function userUpdate() {
     return dispatch => {
         dispatch(userLoading());
         axios
-            .post("/api/get_user")
+            .post(`${process.env.WEBSITE_URL}/api/get_user`)
             .then(response => response.data)
             .then(json => {
                 // update user info and stop loading state
