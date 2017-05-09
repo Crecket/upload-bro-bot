@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const Logger = require("../../Helpers/Logger");
+
 const SiteInteface = require("../SiteInterface.js");
 const UploadObj = require("./Queries/Upload");
 const SearchQueryObj = require("./InlineQueries/SearchQuery");
@@ -16,7 +17,6 @@ module.exports = class Imgur extends SiteInteface {
 
     /**
      * Load all commands for this website
-     *
      * @returns {Promise.<T>}
      */
     register() {
@@ -30,6 +30,15 @@ module.exports = class Imgur extends SiteInteface {
             );
         }
         return Promise.resolve();
+    }
+
+    /**
+     * On false, this site isn't used and allowed in uploadbro
+     *
+     * @returns {boolean}
+     */
+    get enabled() {
+        return true;
     }
 
     /**

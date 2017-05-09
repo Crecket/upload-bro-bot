@@ -2,11 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const Logger = require("../../Helpers/Logger");
 
-const SiteInteface = require("../SiteInterface");
-const SearchQueryObj = require("./InlineQueries/SearchQuery");
-const UploadObj = require("./Queries/Upload");
+const SiteInteface = require("../SiteInterface.js");
+// const UploadObj = require("./Queries/Upload");
+// const SearchQueryObj = require("./InlineQueries/SearchQuery");
 
-module.exports = class Dropbox extends SiteInteface {
+module.exports = class Gfycat extends SiteInteface {
     constructor(UploadBro, register = true) {
         super(UploadBro);
         this._UploadBro = UploadBro;
@@ -21,11 +21,13 @@ module.exports = class Dropbox extends SiteInteface {
      */
     register() {
         if (this._register) {
-            // register commands
-            this._UploadBro._QueryHandler.register(new UploadObj(this._UploadBro));
-
-            // register inline queries
-            // this._UploadBro._InlineQueryHandler.register(new SearchQueryObj(this._UploadBro));
+            // // register commands
+            // this._app._QueryHandler.register(new UploadObj(this._app));
+            //
+            // // register inline queries
+            // this._app._InlineQueryHandler.register(
+            //     new SearchQueryObj(this._app)
+            // );
         }
         return Promise.resolve();
     }
@@ -35,8 +37,8 @@ module.exports = class Dropbox extends SiteInteface {
      *
      * @returns {boolean}
      */
-    get enabled() {
-        return true;
+    get enabled(){
+        return false;
     }
 
     /**
@@ -45,7 +47,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get name() {
-        return "Dropbox";
+        return "Gfycat";
     }
 
     /**
@@ -54,7 +56,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get title() {
-        return "Dropbox";
+        return "Gfycat";
     }
 
     /**
@@ -63,16 +65,16 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get slogan() {
-        return "Securely Share, Sync & Collaborate.";
+        return "Create, discover and share awesome GIFs";
     }
 
     /**
-     * return this site's description
+     * return this site's full title
      *
      * @returns {string}
      */
     get description() {
-        return "Securely Share, Sync & Collaborate.";
+        return "Create, discover and share awesome GIFs";
     }
 
     /**
@@ -81,7 +83,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get key() {
-        return "dropbox";
+        return "gfycat";
     }
 
     /**
@@ -90,7 +92,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get url() {
-        return "https://www.dropbox.com";
+        return "https://gfycat.com";
     }
 
     /**
@@ -101,11 +103,11 @@ module.exports = class Dropbox extends SiteInteface {
     logoUrl(type = "png") {
         switch (type) {
             case "png":
-                return "/assets/img/dropbox.png";
+                return "/assets/img/gfycat.png";
             case "svg":
-                return "/assets/img/dropbox.svg";
+                return "/assets/img/gfycat.svg";
         }
-        return "/assets/img/dropbox.png";
+        return "/assets/img/gfycat.png";
     }
 
     /**
@@ -114,7 +116,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {string}
      */
     get logoUrlSvg() {
-        return "/assets/img/dropbox.svg";
+        return "/assets/img/gfycat.svg";
     }
 
     /**
@@ -123,7 +125,8 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {boolean|[string]}
      */
     get supportedExtensions() {
-        return true;
+        return [];
+        // return ["jpg", "jpeg", "png", "gif", "apng", "tiff", "pdf", "xcf"];
     }
 
     /**
@@ -132,6 +135,7 @@ module.exports = class Dropbox extends SiteInteface {
      * @returns {[string,string]}
      */
     get supportedFeatures() {
-        return ["query_upload"];
+        return [];
+        // return ["inlineQuery_search", "query_uploadImage"];
     }
 };
