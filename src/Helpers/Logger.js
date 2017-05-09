@@ -22,7 +22,7 @@ const tracerOptions = {
     ],
     dateformat: "HH:MM:ss.L",
     // trace is only enabled in dev mode
-    level: process.env.TRACE ? "trace" : DEV ? "debug" : "error",
+    level: process.env.TRACE === "true" ? "trace" : DEV ? "debug" : "error",
     preprocess: preProcess
 };
 
