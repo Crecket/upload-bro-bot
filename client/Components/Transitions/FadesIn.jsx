@@ -1,6 +1,6 @@
 import React from "react";
 import { findDOMNode } from "react-dom";
-import { Power2, TweenLite } from "gsap";
+import { TweenLite, Power2 } from "gsap";
 
 /**
  * Returns a FadesIn wrapped component

@@ -100,7 +100,7 @@
     "html-webpack-plugin": "^2.26.0",
     "jest": "*",
     "loglevel": "^1.4.1",
-    "material-ui": "0.17.4",
+    "material-ui": "0.18.0",
     "moxios": "^0.4.0",
     "node-sass": "^4.5.2",
     "nodemon": "^1.11.0",
@@ -130,7 +130,7 @@
     "store": "^2.0.4",
     "style-loader": "^0.16.1",
     "sw-precache": "^5.1.0",
-    "webpack": "^2.4.1",
+    "webpack": "^2.6.0",
     "webpack-bundle-analyzer": "^2.3.1"
   }
 }

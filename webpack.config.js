@@ -68,7 +68,10 @@ let config = {
         }),
         // webpack analyzer
         new BundleAnalyzerPlugin({
+            // don't open the file automatically
             openAnalyzer: false,
+            // default type to open (`stat`, `parsed` or `gzip`)
+            defaultSizes: "gzip",
             // create a server for the watcher or a static file for production enviroments
             analyzerMode: "static",
             // output outside of the public folder
