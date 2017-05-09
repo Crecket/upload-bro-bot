@@ -3162,10 +3162,6 @@ http-status@^0.2.2:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/http-status/-/http-status-0.2.5.tgz#976f91077ea7bfc15277cbcf8c80c4d5c51b49b0"
 
-http2@^3.3.6:
-  version "3.3.6"
-  resolved "https://registry.yarnpkg.com/http2/-/http2-3.3.6.tgz#7df06227e02b5b5a5841deea08239b3198d04bec"
-
 https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
@@ -4238,9 +4234,9 @@ map-stream@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/map-stream/-/map-stream-0.1.0.tgz#e56aa94c4c8055a16404a0674b78f215f7c8e194"
 
-material-ui@0.17.4:
-  version "0.17.4"
-  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-0.17.4.tgz#193999ecb49c3ec15ae0abb4e90fdf9a7bd343e0"
+material-ui@0.18.0:
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-0.18.0.tgz#fcf5eddfe87d066792bd44f09b4f7c9ca7f620d6"
   dependencies:
     babel-runtime "^6.23.0"
     inline-style-prefixer "^3.0.2"
@@ -6787,9 +6783,9 @@ webpack-sources@^0.2.3:
     source-list-map "^1.1.1"
     source-map "~0.5.3"
 
-webpack@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-2.4.1.tgz#15a91dbe34966d8a4b99c7d656efd92a2e5a6f6a"
+webpack@^2.6.0:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-2.5.1.tgz#61742f0cf8af555b87460a9cd8bba2f1e3ee2fce"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
