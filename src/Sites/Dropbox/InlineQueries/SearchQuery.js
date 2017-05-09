@@ -3,7 +3,7 @@ const path = require("path");
 const mime = require("mime");
 const Logger = require("../../../Helpers/Logger.js");
 const HelperInterface = require("../../../HelperInterface");
-const DropboxHelperObj = require("../../../Sites/Dropbox/Helper");
+const DropboxHelperObj = require("../Helper");
 
 module.exports = class SearchQuery extends HelperInterface {
     constructor(app) {

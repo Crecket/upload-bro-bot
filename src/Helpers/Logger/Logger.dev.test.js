@@ -1,13 +1,15 @@
 const assert = require("assert");
 
-// set debug to true for logger enviroment test
+// debug to false to test development mode
 process.env.DEBUG = "true";
+process.env.TRACE = "false";
+
 const Logger = require("../Logger.js");
 
 describe("Logger", () => {
     describe("preProcess()", () => {
         it("should return uppercase version", () => {
-            const processResult = Logger.preProcess({title: "ab"});
+            const processResult = Logger.preProcess({ title: "ab" });
             expect(processResult).toHaveProperty("title", "AB");
         });
     });

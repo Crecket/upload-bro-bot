@@ -2,30 +2,30 @@ const fs = require("fs");
 const path = require("path");
 const mime = require("mime");
 
-const ImgurHelperObj = require("./Helper");
+const GfycatHelper = require("./Helper");
 const UserHelperObj = require("../../UserHelper");
 
-module.exports = (app, passport, uploadApp) => {
-    let db = uploadApp._Db;
-    let ImgurHelper = new ImgurHelperObj(uploadApp);
-    let UserHelper = new UserHelperObj(uploadApp);
+module.exports = (app, passport, UploadBro) => {
+    let db = UploadBro._Db;
+    let GfycatHelperObj = new GfycatHelper(UploadBro);
+    let UserHelper = new UserHelperObj(UploadBro);
 
     // returns a valid oauth url for the client
-    app.post("/login/imgur", (request, response) => {
+    app.post("/login/gfycat", (request, response) => {
         if (!request.user) {
             // not logged in
             response.redirect("/");
         } else {
             var redirectToUrl = true;
 
-            // check if we already have data for imgur
-            if (request.user.provider_sites.imgur) {
+            // check if we already have data for gfycat
+            if (request.user.provider_sites.gfycat) {
                 // check if we have a refresh token
-                if (request.user.provider_sites.imgur.refresh_token) {
+                if (request.user.provider_sites.gfycat.refresh_token) {
                     redirectToUrl = false;
 
                     // validate tokens
-                    ImgurHelper.createOauthClient(request.user)
+                    GfycatHelperObj.createOauthClient(request.user)
                         .then(valid => {
                             // no need to login
                             response.redirect("/");
@@ -33,31 +33,31 @@ module.exports = (app, passport, uploadApp) => {
                         .catch(err => {
                             // invalid token or something went wrong
                             response.redirect(
-                                ImgurHelper.getAuthorizationUrl("code")
+                                GfycatHelperObj.getAuthorizationUrl("code")
                             );
                         });
                 }
             }
 
             if (redirectToUrl) {
-                // redirect to imgur login url
-                response.redirect(ImgurHelper.getAuthorizationUrl("code"));
+                // redirect to gfycat login url
+                response.redirect(GfycatHelperObj.getAuthorizationUrl("code"));
             }
         }
     });
 
     // handles the oauth callback
-    app.get("/login/imgur/callback", function (request, response) {
+    app.get("/login/gfycat/callback", function (request, response) {
         var code = request.query.code;
 
-        let resultRoute = "/new/imgur";
+        let resultRoute = "/new/gfycat";
 
         // make sure we have a code and we're logged in
         if (!code || !request.user) {
             response.redirect(resultRoute);
             return;
         } else {
-            ImgurHelper.requestAccessToken(code)
+            GfycatHelperObj.requestAccessToken(code)
                 .then(result => {
                     let responseData = result.data;
 
@@ -65,7 +65,7 @@ module.exports = (app, passport, uploadApp) => {
                     const current_provider_sites = request.user.provider_sites;
 
                     // set new data
-                    current_provider_sites.imgur = {
+                    current_provider_sites.gfycat = {
                         access_token: responseData.access_token,
                         expires_in: responseData.expires_in,
                         expiry_date: new Date().getTime() +

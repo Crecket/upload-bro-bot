@@ -1,5 +1,5 @@
-var fs = require("fs");
-var path = require("path");
+const fs = require("fs");
+const path = require("path");
 const Logger = require("../../Helpers/Logger");
 
 const SiteInteface = require("../SiteInterface");
@@ -30,6 +30,15 @@ module.exports = class Google extends SiteInteface {
             );
         }
         return Promise.resolve();
+    }
+
+    /**
+     * On false, this site isn't used and allowed in uploadbro
+     *
+     * @returns {boolean}
+     */
+    get enabled() {
+        return true;
     }
 
     /**

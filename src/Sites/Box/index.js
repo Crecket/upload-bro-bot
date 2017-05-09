@@ -1,28 +1,46 @@
 const fs = require("fs");
 const path = require("path");
 const Logger = require("../../Helpers/Logger.js");
+
 const SiteInteface = require("../SiteInterface.js");
 const UploadObj = require("./Queries/Upload");
-// const SearchQueryObj = rootRequire('src/Sites/Box/InlineQueries/SearchQuery');
+const SearchQueryObj = require("./InlineQueries/SearchQuery");
 
 module.exports = class Box extends SiteInteface {
-    constructor(app) {
-        super(app);
+    constructor(UploadBro, register = true) {
+        super(UploadBro);
+        this._UploadBro = UploadBro;
 
-        this._app = app;
+        // on false, commands aren't registered by default
+        this._register = register;
     }
 
     /**
      * Load all commands for this website
+     * @returns {Promise.<T>}
      */
     register() {
-        // register commands
-        this._app._QueryHandler.register(new UploadObj(this._app));
-        //
-        // // register inline queries
-        // this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
+        if (this._register) {
+            // register commands
+            this._UploadBro._QueryHandler.register(
+                new UploadObj(this._UploadBro)
+            );
 
+            // register inline queries
+            this._UploadBro._InlineQueryHandler.register(
+                new SearchQueryObj(this._UploadBro)
+            );
+        }
         return Promise.resolve();
+    }
+
+    /**
+     * On false, this site isn't used and allowed in uploadbro
+     *
+     * @returns {boolean}
+     */
+    get enabled() {
+        return true;
     }
 
     /**

@@ -1,7 +1,6 @@
 "use strict";
 
-let PreRender = () => {
-};
+let PreRender = () => {};
 if (process.env.ENABLE_SSR === "true") {
     // only load babel-register if we have ssr
     require("babel-register");
@@ -11,7 +10,7 @@ if (process.env.ENABLE_SSR === "true") {
 }
 
 const Logger = require("../Helpers/Logger");
-// const SpdyPush = require("../SpdyPush");
+const SpdyPush = require("../SpdyPush");
 
 /**
  * @param uploadApp
@@ -47,9 +46,8 @@ module.exports = (app, passport, uploadApp) => {
         // polyfill pushhandler result since its buggy for now
         const PushHandlerResult = Promise.resolve();
 
-        // // create new push handler
+        // create new push handler and start sendFiles event for files which are always requested for this route
         // const PushHandler = new SpdyPush(req, res);
-        // // start sendFiles event for files which are always requested for this route
         // const PushHandlerResult = PushHandler.sendFiles([
         //     {
         //         target_url: "/assets/dist/app.js",
@@ -69,7 +67,7 @@ module.exports = (app, passport, uploadApp) => {
         PushHandlerResult.catch(Logger.error);
 
         Promise.all([PreRenderResults, PushHandlerResult])
-        // we only bother with the html results
+            // we only bother with the html results
             .then(([preRenderedHtml]) => {
                 // set a cache header since we want to make sure this is up-to-date if the client
                 // does not have a cached version in the service worker

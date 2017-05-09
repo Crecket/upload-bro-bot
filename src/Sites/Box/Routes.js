@@ -51,8 +51,7 @@ module.exports = (app, passport, uploadApp) => {
                         refreshToken: responseData.refreshToken,
                         accessTokenTTLMS: responseData.accessTokenTTLMS,
                         acquiredAtMS: responseData.acquiredAtMS,
-                        expiry_date: new Date().getTime() +
-                        parseInt(responseData.accessTokenTTLMS / 1000)
+                        expiry_date: new Date().getTime() +responseData.accessTokenTTLMS
                     };
 
                     // create a client to fetch the user info

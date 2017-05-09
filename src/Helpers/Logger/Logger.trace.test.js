@@ -1,8 +1,7 @@
 const assert = require("assert");
 
-// debug to false to test production mode
-process.env.DEBUG = "false";
-process.env.TRACE = "false";
+// trace to true to test trace mode
+process.env.TRACE = "true";
 
 const Logger = require("../Logger.js");
 

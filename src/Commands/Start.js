@@ -4,10 +4,10 @@ const Logger = require("../Helpers/Logger");
 const HelperInterface = require("../HelperInterface");
 
 module.exports = class Start extends HelperInterface {
-    constructor(app) {
-        super(app);
+    constructor(UploadBro) {
+        super(UploadBro);
 
-        this._app = app;
+        this._UploadBro = UploadBro;
     }
 
     /**
@@ -16,7 +16,7 @@ module.exports = class Start extends HelperInterface {
      */
     handle(msg) {
         // get the user for this request
-        this._app._UserHelper
+        this._UploadBro._UserHelper
             .getUser(msg.from.id)
             .then(user_info => {
                 // setup the message

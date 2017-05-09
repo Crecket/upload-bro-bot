@@ -67,7 +67,10 @@ module.exports = class SiteHandler {
     get siteList() {
         let siteList = {};
         Object.keys(this._sites).map(siteKey => {
-            siteList[siteKey] = this.getSiteBasic(siteKey);
+            // get info object for this site
+            const siteInfo = this.getSiteBasic(siteKey);
+            // only add it if site is enabled
+            if (siteInfo.enabled) siteList[siteKey] = siteInfo;
         });
         return siteList;
     }
@@ -79,10 +82,13 @@ module.exports = class SiteHandler {
      * @returns {*}
      */
     getSiteBasic(siteKey) {
-        return !this._sites[siteKey]
-            ? false
-            : {
+        const siteInfo = this._sites[siteKey];
+
+        // only return the site info if it is enabled
+        if (siteInfo && siteInfo.enabled) {
+            return {
                 // static properties
+                enabled: this._sites[siteKey].enabled,
                 name: this._sites[siteKey].name,
                 title: this._sites[siteKey].title,
                 description: this._sites[siteKey].description,
@@ -96,10 +102,10 @@ module.exports = class SiteHandler {
                     svg: this._sites[siteKey].logoUrl("svg")
                 },
                 // documentation and comments
-                documentation: this.generateDocumentation(
-                    this._sites[siteKey]
-                )
+                documentation: this.generateDocumentation(this._sites[siteKey])
             };
+        }
+        return false;
     }
 
     /**
@@ -111,9 +117,9 @@ module.exports = class SiteHandler {
     generateDocumentation(site) {
         let supportedFeatures = site.supportedFeatures.length > 0
             ? `### Supported features\n\n` +
-            site.supportedFeatures
-                .map(type => FeatureLookup[type])
-                .join("\n")
+                  site.supportedFeatures
+                      .map(type => FeatureLookup[type])
+                      .join("\n")
             : "";
 
         return `## ${site.title}\n${supportedFeatures}`;

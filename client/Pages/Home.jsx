@@ -48,8 +48,32 @@ export default class Home extends React.Component {
                 </Paper>
 
                 <FeatureList />
-                <SiteList sites={this.props.sites}/>
+                <SiteList sites={this.props.sites} />
                 <YoutubePreview />
+
+                <div className="row center-xs">
+                    <div className="col-xs-12 col-sm-6">
+                        <div className="box">
+                            <br/>
+                            <a
+                                href="https://telegram.me/uploadbro_bot"
+                                rel="noopener"
+                                target="_blank"
+                            >
+                                <RaisedButton
+                                    icon={
+                                        <img
+                                            src="/assets/img/telegram.svg"
+                                            style={{ width: 32 }}
+                                        />
+                                    }
+                                    label="message uploadbro"
+                                />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         );
     }

@@ -1,24 +1,53 @@
 module.exports = class UserHelper {
     constructor(app) {
-        this._app = app;
+        this._UploadBro = app;
     }
 
     /**
-     *
+     * Updates the user's information in mongodb with the new given object
      * @param user
      * @returns {Promise}
      */
     async updateUserTokens(user) {
         return await new Promise((resolve, reject) => {
-            var db = this._app._Db;
-            var usersCollection = db.collection("users");
+            const db = this._UploadBro._Db;
+            const usersCollection = db.collection("users");
 
             // update provider sites
             usersCollection
                 .updateOne(
-                    {_id: user._id},
+                    { _id: user._id },
                     {
-                        $set: {provider_sites: user.provider_sites}
+                        $set: { provider_sites: user.provider_sites }
+                    }
+                )
+                .then(resolve)
+                .catch(reject);
+        });
+    }
+
+    /**
+     * Removes all data for a specific provider
+     * @param user
+     * @param type
+     * @returns {Promise}
+     */
+    async removeUserTokens(user, type) {
+        return await new Promise((resolve, reject) => {
+            console.log('removed');
+            return resolve();
+            const db = this._UploadBro._Db;
+            const usersCollection = db.collection("users");
+
+            // remove this type from the user's provider sites
+            delete user.provider_sites[type];
+
+            // update provider sites
+            usersCollection
+                .updateOne(
+                    { _id: user._id },
+                    {
+                        $set: { provider_sites: user.provider_sites }
                     }
                 )
                 .then(resolve)
@@ -31,16 +60,11 @@ module.exports = class UserHelper {
      * @param user_id
      * @returns {Promise}
      */
-    getUser(user_id) {
-        return new Promise((resolve, reject) => {
-            var db = this._app._Db;
-            var usersCollection = db.collection("users");
+    async getUser(user_id) {
+        var db = this._UploadBro._Db;
+        var usersCollection = db.collection("users");
 
-            // update provider sites
-            usersCollection
-                .findOne({_id: user_id})
-                .then(resolve)
-                .catch(reject);
-        });
+        // update provider sites
+        return await usersCollection.findOne({ _id: user_id });
     }
 };

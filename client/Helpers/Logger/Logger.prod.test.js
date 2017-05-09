@@ -1,7 +1,8 @@
 const assert = require("assert");
 
 // set debug to false for logger env
-process.env.DEBUG = "false";
+process.env.DEBUG = false;
+
 const Logger = require("../Logger.js");
 
 describe("#Logger", () => {

@@ -4,10 +4,9 @@ const Logger = require("../Helpers/Logger");
 const HelperInterface = require("../HelperInterface");
 
 module.exports = class Login extends HelperInterface {
-    constructor(app) {
-        super(app);
-
-        this._app = app;
+    constructor(UploadBro) {
+        super(UploadBro);
+        this._UploadBro = UploadBro;
     }
 
     /**
@@ -24,7 +23,7 @@ module.exports = class Login extends HelperInterface {
             ">the website.</a> \nWe currently support the follower services: \n";
 
         // generate a list for all our services
-        var supportedSites = this._app._SiteHandler.sites;
+        var supportedSites = this._UploadBro._SiteHandler.sites;
         Object.keys(supportedSites).map(key => {
             var tempSite = supportedSites[key];
             message +=

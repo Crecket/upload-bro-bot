@@ -49,9 +49,10 @@ export default class Dashboard extends React.Component {
                                 icon={
                                     <img
                                         src="/assets/img/telegram.svg"
-                                        style={{width: 32}}
+                                        style={{ width: 32 }}
                                     />
                                 }
+                                label="message uploadbro"
                             />
                         </a>
                     </div>

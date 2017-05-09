@@ -43,6 +43,7 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
 
     // generate a list of all the server-side views
     const ServerViews = glob.sync("src/Resources/Views/**/*.twig");
+    const SitesFiles = glob.sync("src/Sites/**/*.js");
 
     // a list of client-side dependencies whic hare always required
     const GlobalClientComponents = [
@@ -72,6 +73,7 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
             dynamicUrlToDependencies: {
                 "/": [
                     ...globalList,
+                    ...SitesFiles,
                     `${CLIENT_DIR}/Pages/Home.jsx`,
                     `${CLIENT_DIR}/Components/YoutubePreview.jsx`,
                     `${CLIENT_DIR}/Components/FeatureList.jsx`,
