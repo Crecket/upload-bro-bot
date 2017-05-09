@@ -6,6 +6,8 @@ const SiteInteface = require("../SiteInterface.js");
 // const UploadObj = require("./Queries/Upload");
 // const SearchQueryObj = require("./InlineQueries/SearchQuery");
 
+// https://developers.gfycat.com/api/#browser-based-authentication
+
 module.exports = class Gfycat extends SiteInteface {
     constructor(UploadBro, register = true) {
         super(UploadBro);
