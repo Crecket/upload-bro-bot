@@ -28,9 +28,9 @@ const ApiRoutes = require("./Routes/ApiRoutes");
 // useSsl helper
 const useSsl = process.env.EXPRESS_USE_SSL === "true";
 
-module.exports = function (uploadApp) {
+module.exports = function(UploadBro) {
     let app = express();
-    let db = uploadApp._Db;
+    let db = UploadBro._Db;
 
     // use ssl?
     if (useSsl) {
@@ -57,7 +57,17 @@ module.exports = function (uploadApp) {
                 "!CAMELLIA"
             ].join(":"),
             honorCipherOrder: true,
-            requestCert: false
+            requestCert: false,
+            spdy: {
+                protocols: [
+                    "h2",
+                    "spdy/3.1",
+                    "spdy/3",
+                    "spdy/2",
+                    "http/1.1",
+                    "http/1.0"
+                ]
+            }
         };
         // add CA if we have one
         if (process.env.EXPRESS_SSL_CA) {
@@ -87,14 +97,14 @@ module.exports = function (uploadApp) {
         res.redirect(httpsUrl);
     });
 
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
 
-    passport.deserializeUser(function (user_id, done) {
+    passport.deserializeUser(function(user_id, done) {
         db
             .collection("users")
-            .findOne({_id: user_id}, {}, function (err, user) {
+            .findOne({ _id: user_id }, {}, function(err, user) {
                 done(err, user);
             });
     });
@@ -104,15 +114,17 @@ module.exports = function (uploadApp) {
             clientID: process.env.TELEPASS_APPID,
             clientSecret: process.env.TELEPASS_SECRET,
             callbackURL: process.env.WEBSITE_URL +
-            process.env.TELEPASS_REDIRECT_URI
+                process.env.TELEPASS_REDIRECT_URI
         },
-        function (accessToken, refreshToken, profile, done) {
+        function(accessToken, refreshToken, profile, done) {
             // get the users collection
             let usersCollection = db.collection("users");
 
             // check if user exists
-            usersCollection.findOne({_id: profile.id}, {}, function (err,
-                                                                     user) {
+            usersCollection.findOne({ _id: profile.id }, {}, function(
+                err,
+                user
+            ) {
                 if (err) {
                     done(err, profile);
                 }
@@ -166,10 +178,16 @@ module.exports = function (uploadApp) {
     // parsers
     app.use(cookieParser());
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
+    app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
     // gzip optimization
     app.use(compression());
+
+    // only enable morgan debugging if set in process env
+    if(process.env.MORGAN){
+        const morgan = require("morgan");
+        app.use(morgan(":method :status :url - HTTP/:http-version - :response-time ms"));
+    }
 
     // add response time header
     if (process.env.DEBUG) {
@@ -222,7 +240,7 @@ module.exports = function (uploadApp) {
         app.use(express.static(__dirname + "/../public"));
 
         // enable pretty error logs
-        app.use(function (err, req, res, next) {
+        app.use(function(err, req, res, next) {
             new ouch()
                 .pushHandler(new ouch.handlers.PrettyPageHandler())
                 .handleException(err, req, res, () => {
@@ -248,16 +266,16 @@ module.exports = function (uploadApp) {
     }
 
     // Default routes
-    TelegramRoutes(app, passport, uploadApp);
-    GeneralRoutes(app, passport, uploadApp);
-    ApiRoutes(app, passport, uploadApp);
+    TelegramRoutes(app, passport, UploadBro);
+    GeneralRoutes(app, passport, UploadBro);
+    ApiRoutes(app, passport, UploadBro);
 
     // find all specific provider routes
     const ProviderRoutes = glob.sync(__dirname + "/Sites/**/Routes.js");
     // load them all with the correct parameters
     ProviderRoutes.map(providerRoute => {
         // require the route
-        require(providerRoute)(app, passport, uploadApp);
+        require(providerRoute)(app, passport, UploadBro);
     });
 
     // fall back route
@@ -266,7 +284,7 @@ module.exports = function (uploadApp) {
     });
 
     // error handler
-    app.use(function (err, req, res, next) {
+    app.use(function(err, req, res, next) {
         if (err.code !== "EBADCSRFTOKEN") return next(err);
 
         // handle CSRF token errors here
@@ -274,15 +292,15 @@ module.exports = function (uploadApp) {
     });
 
     // start listening http
-    httpServer.listen(process.env.EXPRESS_PORT, function () {
+    httpServer.listen(process.env.EXPRESS_PORT, function() {
         // start https
         if (useSsl) {
-            httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function () {
+            httpsServer.listen(process.env.EXPRESS_HTTPS_PORT, function() {
                 Logger.trace(
                     "Express listening on " +
-                    process.env.EXPRESS_HTTPS_PORT +
-                    " and " +
-                    process.env.EXPRESS_PORT
+                        process.env.EXPRESS_HTTPS_PORT +
+                        " and " +
+                        process.env.EXPRESS_PORT
                 );
             });
         } else {

@@ -76,13 +76,13 @@ class PushHandler {
                 );
 
                 // error handler
-                stream.on("error", function (err) {
+                stream.on("error", function(err) {
                     Logger.error(err);
                 });
 
                 // get file contents
                 this.getFileContents(target_file)
-                // gzip the file contents
+                    // gzip the file contents
                     .then(file_contents => this._compressFile)
                     // end the stream with the file contents
                     .then(gzipped_contents => stream.end(gzipped_contents))
@@ -103,10 +103,10 @@ class PushHandler {
     push(target_url, target_file, options = {}) {
         return new Promise(resolve => {
             // default error handler
-            const defaultErr = (err) => {
+            const defaultErr = err => {
                 Logger.error(err);
                 resolve();
-            }
+            };
 
             // create the push event with the target and options
             const pushstream = this.response.push(

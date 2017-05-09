@@ -1097,13 +1097,33 @@ exports[`<Dashboard /> matches snapshot with verified user 1`] = `
                   src="/assets/img/telegram.svg"
                   style={
                     Object {
-                      "marginLeft": 0,
+                      "marginLeft": 12,
                       "marginRight": 0,
                       "verticalAlign": "middle",
                       "width": 32,
                     }
                   }
                 />
+                <span
+                  style={
+                    Object {
+                      "color": "rgba(0, 0, 0, 0.87)",
+                      "fontSize": 14,
+                      "fontWeight": 500,
+                      "letterSpacing": 0,
+                      "margin": 0,
+                      "muiPrepared": true,
+                      "opacity": 1,
+                      "paddingLeft": 8,
+                      "paddingRight": 16,
+                      "position": "relative",
+                      "textTransform": "uppercase",
+                      "userSelect": "none",
+                    }
+                  }
+                >
+                  message uploadbro
+                </span>
               </div>
             </div>
           </button>
@@ -2177,13 +2197,33 @@ exports[`<Dashboard /> matches snapshot without verified user 1`] = `
                   src="/assets/img/telegram.svg"
                   style={
                     Object {
-                      "marginLeft": 0,
+                      "marginLeft": 12,
                       "marginRight": 0,
                       "verticalAlign": "middle",
                       "width": 32,
                     }
                   }
                 />
+                <span
+                  style={
+                    Object {
+                      "color": "rgba(0, 0, 0, 0.87)",
+                      "fontSize": 14,
+                      "fontWeight": 500,
+                      "letterSpacing": 0,
+                      "margin": 0,
+                      "muiPrepared": true,
+                      "opacity": 1,
+                      "paddingLeft": 8,
+                      "paddingRight": 16,
+                      "position": "relative",
+                      "textTransform": "uppercase",
+                      "userSelect": "none",
+                    }
+                  }
+                >
+                  message uploadbro
+                </span>
               </div>
             </div>
           </button>
@@ -2324,13 +2364,33 @@ exports[`<Dashboard /> matches snapshot without verified user and without sites 
                   src="/assets/img/telegram.svg"
                   style={
                     Object {
-                      "marginLeft": 0,
+                      "marginLeft": 12,
                       "marginRight": 0,
                       "verticalAlign": "middle",
                       "width": 32,
                     }
                   }
                 />
+                <span
+                  style={
+                    Object {
+                      "color": "rgba(0, 0, 0, 0.87)",
+                      "fontSize": 14,
+                      "fontWeight": 500,
+                      "letterSpacing": 0,
+                      "margin": 0,
+                      "muiPrepared": true,
+                      "opacity": 1,
+                      "paddingLeft": 8,
+                      "paddingRight": 16,
+                      "position": "relative",
+                      "textTransform": "uppercase",
+                      "userSelect": "none",
+                    }
+                  }
+                >
+                  message uploadbro
+                </span>
               </div>
             </div>
           </button>

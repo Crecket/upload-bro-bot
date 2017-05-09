@@ -131,8 +131,7 @@ module.exports = class EventHandlers extends HelperInterface {
                     parse_mode: "HTML",
                     disable_notification: true
                 })
-                .then(resulting_message => {
-                })
+                .then(resulting_message => {})
                 .catch(Logger.error);
             return;
         }
@@ -155,11 +154,11 @@ module.exports = class EventHandlers extends HelperInterface {
                             .sendMessage(
                                 msg.from.id,
                                 "Do you want to upload this file? \n" +
-                                "Filename: " +
-                                file.file_name +
-                                " \n" +
-                                "Filesize: " +
-                                filesize(file.file_size),
+                                    "Filename: " +
+                                    file.file_name +
+                                    " \n" +
+                                    "Filesize: " +
+                                    filesize(file.file_size),
                                 {
                                     reply_markup: {
                                         inline_keyboard: [
@@ -232,28 +231,32 @@ module.exports = class EventHandlers extends HelperInterface {
      */
     inlineQuery(inline_query) {
         // get the query
-        var queryData = inline_query.query;
-        var inlineQueries = this._app._InlineQueryHandler.inlineQueries;
-        var foundQuery = false;
+        const queryData = inline_query.query;
+        const inlineQueries = this._app._InlineQueryHandler.inlineQueries;
+        const foundQuery = false;
 
         Object.keys(inlineQueries).map(key => {
-            var queryTemp = inlineQueries[key];
+            const queryTemp = inlineQueries[key];
             if (foundQuery) {
                 // nothing to do, already matched one
                 return;
             }
 
             // get the regex matches
-            var matches = queryData.match(queryTemp.match);
-
+            const matches = queryData.match(queryTemp.match);
             if (matches) {
                 // query matches this inline query
                 queryTemp
                     .handle(inline_query, matches[1])
-                    .then((inline_results = [], options = {
-                        cache_time: 300,
-                        is_personal: true
-                    }) => {
+                    .then(results => {
+                        let {
+                            inline_results = [],
+                            options = {
+                                cache_time: 300,
+                                is_personal: true
+                            }
+                        } = results;
+
                         // enforce this option
                         options.is_personal = true;
 
@@ -267,9 +270,9 @@ module.exports = class EventHandlers extends HelperInterface {
                             .then(result => {
                                 // success
                             })
-                            .catch(err => Logger.error(err));
+                            .catch(Logger.error);
                     })
-                    .catch(err => Logger.error(err));
+                    .catch(Logger.error);
             }
         });
     }

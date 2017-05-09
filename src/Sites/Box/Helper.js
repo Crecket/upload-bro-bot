@@ -2,10 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
 const BoxSDK = require("box-node-sdk");
+const Logger = require("../../Helpers/Logger");
 
 module.exports = class BoxHelper {
     constructor(app) {
-        this._app = app;
+        this._UploadBro = app;
     }
 
     /**
@@ -28,49 +29,70 @@ module.exports = class BoxHelper {
      * @returns {*}
      */
     async createOauthClient(user_info = false) {
-        // no tokens found, just return the regular client
-        if (user_info && !user_info.provider_sites.box) {
-            return Promise.reject("Box tokens not set");
-        }
-
-        // set the token
-        const tokens = this.getToken(user_info);
-
-        // verify if we got tokens
-        if (!tokens) {
-            // no tokens set, we can't continue
-            throw new Error("No tokens set");
-        }
-
-        // get a valid token set
-        let {validTokens, isNew} = await this.getValidToken(tokens);
-
-        if (isNew) {
-            // copy the user and prepare to update
-            let newUser = {};
-            newUser.provider_sites = {};
-            // merge existing with new
-            newUser.provider_sites.box = Object.assign(
-                {},
-                user_info.provider_sites.box,
-                validTokens
-            );
-
-            // update the user
-            const success = await this._app._UserHelper.updateUserTokens(
-                newUser
-            );
-            if (success === false) {
-                // no tokens set, we can't continue
-                throw new Error("Failed to store refreshed tokens");
+        try {
+            // no tokens found, just return the regular client
+            if (user_info && !user_info.provider_sites.box) {
+                return Promise.reject("Box tokens not set");
             }
+
+            // set the token
+            const tokens = this.getToken(user_info);
+
+            // verify if we got tokens
+            if (!tokens) {
+                // no tokens set, we can't continue
+                throw new Error("No tokens set");
+            }
+
+            // get a valid token set
+            let { validTokens, isNew } = await this.getValidToken(tokens);
+
+            if (isNew) {
+                // copy the user and prepare to update
+                let newUser = {};
+                newUser.provider_sites = {};
+                // merge existing with new
+                newUser.provider_sites.box = Object.assign(
+                    {},
+                    user_info.provider_sites.box,
+                    validTokens
+                );
+
+                // update the user
+                const success = await this._UploadBro._UserHelper.updateUserTokens(
+                    newUser
+                );
+                if (success === false) {
+                    // no tokens set, we can't continue
+                    throw new Error("Failed to store refreshed tokens");
+                }
+            }
+
+            // create a box sdk
+            const sdk = this.getSdkClient();
+
+            // create a client with the access token
+            return sdk.getBasicClient(validTokens.accessToken);
+        } catch (ex) {
+            // check for a custom error type
+            if (ex.custom_error) {
+                // handle the custom error type
+                switch (ex.custom_error) {
+                    case "remove_account": {
+                        // remove this provider type from the account, the refresh token/access tokens are no longer valid
+                        try {
+                            await this._UploadBro._UserHelper.removeUserTokens(
+                                user_info,
+                                "box"
+                            );
+                        } catch (ex) {}
+                        break;
+                    }
+                }
+            }
+            // reject/rethrow the original error
+            return Promise.reject(ex);
         }
-
-        // create a box sdk
-        const sdk = this.getSdkClient();
-
-        // create a client with the access token
-        return sdk.getBasicClient(validTokens.accessToken);
     }
 
     /**
@@ -92,13 +114,9 @@ module.exports = class BoxHelper {
         return (
             "https://account.box.com/api/oauth2/authorize" +
             "?response_type=code" +
-            "&client_id=" +
-            process.env.BOX_CLIENT_ID +
-            "&redirect_uri=" +
-            process.env.WEBSITE_URL +
-            process.env.BOX_REDIRECT_URI +
-            "&state=" +
-            new Date().getTime()
+            `&client_id=${process.env.BOX_CLIENT_ID}` +
+            `&redirect_uri=${process.env.WEBSITE_URL}${process.env.BOX_REDIRECT_URI}` +
+            `&state=${new Date().getTime()}`
         );
     }
 
@@ -141,17 +159,12 @@ module.exports = class BoxHelper {
             const sdk = this.getSdkClient();
 
             // attempt to refresh tokens using refresh token
-            sdk.getTokensRefreshGrant(tokens.refreshToken, function (err,
-                                                                     tokenInfo) {
-                if (err) {
-                    Logger.error(err);
-                    return reject(err);
-                }
+            sdk.getTokensRefreshGrant(tokens.refreshToken, (err, tokenInfo) => {
+                if (err) return reject(err);
 
                 // set the expiry date
                 tokenInfo.expiry_date =
-                    new Date().getTime() +
-                    parseInt(tokenInfo.accessTokenTTLMS / 1000);
+                    new Date().getTime() + tokenInfo.accessTokenTTLMS;
 
                 // return the tokens
                 resolve(tokenInfo);
@@ -170,7 +183,7 @@ module.exports = class BoxHelper {
             // check if access token has expired
             if (tokens.expiry_date - new Date().getTime() >= 0) {
                 // not expired, no new tokens
-                resolve({validTokens: tokens});
+                resolve({ validTokens: tokens });
             } else {
                 // attempt to get  new tokens
                 this.refreshAccessToken(tokens)
@@ -180,7 +193,19 @@ module.exports = class BoxHelper {
                             isNew: true
                         })
                     )
-                    .catch(reject);
+                    .catch(error => {
+                        if (
+                            error.response &&
+                            error.response.body &&
+                            error.response.body.error === "invalid_grant"
+                        ) {
+                            Logger.error(error.response.body);
+                            // refresh token has expired, require the user to login again
+                            return reject({ custom_error: "remove_account" });
+                        }
+                        Logger.error(error);
+                        reject(error);
+                    });
             }
         });
     }
@@ -190,6 +215,7 @@ module.exports = class BoxHelper {
      *
      * @param userInfo
      * @param filePath
+     * @param parentFoldId
      * @returns {Promise}
      */
     async uploadFile(userInfo, filePath, parentFoldId = "0") {
@@ -210,11 +236,47 @@ module.exports = class BoxHelper {
                             path.basename(filePath),
                             data,
                             (err, file) => {
-                                if (!err) return resolve(resolve);
+                                if (!err) return resolve(file);
                                 reject(err);
                             }
                         );
                     });
+                })
+                .catch(reject);
+        });
+    }
+
+    /**
+     * Search for files
+     *
+     * @param userInfo
+     * @param searchQuery
+     * @param options
+     * @returns {Promise}
+     */
+    async searchFile(userInfo, searchQuery, options = {}) {
+        // merge given options with defaults
+        const parsedOptions = {
+            fields: "name,modified_at,size,extension,shared_link",
+            // file_extensions: "pdf,doc",
+            limit: 20,
+            type: "file",
+            offset: 0,
+            ...options
+        };
+        return await new Promise((resolve, reject) => {
+            // create a new ouath client
+            this.createOauthClient(userInfo)
+                .then(oauthCllient => {
+                    // search for given query
+                    oauthCllient.search.query(
+                        searchQuery,
+                        parsedOptions,
+                        (err, results) => {
+                            if (!err) return resolve(results);
+                            reject(err);
+                        }
+                    );
                 })
                 .catch(reject);
         });

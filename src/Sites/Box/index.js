@@ -3,13 +3,13 @@ const path = require("path");
 const Logger = require("../../Helpers/Logger.js");
 const SiteInteface = require("../SiteInterface.js");
 const UploadObj = require("./Queries/Upload");
-// const SearchQueryObj = rootRequire('src/Sites/Box/InlineQueries/SearchQuery');
+const SearchQueryObj = require("./InlineQueries/SearchQuery");
 
 module.exports = class Box extends SiteInteface {
-    constructor(app) {
-        super(app);
+    constructor(UploadBro) {
+        super(UploadBro);
 
-        this._app = app;
+        this._UploadBro = UploadBro;
     }
 
     /**
@@ -17,10 +17,10 @@ module.exports = class Box extends SiteInteface {
      */
     register() {
         // register commands
-        this._app._QueryHandler.register(new UploadObj(this._app));
-        //
-        // // register inline queries
-        // this._app._InlineQueryHandler.register(new SearchQueryObj(this._app));
+        this._UploadBro._QueryHandler.register(new UploadObj(this._UploadBro));
+
+        // register inline queries
+        this._UploadBro._InlineQueryHandler.register(new SearchQueryObj(this._UploadBro));
 
         return Promise.resolve();
     }

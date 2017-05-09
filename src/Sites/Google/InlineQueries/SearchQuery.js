@@ -3,7 +3,7 @@ const path = require("path");
 const mime = require("mime");
 const Logger = require("../../../Helpers/Logger");
 const HelperInterface = require("../../../HelperInterface");
-const GoogleHelperObj = require("../../../Sites/Google/Helper");
+const GoogleHelperObj = require("../Helper");
 
 module.exports = class SearchQuery extends HelperInterface {
     constructor(app) {
@@ -49,8 +49,7 @@ module.exports = class SearchQuery extends HelperInterface {
                     this._GoogleHelper
                         .searchFile(
                             user_info, // tokens
-                            match, // file name to search for
-                            {}
+                            match // file name to search for
                         )
                         .then(file_results => {
                             // Logger.trace(file_results);
@@ -68,10 +67,10 @@ module.exports = class SearchQuery extends HelperInterface {
                                     url: file.webViewLink,
                                     input_message_content: {
                                         message_text: "<a href='" +
-                                        fileUrl +
-                                        "'>" +
-                                        file.name +
-                                        "</a>",
+                                            fileUrl +
+                                            "'>" +
+                                            file.name +
+                                            "</a>",
                                         parse_mode: "HTML"
                                     }
                                 };
@@ -84,9 +83,7 @@ module.exports = class SearchQuery extends HelperInterface {
                             });
 
                             // resolve this list
-                            resolve(resultList, {
-                                cacheTime: 1
-                            });
+                            resolve({ inline_results: resultList });
                         })
                         .catch(err => Logger.error(err));
                 })

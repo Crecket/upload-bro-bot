@@ -3,7 +3,7 @@ const path = require("path");
 const mime = require("mime");
 const Logger = require("../../../Helpers/Logger.js");
 const HelperInterface = require("../../../HelperInterface");
-const ImgurHelperObj = require("../../../Sites/Imgur/Helper");
+const ImgurHelperObj = require("../Helper");
 
 module.exports = class SearchQuery extends HelperInterface {
     constructor(app) {
@@ -72,9 +72,7 @@ module.exports = class SearchQuery extends HelperInterface {
                             });
 
                             // resolve this list
-                            resolve(resultList, {
-                                cacheTime: 1
-                            });
+                            resolve({ inline_results: resultList });
                         })
                         .catch(err => Logger.error(err));
                 })

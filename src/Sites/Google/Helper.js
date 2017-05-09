@@ -86,15 +86,19 @@ module.exports = class GoogleHelper {
         const authclient = await this.createOauthClient(user);
 
         // drive object
-        var drive = google.drive({version: "v3", auth: authclient});
+        var drive = google.drive({ version: "v3", auth: authclient });
+
+        // escape special character
+        file_name = file_name.replace(/[\\'"/]/g, " ");
 
         // options to use in upload
         var options = Object.assign(
             {
-                q: "name contains '" + file_name + "'",
+                q: `name contains '${file_name}'`,
                 fields: "nextPageToken, files(id, name, mimeType, thumbnailLink, webViewLink, webContentLink, description)",
                 spaces: "drive",
-                pageToken: null
+                pageToken: null,
+                maxResults: 20
             },
             advanced_options
         );
@@ -122,15 +126,17 @@ module.exports = class GoogleHelper {
      *
      * @see https://developers.google.com/drive/v3/web/manage-uploads
      */
-    async uploadFile(userInfo,
-                     filePath,
-                     fileName = false,
-                     parent_folder_id = false) {
+    async uploadFile(
+        userInfo,
+        filePath,
+        fileName = false,
+        parent_folder_id = false
+    ) {
         // get a valid oauth client
         const authclient = await this.createOauthClient(userInfo);
 
         // drive object
-        let drive = google.drive({version: "v3", auth: authclient});
+        let drive = google.drive({ version: "v3", auth: authclient });
 
         // promise to wrap the callback functions
         return new Promise((resolve, reject) => {
@@ -222,7 +228,7 @@ module.exports = class GoogleHelper {
         const authClient = await this.createOauthClient(userInfo);
 
         // drive object
-        let drive = google.drive({version: "v3", auth: authClient});
+        let drive = google.drive({ version: "v3", auth: authClient });
 
         return new Promise((resolve, reject) => {
             // create the file
@@ -258,7 +264,7 @@ module.exports = class GoogleHelper {
         var authclient = await this.createOauthClient(google_tokens);
 
         // drive object
-        var drive = google.drive({version: "v3", auth: authclient});
+        var drive = google.drive({ version: "v3", auth: authclient });
 
         // get the file mimetype
         var mimeType = mime.lookup(filePath);
@@ -294,7 +300,7 @@ module.exports = class GoogleHelper {
         const authclient = await this.createOauthClient(user_info);
 
         // drive object
-        var drive = google.drive({version: "v3", auth: authclient});
+        var drive = google.drive({ version: "v3", auth: authclient });
 
         // start export
         return new Promise((resolve, reject) => {

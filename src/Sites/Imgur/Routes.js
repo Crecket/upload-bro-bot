@@ -62,7 +62,7 @@ module.exports = (app, passport, uploadApp) => {
                     let responseData = result.data;
 
                     // get collection and current sites
-                    var current_provider_sites = request.user.provider_sites;
+                    const current_provider_sites = request.user.provider_sites;
 
                     // set new data
                     current_provider_sites.imgur = {

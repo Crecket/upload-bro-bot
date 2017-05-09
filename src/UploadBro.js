@@ -22,11 +22,11 @@ let Express = require("./Express");
 const CommandHandler = require("./Handlers/CommandHandler");
 const SiteHandler = require("./Handlers/SiteHandler");
 const QueryHandler = require("./Handlers/QueryHandler");
-const EventHandlersObj = require("./Handlers/EventHandler");
-const InlineQueryHandlerObj = require("./Handlers/InlineQueryHandler");
-const UserHelperObj = require("./UserHelper");
-const QueueObj = require("./Queue");
-const AnalyticsObj = require("./Analytics");
+const EventHandlers = require("./Handlers/EventHandler");
+const InlineQueryHandler = require("./Handlers/InlineQueryHandler");
+const UserHelper = require("./UserHelper");
+const Queue = require("./Queue");
+const Analytics = require("./Analytics");
 
 module.exports = class UploadBro {
     /**
@@ -39,18 +39,18 @@ module.exports = class UploadBro {
         this.onlineMode = onlineMode;
 
         // create a queue object and analytics helper
-        this._Queue = new QueueObj(5);
-        this._Analytics = new AnalyticsObj(this);
+        this._Queue = new Queue(5);
+        this._Analytics = new Analytics(this);
 
         // user helper object
-        this._UserHelper = new UserHelperObj(this);
+        this._UserHelper = new UserHelper(this);
 
         // Create new command handler
         this._CommandHandler = new CommandHandler(this);
         this._SiteHandler = new SiteHandler(this);
         this._QueryHandler = new QueryHandler(this);
-        this._EventHandler = new EventHandlersObj(this);
-        this._InlineQueryHandler = new InlineQueryHandlerObj(this);
+        this._EventHandler = new EventHandlers(this);
+        this._InlineQueryHandler = new InlineQueryHandler(this);
     }
 
     async start() {

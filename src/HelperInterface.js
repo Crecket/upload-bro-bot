@@ -3,8 +3,8 @@ var path = require("path");
 var Utils = require("./Helpers/Utils");
 
 module.exports = class HelperInterface {
-    constructor(app) {
-        this._app = app;
+    constructor(UploadBro) {
+        this._UploadBro = UploadBro;
     }
 
     /**
@@ -16,7 +16,7 @@ module.exports = class HelperInterface {
      * @returns {*}
      */
     sendMessage(chatId, message, options) {
-        return this._app._TelegramBot.sendMessage(chatId, message, options);
+        return this._UploadBro._TelegramBot.sendMessage(chatId, message, options);
     }
 
     /**
@@ -36,7 +36,7 @@ module.exports = class HelperInterface {
             Utils.ensureFolderExists(directory, "0744")
                 .then(() => {
                     // download the file
-                    this._app._TelegramBot
+                    this._UploadBro._TelegramBot
                         .downloadFile(file_id, directory)
                         .then(finalPath => {
                             if (!file_name) {
@@ -70,7 +70,7 @@ module.exports = class HelperInterface {
      * @returns {*}
      */
     editMessage(text, options) {
-        return this._app._TelegramBot.editMessageText(text, options);
+        return this._UploadBro._TelegramBot.editMessageText(text, options);
     }
 
     /**
@@ -96,8 +96,8 @@ module.exports = class HelperInterface {
         // loop through existing provider sites
         Object.keys(user.provider_sites).map(key => {
             // check if this site is active right now
-            if (this._app._SiteHandler.isActive(key)) {
-                var siteInfo = this._app._SiteHandler.getSiteBasic(key);
+            if (this._UploadBro._SiteHandler.isActive(key)) {
+                var siteInfo = this._UploadBro._SiteHandler.getSiteBasic(key);
 
                 if (!siteInfo) {
                     // site not enabled/does not exist
