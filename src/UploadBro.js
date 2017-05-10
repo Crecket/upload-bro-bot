@@ -155,7 +155,7 @@ module.exports = class UploadBro {
 
             // require the index file and set the file handler
             this._SiteHandler.register(
-                new SiteObj(this, this._registerDefault)
+                new SiteObj(this, this.onlineMode)
             );
         });
 
@@ -178,7 +178,7 @@ module.exports = class UploadBro {
 
             // require the index file and set the file handler
             this._CommandHandler.register(
-                new CommandObj(this, this._registerDefault)
+                new CommandObj(this, this.onlineMode)
             );
         });
 
@@ -200,7 +200,7 @@ module.exports = class UploadBro {
 
             // require the index file and set the file handler
             this._QueryHandler.register(
-                new QueryObj(this, this._registerDefault)
+                new QueryObj(this, this.onlineMode)
             );
         });
 

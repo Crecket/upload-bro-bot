@@ -8,6 +8,11 @@ const SiteInteface = require("../SiteInterface.js");
 
 // https://developers.gfycat.com/api/#browser-based-authentication
 
+// console.log(`https://gfycat.com/oauth/authorize?client_id=2_Mn-Y12`+
+//     `&scope=all&state=${new Date().getTime()}`+
+//     `&response_type=token`+
+//     `&redirect_uri=https://uploadbro.local.dev/login/gfycat/callback`);
+
 module.exports = class Gfycat extends SiteInteface {
     constructor(UploadBro, register = true) {
         super(UploadBro);
@@ -40,7 +45,7 @@ module.exports = class Gfycat extends SiteInteface {
      * @returns {boolean}
      */
     get enabled(){
-        return false;
+        return true;
     }
 
     /**

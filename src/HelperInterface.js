@@ -16,7 +16,11 @@ module.exports = class HelperInterface {
      * @returns {*}
      */
     sendMessage(chatId, message, options) {
-        return this._UploadBro._TelegramBot.sendMessage(chatId, message, options);
+        return this._UploadBro._TelegramBot.sendMessage(
+            chatId,
+            message,
+            options
+        );
     }
 
     /**
@@ -99,19 +103,16 @@ module.exports = class HelperInterface {
             if (this._UploadBro._SiteHandler.isActive(key)) {
                 var siteInfo = this._UploadBro._SiteHandler.getSiteBasic(key);
 
-                if (!siteInfo) {
-                    // site not enabled/does not exist
-                    return;
-                }
-
+                // check if site is enabled and supports this file type
                 if (
+                    !siteInfo ||
                     !this.verifyExtensions(
                         siteInfo.supportedExtensions,
                         extension
                     )
                 ) {
                     // invalid extension
-                    return;
+                    return buttonSiteList;
                 }
 
                 // push item into the button list

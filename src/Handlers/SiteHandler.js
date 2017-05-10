@@ -27,7 +27,11 @@ module.exports = class SiteHandler {
      * @returns {boolean}
      */
     isActive(name) {
-        return !!this._sites[name] || !!this._sites[name.toLowerCase()];
+        const siteKey = name.toLowerCase();
+        if (this._sites[siteKey]) {
+            return this._sites[siteKey].enabled;
+        }
+        return false;
     }
 
     /**
@@ -67,10 +71,9 @@ module.exports = class SiteHandler {
     get siteList() {
         let siteList = {};
         Object.keys(this._sites).map(siteKey => {
-            // get info object for this site
-            const siteInfo = this.getSiteBasic(siteKey);
             // only add it if site is enabled
-            if (siteInfo.enabled) siteList[siteKey] = siteInfo;
+            if (this.isActive(siteKey))
+                siteList[siteKey] = this.getSiteBasic(siteKey);
         });
         return siteList;
     }

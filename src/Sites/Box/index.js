@@ -26,10 +26,10 @@ module.exports = class Box extends SiteInteface {
                 new UploadObj(this._UploadBro)
             );
 
-            // register inline queries
-            this._UploadBro._InlineQueryHandler.register(
-                new SearchQueryObj(this._UploadBro)
-            );
+            // // register inline queries
+            // this._UploadBro._InlineQueryHandler.register(
+            //     new SearchQueryObj(this._UploadBro)
+            // );
         }
         return Promise.resolve();
     }
