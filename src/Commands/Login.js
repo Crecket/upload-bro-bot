@@ -59,7 +59,7 @@ module.exports = class Login extends HelperInterface {
      * @returns {string}
      */
     get info() {
-        return "login - Login to the website and register new services";
+        return `${this.name} - Login to the website and register new services`;
     }
 
     /**
@@ -67,6 +67,6 @@ module.exports = class Login extends HelperInterface {
      * @returns {RegExp}
      */
     get pattern() {
-        return /\/login/;
+        return /\/login$/;
     }
 };

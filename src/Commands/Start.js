@@ -55,7 +55,7 @@ module.exports = class Start extends HelperInterface {
      * @returns {string}
      */
     get info() {
-        return "start - Show the starting information";
+        return `${this.name} - Show the getting started information`;
     }
 
     /**
@@ -63,6 +63,6 @@ module.exports = class Start extends HelperInterface {
      * @returns {RegExp}
      */
     get pattern() {
-        return /\/start/;
+        return /\/start$/;
     }
 };

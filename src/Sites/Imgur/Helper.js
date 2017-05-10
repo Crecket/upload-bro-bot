@@ -188,7 +188,7 @@ module.exports = class ImgurHelper {
                     resolve(
                         Object.assign(resultData, {
                             expiry_date: new Date().getTime() +
-                            resultData.expires_in
+                                resultData.expires_in
                         })
                     );
                 })

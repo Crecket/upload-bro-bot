@@ -40,7 +40,7 @@ module.exports = class Help extends HelperInterface {
      * @returns {string}
      */
     get info() {
-        return "help - Helpful information about the bot and it's options";
+        return `${this.name} - Information about the bot and it's options`;
     }
 
     /**
@@ -48,6 +48,6 @@ module.exports = class Help extends HelperInterface {
      * @returns {RegExp}
      */
     get pattern() {
-        return /\/help/;
+        return /\/help$/;
     }
 };

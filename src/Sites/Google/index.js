@@ -4,12 +4,13 @@ const Logger = require("../../Helpers/Logger");
 
 const SiteInteface = require("../SiteInterface");
 const UploadObj = require("./Queries/Upload");
+const HelpObj = require("./Commands/Help");
 const SearchQueryObj = require("./InlineQueries/SearchQuery");
 
 module.exports = class Google extends SiteInteface {
-    constructor(app, register = true) {
-        super(app);
-        this._app = app;
+    constructor(UploadBro, register = true) {
+        super(UploadBro);
+        this._UploadBro = UploadBro;
 
         // on false, commands aren't registered by default
         this._register = register;
@@ -22,11 +23,16 @@ module.exports = class Google extends SiteInteface {
     register() {
         if (this._register) {
             // register commands
-            this._app._QueryHandler.register(new UploadObj(this._app));
+            this._UploadBro._QueryHandler.register(new UploadObj(this._UploadBro));
+
+            // register commands
+            this._UploadBro._CommandHandler.register(
+                new HelpObj(this._UploadBro)
+            );
 
             // register inline queries
-            this._app._InlineQueryHandler.register(
-                new SearchQueryObj(this._app)
+            this._UploadBro._InlineQueryHandler.register(
+                new SearchQueryObj(this._UploadBro)
             );
         }
         return Promise.resolve();
