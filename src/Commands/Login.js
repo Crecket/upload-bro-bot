@@ -15,21 +15,16 @@ module.exports = class Login extends HelperInterface {
      */
     handle(msg) {
         // setup the message
-        var message =
-            "You can login and register services by going to " +
-            "<a href='" +
-            process.env.WEBSITE_URL +
-            "/login'" +
-            ">the website.</a> \nWe currently support the follower services: \n";
+        let message =
+            `You can login and register services by going to ` +
+            `<a href="${process.env.WEBSITE_URL}">${process.env.WEBSITE_URL}</a>\n` +
+            `We currently support the follower services: \n`;
 
         // generate a list for all our services
-        var supportedSites = this._UploadBro._SiteHandler.sites;
+        let supportedSites = this._UploadBro._SiteHandler.sites;
         Object.keys(supportedSites).map(key => {
             var tempSite = supportedSites[key];
-            message +=
-                " - <a href='" + tempSite.url + "'>" + tempSite.title + "</a>";
-            message += ": " + tempSite.description;
-            message += "\n";
+            message += ` - <a href="${tempSite.url}">${tempSite.title}</a>: ${tempSite.description}\n`;
         });
 
         // send the message
@@ -55,11 +50,19 @@ module.exports = class Login extends HelperInterface {
     }
 
     /**
+     * The description for this command
+     * @returns {string}
+     */
+    get description() {
+        return `Login to the website and register new services`;
+    }
+
+    /**
      * Returns a string with the <command> - <description>
      * @returns {string}
      */
     get info() {
-        return `${this.name} - Login to the website and register new services`;
+        return `${this.name} - ${this.description}`;
     }
 
     /**

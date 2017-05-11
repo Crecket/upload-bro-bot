@@ -4,26 +4,27 @@ const Logger = require("../Helpers/Logger");
 const HelperInterface = require("../HelperInterface");
 
 module.exports = class Help extends HelperInterface {
-    constructor(app) {
-        super(app);
-
-        this._app = app;
+    constructor(UploadBro) {
+        super(UploadBro);
+        this._UploadBro = UploadBro;
     }
 
     handle(msg) {
-        const message =
-            "<b>Available commands</b>\n" +
-            "- <a href='/help'>/help</a>: Display this command \n" +
-            "- <a href='/start'>/start</a>: The start message \n" +
-            "- <a href='/login'>/login</a>: Show the login url to connect the supported websites to your telegram account" +
-            "";
+        const commands = this._UploadBro._CommandHandler.commands;
+        const commandList = Object.keys(commands)
+            .map(commandKey => {
+                const tempCommand = commands[commandKey];
+                return ` - <a href="/${tempCommand.name}">/${tempCommand.name}</a>: ${tempCommand.description}`;
+            })
+            .join("\n");
+
+        const message = `<b>Available commands</b>\n` + `${commandList}`;
 
         super
             .sendMessage(msg.chat.id, message, {
                 parse_mode: "HTML"
             })
-            .then(res => {
-            })
+            .then(res => {})
             .catch(Logger.error);
     }
 
@@ -36,11 +37,19 @@ module.exports = class Help extends HelperInterface {
     }
 
     /**
+     * The description for this command
+     * @returns {string}
+     */
+    get description() {
+        return `Information about the bot and it's options`;
+    }
+
+    /**
      * Returns a string with the <command> - <description>
      * @returns {string}
      */
     get info() {
-        return `${this.name} - Information about the bot and it's options`;
+        return `${this.name} - ${this.description}`;
     }
 
     /**

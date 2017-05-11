@@ -4,6 +4,7 @@ const Logger = require("../../Helpers/Logger.js");
 
 const SiteInteface = require("../SiteInterface.js");
 const UploadObj = require("./Queries/Upload");
+const HelpObj = require("./Commands/Help");
 const SearchQueryObj = require("./InlineQueries/SearchQuery");
 
 module.exports = class Box extends SiteInteface {
@@ -24,6 +25,11 @@ module.exports = class Box extends SiteInteface {
             // register commands
             this._UploadBro._QueryHandler.register(
                 new UploadObj(this._UploadBro)
+            );
+
+            // register commands
+            this._UploadBro._CommandHandler.register(
+                new HelpObj(this._UploadBro)
             );
 
             // // register inline queries

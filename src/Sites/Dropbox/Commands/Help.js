@@ -9,18 +9,23 @@ module.exports = class Help extends HelperInterface {
         this._UploadBro = UploadBro;
     }
 
+    /**
+     * Handle the commands request
+     * @param msg
+     */
     handle(msg) {
-        // get supported extensions for this type
-        const supportedExtensions = this._UploadBro._SiteHandler.getSiteBasic(
-            "imgur"
-        ).supportedExtensions;
+        // get site info for this type
+        const siteInfo = this._UploadBro._SiteHandler.getSiteBasic("dropbox");
 
-        // add dot to the extensions
-        const formattedExtension = supportedExtensions.map(
-            ext => `.${ext}`
-        );
+        // generate the message
         const message =
-            `Imgur only allows image uploads with the following extensions: ${formattedExtension.join(", ")}` +
+            `<a href="${siteInfo.url}">Dropbox</a> is a file hosting service operated by American company Dropbox, Inc., ` +
+            `headquartered in San Francisco, California, that offers cloud storage, file synchronization, personal cloud, and client software. ` +
+            `\n\n<b>Upload:</b> Dropbox supports all files types. The only limitation is that Dropbox does not let you preview all ` +
+            `<a href="https://www.dropbox.com/help/mobile/viewable-file-types">file types</a>` +
+            `\n\n<b>Sharing:</b> Use '@uploadbro_bot dropbox &lt;search term&gt;' to search for files. ` +
+            `\nCurrently Dropbox's search API is so slow  that it may not return any results in time. ` +
+            `Telegram expects a result from UploadBro within X seconds and Dropbox might take to long for bigger accounts.` +
             ``;
 
         super
@@ -36,22 +41,30 @@ module.exports = class Help extends HelperInterface {
      * @returns {string}
      */
     get name() {
-        return "help_imgur";
+        return "help_dropbox";
     }
 
     /**
-     * Returns a string with the <command> - <description>
+     * The description for this command
+     * @returns {string}
+     */
+    get description() {
+        return `Information about how Dropbox works with UploadBro`;
+    }
+
+    /**
+     * Returns a string with the <name> - <description>
      * @returns {string}
      */
     get info() {
-        return `${this.name} - Information about how Imgur works with UploadBro`;
+        return `${this.name} - ${this.description}`;
     }
 
     /**
      * Pattern used for this command
-     * @returns {RegExp}
+     * @returns {RegExp}dorpbox
      */
     get pattern() {
-        return /\/help_imgur$/;
+        return /\/help[ _]?(dropbox|dorpbox|drpbx|dropbx).*$/;
     }
 };

@@ -3,6 +3,7 @@ const path = require("path");
 const axios = require("axios");
 const BoxSDK = require("box-node-sdk");
 const Logger = require("../../Helpers/Logger");
+const a = require("awaiting");
 
 module.exports = class BoxHelper {
     constructor(app) {
@@ -35,17 +36,15 @@ module.exports = class BoxHelper {
                 return Promise.reject("Box tokens not set");
             }
 
-            // set the token
+            // verify the tokens
             const tokens = this.getToken(user_info);
-
-            // verify if we got tokens
             if (!tokens) {
                 // no tokens set, we can't continue
                 throw new Error("No tokens set");
             }
 
             // get a valid token set
-            let { validTokens, isNew } = await this.getValidToken(tokens);
+            let { validTokens, isNew } = await this.getValidToken(user_info);
 
             if (isNew) {
                 // copy the user and prepare to update
@@ -74,22 +73,6 @@ module.exports = class BoxHelper {
             // create a client with the access token
             return sdk.getBasicClient(validTokens.accessToken);
         } catch (ex) {
-            // check for a custom error type
-            if (ex.custom_error) {
-                // handle the custom error type
-                switch (ex.custom_error) {
-                    case "remove_account": {
-                        // remove this provider type from the account, the refresh token/access tokens are no longer valid
-                        try {
-                            await this._UploadBro._UserHelper.removeUserTokens(
-                                user_info,
-                                "box"
-                            );
-                        } catch (ex) {}
-                        break;
-                    }
-                }
-            }
             // reject/rethrow the original error
             return Promise.reject(ex);
         }
@@ -127,7 +110,7 @@ module.exports = class BoxHelper {
      * @returns {Promise}
      */
     async requestAccessToken(code) {
-        return await new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             // create a new ouath client
             const sdk = this.getSdkClient();
 
@@ -154,7 +137,7 @@ module.exports = class BoxHelper {
      * @returns {*}
      */
     async refreshAccessToken(tokens) {
-        return await new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             // create new sdk client
             const sdk = this.getSdkClient();
 
@@ -175,39 +158,42 @@ module.exports = class BoxHelper {
     /**
      * validate tokens and get new ones if they are not
      *
-     * @param tokens
+     * @param user_info
      * @returns {Promise}
      */
-    async getValidToken(tokens) {
-        return await new Promise((resolve, reject) => {
+    async getValidToken(user_info) {
+        try {
+            const tokens = this.getToken(user_info);
+
             // check if access token has expired
             if (tokens.expiry_date - new Date().getTime() >= 0) {
                 // not expired, no new tokens
-                resolve({ validTokens: tokens });
+                return { validTokens: tokens };
             } else {
-                // attempt to get  new tokens
-                this.refreshAccessToken(tokens)
-                    .then(newTokens =>
-                        resolve({
-                            validTokens: newTokens,
-                            isNew: true
-                        })
-                    )
-                    .catch(error => {
-                        if (
-                            error.response &&
-                            error.response.body &&
-                            error.response.body.error === "invalid_grant"
-                        ) {
-                            Logger.error(error.response.body);
-                            // refresh token has expired, require the user to login again
-                            return reject({ custom_error: "remove_account" });
-                        }
-                        Logger.error(error);
-                        reject(error);
-                    });
+                // attempt to get  new tokens and return them
+                return {
+                    validTokens: await this.refreshAccessToken(tokens),
+                    isNew: true
+                };
             }
-        });
+        } catch (error) {
+            if (
+                error.response &&
+                error.response.body &&
+                error.response.body.error === "invalid_grant"
+            ) {
+                // refresh token has expired, require the user to login again
+                return Promise.reject({
+                    custom_error: "remove_account",
+                    custom_error_options: {
+                        site: "box"
+                    },
+                    error: error
+                });
+            }
+            // fallback to default error
+            return Promise.reject(error);
+        }
     }
 
     /**
@@ -219,31 +205,29 @@ module.exports = class BoxHelper {
      * @returns {Promise}
      */
     async uploadFile(userInfo, filePath, parentFoldId = "0") {
-        return await new Promise((resolve, reject) => {
+        try {
             // create a new ouath client
-            this.createOauthClient(userInfo)
-                .then(oauthCllient => {
-                    // get the contents
-                    fs.readFile(filePath, {}, (err, data) => {
-                        if (err) {
-                            reject(err);
-                            return;
-                        }
+            const oauthCllient = await this.createOauthClient(userInfo);
 
-                        // upload file using oauth client
-                        oauthCllient.files.uploadFile(
-                            parentFoldId,
-                            path.basename(filePath),
-                            data,
-                            (err, file) => {
-                                if (!err) return resolve(file);
-                                reject(err);
-                            }
-                        );
-                    });
-                })
-                .catch(reject);
-        });
+            // await callbacks
+            const data = await a.callback(fs.readFile, filePath);
+
+            const file = await new Promise((resolve, reject) => {
+                // upload file using oauth client
+                oauthCllient.files.uploadFile(
+                    parentFoldId,
+                    path.basename(filePath),
+                    data,
+                    (err, file) => {
+                        if (!err) return resolve(file);
+                        reject(err);
+                    }
+                );
+            });
+            return file;
+        } catch (ex) {
+            return Promise.reject(ex);
+        }
     }
 
     /**

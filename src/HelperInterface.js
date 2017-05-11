@@ -1,6 +1,7 @@
 var fs = require("fs");
 var path = require("path");
 var Utils = require("./Helpers/Utils");
+var Logger = require("./Helpers/Logger");
 
 module.exports = class HelperInterface {
     constructor(UploadBro) {
@@ -82,10 +83,47 @@ module.exports = class HelperInterface {
      * @param options
      */
     editMessageError(options) {
-        this.editMessage(
-            "\u{26A0} It looks like something went wrong!",
-            options
-        )
+        // check if a custom error was given
+        if (options.error && options.error.custom_error) {
+            // check which custom error
+            switch (options.error.custom_error) {
+                case "remove_account": {
+                    // check for user info since it isn't implemented properly everywhere
+                    if (options.user_info) {
+                        // remove this provider type from the account, the refresh token/access tokens are no longer valid
+                        this._UploadBro._UserHelper
+                            .removeUserTokens(
+                                options.user_info,
+                                options.error.custom_error_options.site
+                            )
+                            .then(_ => {
+                                // we removed the user's info for the site
+                                this.editMessage(
+                                    `\u{2639} It looks like the tokens we had for your account have expired! Please go ` +
+                                        `to the website to log back in. (<a href='/login'>/login</a>)`,
+                                    {
+                                        chat_id: options.chat_id,
+                                        message_id: options.message_id,
+                                        parse_mode: "HTML"
+                                    }
+                                )
+                                    .then(res => {
+                                        Logger.trace(res);
+                                    })
+                                    .catch(err => {
+                                        Logger.trace(err);
+                                    });
+                            })
+                            .catch(Logger.error);
+                    }
+                    return;
+                }
+            }
+        }
+        this.editMessage("\u{26A0} It looks like something went wrong!", {
+            chat_id: options.chat_id,
+            message_id: options.message_id
+        })
             .then(() => {})
             .catch(() => {});
     }

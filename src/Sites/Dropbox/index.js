@@ -3,7 +3,8 @@ const path = require("path");
 const Logger = require("../../Helpers/Logger");
 
 const SiteInteface = require("../SiteInterface");
-const SearchQueryObj = require("./InlineQueries/SearchQuery");
+const HelpObj = require("./Commands/Help");
+// const SearchQueryObj = require("./InlineQueries/SearchQuery");
 const UploadObj = require("./Queries/Upload");
 
 module.exports = class Dropbox extends SiteInteface {
@@ -23,6 +24,11 @@ module.exports = class Dropbox extends SiteInteface {
         if (this._register) {
             // register commands
             this._UploadBro._QueryHandler.register(new UploadObj(this._UploadBro));
+
+            // register commands
+            this._UploadBro._CommandHandler.register(
+                new HelpObj(this._UploadBro)
+            );
 
             // register inline queries
             // this._UploadBro._InlineQueryHandler.register(new SearchQueryObj(this._UploadBro));

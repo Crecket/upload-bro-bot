@@ -3,6 +3,7 @@ const path = require("path");
 const Logger = require("../../Helpers/Logger");
 
 const SiteInteface = require("../SiteInterface.js");
+const HelpObj = require("./Commands/Help");
 // const UploadObj = require("./Queries/Upload");
 // const SearchQueryObj = require("./InlineQueries/SearchQuery");
 
@@ -30,7 +31,12 @@ module.exports = class Gfycat extends SiteInteface {
         if (this._register) {
             // // register commands
             // this._app._QueryHandler.register(new UploadObj(this._app));
-            //
+
+            // register commands
+            this._UploadBro._CommandHandler.register(
+                new HelpObj(this._UploadBro)
+            );
+
             // // register inline queries
             // this._app._InlineQueryHandler.register(
             //     new SearchQueryObj(this._app)

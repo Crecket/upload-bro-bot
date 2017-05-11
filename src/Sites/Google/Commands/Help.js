@@ -43,11 +43,19 @@ module.exports = class Help extends HelperInterface {
     }
 
     /**
+     * The description for this command
+     * @returns {string}
+     */
+    get description(){
+        return `Information about how Google Drive works with UploadBro`;
+    }
+
+    /**
      * Returns a string with the <command> - <description>
      * @returns {string}
      */
     get info() {
-        return `${this.name} - Information about how Google Drive works with UploadBro`;
+        return `${this.name} - ${this.description}`;
     }
 
     /**
@@ -55,6 +63,6 @@ module.exports = class Help extends HelperInterface {
      * @returns {RegExp}
      */
     get pattern() {
-        return /\/help google$/;
+        return /\/help[ _]?(google|google drive|googledrive|google_drive).*$/;
     }
 };

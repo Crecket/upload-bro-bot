@@ -24,25 +24,26 @@ module.exports = class Upload extends HelperInterface {
      * @returns {Promise}
      */
     async handle(query) {
-        // generic start upload event
-        let resolveResults = await this.UploadStartObj.handle(query, "box");
+        try {
+            // generic start upload event
+            let resolveResults = await this.UploadStartObj.handle(query, "box");
 
-        // upload to box
-        resolveResults = await this.uploadBox(resolveResults);
+            // upload to box
+            resolveResults = await this.uploadBox(resolveResults);
 
-        // generic finish upload event
-        resolveResults = await this.UploadFinishObj.handle(resolveResults);
+            // generic finish upload event
+            resolveResults = await this.UploadFinishObj.handle(resolveResults);
 
-        return resolveResults;
+            return resolveResults;
+        } catch (ex) {
+            return false;
+        }
     }
 
     /**
      * Upload file to google
      *
-     * @param msgInfo
-     * @param file_contents
-     * @param file_location
-     * @param userInfo
+     * @param resolveResults
      * @returns {Promise}
      */
     async uploadBox(resolveResults) {
@@ -57,6 +58,9 @@ module.exports = class Upload extends HelperInterface {
         } catch (ex) {
             // error result message
             this.editMessageError({
+                ...resolveResults,
+                error: ex,
+                user_info: resolveResults.userInfo,
                 chat_id: resolveResults.msgInfo.chat_id,
                 message_id: resolveResults.msgInfo.message_id
             });

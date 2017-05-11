@@ -45,18 +45,26 @@ module.exports = class Help extends HelperInterface {
     }
 
     /**
-     * Returns a string with the <command> - <description>
+     * The description for this command
+     * @returns {string}
+     */
+    get description(){
+        return `Information about how Imgur works with UploadBro`;
+    }
+
+    /**
+     * Returns a string with the <name> - <description>
      * @returns {string}
      */
     get info() {
-        return `${this.name} - Information about how Imgur works with UploadBro`;
+        return `${this.name} - ${this.description}`;
     }
 
     /**
      * Pattern used for this command
-     * @returns {RegExp}
+     * @returns {RegExp}imgurigmru
      */
     get pattern() {
-        return /\/help imgur$/;
+        return /\/help[ _]?(imgur|imgru|imgr).*$/;
     }
 };

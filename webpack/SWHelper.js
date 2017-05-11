@@ -3,6 +3,9 @@ const del = require("del");
 const glob = require("glob");
 const swPrecache = require("sw-precache");
 
+// disable cache for static files and use network only for generic files
+const DISABLE_STATIC = process.env.DISABLE_STATIC === "1";
+
 // folder constants
 const PUBLIC_DIR = "public";
 const CLIENT_DIR = "client";
@@ -23,7 +26,7 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
     );
 
     // if Disable static is set, don't cache webpack output
-    if (!process.env.DISABLE_STATIC) {
+    if (DISABLE_STATIC === false) {
         if (customFilesList) {
             // merge the afterEmitFiles list and remove duplicates
             staticFiles = [...new Set(staticFiles.concat(customFilesList))];
@@ -112,7 +115,7 @@ const SWHelper = (customFilesList = false, DEBUG = true) => {
                 },
                 {
                     urlPattern: /[.]?(html|js|css|json|png|jpg|svg|gif|jpeg|woff|woff2|ttf|eot)/,
-                    handler: "cacheFirst"
+                    handler: DISABLE_STATIC ? "networkFirst" : "cacheFirst"
                 },
                 {
                     // fonts don't update and we don't want it delaying our app

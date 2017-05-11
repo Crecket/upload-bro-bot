@@ -51,11 +51,19 @@ module.exports = class Start extends HelperInterface {
     }
 
     /**
+     * The description for this command
+     * @returns {string}
+     */
+    get description(){
+        return `Show the getting started information`;
+    }
+
+    /**
      * Returns a string with the <command> - <description>
      * @returns {string}
      */
     get info() {
-        return `${this.name} - Show the getting started information`;
+        return `${this.name} - ${this.description}`;
     }
 
     /**

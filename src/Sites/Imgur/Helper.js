@@ -166,6 +166,45 @@ module.exports = class ImgurHelper {
     }
 
     /**
+     * validate tokens and get new ones if they are not
+     *
+     * @param tokens
+     * @returns {Promise}
+     */
+    getValidToken(tokens) {
+        return new Promise((resolve, reject) => {
+            // check if access token has expired
+            if (tokens.expiry_date - new Date().getTime() >= 0) {
+                // not expired, no new tokens
+                resolve(true);
+            } else {
+                // attempt to get  new tokens
+                this.refreshAccessToken(tokens)
+                    .then(newTokens => resolve(newTokens))
+                    .catch(error => {
+                        // refresh failed, check if it is because the refresh token expired
+                        if (
+                            error.response.data &&
+                            error.response.data.data &&
+                            error.response.data.data.error
+                        ) {
+                            // refresh token has expired, require the user to login again
+                            return reject({
+                                custom_error: "remove_account",
+                                custom_error_options: {
+                                    site: "imgur"
+                                },
+                                error: error
+                            });
+                        }
+                        // fallback to default error
+                        return reject(error);
+                    });
+            }
+        });
+    }
+
+    /**
      * get a new access token using refresh token
      *
      * @param tokens
@@ -192,31 +231,7 @@ module.exports = class ImgurHelper {
                         })
                     );
                 })
-                .catch(err => {
-                    reject(err);
-                    Logger.error(err.response);
-                });
-        });
-    }
-
-    /**
-     * validate tokens and get new ones if they are not
-     *
-     * @param tokens
-     * @returns {Promise}
-     */
-    getValidToken(tokens) {
-        return new Promise((resolve, reject) => {
-            // check if access token has expired
-            if (tokens.expiry_date - new Date().getTime() >= 0) {
-                // not expired, no new tokens
-                resolve(true);
-            } else {
-                // attempt to get  new tokens
-                this.refreshAccessToken(tokens)
-                    .then(newTokens => resolve(newTokens))
-                    .catch(reject);
-            }
+                .catch(reject);
         });
     }
 };

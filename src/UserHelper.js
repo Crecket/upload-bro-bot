@@ -1,6 +1,6 @@
 module.exports = class UserHelper {
-    constructor(app) {
-        this._UploadBro = app;
+    constructor(UploadBro) {
+        this._UploadBro = UploadBro;
     }
 
     /**
@@ -34,8 +34,6 @@ module.exports = class UserHelper {
      */
     async removeUserTokens(user, type) {
         return await new Promise((resolve, reject) => {
-            console.log('removed');
-            return resolve();
             const db = this._UploadBro._Db;
             const usersCollection = db.collection("users");
 
