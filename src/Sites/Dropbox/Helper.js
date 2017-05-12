@@ -53,7 +53,7 @@ module.exports = class DropboxHelper {
      */
     async searchFile(user_info, file_name, advanced_options = {}) {
         // Create dropbox object
-        var dbx = this.createClient(user_info);
+        const dbx = this.createClient(user_info);
 
         // options to use in upload
         var options = Object.assign(
@@ -82,7 +82,7 @@ module.exports = class DropboxHelper {
      */
     uploadFile(newOptions, user_info) {
         // Create dropbox object
-        var dbx = this.createClient(user_info);
+        const dbx = this.createClient(user_info);
 
         // options to use in upload
         var options = Object.assign(
@@ -110,10 +110,10 @@ module.exports = class DropboxHelper {
     getUserInfo(user_info) {
         return new Promise((resolve, reject) => {
             // create a dropboxclient
-            var client = this.createClient(user_info);
+            const dbx = this.createClient(user_info);
 
             // return the info promise
-            client
+            dbx
                 .usersGetCurrentAccount()
                 .then(user_info => resolve(user_info))
                 .catch(reject);
@@ -129,10 +129,10 @@ module.exports = class DropboxHelper {
      */
     createShareLink(user_info, path, short = false) {
         // create a dropboxclient
-        var client = this.createClient(user_info);
+        const dbx = this.createClient(user_info);
 
         // return the share link
-        return client.sharingCreateSharedLink({
+        return dbx.sharingCreateSharedLink({
             path: path,
             short_url: short
         });
