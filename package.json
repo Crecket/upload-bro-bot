@@ -9,6 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --colors",
     "build-silent": "cross-env NODE_ENV=production webpack",
     "start": "cross-env NODE_ENV=development TRACE=true nodemon app.js",
+    "start-log": "cross-env NODE_ENV=development MORGAN=true TRACE=true nodemon app.js",
     "test": "jest --coverage --verbose",
     "test:dev": "jest --watch --coverage",
     "sw": "cross-env RUN_HELPER=1 node webpack/SWHelper.js",

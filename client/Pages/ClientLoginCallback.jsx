@@ -1,14 +1,16 @@
 import React from "react";
 import Helmet from "react-helmet";
 import Paper from "material-ui/Paper";
+import { Redirect } from "react-router-dom";
 import CircularProgress from "material-ui/CircularProgress";
 import Check from "material-ui/svg-icons/navigation/check";
 import Error from "material-ui/svg-icons/alert/error";
-import {green800, red500} from "material-ui/styles/colors";
-import {browserHistory} from "react-router";
+import { green800, red500 } from "material-ui/styles/colors";
+import { browserHistory } from "react-router";
 import axios from "axios";
 
 import Utils from "../Helpers/Utils";
+import Logger from "../Helpers/Logger";
 
 const styles = {
     inputs: {
@@ -36,10 +38,11 @@ const styles = {
     }
 };
 
-class DropboxLoginCallback extends React.Component {
+class ClientLoginCallback extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
+            redirect: false,
             loading: true,
             error: false
         };
@@ -50,9 +53,11 @@ class DropboxLoginCallback extends React.Component {
     }
 
     sendTokens = () => {
+        const providerType = this.props.match.params.type;
+
         // send the post request
         axios
-            .post("/login/dropbox/callback", Utils.getHashParams())
+            .post(`/login/${providerType}/callback`, Utils.getHashParams())
             .then(result => {
                 this.setState({
                     loading: false
@@ -61,24 +66,32 @@ class DropboxLoginCallback extends React.Component {
                 // update the current user
                 this.props.updateUser();
 
+                // after timeout trigger redirect
                 setTimeout(() => {
-                    // send home after waiting a while
-                    browserHistory.push("/");
-                }, 1000);
+                    this.setState({ redirect: "/dashboard" });
+                }, 2000);
             })
             .catch(error => {
-                console.error(error);
+                Logger.error(error);
                 this.setState({
                     error: true
                 });
+
+                // after timeout trigger redirect
                 setTimeout(() => {
-                    // send home after waiting a while
-                    browserHistory.push("/");
-                }, 1000);
+                    this.setState({ redirect: "/dashboard" });
+                }, 2000);
             });
     };
 
     render() {
+        if (this.state.redirect) return <Redirect to={this.state.redirect} />;
+
+        // check if provider is available
+        if (!this.props.sites[this.props.match.params.type]) {
+            return null;
+        }
+        const providerTitle = this.props.sites[this.props.match.params.type].title;
 
         var icon = (
             <CircularProgress
@@ -91,7 +104,7 @@ class DropboxLoginCallback extends React.Component {
         if (this.state.error) {
             icon = (
                 <h3>
-                    <Error style={styles.errorIcon}/>
+                    <Error style={styles.errorIcon} />
                     <br />
                     Something went wrong
                 </h3>
@@ -99,9 +112,9 @@ class DropboxLoginCallback extends React.Component {
         } else if (!this.state.loading) {
             icon = (
                 <h3>
-                    <Check style={styles.checkIcon}/>
+                    <Check style={styles.checkIcon} />
                     <br />
-                    Connected your Dropbox account
+                    Connected your {providerTitle} account
                 </h3>
             );
         }
@@ -112,10 +125,10 @@ class DropboxLoginCallback extends React.Component {
                 className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3"
             >
                 <Helmet>
-                    <title>{`UploadBroBot - Dropbox Login`}</title>
+                    <title>{`UploadBroBot - ${providerTitle} Login`}</title>
                 </Helmet>
                 <Paper style={styles.paper}>
-                    <h1>Logging in to Dropbox</h1>
+                    <h1>Logging in to {providerTitle}</h1>
                     {icon}
                 </Paper>
             </div>
@@ -123,4 +136,4 @@ class DropboxLoginCallback extends React.Component {
     }
 }
 
-export default DropboxLoginCallback;
+export default ClientLoginCallback;

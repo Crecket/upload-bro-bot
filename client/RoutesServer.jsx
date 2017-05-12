@@ -12,7 +12,7 @@ import Home from "./Pages/Home.jsx";
 // import ThemeTest from "./Pages/ThemeTest.jsx";
 // import ProviderLogin from "./Pages/ProviderLogin.jsx";
 // import ProviderRemove from "./Pages/ProviderRemove.jsx";
-// import DropboxLoginCallback from "./Pages/DropboxLoginCallback.jsx";
+// import ClientLoginCallback from "./Pages/ClientLoginCallback.jsx";
 // import NotFound from "./Pages/NotFound.jsx";
 
 // router react component
@@ -49,7 +49,7 @@ export default class RoutesServer extends React.Component {
                             <Route path="/remove/:type" component={Loader}/>
                             <Route path="/new/:type" component={Loader}/>
                             <Route
-                                path="/login/dropbox/callback"
+                                path="/login/:type/callback"
                                 component={Loader}
                             />
 

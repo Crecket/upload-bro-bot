@@ -32,10 +32,10 @@ const ProviderLogin = Cl(
         import(/* webpackChunkName: "providerlogin" */ "./Pages/ProviderLogin"),
     true
 );
-const DropboxLoginCb = Cl(
+const ClientLoginCallback = Cl(
     () =>
         import(
-            /* webpackChunkName: "dropboxlogin" */ "./Pages/DropboxLoginCallback"
+            /* webpackChunkName: "dropboxlogin" */ "./Pages/ClientLoginCallback"
         ),
     true
 );
@@ -117,9 +117,9 @@ export default class RoutesClient extends React.Component {
                             />
                             <PrivateRoute
                                 user_info={this.props.user_info}
-                                path="/login/dropbox/callback"
+                                path="/login/:type/callback"
                                 render={props => (
-                                    <DropboxLoginCb
+                                    <ClientLoginCallback
                                         {...props}
                                         {...this.props.childProps}
                                     />

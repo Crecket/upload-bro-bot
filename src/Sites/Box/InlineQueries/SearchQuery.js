@@ -6,13 +6,13 @@ const HelperInterface = require("../../../HelperInterface");
 const BoxHelperObj = require("../Helper");
 
 module.exports = class SearchQuery extends HelperInterface {
-    constructor(app) {
-        super(app);
+    constructor(UploadBro) {
+        super(UploadBro);
 
-        this._app = app;
+        this._UploadBro = UploadBro;
 
         // create box helper
-        this._BoxHelper = new BoxHelperObj(app);
+        this._BoxHelper = new BoxHelperObj(UploadBro);
     }
 
     /**
@@ -25,7 +25,7 @@ module.exports = class SearchQuery extends HelperInterface {
     async handle(inline_query, match) {
         try {
             // first get user info
-            const user_info = await this._app._UserHelper.getUser(
+            const user_info = await this._UploadBro._UserHelper.getUser(
                 inline_query.from.id
             );
             if (!user_info) {
@@ -53,7 +53,6 @@ module.exports = class SearchQuery extends HelperInterface {
                     match // file name to search for
                 )
                 .then(results => results.entries);
-            Logger.trace(search_results);
             return {};
 
             var resultList = [];
@@ -81,7 +80,10 @@ module.exports = class SearchQuery extends HelperInterface {
 
             // resolve this list
             return { inline_results: resultList };
-        } catch (ex) {}
+        } catch (ex) {
+            Logger.error(ex);
+            return {};
+        }
     }
 
     /**

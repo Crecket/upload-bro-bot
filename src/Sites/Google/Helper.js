@@ -94,11 +94,11 @@ module.exports = class GoogleHelper {
         // options to use in upload
         var options = Object.assign(
             {
-                q: `name contains '${file_name}'`,
+                q: `name contains '${file_name}' and trashed=false`,
                 fields: "nextPageToken, files(id, name, mimeType, thumbnailLink, webViewLink, webContentLink, description)",
                 spaces: "drive",
                 pageToken: null,
-                maxResults: 20
+                pageSize: 25
             },
             advanced_options
         );

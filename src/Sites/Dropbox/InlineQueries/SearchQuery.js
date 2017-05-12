@@ -6,13 +6,13 @@ const HelperInterface = require("../../../HelperInterface");
 const DropboxHelperObj = require("../Helper");
 
 module.exports = class SearchQuery extends HelperInterface {
-    constructor(app) {
-        super(app);
+    constructor(UploadBro) {
+        super(UploadBro);
 
-        this._app = app;
+        this._UploadBro = UploadBro;
 
-        // create google helper
-        this._DropboxHelper = new DropboxHelperObj(app);
+        // create dropbox helper
+        this._DropboxHelper = new DropboxHelperObj(UploadBro);
     }
 
     /**
@@ -22,80 +22,72 @@ module.exports = class SearchQuery extends HelperInterface {
      * @param match
      * @returns {Promise}
      */
-    handle(inline_query, match) {
-        // console.log(query);
-        return new Promise((resolve, reject) => {
+    async handle(inline_query, match) {
+        try {
             // first get user info
-            this._app._UserHelper
-                .getUser(inline_query.from.id)
-                .then(user_info => {
-                    if (!user_info) {
-                        return resolve(
-                            "It looks like you're not registered in our system."
-                        );
+            const user_info = await this._UploadBro._UserHelper.getUser(
+                inline_query.from.id
+            );
+
+            if (!user_info) {
+                return {
+                    options: {
+                        switch_pm_text: "It looks like you're not registered in our system.",
+                        switch_pm_parameter: "start"
                     }
+                };
+            }
 
-                    // check if we have
-                    if (!user_info.provider_sites.dropbox) {
-                        return resolve(
-                            [], // no results
-                            {
-                                switch_pm_text: "Dropbox service not connected to your account",
-                                switch_pm_parameter: "login"
-                            }
-                        );
+            if (!user_info.provider_sites.dropbox) {
+                return {
+                    options: {
+                        switch_pm_text: "Dropbox service not connected to your account",
+                        switch_pm_parameter: "login"
                     }
+                };
+            }
 
-                    // search for this file
-                    this._DropboxHelper
-                        .searchFile(
-                            user_info, // tokens
-                            match, // file name to search for
-                            {}
-                        )
-                        .then(file_results => {
-                            // Logger.trace(file_results);
-                            var resultList = [];
-                            file_results.map((file, key) => {
-                                if (file.match_type[".tag"] !== "file_name") {
-                                    // not a file type
-                                    return null;
-                                }
+            // search for this file
+            const file_results = await this._DropboxHelper.searchFile(
+                user_info, // tokens
+                match, // file name to search for
+                {}
+            );
 
-                                // create a shareable url
-                                var shareUrl = this._DropboxHelper.createShareLink(
-                                    user_info,
-                                    file.metadata.path
-                                );
+            // Logger.trace(file_results);
+            const resultList = [];
+            file_results.map((file, key) => {
+                if (file.match_type[".tag"] !== "file_name") {
+                    // not a file type
+                    return null;
+                }
 
-                                // create a new article
-                                var fileResult = {
-                                    type: "article",
-                                    id: file.meta_data.id,
-                                    title: file.meta_data.name,
-                                    url: shareUrl,
-                                    input_message_content: {
-                                        message_text: "<a href='" +
-                                        shareUrl +
-                                        "'>" +
-                                        file.meta_data.name +
-                                        "</a>",
-                                        parse_mode: "HTML"
-                                    }
-                                };
+                // create a shareable url
+                const shareUrl = this._DropboxHelper.createShareLink(
+                    user_info,
+                    file.metadata.path
+                );
 
-                                resultList.push(fileResult);
-                            });
+                // create a new article
+                var fileResult = {
+                    type: "article",
+                    id: file.meta_data.id,
+                    title: file.meta_data.name,
+                    url: shareUrl,
+                    input_message_content: {
+                        message_text: `<a href="${shareUrl}">${file.meta_data.name}</a>`,
+                        parse_mode: "HTML"
+                    }
+                };
+                resultList.push(fileResult);
+            });
 
-                            // resolve this list
-                            resolve(resultList, {
-                                cacheTime: 1
-                            });
-                        })
-                        .catch(err => Logger.error(err));
-                })
-                .catch(err => Logger.error(err));
-        });
+            // resolve this list
+            return { inline_results: resultList };
+        } catch (ex) {
+            Logger.error(ex);
+            return { inline_results: [] };
+        }
     }
 
     /**

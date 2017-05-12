@@ -6,13 +6,13 @@ const HelperInterface = require("../../../HelperInterface");
 const GoogleHelperObj = require("../Helper");
 
 module.exports = class SearchQuery extends HelperInterface {
-    constructor(app) {
-        super(app);
+    constructor(UploadBro) {
+        super(UploadBro);
 
-        this._app = app;
+        this._UploadBro = UploadBro;
 
         // create google helper
-        this._GoogleHelper = new GoogleHelperObj(app);
+        this._GoogleHelper = new GoogleHelperObj(UploadBro);
     }
 
     /**
@@ -22,73 +22,69 @@ module.exports = class SearchQuery extends HelperInterface {
      * @param match
      * @returns {Promise}
      */
-    handle(inline_query, match) {
-        // console.log(query);
-        return new Promise((resolve, reject) => {
+    async handle(inline_query, match) {
+        try {
             // first get user info
-            this._app._UserHelper
-                .getUser(inline_query.from.id)
-                .then(user_info => {
-                    if (!user_info) {
-                        return resolve(
-                            "It looks like you're not registered in our system."
-                        );
+            const user_info = await this._UploadBro._UserHelper.getUser(
+                inline_query.from.id
+            );
+
+            if (!user_info) {
+                return {
+                    options: {
+                        switch_pm_text: "It looks like you're not registered in our system.",
+                        switch_pm_parameter: "start"
                     }
+                };
+            }
 
-                    if (!user_info.provider_sites.google) {
-                        return resolve(
-                            [], // no results
-                            {
-                                switch_pm_text: "Google service not connected to your account",
-                                switch_pm_parameter: "login"
-                            }
-                        );
+            if (!user_info.provider_sites.google) {
+                return {
+                    options: {
+                        switch_pm_text: "Google Drive service not connected to your account",
+                        switch_pm_parameter: "login"
                     }
+                };
+            }
 
-                    // search for this file
-                    this._GoogleHelper
-                        .searchFile(
-                            user_info, // tokens
-                            match // file name to search for
-                        )
-                        .then(file_results => {
-                            // Logger.trace(file_results);
-                            var resultList = [];
-                            file_results.map((file, key) => {
-                                var fileUrl = this._GoogleHelper.getShareableLink(
-                                    file.id
-                                );
+            // search for this file
+            const file_results = await this._GoogleHelper.searchFile(
+                user_info, // tokens
+                match // file name to search for
+            );
 
-                                // create a new article
-                                var fileResult = {
-                                    type: "article",
-                                    id: file.id,
-                                    title: file.name,
-                                    url: file.webViewLink,
-                                    input_message_content: {
-                                        message_text: "<a href='" +
-                                            fileUrl +
-                                            "'>" +
-                                            file.name +
-                                            "</a>",
-                                        parse_mode: "HTML"
-                                    }
-                                };
-                                // optional thumbnail url
-                                if (file.thumbnailLink) {
-                                    fileResult.thumb_url = file.thumbnailLink;
-                                }
+            // Logger.trace(file_results);
+            const resultList = [];
+            file_results.map((file, key) => {
+                const fileUrl = this._GoogleHelper.getShareableLink(file.id);
 
-                                resultList.push(fileResult);
-                            });
+                // create a new article
+                var fileResult = {
+                    type: "article",
+                    id: file.id,
+                    title: file.name,
+                    url: file.webViewLink,
+                    input_message_content: {
+                        message_text: `<a href="${fileUrl}">${file.name}</a>`,
+                        parse_mode: "HTML"
+                    }
+                };
+                // optional thumbnail url
+                if (file.thumbnailLink) {
+                    fileResult.thumb_url = file.thumbnailLink;
+                }
 
-                            // resolve this list
-                            resolve({ inline_results: resultList });
-                        })
-                        .catch(err => Logger.error(err));
-                })
-                .catch(err => Logger.error(err));
-        });
+                resultList.push(fileResult);
+            });
+
+            console.log(resultList.length);
+
+            // resolve this list
+            return { inline_results: resultList };
+        } catch (ex) {
+            Logger.error(ex);
+            return { inline_results: [] };
+        }
     }
 
     /**

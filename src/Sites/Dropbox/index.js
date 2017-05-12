@@ -4,7 +4,7 @@ const Logger = require("../../Helpers/Logger");
 
 const SiteInteface = require("../SiteInterface");
 const HelpObj = require("./Commands/Help");
-// const SearchQueryObj = require("./InlineQueries/SearchQuery");
+const SearchQueryObj = require("./InlineQueries/SearchQuery");
 const UploadObj = require("./Queries/Upload");
 
 module.exports = class Dropbox extends SiteInteface {
@@ -23,7 +23,9 @@ module.exports = class Dropbox extends SiteInteface {
     register() {
         if (this._register) {
             // register commands
-            this._UploadBro._QueryHandler.register(new UploadObj(this._UploadBro));
+            this._UploadBro._QueryHandler.register(
+                new UploadObj(this._UploadBro)
+            );
 
             // register commands
             this._UploadBro._CommandHandler.register(
@@ -31,7 +33,9 @@ module.exports = class Dropbox extends SiteInteface {
             );
 
             // register inline queries
-            // this._UploadBro._InlineQueryHandler.register(new SearchQueryObj(this._UploadBro));
+            this._UploadBro._InlineQueryHandler.register(
+                new SearchQueryObj(this._UploadBro)
+            );
         }
         return Promise.resolve();
     }

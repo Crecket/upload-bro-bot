@@ -39,7 +39,7 @@ module.exports = class DropboxHelper {
         var dbx = this.createClient(user_info);
 
         // return the promise
-        return dbx.filesListFolder({path: path});
+        return dbx.filesListFolder({ path: path });
     }
 
     /**
@@ -51,31 +51,26 @@ module.exports = class DropboxHelper {
      *
      * @see https://developers.google.com/drive/v3/web/search-parameters
      */
-    searchFile(user_info, file_name, advanced_options = {}) {
-        return new Promise((resolve, reject) => {
-            // Create dropbox object
-            var dbx = this.createClient(user_info);
+    async searchFile(user_info, file_name, advanced_options = {}) {
+        // Create dropbox object
+        var dbx = this.createClient(user_info);
 
-            // options to use in upload
-            var options = Object.assign(
-                {
-                    path: "",
-                    query: file_name.trim(),
-                    start: 0,
-                    max_results: 25,
-                    mode: {
-                        ".tag": "filename"
-                    }
-                },
-                advanced_options
-            );
+        // options to use in upload
+        var options = Object.assign(
+            {
+                path: "",
+                query: file_name.trim(),
+                start: 0,
+                max_results: 25,
+                mode: {
+                    ".tag": "filename"
+                }
+            },
+            advanced_options
+        );
 
-            // load the files
-            dbx
-                .filesSearch(options)
-                .then(result => resolve(result.matches))
-                .catch(FilesSearchError => reject(FilesSearchError));
-        });
+        // search for the files and return the result
+        return await dbx.filesSearch(options).then(result => result.matches);
     }
 
     /**
