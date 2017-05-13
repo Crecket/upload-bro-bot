@@ -1,4 +1,4 @@
-const UploadBro = require("./UploadBro");
+const UploadBro = require("./UploadBro").default;
 
 describe("#UploadBro", () => {
     it("does startup sequence without errors", async () => {

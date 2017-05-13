@@ -3,17 +3,17 @@ import {Route, Switch} from "react-router-dom";
 import {CSSTransitionGroup} from "react-transition-group";
 import Loader from "./Components/Sub/Loader";
 
-import Home from "./Pages/Home.jsx";
+import Home from "./Pages/Home";
 
 // route helpers
 // import PrivateRoute from "./Components/Sub/PrivateRoute";
 // import PublicRoute from "./Components/Sub/PublicRoute";
-// import Dashboard from "./Pages/Dashboard.jsx";
-// import ThemeTest from "./Pages/ThemeTest.jsx";
-// import ProviderLogin from "./Pages/ProviderLogin.jsx";
-// import ProviderRemove from "./Pages/ProviderRemove.jsx";
-// import ClientLoginCallback from "./Pages/ClientLoginCallback.jsx";
-// import NotFound from "./Pages/NotFound.jsx";
+// import Dashboard from "./Pages/Dashboard";
+// import ThemeTest from "./Pages/ThemeTest";
+// import ProviderLogin from "./Pages/ProviderLogin";
+// import ProviderRemove from "./Pages/ProviderRemove";
+// import ClientLoginCallback from "./Pages/ClientLoginCallback";
+// import NotFound from "./Pages/NotFound";
 
 // router react component
 export default class RoutesServer extends React.Component {

@@ -28,7 +28,7 @@ const UserHelper = require("./UserHelper");
 const Queue = require("./Queue");
 const Analytics = require("./Analytics");
 
-module.exports = class UploadBro {
+export default class UploadBro {
     /**
      * @param onlineMode - in onlineMode, connections to external services are actived
      */

@@ -8,6 +8,7 @@ cache:
 script:
   - sudo cp .env.example .env
   - npm run test
-  - npm run build
+  - npm run build-server
+  - npm run build-client
 #services:
 #  - mongodb

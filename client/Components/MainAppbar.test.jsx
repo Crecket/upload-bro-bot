@@ -6,7 +6,7 @@ import {Mount, Renderer} from "../Helpers/Test/WithContext";
 // import MainAppbarPopover from "./Sub/MainAppbarPopover";
 // injection, required for materialze tap events
 import injectTapEventPlugin from "react-tap-event-plugin";
-import MainAppbar from "./MainAppbar.jsx";
+import MainAppbar from "./MainAppbar";
 injectTapEventPlugin();
 
 const userInfoList = require("../Helpers/Test/Data/api-get_user.json");

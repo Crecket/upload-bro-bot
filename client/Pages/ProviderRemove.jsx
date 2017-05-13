@@ -11,7 +11,7 @@ import Swipe from "react-easy-swipe";
 import axios from "axios";
 
 import Logger from "../Helpers/Logger";
-import NavLink from "../Components/Sub/NavLink.jsx";
+import NavLink from "../Components/Sub/NavLink";
 
 const styles = {
     img: {

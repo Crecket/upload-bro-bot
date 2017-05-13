@@ -4,14 +4,14 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "cross-env NODE_ENV=development TRACE=true nodemon --exec babel-node app.js",
     "dev": "cross-env NODE_ENV=development DISABLE_STATIC=1 webpack --debug --watch --progress --colors",
     "dev-sw": "cross-env NODE_ENV=development webpack --debug --watch --progress --colors",
-    "build": "cross-env NODE_ENV=production webpack --progress --colors",
-    "build-silent": "cross-env NODE_ENV=production webpack",
-    "start": "cross-env NODE_ENV=development TRACE=true nodemon app.js",
-    "start-log": "cross-env NODE_ENV=development MORGAN=true TRACE=true nodemon app.js",
     "test": "jest --coverage --verbose",
     "test:dev": "jest --watch --coverage",
+    "build": "npm run build:server && npm run build:client",
+    "build:client": "cross-env NODE_ENV=production webpack --progress --colors",
+    "build:server": "cross-env NODE_ENV=production babel src --out-dir dist --copy-files && cross-env NODE_ENV=production babel client --out-dir dist/client",
     "sw": "cross-env RUN_HELPER=1 node webpack/SWHelper.js",
     "prettify": "prettier --write \"{src,client,webpack}/**/*.{js,jsx}\" --tab-width 4",
     "pm2": "pm2 start pm2.json"
@@ -28,6 +28,7 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/public/",
+      "/dist/",
       ".html"
     ]
   },
@@ -72,6 +73,7 @@
   },
   "devDependencies": {
     "babel": "^6.23.0",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.1",
     "babel-jest": "^19.0.0",
@@ -111,7 +113,7 @@
     "react-addons-perf": "^15.4.2",
     "react-addons-test-utils": "15.5.1",
     "react-dom": "15.5.4",
-    "react-easy-swipe": "^0.0.9",
+    "react-easy-swipe": "^0.0.13",
     "react-gsap-enhancer": "^0.3.0",
     "react-helmet": "^5.0.2",
     "react-loadable": "^3.2.2",
@@ -133,7 +135,7 @@
     "store": "^2.0.4",
     "style-loader": "^0.16.1",
     "sw-precache": "^5.1.0",
-    "webpack": "^2.6.0",
+    "webpack": "^2.5.1",
     "webpack-bundle-analyzer": "^2.3.1"
   }
 }

@@ -38,7 +38,7 @@ let config = {
     output: {
         path: BUILD_DIR,
         filename: OUTPUT_DIR + "[name].js",
-        publicPath: process.env.WEBSITE_URL + "/",
+        publicPath: "/",
         chunkFilename: OUTPUT_DIR + "[name].[chunkhash].bundle.js"
     },
     resolve: {

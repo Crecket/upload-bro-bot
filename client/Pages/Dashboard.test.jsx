@@ -3,7 +3,7 @@
 import React from "react";
 import {Renderer} from "../Helpers/Test/WithContext";
 
-import Dashboard from "./Dashboard.jsx";
+import Dashboard from "./Dashboard";
 
 const userInfoList = require("../Helpers/Test/Data/api-get_user.json");
 const siteInfoList = require("../Helpers/Test/Data/api-get_providers.json");

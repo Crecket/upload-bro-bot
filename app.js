@@ -1,16 +1,7 @@
-"use strict";
-// load env config
-require('dotenv').config();
-const Logger = require('./src/Helpers/Logger');
-
-// unhandledrejection listener
-process.on('unhandledRejection', (reason, promise) => {
-    Logger.error(reason);
-});
-
-// Load the app
-const UploadBro = require('./src/UploadBro');
-const App = new UploadBro();
-
-// start Uploadbro
-App.start().then().catch(Logger.error);
+require("dotenv").config();
+// load correct version based on node env
+if (process.env.NODE_ENV === "development") {
+    require("./src/index");
+} else {
+    require("./dist/index");
+}

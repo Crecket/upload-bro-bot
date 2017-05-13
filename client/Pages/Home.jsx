@@ -2,12 +2,13 @@ import React from "react";
 import Helmet from "react-helmet";
 import RaisedButton from "material-ui/RaisedButton";
 import Paper from "material-ui/Paper";
+// import Typist from "react-typist";
 // custom components
 import ManualPost from "../Helpers/ManualPost";
 // make sync
-import FeatureList from "../Components/FeatureList.jsx";
-import YoutubePreview from "../Components/YoutubePreview.jsx";
-import SiteList from "../Components/SiteList.jsx";
+import FeatureList from "../Components/FeatureList";
+import YoutubePreview from "../Components/YoutubePreview";
+import SiteList from "../Components/SiteList";
 
 const styles = {
     centerBox: {
@@ -54,7 +55,7 @@ export default class Home extends React.Component {
                 <div className="row center-xs">
                     <div className="col-xs-12 col-sm-6">
                         <div className="box">
-                            <br/>
+                            <br />
                             <a
                                 href="https://telegram.me/uploadbro_bot"
                                 rel="noopener"

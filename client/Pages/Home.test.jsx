@@ -3,7 +3,7 @@
 import React from "react";
 
 import {Renderer, Shallow} from "../Helpers/Test/WithContext";
-import Home from "./Home.jsx";
+import Home from "./Home";
 
 const siteTestList = require("../Helpers/Test/Data/api-get_providers.json");
 

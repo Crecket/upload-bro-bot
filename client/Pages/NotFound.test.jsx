@@ -2,7 +2,7 @@
 import React from "react";
 
 import {Renderer} from "../Helpers/Test/WithContext";
-import NotFound from "./NotFound.jsx";
+import NotFound from "./NotFound";
 
 describe("<NotFound />", () => {
     it("matches snapshot", () => {

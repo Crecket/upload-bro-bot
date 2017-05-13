@@ -2,9 +2,6 @@
 
 let PreRender = () => {};
 if (process.env.ENABLE_SSR === "true") {
-    // only load babel-register if we have ssr
-    require("babel-register");
-
     // only load pre-Render if ssr is enabled
     PreRender = require("../PreRender");
 }

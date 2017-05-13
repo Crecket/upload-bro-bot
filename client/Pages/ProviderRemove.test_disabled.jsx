@@ -6,8 +6,8 @@ import renderer from "react-test-renderer";
 import {shallow} from "enzyme";
 import moxios from "moxios";
 
-import Wrapper from "../TestHelpers/Wrapper.jsx";
-import ProviderRemove from "./ProviderRemove.jsx";
+import Wrapper from "../TestHelpers/Wrapper";
+import ProviderRemove from "./ProviderRemove";
 
 // pre-loaded info from json
 const userInfoList = require("../TestHelpers/Data/api-get_user.json");
