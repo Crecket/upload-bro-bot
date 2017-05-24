@@ -6,10 +6,10 @@ const Logger = require("../../Helpers/Logger");
 const OneDriveHelperObj = require("./Helper");
 const UserHelperObj = require("../../UserHelper");
 
-module.exports = (app, passport, uploadApp) => {
-    var db = uploadApp._Db;
-    var OneDriveHelper = new OneDriveHelperObj(uploadApp);
-    var UserHelper = new UserHelperObj(uploadApp);
+module.exports = (app, passport, UploadBro) => {
+    var db = UploadBro._Db;
+    var OneDriveHelper = new OneDriveHelperObj(UploadBro);
+    var UserHelper = new UserHelperObj(UploadBro);
 
     // returns a valid oauth url for the client
     app.post("/login/onedrive", (request, response) => {
@@ -17,30 +17,13 @@ module.exports = (app, passport, uploadApp) => {
             // not logged in
             return response.redirect("/");
         }
-        var urlOptions = {
-            access_type: "offline",
-            approval_prompt: "force",
-            scope: [
-                "https://www.onedriveapis.com/auth/userinfo.profile",
-                "https://www.onedriveapis.com/auth/drive"
-            ]
-        };
 
         // redirect to the auth url helper func
         let redirectToUrl = () => {
             // create the url
-            OneDriveHelper.createOauthClient()
-                .then(authclient => {
-                    let url = authclient.generateAuthUrl(urlOptions);
-
-                    // redirect to it
-                    response.redirect(url);
-                })
-                .catch(err => {
-                    Logger.error(err);
-                    // redirect to home, something went terribly wrong
-                    response.redirect("/");
-                });
+            const url = OneDriveHelper.getAuthorizationUrl();
+            // redirect to it
+            response.redirect(url);
         };
 
         // check if we already have data for onedrive
@@ -67,7 +50,7 @@ module.exports = (app, passport, uploadApp) => {
     });
 
     // handles the oauth callback
-    app.get("/login/onedrive/callback", function (request, response) {
+    app.get("/login/onedrive/callback", function(request, response) {
         var code = request.query.code;
 
         let resultRoute = "/new/onedrive";
@@ -81,7 +64,7 @@ module.exports = (app, passport, uploadApp) => {
             OneDriveHelper.createOauthClient()
                 .then(authclient => {
                     // get token using new code
-                    authclient.getToken(code, function (err, tokens) {
+                    authclient.getToken(code, function(err, tokens) {
                         if (err) {
                             response.redirect(resultRoute);
                             return;

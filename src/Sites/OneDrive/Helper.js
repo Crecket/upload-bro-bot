@@ -1,13 +1,15 @@
 const fs = require("fs");
 const mime = require("mime");
 const path = require("path");
-const google = require("googleapis");
 const Logger = require("../../Helpers/Logger");
-const OAuth2 = google.auth.OAuth2;
 
-module.exports = class GoogleHelper {
-    constructor(app) {
-        this._app = app;
+// https://github.com/dkatavic/onedrive-api
+// https://dev.onedrive.com/auth/graph_oauth.htm
+//
+
+module.exports = class OneDriveHelper {
+    constructor(UploadBro) {
+        this._UploadBro = UploadBro;
     }
 
     /**
@@ -31,7 +33,7 @@ module.exports = class GoogleHelper {
         }
 
         // seperate correct tokens
-        const tokens = userInfo.provider_sites.google;
+        const tokens = userInfo.provider_sites.onedrive;
 
         // check if oogle tokens found
         if (tokens) {
@@ -52,9 +54,9 @@ module.exports = class GoogleHelper {
 
             // copy the user and prepare to update
             let newUser = userInfo;
-            newUser.provider_sites.google = Object.assign(
+            newUser.provider_sites.onedrive = Object.assign(
                 {},
-                newUser.provider_sites.google,
+                newUser.provider_sites.onedrive,
                 newTokens
             );
 
@@ -62,31 +64,31 @@ module.exports = class GoogleHelper {
             oauthclient.setCredentials(newTokens);
 
             // update the user
-            const success = await this._app._UserHelper.updateUserTokens(
+            const success = await this._UploadBro._UserHelper.updateUserTokens(
                 newUser
             );
             if (success) return oauthclient;
             // new token failed to store
             throw new Error("Failed to store new access tokens");
         }
-        throw new Error("No token found for Google provider");
+        throw new Error("No token found for OneDrive provider");
     }
 
     /**
      * Search for files in folder
      *
-     * @param google_tokens
+     * @param onedrive_tokens
      * @param newOptions
      * @returns {Promise}
      *
-     * @see https://developers.google.com/drive/v3/web/search-parameters
+     * @see https://developers.onedrive.com/drive/v3/web/search-parameters
      */
     async searchFile(user, file_name, advanced_options = {}) {
         // get a valid oauth client
         const authclient = await this.createOauthClient(user);
 
         // drive object
-        var drive = google.drive({ version: "v3", auth: authclient });
+        var drive = onedrive.drive({ version: "v3", auth: authclient });
 
         // escape special character
         file_name = file_name.replace(/[\\'"/]/g, " ");
@@ -124,7 +126,7 @@ module.exports = class GoogleHelper {
      * @param parent_folder_id
      * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
      *
-     * @see https://developers.google.com/drive/v3/web/manage-uploads
+     * @see https://developers.onedrive.com/drive/v3/web/manage-uploads
      */
     async uploadFile(
         userInfo,
@@ -136,7 +138,7 @@ module.exports = class GoogleHelper {
         const authclient = await this.createOauthClient(userInfo);
 
         // drive object
-        let drive = google.drive({ version: "v3", auth: authclient });
+        let drive = onedrive.drive({ version: "v3", auth: authclient });
 
         // promise to wrap the callback functions
         return new Promise((resolve, reject) => {
@@ -190,30 +192,10 @@ module.exports = class GoogleHelper {
      * @param userInfo
      * @returns {Promise}
      *
-     * @see https://developers.google.com/drive/v3/web/folder
+     * @see https://developers.onedrive.com/drive/v3/web/folder
      */
     async assertUploadFolder(userInfo) {
-        return await new Promise((resolve, reject) => {
-            // check if the folder exists with the name uploadbro
-            this.searchFile(userInfo, "UploadBro", {
-                q: "name = 'UploadBro' and trashed = false and mimeType = 'application/vnd.google-apps.folder'"
-            })
-                .then(file_info => {
-                    // should only return 1 result
-                    if (file_info.length === 0) {
-                        // no results so we need to create it
-                        this.createFolder(userInfo, "UploadBro")
-                            .then(resolve)
-                            .catch(reject);
-                    } else if (file_info.length === 1) {
-                        // return the folrder id
-                        resolve(file_info[0]["id"]);
-                    } else {
-                        reject("Failed to reliably fetch the UploadBro folder");
-                    }
-                })
-                .catch(reject);
-        });
+        //
     }
 
     /**
@@ -224,70 +206,21 @@ module.exports = class GoogleHelper {
      * @returns {Promise}
      */
     async createFolder(userInfo, folder_name) {
-        // create a new ouath client
-        const authClient = await this.createOauthClient(userInfo);
-
-        // drive object
-        let drive = google.drive({ version: "v3", auth: authClient });
-
-        return new Promise((resolve, reject) => {
-            // create the file
-            drive.files.create(
-                {
-                    resource: {
-                        name: "UploadBro",
-                        mimeType: "application/vnd.google-apps.folder"
-                    },
-                    fields: "id"
-                },
-                (err, file) => {
-                    if (err) return reject(err);
-                    // resolve the file id
-                    resolve(file.id);
-                }
-            );
-        });
+       //
     }
 
     /**
      * download a file
      *
-     * @param google_tokens
+     * @param onedrive_tokens
      * @param fileId
      * @param filePath
      * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
      *
-     * @see https://developers.google.com/drive/v3/web/manage-downloads
+     * @see https://developers.onedrive.com/drive/v3/web/manage-downloads
      */
-    async downloadFile(google_tokens, fileId, filePath) {
-        // create new auth client
-        var authclient = await this.createOauthClient(google_tokens);
-
-        // drive object
-        var drive = google.drive({ version: "v3", auth: authclient });
-
-        // get the file mimetype
-        var mimeType = mime.lookup(filePath);
-
-        // create target stream
-        var dest = fs.createWriteStream(filePath);
-
-        return await new Promise((resolve, reject) => {
-            // start export
-            drive.files
-                .get({
-                    fileId: fileId,
-                    mimeType: mimeType,
-                    alt: "media"
-                })
-                .on("end", () => {
-                    resolve(true);
-                })
-                .on("error", err => {
-                    reject(err);
-                })
-                .pipe(dest);
-        });
+    async downloadFile(onedrive_tokens, fileId, filePath) {
+        //
     }
 
     /**
@@ -300,82 +233,24 @@ module.exports = class GoogleHelper {
         const authclient = await this.createOauthClient(user_info);
 
         // drive object
-        var drive = google.drive({ version: "v3", auth: authclient });
+        var drive = onedrive.drive({ version: "v3", auth: authclient });
 
         // start export
         return new Promise((resolve, reject) => {
-            drive.about.get(
-                {
-                    fields: "user"
-                },
-                (err, userInformation) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(userInformation);
-                    }
-                }
-            );
+            // do request to: https://api.onedrive.com/v1.0/drive
         });
     }
 
-    // /**
-    //  * get file info
-    //  *
-    //  * @param google_tokens
-    //  * @param fileId
-    //  * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
-    //  *
-    //  * @see https://developers.google.com/drive/v3/web/manage-downloads
-    //  */
-    // fileInfo(google_tokens, fileId) {
-    //     return new Promise((resolve, reject) => {
-    //         var authclient = this.createOauthClient(google_tokens)
-    //
-    //         // drive object
-    //         var drive = google.drive({version: 'v3', auth: authclient});
-    //
-    //         // start export
-    //         drive.files.get({
-    //             fileId: fileId
-    //         }, (err, buffer) => {
-    //             if (err) {
-    //                 reject(err);
-    //             } else {
-    //                 resolve(buffer);
-    //             }
-    //         });
-    //     });
-    // }
-    //
-    // /**
-    //  * get files list
-    //  *
-    //  * @param file
-    //  * @param newOptions
-    //  * @param dropboxToken
-    //  * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadError>>}
-    //  *
-    //  * @see
-    //  */
-    // getFilesList(google_tokens, path = "") {
-    //     return new Promise((resolve, reject) => {
-    //         var authclient = this.createOauthClient(google_tokens)
-    //         var drive = google.drive({version: 'v3', auth: authclient});
-    //
-    //         drive.files.list({
-    //             auth: authclient,
-    //             pageSize: 10,
-    //             fields: "nextPageToken, files(id, name, thumbnailLink, description)"
-    //         }, (err, response) => {
-    //             if (err) {
-    //                 reject(err);
-    //             } else {
-    //                 resolve(response.files);
-    //             }
-    //         });
-    //     })
-    // }
+    /**
+     * Get the authorization request url
+     *
+     * @returns {string}
+     */
+    getAuthorizationUrl() {
+        const scope = "files.readwrite.all offline_access";
+        return `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${client_id}&scope=${scope}
+&response_type=code&redirect_uri=${process.env.WEBSITE_URL}${process.env.ONEDRIVE_REDIRECT_URI}`;
+    }
 
     /**
      * Creates a shareable link
@@ -384,7 +259,7 @@ module.exports = class GoogleHelper {
      * @returns {string}
      */
     getShareableLink(fileId) {
-        return "https://drive.google.com/open?id=" + fileId;
+        return "https://drive.onedrive.com/open?id=" + fileId;
     }
 
     /**
@@ -395,7 +270,8 @@ module.exports = class GoogleHelper {
      */
     getThumbnailLink(fileId) {
         return (
-            "https://drive.google.com/thumbnail?authuser=0&sz=w320&id=" + fileId
+            "https://drive.onedrive.com/thumbnail?authuser=0&sz=w320&id=" +
+            fileId
         );
     }
 
