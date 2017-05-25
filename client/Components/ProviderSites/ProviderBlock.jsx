@@ -10,6 +10,7 @@ import NavLink from "../Sub/NavLink.jsx";
 const styles = {
     img: {
         height: 120,
+        maxWidth: "100%",
         zIndex: 5
     },
     container: {

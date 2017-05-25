@@ -68,15 +68,6 @@ module.exports = class Imgur extends SiteInteface {
     }
 
     /**
-     * return this site's slogan
-     *
-     * @returns {string}
-     */
-    get slogan() {
-        return "The most awesome images on the Internet";
-    }
-
-    /**
      * return this site's full title
      *
      * @returns {string}

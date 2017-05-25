@@ -7,7 +7,7 @@ const UploadObj = require("./Queries/Upload");
 const HelpObj = require("./Commands/Help");
 const SearchQueryObj = require("./InlineQueries/SearchQuery");
 
-module.exports = class Google extends SiteInteface {
+module.exports = class OneDrive extends SiteInteface {
     constructor(UploadBro, register = true) {
         super(UploadBro);
         this._UploadBro = UploadBro;
@@ -53,7 +53,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {string}
      */
     get name() {
-        return "Google";
+        return "OneDrive";
     }
 
     /**
@@ -62,16 +62,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {string}
      */
     get title() {
-        return "Google Drive";
-    }
-
-    /**
-     * return this site's slogan
-     *
-     * @returns {string}
-     */
-    get slogan() {
-        return "Cloud Storage & File Backup for Photos, Docs & More";
+        return "Microsoft OneDrive";
     }
 
     /**
@@ -80,7 +71,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {string}
      */
     get description() {
-        return "Cloud Storage & File Backup for Photos, Docs & More";
+        return "Get to your files and photos from anywhere, on any device.";
     }
 
     /**
@@ -89,7 +80,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {string}
      */
     get key() {
-        return "google";
+        return "onedrive";
     }
 
     /**
@@ -98,7 +89,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {string}
      */
     get url() {
-        return "https://drive.google.com";
+        return "https://onedrive.live.com/";
     }
 
     /**
@@ -109,11 +100,11 @@ module.exports = class Google extends SiteInteface {
     logoUrl(type = "png") {
         switch (type) {
             case "png":
-                return "/assets/img/google.png";
+                return "/assets/img/onedrive.png";
             case "svg":
-                return "/assets/img/google.svg";
+                return "/assets/img/onedrive.svg";
         }
-        return "/assets/img/google.png";
+        return "/assets/img/onedrive.png";
     }
 
     /**
@@ -122,7 +113,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {string}
      */
     get logoUrlSvg() {
-        return "/assets/img/google.svg";
+        return "/assets/img/onedrive.svg";
     }
 
     /**
@@ -140,6 +131,7 @@ module.exports = class Google extends SiteInteface {
      * @returns {[string,string]}
      */
     get supportedFeatures() {
+        return [];
         return ["inlineQuery_search", "query_upload"];
     }
 };

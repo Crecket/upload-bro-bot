@@ -68,15 +68,6 @@ module.exports = class Box extends SiteInteface {
     }
 
     /**
-     * return this site's slogan
-     *
-     * @returns {string}
-     */
-    get slogan() {
-        return "Secure File Sharing, Storage, and Collaboration";
-    }
-
-    /**
      * return this site's description
      *
      * @returns {string}

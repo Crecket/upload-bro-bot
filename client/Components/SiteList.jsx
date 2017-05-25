@@ -45,7 +45,7 @@ class SiteList extends React.Component {
                         <div className="col-xs-12 col-sm-8">
                             <div className="box">
                                 <h3>{site.title}</h3>
-                                {site.slogan}
+                                {site.description}
                             </div>
                         </div>
                     </div>

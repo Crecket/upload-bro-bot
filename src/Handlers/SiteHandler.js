@@ -1,8 +1,8 @@
 const FeatureLookup = require("../Sites/FeatureLookup.js");
 
 module.exports = class SiteHandler {
-    constructor(app) {
-        this._app = app;
+    constructor(Uploadbro) {
+        this._Uploadbro = Uploadbro;
 
         this._sites = {};
     }
@@ -95,7 +95,6 @@ module.exports = class SiteHandler {
                 name: this._sites[siteKey].name,
                 title: this._sites[siteKey].title,
                 description: this._sites[siteKey].description,
-                slogan: this._sites[siteKey].slogan,
                 key: this._sites[siteKey].key,
                 url: this._sites[siteKey].url,
                 supportedExtensions: this._sites[siteKey].supportedExtensions,

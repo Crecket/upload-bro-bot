@@ -66,15 +66,6 @@ module.exports = class Flickr extends SiteInteface {
     }
 
     /**
-     * return this site's slogan
-     *
-     * @returns {string}
-     */
-    get slogan() {
-        return "Picture galleries available with social networking, chat, groups, and photo ratings.";
-    }
-
-    /**
      * return this site's description
      *
      * @returns {string}

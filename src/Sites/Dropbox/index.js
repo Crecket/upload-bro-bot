@@ -68,15 +68,6 @@ module.exports = class Dropbox extends SiteInteface {
     }
 
     /**
-     * return this site's slogan
-     *
-     * @returns {string}
-     */
-    get slogan() {
-        return "Securely Share, Sync & Collaborate.";
-    }
-
-    /**
      * return this site's description
      *
      * @returns {string}

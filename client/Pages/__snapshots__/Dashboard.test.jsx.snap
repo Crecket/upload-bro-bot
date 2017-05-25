@@ -169,6 +169,7 @@ exports[`<Dashboard /> matches snapshot with verified user 1`] = `
               style={
                 Object {
                   "height": 120,
+                  "maxWidth": "100%",
                   "zIndex": 5,
                 }
               }
@@ -410,6 +411,7 @@ exports[`<Dashboard /> matches snapshot with verified user 1`] = `
               style={
                 Object {
                   "height": 120,
+                  "maxWidth": "100%",
                   "zIndex": 5,
                 }
               }
@@ -651,6 +653,7 @@ exports[`<Dashboard /> matches snapshot with verified user 1`] = `
               style={
                 Object {
                   "height": 120,
+                  "maxWidth": "100%",
                   "zIndex": 5,
                 }
               }
@@ -892,6 +895,7 @@ exports[`<Dashboard /> matches snapshot with verified user 1`] = `
               style={
                 Object {
                   "height": 120,
+                  "maxWidth": "100%",
                   "zIndex": 5,
                 }
               }
@@ -1301,6 +1305,7 @@ exports[`<Dashboard /> matches snapshot without verified user 1`] = `
               style={
                 Object {
                   "height": 120,
+                  "maxWidth": "100%",
                   "zIndex": 5,
                 }
               }
@@ -1534,6 +1539,7 @@ exports[`<Dashboard /> matches snapshot without verified user 1`] = `
               style={
                 Object {
                   "height": 120,
+                  "maxWidth": "100%",
                   "zIndex": 5,
                 }
               }
@@ -1767,6 +1773,7 @@ exports[`<Dashboard /> matches snapshot without verified user 1`] = `
               style={
                 Object {
                   "height": 120,
+                  "maxWidth": "100%",
                   "zIndex": 5,
                 }
               }
@@ -2000,6 +2007,7 @@ exports[`<Dashboard /> matches snapshot without verified user 1`] = `
               style={
                 Object {
                   "height": 120,
+                  "maxWidth": "100%",
                   "zIndex": 5,
                 }
               }

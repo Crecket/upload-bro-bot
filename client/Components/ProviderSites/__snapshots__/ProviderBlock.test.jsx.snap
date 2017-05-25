@@ -135,6 +135,7 @@ exports[`<ProviderBlock /> matches snapshot with both site and user info 1`] = `
         style={
           Object {
             "height": 120,
+            "maxWidth": "100%",
             "zIndex": 5,
           }
         }
@@ -613,6 +614,7 @@ exports[`<ProviderBlock /> matches snapshot without user info 1`] = `
         style={
           Object {
             "height": 120,
+            "maxWidth": "100%",
             "zIndex": 5,
           }
         }

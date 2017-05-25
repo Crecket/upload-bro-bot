@@ -66,15 +66,6 @@ module.exports = class Google extends SiteInteface {
     }
 
     /**
-     * return this site's slogan
-     *
-     * @returns {string}
-     */
-    get slogan() {
-        return "Cloud Storage & File Backup for Photos, Docs & More";
-    }
-
-    /**
      * return this site's description
      *
      * @returns {string}
