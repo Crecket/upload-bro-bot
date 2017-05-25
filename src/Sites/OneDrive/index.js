@@ -44,7 +44,7 @@ module.exports = class OneDrive extends SiteInteface {
      * @returns {boolean}
      */
     get enabled() {
-        return true;
+        return false;
     }
 
     /**
