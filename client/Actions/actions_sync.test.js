@@ -32,7 +32,7 @@ describe("actions synchronous", () => {
             const expected = {
                 type: "USER_INITIAL_CHECK"
             };
-            expect(userActions.userInitialCHeck()).toEqual(expected);
+            expect(userActions.userInitialCheck()).toEqual(expected);
         });
 
         it("should create a set userinfo action", () => {

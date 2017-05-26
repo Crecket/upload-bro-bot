@@ -4,13 +4,13 @@
 {#<link rel="preload" as="script" crossorigin="anonymous" href="{{ WEBSITE_URL }}/assets/dist/commons.js"/>#}
 {#<link rel="preload" as="script" crossorigin="anonymous" href="{{ WEBSITE_URL }}/assets/dist/sw-register.js"/>#}
 {#<link rel="preload" as="script" crossorigin="anonymous" href="{{ WEBSITE_URL }}/assets/dist/app.js"/>#}
+{#<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" lazyload="1">#}
 {% block css %}
     {% if appCss|default %}
         <style>{{ appCss }}</style>
     {% else %}
         <link href="/assets/dist/css-app.css" rel="stylesheet" lazyload="1">
     {% endif %}
-    {#<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" lazyload="1">#}
 {% endblock %}
 
 {% block content %}
