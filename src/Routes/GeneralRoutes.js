@@ -5,7 +5,7 @@ if (process.env.ENABLE_SSR === "true") {
     // only load pre-Render if ssr is enabled
     PreRender = require("../PreRender");
 }
-
+import InlineCss from "../Helpers/InlineCss";
 const Logger = require("../Helpers/Logger");
 const SpdyPush = require("../SpdyPush");
 
@@ -37,11 +37,7 @@ module.exports = (app, passport, uploadApp) => {
     app.get(["/", "/dashboard", "/remove/:type", "/new/:type"], (req, res) => {
         res.set("X-Frame-Options", "ALLOW-FROM-ALL");
 
-        // pre-render check
-        const PreRenderResults = doPrerender(uploadApp, req);
-
-        // polyfill pushhandler result since its buggy for now
-        const PushHandlerResult = Promise.resolve();
+        let time = new Date();
 
         // create new push handler and start sendFiles event for files which are always requested for this route
         // const PushHandler = new SpdyPush(req, res);
@@ -60,19 +56,31 @@ module.exports = (app, passport, uploadApp) => {
         //     }
         // ]);
 
-        // catch errors for this
-        PushHandlerResult.catch(Logger.error);
+        // polyfill pushhandler result since its buggy for now
+        const PushHandlerRequest = Promise.resolve();
 
-        Promise.all([PreRenderResults, PushHandlerResult])
-            // we only bother with the html results
-            .then(([preRenderedHtml]) => {
+        // pre-render check
+        const PreRenderRequest = doPrerender(uploadApp, req);
+
+        // try to get css styles for inline css
+        const CssAppStylesRequest = InlineCss("/assets/dist/css-app.css");
+
+        Promise.all([PreRenderRequest, PushHandlerRequest, CssAppStylesRequest])
+            .then(([
+                PreRenderResults,
+                PushHandlerResult,
+                CssAppStylesResult
+            ]) => {
+                Logger.debug(new Date().getTime() - time.getTime());
+
                 // set a cache header since we want to make sure this is up-to-date if the client
                 // does not have a cached version in the service worker
                 res.setHeader("Cache-Control", "max-age=0, no-cache");
 
                 // render the index page with the preRenderedHtml string
                 res.render("index", {
-                    appPreRender: preRenderedHtml || ""
+                    appPreRender: PreRenderResults || "",
+                    appCss: CssAppStylesResult
                 });
             })
             // error fallback to rendering basic index page

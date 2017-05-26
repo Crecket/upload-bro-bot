@@ -47,7 +47,7 @@ export default class YoutubePreview extends React.Component {
         // the buttons
         const PlayButtons = (
             <div style={styles.playWrapper} key="playbuttons">
-                <FloatingActionButton>
+                <FloatingActionButton aria-label="Display a youtube video preview">
                     <PlayArrow
                         style={styles.playIcon}
                         onTouchTap={this.onPlay}

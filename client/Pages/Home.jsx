@@ -42,6 +42,7 @@ export default class Home extends React.Component {
                     style={Object.assign(styles.notLoggedIn, styles.centerBox)}
                 >
                     <RaisedButton
+                        aria-label="Login to UploadBro using Telegram"
                         onClick={ManualPost("/login/telegram")}
                         primary={true}
                         label="Login with Telegram"
@@ -62,9 +63,11 @@ export default class Home extends React.Component {
                                 target="_blank"
                             >
                                 <RaisedButton
+                                    aria-label="Message uploadbro on telegram"
                                     icon={
                                         <img
                                             src="/assets/img/telegram.svg"
+                                            alt="Telegram icon"
                                             style={{ width: 32 }}
                                         />
                                     }

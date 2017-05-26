@@ -223,6 +223,7 @@ module.exports = function(UploadBro) {
     app.use((request, response, next) => {
         // response.locals.csrftoken = request.csrfToken();
         response.locals.csrftoken = "disabled";
+        response.locals.WEBSITE_URL = process.env.WEBSITE_URL;
         next();
     });
 

@@ -8,6 +8,7 @@ const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin;
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 // custom extension
 const SWPlugin = require("./webpack/SWPlugin");
@@ -140,7 +141,7 @@ let config = {
 if (!DEV) {
     // production only plugins
 
-    // uglify plugin
+    // optimize js output
     config.plugins.push(
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
@@ -150,6 +151,14 @@ if (!DEV) {
                 warnings: false,
                 drop_console: true
             }
+        })
+    );
+    // optimize css output
+    config.plugins.push(
+        new OptimizeCssAssetsPlugin({
+            cssProcessor: require("cssnano"),
+            cssProcessorOptions: { discardComments: { removeAll: true } },
+            canPrint: true
         })
     );
 } else {

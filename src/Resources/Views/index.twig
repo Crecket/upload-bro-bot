@@ -1,19 +1,39 @@
 {% extends 'bootstrap.twig' %}
 
+{# preload our js files#}
+{#<link rel="preload" as="script" crossorigin="anonymous" href="{{ WEBSITE_URL }}/assets/dist/commons.js"/>#}
+{#<link rel="preload" as="script" crossorigin="anonymous" href="{{ WEBSITE_URL }}/assets/dist/sw-register.js"/>#}
+{#<link rel="preload" as="script" crossorigin="anonymous" href="{{ WEBSITE_URL }}/assets/dist/app.js"/>#}
 {% block css %}
-    {{ parent() }}
-    <link href="/assets/dist/css-app.css" rel="stylesheet">
+    {% if appCss|default %}
+        <style>{{ appCss }}</style>
+    {% else %}
+        <link href="/assets/dist/css-app.css" rel="stylesheet" lazyload="1">
+    {% endif %}
+    {#<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" lazyload="1">#}
 {% endblock %}
 
 {% block content %}
-    <noscript><h1 style="text-align:center;">UploadBro requires javascript to run propperly :(</h1></noscript>
-    {#{% include 'load_screen.twig' %}#}
-    <div id="app">{{ appPreRender|raw|default }}</div>
+    <div
+        id="app">{{ appPreRender|raw|default("<noscript><h1 style=\"text-align:center;\">UploadBro requires javascript to run :(</h1></noscript>") }}</div>
 {% endblock %}
 
 {% block js %}
-    {{ parent() }}
-    <script src="/assets/dist/commons.js"></script>
+    <script async src="/assets/dist/commons.js"></script>
     <script async defer src="/assets/dist/sw-register.js"></script>
     <script async defer src="/assets/dist/app.js"></script>
+    <script>
+        WebFontConfig = {
+            google: {
+                families: ['Roboto']
+            }
+        };
+        (function (d) {
+            var wf = d.createElement('script'), s = d.scripts[0];
+            wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+            wf.async = true;
+            wf.defer = true;
+            s.parentNode.insertBefore(wf, s);
+        })(document);
+    </script>
 {% endblock %}

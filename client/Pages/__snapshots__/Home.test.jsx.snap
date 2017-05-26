@@ -46,6 +46,7 @@ exports[`<Home /> matches snapshot 1`] = `
       }
     >
       <button
+        aria-label="Login to UploadBro using Telegram"
         disabled={false}
         href={undefined}
         onBlur={[Function]}
@@ -586,6 +587,7 @@ exports[`<Home /> matches snapshot 1`] = `
             }
           >
             <img
+              alt="Box logo"
               src="/assets/img/box.svg"
               style={
                 Object {
@@ -648,6 +650,7 @@ exports[`<Home /> matches snapshot 1`] = `
             }
           >
             <img
+              alt="Dropbox logo"
               src="/assets/img/dropbox.svg"
               style={
                 Object {
@@ -710,6 +713,7 @@ exports[`<Home /> matches snapshot 1`] = `
             }
           >
             <img
+              alt="Google logo"
               src="/assets/img/google.svg"
               style={
                 Object {
@@ -772,6 +776,7 @@ exports[`<Home /> matches snapshot 1`] = `
             }
           >
             <img
+              alt="Imgur logo"
               src="/assets/img/imgur.svg"
               style={
                 Object {
@@ -852,6 +857,7 @@ exports[`<Home /> matches snapshot 1`] = `
           }
         >
           <button
+            aria-label="Display a youtube video preview"
             disabled={false}
             href={undefined}
             onBlur={[Function]}
@@ -978,6 +984,7 @@ exports[`<Home /> matches snapshot 1`] = `
             }
           >
             <button
+              aria-label="Message uploadbro on telegram"
               disabled={false}
               href={undefined}
               onBlur={[Function]}
@@ -1042,6 +1049,7 @@ exports[`<Home /> matches snapshot 1`] = `
                   }
                 >
                   <img
+                    alt="Telegram icon"
                     color="rgba(0, 0, 0, 0.87)"
                     src="/assets/img/telegram.svg"
                     style={
@@ -1130,6 +1138,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
       }
     >
       <button
+        aria-label="Login to UploadBro using Telegram"
         disabled={false}
         href={undefined}
         onBlur={[Function]}
@@ -1688,6 +1697,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
           }
         >
           <button
+            aria-label="Display a youtube video preview"
             disabled={false}
             href={undefined}
             onBlur={[Function]}
@@ -1814,6 +1824,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
             }
           >
             <button
+              aria-label="Message uploadbro on telegram"
               disabled={false}
               href={undefined}
               onBlur={[Function]}
@@ -1878,6 +1889,7 @@ exports[`<Home /> matches snapshot without sites 1`] = `
                   }
                 >
                   <img
+                    alt="Telegram icon"
                     color="rgba(0, 0, 0, 0.87)"
                     src="/assets/img/telegram.svg"
                     style={

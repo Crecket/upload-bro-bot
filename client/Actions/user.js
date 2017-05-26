@@ -22,11 +22,11 @@ export function userUpdate() {
                 // update user info and stop loading state
                 dispatch(userSetInfo(json));
                 dispatch(userNotLoading());
-                dispatch(userInitialCHeck());
+                dispatch(userInitialCheck());
             })
             .catch(err => {
                 // finish initial check
-                dispatch(userInitialCHeck());
+                dispatch(userInitialCheck());
                 Logger.trace(err);
             });
     };
@@ -61,6 +61,6 @@ export function userNotLoading() {
     return {type: "USER_IS_NOT_LOADING"};
 }
 
-export function userInitialCHeck() {
+export function userInitialCheck() {
     return {type: "USER_INITIAL_CHECK"};
 }

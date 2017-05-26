@@ -25,21 +25,25 @@ export default props => {
         <IconMenu
             open={props.open}
             onRequestChange={props.setMenuState}
-            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-            targetOrigin={{horizontal: "right", vertical: "bottom"}}
-            anchorOrigin={{horizontal: "right", vertical: "top"}}
+            iconButtonElement={
+                <IconButton aria-label="Open options menu in the header">
+                    <MoreVertIcon />
+                </IconButton>
+            }
+            targetOrigin={{ horizontal: "right", vertical: "bottom" }}
+            anchorOrigin={{ horizontal: "right", vertical: "top" }}
         >
             {props.loggedIn
                 ? <MenuItem
-                    primaryText="Logout"
-                    rightIcon={<PowerIcon />}
-                    onClick={props.logoutUser}
-                />
+                      primaryText="Logout"
+                      rightIcon={<PowerIcon />}
+                      onClick={props.logoutUser}
+                  />
                 : <MenuItem
-                    primaryText="Login"
-                    rightIcon={<ExitToAppIcon />}
-                    onClick={ManualPost("/login/telegram")}
-                />}
+                      primaryText="Login"
+                      rightIcon={<ExitToAppIcon />}
+                      onClick={ManualPost("/login/telegram")}
+                  />}
             <MenuItem
                 id="theme-changer-menu-item"
                 primaryText="Change Theme"
@@ -48,4 +52,4 @@ export default props => {
             />
         </IconMenu>
     );
-}
+};

@@ -35,6 +35,7 @@ exports[`<MainAppbar /> matches snapshot with verified user 1`] = `
     }
   >
     <a
+      aria-label="Navigate to home"
       className="active"
       disabled={false}
       href="/dashboard"
@@ -144,6 +145,7 @@ exports[`<MainAppbar /> matches snapshot with verified user 1`] = `
       }
     >
       <button
+        aria-label="Open options menu in the header"
         disabled={false}
         href={undefined}
         onBlur={[Function]}
@@ -261,6 +263,7 @@ exports[`<MainAppbar /> matches snapshot without verified user 1`] = `
     }
   >
     <a
+      aria-label="Navigate to home"
       className="active"
       disabled={false}
       href="/dashboard"
@@ -370,6 +373,7 @@ exports[`<MainAppbar /> matches snapshot without verified user 1`] = `
       }
     >
       <button
+        aria-label="Open options menu in the header"
         disabled={false}
         href={undefined}
         onBlur={[Function]}

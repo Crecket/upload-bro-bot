@@ -48,6 +48,7 @@ class MainAppbar extends React.Component {
                 style={styles.appbar}
                 iconElementLeft={
                     <IconButton
+                        aria-label="Navigate to home"
                         containerElement={<NavLink to={"/dashboard"}/>}
                     >
                         <img src="/favicon-32x32.png" alt="App bar logo"/>

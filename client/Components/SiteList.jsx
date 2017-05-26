@@ -41,7 +41,11 @@ class SiteList extends React.Component {
             >
                 <Paper className="box" style={styles.box}>
                     <div className="row" style={styles.contentRow}>
-                        <img style={styles.logo} src={site.logos["svg"]} />
+                        <img
+                            style={styles.logo}
+                            src={site.logos["svg"]}
+                            alt={site.name + " logo"}
+                        />
                         <div className="col-xs-12 col-sm-8">
                             <div className="box">
                                 <h3>{site.title}</h3>
