@@ -11,6 +11,8 @@ module.exports = (app, passport, UploadBro) => {
     var OneDriveHelper = new OneDriveHelperObj(UploadBro);
     var UserHelper = new UserHelperObj(UploadBro);
 
+    /*
+
     // returns a valid oauth url for the client
     app.post("/login/onedrive", (request, response) => {
         if (!request.user) {
@@ -61,49 +63,30 @@ module.exports = (app, passport, UploadBro) => {
             return;
         } else {
             // create new client
-            OneDriveHelper.createOauthClient()
-                .then(authclient => {
-                    // get token using new code
-                    authclient.getToken(code, function(err, tokens) {
-                        if (err) {
-                            response.redirect(resultRoute);
-                            return;
-                        }
-
-                        // update or overwrite
-                        if (request.user.provider_sites.onedrive) {
-                            // already exists, update existing values
-                            request.user.provider_sites.onedrive.expiry_date =
-                                tokens.expiry_date;
-                            request.user.provider_sites.onedrive.access_token =
-                                tokens.access_token;
-                            request.user.provider_sites.onedrive.id_token =
-                                tokens.id_token;
-                        } else {
-                            // add new provider
-                            request.user.provider_sites.onedrive = {
-                                expiry_date: tokens.expiry_date,
-                                access_token: tokens.access_token,
-                                refresh_token: tokens.refresh_token,
-                                id_token: tokens.id_token
-                            };
-                        }
+            OneDriveHelper.createOauthClient().then(authclient => {
+                // get token using new code
+                authclient
+                    .getToken(code)
+                    .then(tokens => {
+                        // add token info to provider
+                        request.user.provider_sites.onedrive = {
+                            expiry_date: tokens.expiry_date,
+                            access_token: tokens.access_token,
+                            refresh_token: tokens.refresh_token,
+                            id_token: tokens.id_token
+                        };
 
                         // attempt to get information about username
                         OneDriveHelper.userInfo(request.user)
                             .then(user_information => {
                                 // merge new user info content
-                                request.user.provider_sites.onedrive = Object.assign(
-                                    {},
-                                    request.user.provider_sites.onedrive,
-                                    {
-                                        avatar: user_information.user.photoLink,
-                                        display_name: user_information.user
-                                            .displayName,
-                                        email: user_information.user
-                                            .emailAddress
-                                    }
-                                );
+                                request.user.provider_sites.onedrive = {
+                                    ...request.user.provider_sites.onedrive,
+                                    avatar: user_information.user.photoLink,
+                                    display_name: user_information.user
+                                        .displayName,
+                                    email: user_information.user.emailAddress
+                                };
 
                                 // update the tokens for this user
                                 UserHelper.updateUserTokens(
@@ -122,13 +105,13 @@ module.exports = (app, passport, UploadBro) => {
                                 Logger.error(err);
                                 response.redirect(resultRoute);
                             });
+                    })
+                    .catch(err => {
+                        Logger.error(err);
+                        response.redirect(resultRoute);
                     });
-                })
-                .catch(err => {
-                    // log and redirect
-                    Logger.error(err);
-                    response.redirect(resultRoute);
-                });
+            });
         }
     });
+    //*/
 };

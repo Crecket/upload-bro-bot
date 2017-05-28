@@ -2,10 +2,9 @@ const fs = require("fs");
 const mime = require("mime");
 const path = require("path");
 const Logger = require("../../Helpers/Logger");
+const OAuth2Client = require("./OAuth2Client");
 
-// https://github.com/dkatavic/onedrive-api
 // https://dev.onedrive.com/auth/graph_oauth.htm
-//
 
 module.exports = class OneDriveHelper {
     constructor(UploadBro) {
@@ -19,17 +18,12 @@ module.exports = class OneDriveHelper {
      * @returns {Promise}
      */
     async createOauthClient(userInfo) {
-        // create default oauth2 client
-        const oauthclient = new OAuth2(
-            process.env.GOOGLE_CLIENT_ID,
-            process.env.GOOGLE_SECRET,
-            process.env.WEBSITE_URL + process.env.GOOGLE_REDIRECT_URI
-        );
+        const Client = new OAuth2Client();
 
         // check if user info is set, else just return the oauth2 client
         if (!userInfo) {
             // nothing more to do
-            return Promise.resolve(oauthclient);
+            return Promise.resolve(Client);
         }
 
         // seperate correct tokens
@@ -37,37 +31,38 @@ module.exports = class OneDriveHelper {
 
         // check if oogle tokens found
         if (tokens) {
-            // store the initial credentials
-            oauthclient.setCredentials(tokens);
+            // store the initial credentials and create a new client
+            Client.setCredentials(tokens);
 
             // get a valid token
-            const newTokens = await this.getValidToken(
-                oauthclient,
-                userInfo._id
-            );
+            const newTokens = await Client.getValid(userInfo._id);
 
-            // true means not new
             if (newTokens === true) {
                 // tokens were still valid, resolve existing client
-                return Promise.resolve(oauthclient);
+                return Promise.resolve(Client);
+            }
+            if (newTokens === false) {
+                // no valid access or refresh token
+                throw new Error(
+                    "We don't have any valid tokens stored for this user"
+                );
             }
 
             // copy the user and prepare to update
             let newUser = userInfo;
-            newUser.provider_sites.onedrive = Object.assign(
-                {},
-                newUser.provider_sites.onedrive,
-                newTokens
-            );
+            newUser.provider_sites.onedrive = {
+                ...newUser.provider_sites.onedrive,
+                ...newTokens
+            };
 
             // store new crednetials
-            oauthclient.setCredentials(newTokens);
+            Client.setCredentials(newTokens);
 
             // update the user
             const success = await this._UploadBro._UserHelper.updateUserTokens(
                 newUser
             );
-            if (success) return oauthclient;
+            if (success) return Client;
             // new token failed to store
             throw new Error("Failed to store new access tokens");
         }
@@ -206,7 +201,7 @@ module.exports = class OneDriveHelper {
      * @returns {Promise}
      */
     async createFolder(userInfo, folder_name) {
-       //
+        //
     }
 
     /**
@@ -248,7 +243,7 @@ module.exports = class OneDriveHelper {
      */
     getAuthorizationUrl() {
         const scope = "files.readwrite.all offline_access";
-        return `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${client_id}&scope=${scope}
+        return `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${process.env.ONEDRIVE_CLIENT_ID}&scope=${scope}
 &response_type=code&redirect_uri=${process.env.WEBSITE_URL}${process.env.ONEDRIVE_REDIRECT_URI}`;
     }
 
