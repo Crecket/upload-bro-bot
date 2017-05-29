@@ -15,9 +15,8 @@ public/assets/dist/*
 # service workers
 /public/service-worker.*
 /public/sw.js
-/public/appcache/
 
-# generated files from npm errors and webpack analyzer
+# generated files from npm, webpack and vagrant
 /npm-debug.log
 /npm-debug.log.*
 /webpack.report.html
@@ -25,3 +24,4 @@ public/assets/dist/*
 /webpack.stats.html
 /coverage/
 /yarn-error.log
+.vagrant/
