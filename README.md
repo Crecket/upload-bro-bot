@@ -2,6 +2,29 @@
 
 [![Build Status](https://travis-ci.com/Crecket/upload-bro-bot.svg?token=DyngMrpViVuxsTWmBnCh&branch=master)](https://travis-ci.com/Crecket/upload-bro-bot)
 
+## Installation
+1. Run the initial commands to setup the vagrant box and install requirements
+```bash
+git clone git@github.com:Crecket/upload-bro-bot.git 
+cd upload-bro-bot
+yarn
+cp .env.example .env
+npm run build
+vagrant up
+```
+2. Enter the correct keys in the env file for all the providers.
+3. Setup SFTP to sync your this project folder to the `/var/www/upload-bro-bot` folder on the vagrant box (IP: 192.168.33.10)
+4. Add `uploadbro.local.dev` to your hostfile and ensure the ssl certificates in `src/Vagrant/tls` are trusted by the browser
+
+## Development
+Development is done by running the vagrant box and building the files on your local project folder.
+
+Use the `npm run dev` command to build the client-side files. In develoment mode, the server uses babel-node to compile the files on the fly.
+
+Make sure to run `npm run test:dev` to start Jest in watch mode or `npm run test` to run all tests in verbose mode.
+
+To develop the server-side code use `vagrant ssh` to login to the box, stop the pm2 instance using `pm2 stop upload-bro-bot` and then start a manual server instance with `npm run start`. 
+
 ## Scripts
 
 |script| description|
@@ -17,5 +40,4 @@
 | `sw` | runs a single production-mode round of the sw-precache plugin |
 | `prettify` | runs prettify on all src/client files |
 | `pm2` | starts the production server using the pm2 config |
-
  
