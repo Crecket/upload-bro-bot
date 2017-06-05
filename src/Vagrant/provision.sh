@@ -14,28 +14,30 @@
         curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
         echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
-    echo -e "= updating apt"
+    echo -e "= Updating apt"
         sudo apt-get update
-    echo -e "= installing apt packages"
+    echo -e "= Installing apt packages"
         sudo apt-get install -y nodejs mongodb-org openssl yarn
-    echo -e "= installing npm packages"
+    echo -e "= Installing npm packages"
         sudo yarn global add webpack cross-env pm2 jest nodemon prettier
 
     echo -e "Doing initial rsync to upload files to leviy-bus directory..."
         sudo mkdir -p /var/www/upload-bro-bot
         sudo rsync -a /vagrant/ /var/www/upload-bro-bot/
 
-    echo -e "Starting mongodb"
+    echo -e "Starting mongodb..."
         sudo service mongod start
-    echo -e "= importing mongodb dump"
+    echo -e "= Enable mongodb on system startup"
+        systemctl enable mongod.service
+    echo -e "= Importing mongodb dump"
         sudo npm run mongorestore --prefix /var/www/upload-bro-bot
 
-    echo -e "Setting up Apache SSL..."
-        # SSL files and config
+    echo -e "Setting up SSL Certificates..."
         sudo mkdir -p /etc/tls
         sudo cp /vagrant/src/Vagrant/tls/uploadbro.local.dev.crt /etc/tls/uploadbro.local.dev.crt
         sudo cp /vagrant/src/Vagrant/tls/uploadbro.local.dev.key /etc/tls/uploadbro.local.dev.key
 
-    echo -e "Starting pm2 in dev mode"
-        # todo start pm2 correctly
+    echo -e "Starting pm2 in dev mode..."
         sudo npm run pm2:dev --prefix /var/www/upload-bro-bot
+    echo -e "= Running pm2 startup command"
+        sudo pm2 startup
