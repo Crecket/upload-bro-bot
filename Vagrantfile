@@ -4,8 +4,11 @@
 Vagrant.configure(2) do |config|
     config.vm.box = "ubuntu/xenial64"
 
+    # ensure this folder is synced by default
+    config.vm.synced_folder ".", "/vagrant"
+
     # set a private ip
-    config.vm.network "private_network", ip: "192.168.33.10"
+    config.vm.network "private_network", ip: "192.168.33.2"
 
     # limit the box settings
     config.vm.provider "virtualbox" do |v|
