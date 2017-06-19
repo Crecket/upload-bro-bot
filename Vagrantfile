@@ -10,12 +10,6 @@ Vagrant.configure(2) do |config|
     # set a private ip
     config.vm.network "private_network", ip: "192.168.33.2"
 
-    # ssh settings
-    config.ssh.private_key_path = "~/.ssh/id_rsa"
-    config.ssh.username = "root"
-    config.ssh.forward_agent = true
-    config.ssh.insert_key = true
-
     # copy our public key to the box
     config.vm.provision "shell" do |s|
         ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
