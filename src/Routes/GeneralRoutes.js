@@ -8,6 +8,7 @@ if (process.env.ENABLE_SSR === "true") {
 import InlineCss from "../Helpers/InlineCss";
 const Logger = require("../Helpers/Logger");
 const SpdyPush = require("../SpdyPush");
+const express = require("express");
 
 /**
  * @param uploadApp
@@ -33,6 +34,13 @@ const doPrerender = (uploadApp, req) => {
 };
 
 module.exports = (app, passport, uploadApp) => {
+    if (process.env.DEBUG === "true") {
+        app.get("/coverage", (req, res) =>
+            res.redirect("/coverage/lcov-report/index.html")
+        );
+        app.use("/coverage", express.static("coverage"));
+    }
+
     // routes
     app.get(["/", "/dashboard", "/remove/:type", "/new/:type"], (req, res) => {
         res.set("X-Frame-Options", "ALLOW-FROM-ALL");

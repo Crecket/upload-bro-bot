@@ -21,7 +21,7 @@
     echo -e "= Installing npm packages"
         sudo yarn global add webpack cross-env pm2 jest nodemon prettier
 
-    echo -e "Doing initial rsync to upload files to leviy-bus directory..."
+    echo -e "Doing initial rsync to upload files to /var/www/upload-bro-bot directory..."
         sudo mkdir -p /var/www/upload-bro-bot
         sudo rsync -a /vagrant/ /var/www/upload-bro-bot/
 
