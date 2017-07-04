@@ -161,10 +161,6 @@ if (!DEV) {
             canPrint: true
         })
     );
-    // scope fix
-    config.plugins.push(
-        new webpack.optimize.ModuleConcatenationPlugin()
-    )
 } else {
     // development only plugins
 }
