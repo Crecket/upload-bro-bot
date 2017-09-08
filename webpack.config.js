@@ -34,7 +34,7 @@ let config = {
         // App css code
         "css-app": SRC_DIR + "/css-app.js",
         // Service worker registration
-        "sw-register": SRC_DIR + "/Plugins/ServiceWorkerRegistration.js"
+        // "sw-register": SRC_DIR + "/Plugins/ServiceWorkerRegistration.js"
     },
     output: {
         path: BUILD_DIR,
@@ -97,14 +97,14 @@ let config = {
             "process.env.WEBPACK_MODE": JSON.stringify(true)
         }),
         // split up common code into commons file
-        new webpack.optimize.CommonsChunkPlugin({
-            // (the commons chunk name)
-            name: "commons",
-            // (the filename of the commons chunk)
-            filename: OUTPUT_DIR + "commons.js",
-            // minimum shared locations before being added
-            minChunks: 2
-        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     // (the commons chunk name)
+        //     name: "commons",
+        //     // (the filename of the commons chunk)
+        //     filename: OUTPUT_DIR + "commons.js",
+        //     // minimum shared locations before being added
+        //     minChunks: 2
+        // }),
         // ignore moment locales
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ],

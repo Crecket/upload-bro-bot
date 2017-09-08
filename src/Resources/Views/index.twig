@@ -4,7 +4,7 @@
 {#<link rel="preload" as="script" crossorigin="anonymous" href="{{ WEBSITE_URL }}/assets/dist/commons.js"/>#}
 {#<link rel="preload" as="script" crossorigin="anonymous" href="{{ WEBSITE_URL }}/assets/dist/sw-register.js"/>#}
 {#<link rel="preload" as="script" crossorigin="anonymous" href="{{ WEBSITE_URL }}/assets/dist/app.js"/>#}
-{#<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" lazyload="1">#}
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" lazyload="1">
 {% block css %}
     {% if appCss|default %}
         <style>{{ appCss }}</style>
@@ -19,21 +19,21 @@
 {% endblock %}
 
 {% block js %}
-    <script async src="/assets/dist/commons.js"></script>
-    <script async defer src="/assets/dist/sw-register.js"></script>
+    {#<script async rc="/assets/dist/commons.js"></script>#}
+    {#<script src="/assets/dist/sw-register.js"></script>#}
     <script async defer src="/assets/dist/app.js"></script>
-    <script>
-        WebFontConfig = {
-            google: {
-                families: ['Roboto']
-            }
-        };
-        (function (d) {
-            var wf = d.createElement('script'), s = d.scripts[0];
-            wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
-            wf.async = true;
-            wf.defer = true;
-            s.parentNode.insertBefore(wf, s);
-        })(document);
-    </script>
+    {#<script>#}
+        {#WebFontConfig = {#}
+            {#google: {#}
+                {#families: ['Roboto']#}
+            {#}#}
+        {#};#}
+        {#(function (d) {#}
+            {#var wf = d.createElement('script'), s = d.scripts[0];#}
+            {#wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';#}
+            {#wf.async = true;#}
+            {#wf.defer = true;#}
+            {#s.parentNode.insertBefore(wf, s);#}
+        {#})(document);#}
+    {#</script>#}
 {% endblock %}
