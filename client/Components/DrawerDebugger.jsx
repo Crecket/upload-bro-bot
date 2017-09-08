@@ -16,14 +16,13 @@ class DrawerDebugger extends React.Component {
 
         window.drawerDebugger = process.env.DEBUG
             ? this.toggleDrawer
-            : () => {
-            };
+            : () => {};
 
         // Logger.debug(this.props.theme);
     }
 
     toggleDrawer = () => {
-        this.setState({open: !this.state.open});
+        this.setState({ open: !this.state.open });
     };
 
     render() {
@@ -31,7 +30,7 @@ class DrawerDebugger extends React.Component {
 
         return (
             <Drawer open={this.state.open}>
-                <AppBar title="AppBar" onClick={this.toggleDrawer}/>
+                <AppBar title="AppBar" onClick={this.toggleDrawer} />
                 <TextField
                     key="input"
                     name="asdfaf123"

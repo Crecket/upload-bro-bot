@@ -1,4 +1,4 @@
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 
 import modal from "./modal";
 import snackbar from "./snackbar";

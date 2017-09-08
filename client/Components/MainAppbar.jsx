@@ -1,10 +1,10 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import AppBar from "material-ui/AppBar";
 import IconButton from "material-ui/IconButton";
 
 import MainAppbarPopover from "./Sub/MainAppbarPopover";
-import {userLogout} from "../Actions/user.js";
+import { userLogout } from "../Actions/user.js";
 
 const styles = {
     appbar: {
@@ -39,7 +39,7 @@ class MainAppbar extends React.Component {
     };
 
     // menu handlers
-    setMenuState = open => this.setState({open: open});
+    setMenuState = open => this.setState({ open: open });
 
     render() {
         return (
@@ -49,9 +49,9 @@ class MainAppbar extends React.Component {
                 iconElementLeft={
                     <IconButton
                         aria-label="Navigate to home"
-                        containerElement={<NavLink to={"/dashboard"}/>}
+                        containerElement={<NavLink to={"/dashboard"} />}
                     >
-                        <img src="/favicon-32x32.png" alt="App bar logo"/>
+                        <img src="/favicon-32x32.png" alt="App bar logo" />
                     </IconButton>
                 }
                 iconElementRight={

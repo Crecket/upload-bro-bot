@@ -1,11 +1,11 @@
 import React from "react";
 import Helmet from "react-helmet";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Paper from "material-ui/Paper";
 import Check from "material-ui/svg-icons/navigation/check";
 import CircularProgress from "material-ui/CircularProgress";
 import Error from "material-ui/svg-icons/alert/error";
-import {green800, red500} from "material-ui/styles/colors";
+import { green800, red500 } from "material-ui/styles/colors";
 
 import Utils from "../Helpers/Utils";
 
@@ -52,12 +52,12 @@ export default class ProviderLogin extends React.Component {
 
     componentDidMount() {
         setTimeout(() => {
-            this.setState({redirect: '/dashboard'});
+            this.setState({ redirect: "/dashboard" });
         }, 2000);
     }
 
     render() {
-        if (this.state.redirect) return <Redirect to={this.state.redirect}/>;
+        if (this.state.redirect) return <Redirect to={this.state.redirect} />;
 
         // default to loading screen
         let loginStatusResult = (
@@ -74,23 +74,22 @@ export default class ProviderLogin extends React.Component {
             if (
                 this.props.user_info &&
                 this.props.user_info.provider_sites &&
-                this.props.user_info.provider_sites[this.props.match.params.type]
+                this.props.user_info.provider_sites[
+                    this.props.match.params.type
+                ]
             ) {
                 loginStatusResult = (
                     <h3>
-                        <Check style={styles.checkIcon}/>
+                        <Check style={styles.checkIcon} />
                         <br />
-                        Successfully logged in to your
-                        {" "}
-                        {Utils.ucfirst(this.props.match.params.type)}
-                        {" "}
-                        account!
+                        Successfully logged in to your{" "}
+                        {Utils.ucfirst(this.props.match.params.type)} account!
                     </h3>
                 );
             } else {
                 loginStatusResult = (
                     <h3>
-                        <Error style={styles.errorIcon}/>
+                        <Error style={styles.errorIcon} />
                         <br />
                         Something went wrong
                     </h3>
@@ -104,11 +103,10 @@ export default class ProviderLogin extends React.Component {
                 className="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3"
             >
                 <Helmet>
-                    <title
-                    >{`UploadBroBot - ${this.props.match.params.type} Login`}</title>
+                    <title>{`UploadBroBot - ${this.props.match.params
+                        .type} Login`}</title>
                 </Helmet>
                 <Paper style={styles.paper}>
-
                     {loginStatusResult}
                 </Paper>
             </div>

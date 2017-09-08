@@ -24,9 +24,10 @@ import { siteLoadLocalstorage, siteUpdate } from "../Actions/sites.js";
 // import Dark from "../Themes/Dark";
 
 // navigator fallback for server-side rendering
-const navigatorHelper = typeof navigator !== "undefined" && navigator.userAgent
-    ? navigator.userAgent
-    : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
+const navigatorHelper =
+    typeof navigator !== "undefined" && navigator.userAgent
+        ? navigator.userAgent
+        : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
 const ThemesList = {
     LightBlue: getMuiTheme(LightBlue, { userAgent: navigatorHelper })
 
@@ -139,8 +140,9 @@ class Main extends React.Component {
                         "container-fluid react-root " + this.state.muiTheme
                     }
                     style={{
-                        backgroundColor: ThemesList[this.state.muiTheme]
-                            .rawTheme.palette.appBackgroundColor
+                        backgroundColor:
+                            ThemesList[this.state.muiTheme].rawTheme.palette
+                                .appBackgroundColor
                     }}
                 >
                     <div className={"row center-xs"}>

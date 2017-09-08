@@ -110,7 +110,8 @@ export default class UploadBro {
 
             // finished loading everything
             Logger.trace(
-                `Loaded the following commands:\n\n${this._CommandHandler.info}\n`
+                `Loaded the following commands:\n\n${this._CommandHandler
+                    .info}\n`
             );
 
             // default to onlineMode
@@ -154,9 +155,7 @@ export default class UploadBro {
             const SiteObj = require(Site);
 
             // require the index file and set the file handler
-            this._SiteHandler.register(
-                new SiteObj(this, this.onlineMode)
-            );
+            this._SiteHandler.register(new SiteObj(this, this.onlineMode));
         });
 
         Logger.trace(`Loaded ${this._SiteHandler.siteCount} sites`);
@@ -199,9 +198,7 @@ export default class UploadBro {
             const QueryObj = require(Query);
 
             // require the index file and set the file handler
-            this._QueryHandler.register(
-                new QueryObj(this, this.onlineMode)
-            );
+            this._QueryHandler.register(new QueryObj(this, this.onlineMode));
         });
 
         Logger.trace(`Loaded ${this._QueryHandler.queryCount} queries`);
@@ -275,4 +272,4 @@ export default class UploadBro {
             fn._EventHandler.inlineQuery(msg);
         });
     }
-};
+}

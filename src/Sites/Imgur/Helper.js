@@ -226,8 +226,8 @@ module.exports = class ImgurHelper {
                     // return the new list
                     resolve(
                         Object.assign(resultData, {
-                            expiry_date: new Date().getTime() +
-                                resultData.expires_in
+                            expiry_date:
+                                new Date().getTime() + resultData.expires_in
                         })
                     );
                 })

@@ -91,7 +91,8 @@ class ClientLoginCallback extends React.Component {
         if (!this.props.sites[this.props.match.params.type]) {
             return null;
         }
-        const providerTitle = this.props.sites[this.props.match.params.type].title;
+        const providerTitle = this.props.sites[this.props.match.params.type]
+            .title;
 
         var icon = (
             <CircularProgress
@@ -128,7 +129,9 @@ class ClientLoginCallback extends React.Component {
                     <title>{`UploadBroBot - ${providerTitle} Login`}</title>
                 </Helmet>
                 <Paper style={styles.paper}>
-                    <h1>Logging in to {providerTitle}</h1>
+                    <h1>
+                        Logging in to {providerTitle}
+                    </h1>
                     {icon}
                 </Paper>
             </div>

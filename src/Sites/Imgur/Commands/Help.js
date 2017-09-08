@@ -24,7 +24,9 @@ module.exports = class Help extends HelperInterface {
         // generate the message
         const message =
             `<a href="${siteInfo.url}">Imgur</a> is an online image sharing community and popular image host. ` +
-            `\n\n<b>Upload:</b> Currently Imgur only supports image uploads with the following extensions: ${formattedExtension.join(", ")}` +
+            `\n\n<b>Upload:</b> Currently Imgur only supports image uploads with the following extensions: ${formattedExtension.join(
+                ", "
+            )}` +
             `\n\n<b>Sharing:</b> Use '@uploadbro_bot imgur' to list the 50 most recent images from your imgur account.` +
             ``;
 
@@ -48,7 +50,7 @@ module.exports = class Help extends HelperInterface {
      * The description for this command
      * @returns {string}
      */
-    get description(){
+    get description() {
         return `Information about how Imgur works with UploadBro`;
     }
 

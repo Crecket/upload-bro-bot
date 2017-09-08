@@ -98,7 +98,8 @@ module.exports = class BoxHelper {
             "https://account.box.com/api/oauth2/authorize" +
             "?response_type=code" +
             `&client_id=${process.env.BOX_CLIENT_ID}` +
-            `&redirect_uri=${process.env.WEBSITE_URL}${process.env.BOX_REDIRECT_URI}` +
+            `&redirect_uri=${process.env.WEBSITE_URL}${process.env
+                .BOX_REDIRECT_URI}` +
             `&state=${new Date().getTime()}`
         );
     }

@@ -17,7 +17,8 @@ module.exports = class Login extends HelperInterface {
         // setup the message
         let message =
             `You can login and register services by going to ` +
-            `<a href="${process.env.WEBSITE_URL}">${process.env.WEBSITE_URL}</a>\n` +
+            `<a href="${process.env.WEBSITE_URL}">${process.env
+                .WEBSITE_URL}</a>\n` +
             `We currently support the follower services: \n`;
 
         // generate a list for all our services

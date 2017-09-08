@@ -1,7 +1,7 @@
 import React from "react";
 import Logger from "../../Helpers/Logger";
 
-export default ({isLoading, pastDelay, error}) => {
+export default ({ isLoading, pastDelay, error }) => {
     if (isLoading && pastDelay) {
         // during loading but delay has been passed
         return null;
@@ -11,6 +11,6 @@ export default ({isLoading, pastDelay, error}) => {
         return null;
     } else {
         // during loading
-        return <div key="loading-component"></div>;
+        return <div key="loading-component" />;
     }
 };

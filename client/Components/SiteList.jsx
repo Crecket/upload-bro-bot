@@ -48,7 +48,9 @@ class SiteList extends React.Component {
                         />
                         <div className="col-xs-12 col-sm-8">
                             <div className="box">
-                                <h3>{site.title}</h3>
+                                <h3>
+                                    {site.title}
+                                </h3>
                                 {site.description}
                             </div>
                         </div>
@@ -68,9 +70,7 @@ class SiteList extends React.Component {
                 <div className="row center-xs">
                     <div className="col-xs-12">
                         <Paper className="box">
-                            <TitleBar>
-                                Supported Services
-                            </TitleBar>
+                            <TitleBar>Supported Services</TitleBar>
                         </Paper>
                     </div>
                     {siteComponents}

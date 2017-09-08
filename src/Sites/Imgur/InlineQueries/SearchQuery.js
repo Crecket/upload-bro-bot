@@ -32,7 +32,8 @@ module.exports = class SearchQuery extends HelperInterface {
             if (!user_info) {
                 return {
                     options: {
-                        switch_pm_text: "It looks like you're not registered in our system.",
+                        switch_pm_text:
+                            "It looks like you're not registered in our system.",
                         switch_pm_parameter: "start"
                     }
                 };
@@ -41,7 +42,8 @@ module.exports = class SearchQuery extends HelperInterface {
             if (!user_info.provider_sites.imgur) {
                 return {
                     options: {
-                        switch_pm_text: "Imgur service not connected to your account",
+                        switch_pm_text:
+                            "Imgur service not connected to your account",
                         switch_pm_parameter: "login"
                     }
                 };

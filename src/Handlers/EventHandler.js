@@ -190,7 +190,8 @@ module.exports = class EventHandlers extends HelperInterface {
                                     storeKey,
                                     {
                                         chat_id: resulting_message.chat.id,
-                                        message_id: resulting_message.message_id,
+                                        message_id:
+                                            resulting_message.message_id,
                                         file_name: file.file_name,
                                         file_size: file.file_size,
                                         file_id: file.file_id

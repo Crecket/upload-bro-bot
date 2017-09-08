@@ -18,9 +18,7 @@ const Dashboard = Cl(
 );
 const ProviderRemove = Cl(
     () =>
-        import(
-            /* webpackChunkName: "providerremove" */ "./Pages/ProviderRemove"
-        ),
+        import(/* webpackChunkName: "providerremove" */ "./Pages/ProviderRemove"),
     true
 );
 const ThemeTest = Cl(
@@ -34,9 +32,7 @@ const ProviderLogin = Cl(
 );
 const ClientLoginCallback = Cl(
     () =>
-        import(
-            /* webpackChunkName: "dropboxlogin" */ "./Pages/ClientLoginCallback"
-        ),
+        import(/* webpackChunkName: "dropboxlogin" */ "./Pages/ClientLoginCallback"),
     true
 );
 const NotFound = Cl(() =>
@@ -53,7 +49,7 @@ export default class RoutesClient extends React.Component {
     render() {
         return (
             <Route
-                render={wrapperProps => (
+                render={wrapperProps =>
                     <TransitionGroup>
                         <FadesInSwitch
                             key={wrapperProps.location.key}
@@ -63,22 +59,20 @@ export default class RoutesClient extends React.Component {
                                 exact
                                 path="/"
                                 user_info={this.props.user_info}
-                                render={props => (
+                                render={props =>
                                     <Home
                                         {...props}
                                         {...this.props.childProps}
-                                    />
-                                )}
+                                    />}
                             />
 
                             <Route
                                 path="/theme"
-                                render={props => (
+                                render={props =>
                                     <ThemeTest
                                         {...props}
                                         {...this.props.childProps}
-                                    />
-                                )}
+                                    />}
                             />
 
                             <PrivateRoute
@@ -108,38 +102,34 @@ export default class RoutesClient extends React.Component {
                             <PrivateRoute
                                 user_info={this.props.user_info}
                                 path="/new/:type"
-                                render={props => (
+                                render={props =>
                                     <ProviderLogin
                                         {...props}
                                         {...this.props.childProps}
-                                    />
-                                )}
+                                    />}
                             />
                             <PrivateRoute
                                 user_info={this.props.user_info}
                                 path="/login/:type/callback"
-                                render={props => (
+                                render={props =>
                                     <ClientLoginCallback
                                         {...props}
                                         {...this.props.childProps}
-                                    />
-                                )}
+                                    />}
                             />
 
                             {/* a empty path we use for fallback routes in the service worker*/}
                             <Route path="/shell" render={props => null} />
 
                             <Route
-                                render={props => (
+                                render={props =>
                                     <NotFound
                                         {...props}
                                         {...this.props.childProps}
-                                    />
-                                )}
+                                    />}
                             />
                         </FadesInSwitch>
-                    </TransitionGroup>
-                )}
+                    </TransitionGroup>}
             />
         );
     }

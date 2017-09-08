@@ -1,5 +1,5 @@
 import React from "react";
-import {Mount, Renderer} from "../../Helpers/Test/WithContext";
+import { Mount, Renderer } from "../../Helpers/Test/WithContext";
 
 import TitleBar from "./TitleBar.jsx";
 

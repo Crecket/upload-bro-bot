@@ -1,9 +1,9 @@
 import React from "react";
-import {findDOMNode} from "react-dom";
-import {Sine, TweenMax} from "gsap";
+import { findDOMNode } from "react-dom";
+import { Sine, TweenMax } from "gsap";
 
 // returns fade up animation
-function makeFadesIn(Component, options = {duration: 0.5}) {
+function makeFadesIn(Component, options = { duration: 0.5 }) {
     return class FadesIn extends React.Component {
         static get propTypes() {
             key: Component.name;

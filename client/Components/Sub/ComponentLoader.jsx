@@ -6,8 +6,6 @@ import Loader from "./Loader";
 export default (importCb, showLoader = false) =>
     Loadable({
         loader: importCb,
-        LoadingComponent: showLoader
-            ? () => <Loader />
-            : LoadingComponent,
+        LoadingComponent: showLoader ? () => <Loader /> : LoadingComponent,
         delay: 300
     });

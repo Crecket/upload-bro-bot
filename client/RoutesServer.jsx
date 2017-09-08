@@ -1,6 +1,6 @@
 import React from "react";
-import {Route, Switch} from "react-router-dom";
-import {CSSTransitionGroup} from "react-transition-group";
+import { Route, Switch } from "react-router-dom";
+import { CSSTransitionGroup } from "react-transition-group";
 import Loader from "./Components/Sub/Loader";
 
 import Home from "./Pages/Home";
@@ -25,7 +25,7 @@ export default class RoutesServer extends React.Component {
     render() {
         return (
             <Route
-                render={({location}) => (
+                render={({ location }) =>
                     <CSSTransitionGroup
                         transitionName="fade"
                         transitionAppear={true}
@@ -38,25 +38,26 @@ export default class RoutesServer extends React.Component {
                                 exact
                                 path="/"
                                 render={props => {
-                                    return <Home
-                                        {...props}
-                                        {...this.props.childProps}
-                                    />;
+                                    return (
+                                        <Home
+                                            {...props}
+                                            {...this.props.childProps}
+                                        />
+                                    );
                                 }}
                             />
-                            <Route path="/theme" component={Loader}/>
-                            <Route path="/dashboard" component={Loader}/>
-                            <Route path="/remove/:type" component={Loader}/>
-                            <Route path="/new/:type" component={Loader}/>
+                            <Route path="/theme" component={Loader} />
+                            <Route path="/dashboard" component={Loader} />
+                            <Route path="/remove/:type" component={Loader} />
+                            <Route path="/new/:type" component={Loader} />
                             <Route
                                 path="/login/:type/callback"
                                 component={Loader}
                             />
 
-                            <Route component={Loader}/>
+                            <Route component={Loader} />
                         </Switch>
-                    </CSSTransitionGroup>
-                )}
+                    </CSSTransitionGroup>}
             />
         );
     }

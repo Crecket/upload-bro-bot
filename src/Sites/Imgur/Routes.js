@@ -47,7 +47,7 @@ module.exports = (app, passport, uploadApp) => {
     });
 
     // handles the oauth callback
-    app.get("/login/imgur/callback", function (request, response) {
+    app.get("/login/imgur/callback", function(request, response) {
         var code = request.query.code;
 
         let resultRoute = "/new/imgur";
@@ -68,8 +68,8 @@ module.exports = (app, passport, uploadApp) => {
                     current_provider_sites.imgur = {
                         access_token: responseData.access_token,
                         expires_in: responseData.expires_in,
-                        expiry_date: new Date().getTime() +
-                        responseData.expires_in,
+                        expiry_date:
+                            new Date().getTime() + responseData.expires_in,
                         token_type: responseData.token_type,
                         scope: responseData.scope,
                         refresh_token: responseData.refresh_token,

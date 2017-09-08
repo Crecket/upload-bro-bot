@@ -95,7 +95,8 @@ module.exports = class FlickrHelper {
         var options = Object.assign(
             {
                 q: `name contains '${file_name}' and trashed=false`,
-                fields: "nextPageToken, files(id, name, mimeType, thumbnailLink, webViewLink, webContentLink, description)",
+                fields:
+                    "nextPageToken, files(id, name, mimeType, thumbnailLink, webViewLink, webContentLink, description)",
                 spaces: "drive",
                 pageToken: null,
                 pageSize: 25
@@ -196,7 +197,8 @@ module.exports = class FlickrHelper {
         return await new Promise((resolve, reject) => {
             // check if the folder exists with the name uploadbro
             this.searchFile(userInfo, "UploadBro", {
-                q: "name = 'UploadBro' and trashed = false and mimeType = 'application/vnd.flickr-apps.folder'"
+                q:
+                    "name = 'UploadBro' and trashed = false and mimeType = 'application/vnd.flickr-apps.folder'"
             })
                 .then(file_info => {
                     // should only return 1 result

@@ -113,8 +113,8 @@ module.exports = function(UploadBro) {
         {
             clientID: process.env.TELEPASS_APPID,
             clientSecret: process.env.TELEPASS_SECRET,
-            callbackURL: process.env.WEBSITE_URL +
-                process.env.TELEPASS_REDIRECT_URI
+            callbackURL:
+                process.env.WEBSITE_URL + process.env.TELEPASS_REDIRECT_URI
         },
         function(accessToken, refreshToken, profile, done) {
             // get the users collection
@@ -184,9 +184,13 @@ module.exports = function(UploadBro) {
     app.use(compression());
 
     // only enable morgan debugging if set in process env
-    if(process.env.MORGAN){
+    if (process.env.MORGAN) {
         const morgan = require("morgan");
-        app.use(morgan(":method :status :url - HTTP/:http-version - :response-time ms"));
+        app.use(
+            morgan(
+                ":method :status :url - HTTP/:http-version - :response-time ms"
+            )
+        );
     }
 
     // add response time header

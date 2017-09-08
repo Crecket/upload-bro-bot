@@ -92,7 +92,8 @@ module.exports = class OneDriveHelper {
         var options = Object.assign(
             {
                 q: `name contains '${file_name}' and trashed=false`,
-                fields: "nextPageToken, files(id, name, mimeType, thumbnailLink, webViewLink, webContentLink, description)",
+                fields:
+                    "nextPageToken, files(id, name, mimeType, thumbnailLink, webViewLink, webContentLink, description)",
                 spaces: "drive",
                 pageToken: null,
                 pageSize: 25
@@ -243,8 +244,10 @@ module.exports = class OneDriveHelper {
      */
     getAuthorizationUrl() {
         const scope = "files.readwrite.all offline_access";
-        return `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${process.env.ONEDRIVE_CLIENT_ID}&scope=${scope}
-&response_type=code&redirect_uri=${process.env.WEBSITE_URL}${process.env.ONEDRIVE_REDIRECT_URI}`;
+        return `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${process
+            .env.ONEDRIVE_CLIENT_ID}&scope=${scope}
+&response_type=code&redirect_uri=${process.env.WEBSITE_URL}${process.env
+            .ONEDRIVE_REDIRECT_URI}`;
     }
 
     /**

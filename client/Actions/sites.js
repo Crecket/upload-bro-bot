@@ -31,13 +31,13 @@ export function siteUpdate() {
 
 export function siteLoadLocalstorage() {
     setSites(store.get("sites") || []);
-    return {type: "SITE_LOAD_LOCALSTORAGE"};
+    return { type: "SITE_LOAD_LOCALSTORAGE" };
 }
 
 export function siteLoading() {
-    return {type: "SITE_IS_LOADING"};
+    return { type: "SITE_IS_LOADING" };
 }
 
 export function siteNotLoading() {
-    return {type: "SITE_IS_NOT_LOADING"};
+    return { type: "SITE_IS_NOT_LOADING" };
 }

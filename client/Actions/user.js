@@ -34,12 +34,12 @@ export function userUpdate() {
 
 export function userLoadLocalstorage() {
     userSetInfo(store.get("user_info") || false);
-    return {type: "USER_LOAD_LOCALSTORAGE"};
+    return { type: "USER_LOAD_LOCALSTORAGE" };
 }
 
 export function userLogout() {
     return dispatch => {
-        dispatch({type: "USER_LOGOUT_REQUEST"});
+        dispatch({ type: "USER_LOGOUT_REQUEST" });
         axios
             .post("/logout")
             .then(() => {
@@ -47,20 +47,20 @@ export function userLogout() {
                 store.remove("user_info");
 
                 // send user logout event
-                dispatch({type: "USER_LOGOUT"});
+                dispatch({ type: "USER_LOGOUT" });
             })
             .catch(Logger.trace);
     };
 }
 
 export function userLoading() {
-    return {type: "USER_IS_LOADING"};
+    return { type: "USER_IS_LOADING" };
 }
 
 export function userNotLoading() {
-    return {type: "USER_IS_NOT_LOADING"};
+    return { type: "USER_IS_NOT_LOADING" };
 }
 
 export function userInitialCheck() {
-    return {type: "USER_INITIAL_CHECK"};
+    return { type: "USER_INITIAL_CHECK" };
 }

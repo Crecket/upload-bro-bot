@@ -64,7 +64,8 @@ module.exports = class OAuth2Client {
                 method: "POST",
                 data: {
                     client_id: process.env.ONEDRIVE_CLIENT_ID,
-                    redirect_uri: `${process.env.WEBSITE_URL}${process.env.ONEDRIVE_REDIRECT_URI}`,
+                    redirect_uri: `${process.env.WEBSITE_URL}${process.env
+                        .ONEDRIVE_REDIRECT_URI}`,
                     client_secret: process.env.ONEDRIVE_CLIENT_SECRET,
                     refresh_token: this._refresh_token,
                     grant_type: "refresh_token"
@@ -72,14 +73,14 @@ module.exports = class OAuth2Client {
             }
         );
         return tokens;
-    }
+    };
 
     /**
      * Gets a new access and refresh token using a code
      * @param code
      * @returns {Promise.<void>}
      */
-    getToken = async (code) => {
+    getToken = async code => {
         // we have a refresh token, attempt to get new tokens
         return await this.getResponse(
             `https://login.microsoftonline.com/common/oauth2/v2.0/token`,
@@ -87,14 +88,15 @@ module.exports = class OAuth2Client {
                 method: "POST",
                 data: {
                     client_id: process.env.ONEDRIVE_CLIENT_ID,
-                    redirect_uri: `${process.env.WEBSITE_URL}${process.env.ONEDRIVE_REDIRECT_URI}`,
+                    redirect_uri: `${process.env.WEBSITE_URL}${process.env
+                        .ONEDRIVE_REDIRECT_URI}`,
                     client_secret: process.env.ONEDRIVE_CLIENT_SECRET,
                     code: code,
                     grant_type: "refresh_token"
                 }
             }
         );
-    }
+    };
 
     /**
      * Does a request to the one drive api using our tokens

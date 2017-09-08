@@ -71,7 +71,7 @@ module.exports = (app, passport, uploadApp) => {
     });
 
     // handles the oauth callback
-    app.get("/login/google/callback", function (request, response) {
+    app.get("/login/google/callback", function(request, response) {
         var code = request.query.code;
 
         let resultRoute = "/new/google";
@@ -85,7 +85,7 @@ module.exports = (app, passport, uploadApp) => {
             GoogleHelper.createOauthClient()
                 .then(authclient => {
                     // get token using new code
-                    authclient.getToken(code, function (err, tokens) {
+                    authclient.getToken(code, function(err, tokens) {
                         if (err) {
                             response.redirect(resultRoute);
                             return;
@@ -119,10 +119,10 @@ module.exports = (app, passport, uploadApp) => {
                                     request.user.provider_sites.google,
                                     {
                                         avatar: user_information.user.photoLink,
-                                        display_name: user_information.user
-                                            .displayName,
-                                        email: user_information.user
-                                            .emailAddress
+                                        display_name:
+                                            user_information.user.displayName,
+                                        email:
+                                            user_information.user.emailAddress
                                     }
                                 );
 

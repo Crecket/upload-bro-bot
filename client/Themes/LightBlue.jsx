@@ -10,7 +10,7 @@ import {
     indigo700,
     white
 } from "material-ui/styles/colors";
-import {fade} from "material-ui/utils/colorManipulator";
+import { fade } from "material-ui/utils/colorManipulator";
 import spacing from "material-ui/styles/spacing";
 
 export default {

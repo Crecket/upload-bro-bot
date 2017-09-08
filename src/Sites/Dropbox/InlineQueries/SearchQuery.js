@@ -32,7 +32,8 @@ module.exports = class SearchQuery extends HelperInterface {
             if (!user_info) {
                 return {
                     options: {
-                        switch_pm_text: "It looks like you're not registered in our system.",
+                        switch_pm_text:
+                            "It looks like you're not registered in our system.",
                         switch_pm_parameter: "start"
                     }
                 };
@@ -41,7 +42,8 @@ module.exports = class SearchQuery extends HelperInterface {
             if (!user_info.provider_sites.dropbox) {
                 return {
                     options: {
-                        switch_pm_text: "Dropbox service not connected to your account",
+                        switch_pm_text:
+                            "Dropbox service not connected to your account",
                         switch_pm_parameter: "login"
                     }
                 };
@@ -75,7 +77,8 @@ module.exports = class SearchQuery extends HelperInterface {
                     title: file.meta_data.name,
                     url: shareUrl,
                     input_message_content: {
-                        message_text: `<a href="${shareUrl}">${file.meta_data.name}</a>`,
+                        message_text: `<a href="${shareUrl}">${file.meta_data
+                            .name}</a>`,
                         parse_mode: "HTML"
                     }
                 };

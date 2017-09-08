@@ -36,11 +36,13 @@ class FeatureList extends React.Component {
 
     renderFeature(key, icon, title, description) {
         return (
-            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3" key={key}
-                 style={styles.colwrapper}>
+            <div
+                className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+                key={key}
+                style={styles.colwrapper}
+            >
                 <Paper className="box" style={styles.box}>
                     <div className="row">
-
                         <div className="col-xs-12 col-sm-4">
                             <Center>
                                 {icon}
@@ -49,11 +51,12 @@ class FeatureList extends React.Component {
 
                         <div className="col-xs-12 col-sm-8">
                             <div className="box">
-                                <h3>{title}</h3>
+                                <h3>
+                                    {title}
+                                </h3>
                                 {description}
                             </div>
                         </div>
-
                     </div>
                 </Paper>
             </div>
@@ -69,22 +72,25 @@ class FeatureList extends React.Component {
         // list of features
         const featureList = [
             {
-                icon: <CloudUploadIcon style={iconStyle}/>,
+                icon: <CloudUploadIcon style={iconStyle} />,
                 title: "Instant upload",
-                description: "Upload files from the chat directly to other services."
+                description:
+                    "Upload files from the chat directly to other services."
             },
             {
-                icon: <SearchIcon style={iconStyle}/>,
+                icon: <SearchIcon style={iconStyle} />,
                 title: "Share files",
-                description: "Search for files and share them directly in Telegram."
+                description:
+                    "Search for files and share them directly in Telegram."
             },
             {
-                icon: <GroupIcon style={iconStyle}/>,
+                icon: <GroupIcon style={iconStyle} />,
                 title: "Works in groups",
-                description: "Just right click the file and forward it to UploadBro."
+                description:
+                    "Just right click the file and forward it to UploadBro."
             },
             {
-                icon: <DesktopWindowsIcon style={iconStyle}/>,
+                icon: <DesktopWindowsIcon style={iconStyle} />,
                 title: "All platforms",
                 description: "UploadBro supports all Telegram's platforms."
             }
@@ -104,9 +110,7 @@ class FeatureList extends React.Component {
                 <div className="row center-xs">
                     <div className="col-xs-12">
                         <Paper className="box">
-                            <TitleBar>
-                                Features
-                            </TitleBar>
+                            <TitleBar>Features</TitleBar>
                         </Paper>
                     </div>
                     {featureComponents}

@@ -1,6 +1,6 @@
-import {applyMiddleware, createStore} from "redux";
+import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
-import {createLogger} from "redux-logger";
+import { createLogger } from "redux-logger";
 // fetch all reducers as a bundle
 import reducer from "./Reducers/index.js";
 

@@ -28,10 +28,11 @@ export default class ProviderBlocks extends React.Component {
             let siteInfo = this.props.provider_sites[key];
 
             // fallback to empty list
-            let userSiteInfo = this.props.user_provider_sites &&
-            this.props.user_provider_sites[siteInfo.key]
-                ? this.props.user_provider_sites[siteInfo.key]
-                : false;
+            let userSiteInfo =
+                this.props.user_provider_sites &&
+                this.props.user_provider_sites[siteInfo.key]
+                    ? this.props.user_provider_sites[siteInfo.key]
+                    : false;
 
             // always add to the list
             finalBlocks.push(

@@ -74,23 +74,21 @@ module.exports = (app, passport, uploadApp) => {
         const CssAppStylesRequest = InlineCss("/assets/dist/css-app.css");
 
         Promise.all([PreRenderRequest, PushHandlerRequest, CssAppStylesRequest])
-            .then(([
-                PreRenderResults,
-                PushHandlerResult,
-                CssAppStylesResult
-            ]) => {
-                Logger.debug(new Date().getTime() - time.getTime());
+            .then(
+                ([PreRenderResults, PushHandlerResult, CssAppStylesResult]) => {
+                    Logger.debug(new Date().getTime() - time.getTime());
 
-                // set a cache header since we want to make sure this is up-to-date if the client
-                // does not have a cached version in the service worker
-                res.setHeader("Cache-Control", "max-age=0, no-cache");
+                    // set a cache header since we want to make sure this is up-to-date if the client
+                    // does not have a cached version in the service worker
+                    res.setHeader("Cache-Control", "max-age=0, no-cache");
 
-                // render the index page with the preRenderedHtml string
-                res.render("index", {
-                    appPreRender: PreRenderResults || "",
-                    appCss: CssAppStylesResult
-                });
-            })
+                    // render the index page with the preRenderedHtml string
+                    res.render("index", {
+                        appPreRender: PreRenderResults || "",
+                        appCss: CssAppStylesResult
+                    });
+                }
+            )
             // error fallback to rendering basic index page
             .catch(error => {
                 Logger.error(error);

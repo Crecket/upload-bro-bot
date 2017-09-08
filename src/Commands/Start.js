@@ -54,7 +54,7 @@ module.exports = class Start extends HelperInterface {
      * The description for this command
      * @returns {string}
      */
-    get description(){
+    get description() {
         return `Show the getting started information`;
     }
 

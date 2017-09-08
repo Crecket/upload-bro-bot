@@ -23,7 +23,9 @@ module.exports = class OneDrive extends SiteInteface {
     register() {
         if (this._register) {
             // register commands
-            this._UploadBro._QueryHandler.register(new UploadObj(this._UploadBro));
+            this._UploadBro._QueryHandler.register(
+                new UploadObj(this._UploadBro)
+            );
 
             // register commands
             this._UploadBro._CommandHandler.register(

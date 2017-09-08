@@ -48,7 +48,6 @@ describe("actions synchronous", () => {
                 expected
             );
         });
-
     });
 
     describe("sites", () => {
@@ -150,9 +149,7 @@ describe("actions synchronous", () => {
                     duration: 4000
                 }
             };
-            expect(snackbarActions.openSnackbar(message)).toEqual(
-                expected
-            );
+            expect(snackbarActions.openSnackbar(message)).toEqual(expected);
         });
     });
 });

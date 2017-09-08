@@ -62,9 +62,7 @@ export default class YoutubePreview extends React.Component {
         return (
             <div style={styles.wrapper}>
                 <Paper>
-                    <TitleBar>
-                        File upload preview
-                    </TitleBar>
+                    <TitleBar>File upload preview</TitleBar>
                     {VideoPreview}
                 </Paper>
             </div>

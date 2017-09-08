@@ -117,12 +117,13 @@ module.exports = class SiteHandler {
      * @returns {string}
      */
     generateDocumentation(site) {
-        let supportedFeatures = site.supportedFeatures.length > 0
-            ? `### Supported features\n\n` +
+        let supportedFeatures =
+            site.supportedFeatures.length > 0
+                ? `### Supported features\n\n` +
                   site.supportedFeatures
                       .map(type => FeatureLookup[type])
                       .join("\n")
-            : "";
+                : "";
 
         return `## ${site.title}\n${supportedFeatures}`;
     }

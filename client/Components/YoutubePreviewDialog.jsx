@@ -36,7 +36,7 @@ export default class YoutubePreview extends React.Component {
                 open={true}
             >
                 <div className="fluidMedia">
-                    <YouTube videoId="FsN-6xlfoz4" opts={opts}/>
+                    <YouTube videoId="FsN-6xlfoz4" opts={opts} />
                 </div>
             </Dialog>
         );
