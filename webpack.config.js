@@ -8,6 +8,7 @@ const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin;
+const CommonShake = require("webpack-common-shake").Plugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 // custom extension
@@ -32,7 +33,7 @@ let config = {
             SRC_DIR + "/react-app.jsx" // actual app
         ],
         // App css code
-        "css-app": SRC_DIR + "/css-app.js",
+        "css-app": SRC_DIR + "/css-app.js"
         // Service worker registration
         // "sw-register": SRC_DIR + "/Plugins/ServiceWorkerRegistration.js"
     },
@@ -159,6 +160,15 @@ if (!DEV) {
             cssProcessor: require("cssnano"),
             cssProcessorOptions: { discardComments: { removeAll: true } },
             canPrint: true
+        })
+    );
+    // remove unused variables within code
+    config.plugins.push(
+        new CommonShake({
+            warnings: {
+                global: true,
+                module: false
+            }
         })
     );
 } else {
