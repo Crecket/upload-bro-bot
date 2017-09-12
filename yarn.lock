@@ -1673,6 +1673,14 @@ commander@2.11.x, commander@^2.11.0, commander@^2.3.0, commander@^2.9.0, command
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
 
+common-shake@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/common-shake/-/common-shake-2.0.2.tgz#2c016fa2aa36c6461afdde5cb7605c77ccbb855f"
+  dependencies:
+    acorn "^5.1.1"
+    debug "^2.6.8"
+    escope "^3.6.0"
+
 commondir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
@@ -7326,6 +7334,15 @@ webpack-bundle-analyzer@^2.3.1:
     opener "^1.4.3"
     ws "^2.3.1"
 
+webpack-common-shake@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/webpack-common-shake/-/webpack-common-shake-1.5.3.tgz#d239321a71a2d5128e5fb871616ce340db729bbb"
+  dependencies:
+    acorn "^5.1.1"
+    common-shake "^2.0.2"
+    webpack "^3.1.0"
+    webpack-sources "^1.0.1"
+
 webpack-sources@^0.1.0:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-0.1.5.tgz#aa1f3abf0f0d74db7111c40e500b84f966640750"
@@ -7340,7 +7357,7 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@^3.0.0:
+webpack@^3.0.0, webpack@^3.1.0:
   version "3.5.6"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.5.6.tgz#a492fb6c1ed7f573816f90e00c8fbb5a20cc5c36"
   dependencies:
