@@ -1,0 +1,1933 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Home /> matches snapshot 1`] = `
+<div>
+  <div
+    style={
+      Object {
+        "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+        "alignContent": "center",
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "borderRadius": 2,
+        "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+        "boxSizing": "border-box",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "display": "flex",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "fontFamily": "Roboto, sans-serif",
+        "justifyContent": "center",
+        "minHeight": 200,
+        "muiPrepared": true,
+        "textAlign": "center",
+        "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+      }
+    }
+  >
+    <div
+      className={undefined}
+      style={
+        Object {
+          "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+          "backgroundColor": "#ffffff",
+          "borderRadius": 2,
+          "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+          "boxSizing": "border-box",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "display": "inline-block",
+          "fontFamily": "Roboto, sans-serif",
+          "minWidth": 88,
+          "muiPrepared": true,
+          "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+        }
+      }
+    >
+      <button
+        aria-label="Login to UploadBro using Telegram"
+        disabled={false}
+        href={undefined}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        onTouchTap={[Function]}
+        style={
+          Object {
+            "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+            "backgroundColor": "#3f51b5",
+            "border": 10,
+            "borderRadius": 2,
+            "boxSizing": "border-box",
+            "cursor": "pointer",
+            "display": "inline-block",
+            "fontFamily": "Roboto, sans-serif",
+            "fontSize": "inherit",
+            "fontWeight": "inherit",
+            "height": 36,
+            "lineHeight": "36px",
+            "margin": 0,
+            "muiPrepared": true,
+            "outline": "none",
+            "padding": 0,
+            "position": "relative",
+            "textAlign": "center",
+            "textDecoration": "none",
+            "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+            "verticalAlign": null,
+            "width": "100%",
+            "zIndex": 1,
+          }
+        }
+        tabIndex={0}
+        type="button"
+      >
+        <div
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+        >
+          <div
+            style={
+              Object {
+                "backgroundColor": false,
+                "borderRadius": 2,
+                "height": 36,
+                "muiPrepared": true,
+                "top": 0,
+                "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              }
+            }
+          >
+            <span
+              style={
+                Object {
+                  "color": "#ffffff",
+                  "fontSize": 14,
+                  "fontWeight": 500,
+                  "letterSpacing": 0,
+                  "margin": 0,
+                  "muiPrepared": true,
+                  "opacity": 1,
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "position": "relative",
+                  "textTransform": "uppercase",
+                  "userSelect": "none",
+                }
+              }
+            >
+              Login with Telegram
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "marginTop": 30,
+      }
+    }
+  >
+    <div
+      className="row center-xs"
+    >
+      <div
+        className="col-xs-12"
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "muiPrepared": true,
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+            }
+          }
+        >
+          <div
+            className="row center-xs"
+          >
+            <h1>
+              Features
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 10,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+          >
+            <div
+              className="col-xs-12 col-sm-4"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "display": "flex",
+                    "height": "100%",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "#303f9f",
+                      "display": "inline-block",
+                      "fill": "currentColor",
+                      "height": 60,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 60,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  Instant upload
+                </h3>
+                Upload files from the chat directly to other services.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 10,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+          >
+            <div
+              className="col-xs-12 col-sm-4"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "display": "flex",
+                    "height": "100%",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "#303f9f",
+                      "display": "inline-block",
+                      "fill": "currentColor",
+                      "height": 60,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 60,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  Share files
+                </h3>
+                Search for files and share them directly in Telegram.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 10,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+          >
+            <div
+              className="col-xs-12 col-sm-4"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "display": "flex",
+                    "height": "100%",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "#303f9f",
+                      "display": "inline-block",
+                      "fill": "currentColor",
+                      "height": 60,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 60,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  Works in groups
+                </h3>
+                Just right click the file and forward it to UploadBro.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 10,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+          >
+            <div
+              className="col-xs-12 col-sm-4"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "display": "flex",
+                    "height": "100%",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "#303f9f",
+                      "display": "inline-block",
+                      "fill": "currentColor",
+                      "height": 60,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 60,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  All platforms
+                </h3>
+                UploadBro supports all Telegram's platforms.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "marginTop": 10,
+      }
+    }
+  >
+    <div
+      className="row center-xs"
+    >
+      <div
+        className="col-xs-12"
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "muiPrepared": true,
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+            }
+          }
+        >
+          <div
+            className="row center-xs"
+          >
+            <h1>
+              Supported Services
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 5,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+            style={
+              Object {
+                "alignItems": "center",
+                "height": "100%",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <img
+              alt="Box logo"
+              src="/assets/img/box.svg"
+              style={
+                Object {
+                  "height": 90,
+                }
+              }
+            />
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  Box
+                </h3>
+                Secure File Sharing, Storage, and Collaboration
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 5,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+            style={
+              Object {
+                "alignItems": "center",
+                "height": "100%",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <img
+              alt="Dropbox logo"
+              src="/assets/img/dropbox.svg"
+              style={
+                Object {
+                  "height": 90,
+                }
+              }
+            />
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  Dropbox
+                </h3>
+                Securely Share, Sync & Collaborate.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 5,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+            style={
+              Object {
+                "alignItems": "center",
+                "height": "100%",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <img
+              alt="Google logo"
+              src="/assets/img/google.svg"
+              style={
+                Object {
+                  "height": 90,
+                }
+              }
+            />
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  Google Drive
+                </h3>
+                Cloud Storage & File Backup for Photos, Docs & More
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 5,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+            style={
+              Object {
+                "alignItems": "center",
+                "height": "100%",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <img
+              alt="Imgur logo"
+              src="/assets/img/imgur.svg"
+              style={
+                Object {
+                  "height": 90,
+                }
+              }
+            />
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  Imgur
+                </h3>
+                The most awesome images on the Internet
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "marginTop": 30,
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+          "backgroundColor": "#ffffff",
+          "borderRadius": 2,
+          "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+          "boxSizing": "border-box",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "fontFamily": "Roboto, sans-serif",
+          "muiPrepared": true,
+          "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+        }
+      }
+    >
+      <div
+        className="row center-xs"
+      >
+        <h1>
+          File upload preview
+        </h1>
+      </div>
+      <div
+        style={
+          Object {
+            "minHeight": 120,
+          }
+        }
+      >
+        <div
+          className={undefined}
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "transparent",
+              "borderRadius": "50%",
+              "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
+         0 3px 10px rgba(0, 0, 0, 0.23)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "display": "inline-block",
+              "fontFamily": "Roboto, sans-serif",
+              "muiPrepared": true,
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+            }
+          }
+        >
+          <button
+            aria-label="Display a youtube video preview"
+            disabled={false}
+            href={undefined}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchStart={[Function]}
+            onTouchTap={[Function]}
+            style={
+              Object {
+                "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+                "backgroundColor": "#3f51b5",
+                "border": 10,
+                "borderRadius": "50%",
+                "boxSizing": "border-box",
+                "cursor": "pointer",
+                "display": "inline-block",
+                "fontFamily": "Roboto, sans-serif",
+                "fontSize": "inherit",
+                "fontWeight": "inherit",
+                "height": 56,
+                "margin": 0,
+                "muiPrepared": true,
+                "outline": "none",
+                "overflow": "hidden",
+                "padding": 0,
+                "position": "relative",
+                "textAlign": "center",
+                "textDecoration": "none",
+                "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                "verticalAlign": "bottom",
+                "width": 56,
+                "zIndex": 1,
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            <div
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+            >
+              <div
+                style={
+                  Object {
+                    "muiPrepared": true,
+                    "top": 0,
+                    "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  onTouchTap={[Function]}
+                  style={
+                    Object {
+                      "color": "#ffffff",
+                      "display": "inline-block",
+                      "fill": "#ffffff",
+                      "height": 56,
+                      "lineHeight": "56px",
+                      "minWidth": 40,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 24,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 5v14l11-7z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row center-xs"
+  >
+    <div
+      className="col-xs-12 col-sm-6"
+    >
+      <div
+        className="box"
+      >
+        <br />
+        <a
+          href="https://telegram.me/uploadbro_bot"
+          rel="noopener"
+          target="_blank"
+        >
+          <div
+            className={undefined}
+            style={
+              Object {
+                "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+                "backgroundColor": "#ffffff",
+                "borderRadius": 2,
+                "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+                "boxSizing": "border-box",
+                "color": "rgba(0, 0, 0, 0.87)",
+                "display": "inline-block",
+                "fontFamily": "Roboto, sans-serif",
+                "minWidth": 88,
+                "muiPrepared": true,
+                "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              }
+            }
+          >
+            <button
+              aria-label="Message uploadbro on telegram"
+              disabled={false}
+              href={undefined}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+              onTouchTap={[Function]}
+              style={
+                Object {
+                  "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+                  "backgroundColor": "#ffffff",
+                  "border": 10,
+                  "borderRadius": 2,
+                  "boxSizing": "border-box",
+                  "cursor": "pointer",
+                  "display": "inline-block",
+                  "fontFamily": "Roboto, sans-serif",
+                  "fontSize": "inherit",
+                  "fontWeight": "inherit",
+                  "height": 36,
+                  "lineHeight": "36px",
+                  "margin": 0,
+                  "muiPrepared": true,
+                  "outline": "none",
+                  "padding": 0,
+                  "position": "relative",
+                  "textAlign": "center",
+                  "textDecoration": "none",
+                  "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                  "verticalAlign": null,
+                  "width": "100%",
+                  "zIndex": 1,
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              <div
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
+              >
+                <div
+                  style={
+                    Object {
+                      "backgroundColor": false,
+                      "borderRadius": 2,
+                      "height": 36,
+                      "muiPrepared": true,
+                      "top": 0,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                    }
+                  }
+                >
+                  <img
+                    alt="Telegram icon"
+                    color="rgba(0, 0, 0, 0.87)"
+                    src="/assets/img/telegram.svg"
+                    style={
+                      Object {
+                        "marginLeft": 12,
+                        "marginRight": 0,
+                        "verticalAlign": "middle",
+                        "width": 32,
+                      }
+                    }
+                  />
+                  <span
+                    style={
+                      Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontSize": 14,
+                        "fontWeight": 500,
+                        "letterSpacing": 0,
+                        "margin": 0,
+                        "muiPrepared": true,
+                        "opacity": 1,
+                        "paddingLeft": 8,
+                        "paddingRight": 16,
+                        "position": "relative",
+                        "textTransform": "uppercase",
+                        "userSelect": "none",
+                      }
+                    }
+                  >
+                    message uploadbro
+                  </span>
+                </div>
+              </div>
+            </button>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Home /> matches snapshot without sites 1`] = `
+<div>
+  <div
+    style={
+      Object {
+        "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+        "alignContent": "center",
+        "alignItems": "center",
+        "backgroundColor": "#ffffff",
+        "borderRadius": 2,
+        "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+        "boxSizing": "border-box",
+        "color": "rgba(0, 0, 0, 0.87)",
+        "display": "flex",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "fontFamily": "Roboto, sans-serif",
+        "justifyContent": "center",
+        "minHeight": 200,
+        "muiPrepared": true,
+        "textAlign": "center",
+        "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+      }
+    }
+  >
+    <div
+      className={undefined}
+      style={
+        Object {
+          "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+          "backgroundColor": "#ffffff",
+          "borderRadius": 2,
+          "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+          "boxSizing": "border-box",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "display": "inline-block",
+          "fontFamily": "Roboto, sans-serif",
+          "minWidth": 88,
+          "muiPrepared": true,
+          "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+        }
+      }
+    >
+      <button
+        aria-label="Login to UploadBro using Telegram"
+        disabled={false}
+        href={undefined}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchStart={[Function]}
+        onTouchTap={[Function]}
+        style={
+          Object {
+            "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+            "backgroundColor": "#3f51b5",
+            "border": 10,
+            "borderRadius": 2,
+            "boxSizing": "border-box",
+            "cursor": "pointer",
+            "display": "inline-block",
+            "fontFamily": "Roboto, sans-serif",
+            "fontSize": "inherit",
+            "fontWeight": "inherit",
+            "height": 36,
+            "lineHeight": "36px",
+            "margin": 0,
+            "muiPrepared": true,
+            "outline": "none",
+            "padding": 0,
+            "position": "relative",
+            "textAlign": "center",
+            "textDecoration": "none",
+            "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+            "verticalAlign": null,
+            "width": "100%",
+            "zIndex": 1,
+          }
+        }
+        tabIndex={0}
+        type="button"
+      >
+        <div
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchStart={[Function]}
+        >
+          <div
+            style={
+              Object {
+                "backgroundColor": false,
+                "borderRadius": 2,
+                "height": 36,
+                "muiPrepared": true,
+                "top": 0,
+                "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              }
+            }
+          >
+            <span
+              style={
+                Object {
+                  "color": "#ffffff",
+                  "fontSize": 14,
+                  "fontWeight": 500,
+                  "letterSpacing": 0,
+                  "margin": 0,
+                  "muiPrepared": true,
+                  "opacity": 1,
+                  "paddingLeft": 16,
+                  "paddingRight": 16,
+                  "position": "relative",
+                  "textTransform": "uppercase",
+                  "userSelect": "none",
+                }
+              }
+            >
+              Login with Telegram
+            </span>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "marginTop": 30,
+      }
+    }
+  >
+    <div
+      className="row center-xs"
+    >
+      <div
+        className="col-xs-12"
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "muiPrepared": true,
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+            }
+          }
+        >
+          <div
+            className="row center-xs"
+          >
+            <h1>
+              Features
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 10,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+          >
+            <div
+              className="col-xs-12 col-sm-4"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "display": "flex",
+                    "height": "100%",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "#303f9f",
+                      "display": "inline-block",
+                      "fill": "currentColor",
+                      "height": 60,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 60,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  Instant upload
+                </h3>
+                Upload files from the chat directly to other services.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 10,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+          >
+            <div
+              className="col-xs-12 col-sm-4"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "display": "flex",
+                    "height": "100%",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "#303f9f",
+                      "display": "inline-block",
+                      "fill": "currentColor",
+                      "height": 60,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 60,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  Share files
+                </h3>
+                Search for files and share them directly in Telegram.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 10,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+          >
+            <div
+              className="col-xs-12 col-sm-4"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "display": "flex",
+                    "height": "100%",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "#303f9f",
+                      "display": "inline-block",
+                      "fill": "currentColor",
+                      "height": 60,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 60,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  Works in groups
+                </h3>
+                Just right click the file and forward it to UploadBro.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-xs-12 col-sm-6 col-md-4 col-lg-3"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "marginTop": 10,
+              "muiPrepared": true,
+              "padding": 5,
+              "textAlign": "center",
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              "width": "100%",
+            }
+          }
+        >
+          <div
+            className="row"
+          >
+            <div
+              className="col-xs-12 col-sm-4"
+            >
+              <div
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "display": "flex",
+                    "height": "100%",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  style={
+                    Object {
+                      "color": "#303f9f",
+                      "display": "inline-block",
+                      "fill": "currentColor",
+                      "height": 60,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 60,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M21 2H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H3V4h18v12z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              className="col-xs-12 col-sm-8"
+            >
+              <div
+                className="box"
+              >
+                <h3>
+                  All platforms
+                </h3>
+                UploadBro supports all Telegram's platforms.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "marginTop": 10,
+      }
+    }
+  >
+    <div
+      className="row center-xs"
+    >
+      <div
+        className="col-xs-12"
+      >
+        <div
+          className="box"
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "#ffffff",
+              "borderRadius": 2,
+              "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "fontFamily": "Roboto, sans-serif",
+              "muiPrepared": true,
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+            }
+          }
+        >
+          <div
+            className="row center-xs"
+          >
+            <h1>
+              Supported Services
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style={
+      Object {
+        "marginTop": 30,
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+          "backgroundColor": "#ffffff",
+          "borderRadius": 2,
+          "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+          "boxSizing": "border-box",
+          "color": "rgba(0, 0, 0, 0.87)",
+          "fontFamily": "Roboto, sans-serif",
+          "muiPrepared": true,
+          "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+        }
+      }
+    >
+      <div
+        className="row center-xs"
+      >
+        <h1>
+          File upload preview
+        </h1>
+      </div>
+      <div
+        style={
+          Object {
+            "minHeight": 120,
+          }
+        }
+      >
+        <div
+          className={undefined}
+          style={
+            Object {
+              "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+              "backgroundColor": "transparent",
+              "borderRadius": "50%",
+              "boxShadow": "0 3px 10px rgba(0, 0, 0, 0.16),
+         0 3px 10px rgba(0, 0, 0, 0.23)",
+              "boxSizing": "border-box",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "display": "inline-block",
+              "fontFamily": "Roboto, sans-serif",
+              "muiPrepared": true,
+              "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+            }
+          }
+        >
+          <button
+            aria-label="Display a youtube video preview"
+            disabled={false}
+            href={undefined}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchStart={[Function]}
+            onTouchTap={[Function]}
+            style={
+              Object {
+                "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+                "backgroundColor": "#3f51b5",
+                "border": 10,
+                "borderRadius": "50%",
+                "boxSizing": "border-box",
+                "cursor": "pointer",
+                "display": "inline-block",
+                "fontFamily": "Roboto, sans-serif",
+                "fontSize": "inherit",
+                "fontWeight": "inherit",
+                "height": 56,
+                "margin": 0,
+                "muiPrepared": true,
+                "outline": "none",
+                "overflow": "hidden",
+                "padding": 0,
+                "position": "relative",
+                "textAlign": "center",
+                "textDecoration": "none",
+                "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                "verticalAlign": "bottom",
+                "width": 56,
+                "zIndex": 1,
+              }
+            }
+            tabIndex={0}
+            type="button"
+          >
+            <div
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+            >
+              <div
+                style={
+                  Object {
+                    "muiPrepared": true,
+                    "top": 0,
+                    "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                  }
+                }
+              >
+                <svg
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  onTouchTap={[Function]}
+                  style={
+                    Object {
+                      "color": "#ffffff",
+                      "display": "inline-block",
+                      "fill": "#ffffff",
+                      "height": 56,
+                      "lineHeight": "56px",
+                      "minWidth": 40,
+                      "muiPrepared": true,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                      "userSelect": "none",
+                      "width": 24,
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 5v14l11-7z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="row center-xs"
+  >
+    <div
+      className="col-xs-12 col-sm-6"
+    >
+      <div
+        className="box"
+      >
+        <br />
+        <a
+          href="https://telegram.me/uploadbro_bot"
+          rel="noopener"
+          target="_blank"
+        >
+          <div
+            className={undefined}
+            style={
+              Object {
+                "WebkitTapHighlightColor": "rgba(0,0,0,0)",
+                "backgroundColor": "#ffffff",
+                "borderRadius": 2,
+                "boxShadow": "0 1px 6px rgba(0, 0, 0, 0.12),
+         0 1px 4px rgba(0, 0, 0, 0.12)",
+                "boxSizing": "border-box",
+                "color": "rgba(0, 0, 0, 0.87)",
+                "display": "inline-block",
+                "fontFamily": "Roboto, sans-serif",
+                "minWidth": 88,
+                "muiPrepared": true,
+                "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+              }
+            }
+          >
+            <button
+              aria-label="Message uploadbro on telegram"
+              disabled={false}
+              href={undefined}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+              onTouchTap={[Function]}
+              style={
+                Object {
+                  "WebkitTapHighlightColor": "rgba(0, 0, 0, 0)",
+                  "backgroundColor": "#ffffff",
+                  "border": 10,
+                  "borderRadius": 2,
+                  "boxSizing": "border-box",
+                  "cursor": "pointer",
+                  "display": "inline-block",
+                  "fontFamily": "Roboto, sans-serif",
+                  "fontSize": "inherit",
+                  "fontWeight": "inherit",
+                  "height": 36,
+                  "lineHeight": "36px",
+                  "margin": 0,
+                  "muiPrepared": true,
+                  "outline": "none",
+                  "padding": 0,
+                  "position": "relative",
+                  "textAlign": "center",
+                  "textDecoration": "none",
+                  "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                  "verticalAlign": null,
+                  "width": "100%",
+                  "zIndex": 1,
+                }
+              }
+              tabIndex={0}
+              type="button"
+            >
+              <div
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
+              >
+                <div
+                  style={
+                    Object {
+                      "backgroundColor": false,
+                      "borderRadius": 2,
+                      "height": 36,
+                      "muiPrepared": true,
+                      "top": 0,
+                      "transition": "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms",
+                    }
+                  }
+                >
+                  <img
+                    alt="Telegram icon"
+                    color="rgba(0, 0, 0, 0.87)"
+                    src="/assets/img/telegram.svg"
+                    style={
+                      Object {
+                        "marginLeft": 12,
+                        "marginRight": 0,
+                        "verticalAlign": "middle",
+                        "width": 32,
+                      }
+                    }
+                  />
+                  <span
+                    style={
+                      Object {
+                        "color": "rgba(0, 0, 0, 0.87)",
+                        "fontSize": 14,
+                        "fontWeight": 500,
+                        "letterSpacing": 0,
+                        "margin": 0,
+                        "muiPrepared": true,
+                        "opacity": 1,
+                        "paddingLeft": 8,
+                        "paddingRight": 16,
+                        "position": "relative",
+                        "textTransform": "uppercase",
+                        "userSelect": "none",
+                      }
+                    }
+                  >
+                    message uploadbro
+                  </span>
+                </div>
+              </div>
+            </button>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
