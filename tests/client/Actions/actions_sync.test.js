@@ -1,9 +1,9 @@
 jest.mock("store");
 
-import * as sitesActions from "../../../client/actions/sites";
-import * as userActions from "../../../client/actions/user";
-import * as modalActions from "../../../client/actions/modal";
-import * as snackbarActions from "../../../client/actions/snackbar";
+import * as sitesActions from "../../../client/Actions/sites";
+import * as userActions from "../../../client/Actions/user";
+import * as modalActions from "../../../client/Actions/modal";
+import * as snackbarActions from "../../../client/Actions/snackbar";
 
 describe("actions synchronous", () => {
     describe("user", () => {

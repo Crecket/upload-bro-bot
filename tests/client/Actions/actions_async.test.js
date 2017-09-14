@@ -3,8 +3,8 @@ import React from "react";
 import moxios from "moxios";
 import MockStore from "../../MockStore";
 
-import * as sitesActions from "../../../client/actions/sites";
-import * as userActions from "../../../client/actions/user";
+import * as sitesActions from "../../../client/Actions/sites";
+import * as userActions from "../../../client/Actions/user";
 
 describe("actions asynchronous", () => {
     beforeEach(() => {
