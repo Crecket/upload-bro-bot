@@ -8,7 +8,6 @@ const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin;
-const CommonShake = require("webpack-common-shake").Plugin;
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 // custom extension
@@ -160,15 +159,6 @@ if (!DEV) {
             cssProcessor: require("cssnano"),
             cssProcessorOptions: { discardComments: { removeAll: true } },
             canPrint: true
-        })
-    );
-    // remove unused variables within code
-    config.plugins.push(
-        new CommonShake({
-            warnings: {
-                global: true,
-                module: false
-            }
         })
     );
 } else {

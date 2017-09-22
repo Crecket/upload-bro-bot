@@ -220,7 +220,15 @@ module.exports = function(UploadBro) {
     app.use(passport.session());
 
     // security headers
-    app.use(helmet());
+    app.use(
+        helmet({
+            hsts: {
+                maxAge: 31536000,
+                includeSubDomains: true,
+                preload: true
+            }
+        })
+    );
 
     // csurf for csrf values and a simple helper middleware
     // app.use(csurf({cookie: true}));
