@@ -1,6 +1,7 @@
 import { applyMiddleware, createStore } from "redux";
-import thunk from "redux-thunk";
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { createLogger } from "redux-logger";
+import thunk from "redux-thunk";
 // fetch all reducers as a bundle
 import reducer from "./Reducers/index.js";
 
@@ -22,5 +23,5 @@ if (process.env.DEBUG === true) {
 
 //return the store
 export default (initialValues = {}) => {
-    return createStore(reducer, initialValues, middleware);
+    return createStore(reducer, initialValues, composeWithDevTools(middleware));
 };

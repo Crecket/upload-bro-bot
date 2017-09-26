@@ -5,7 +5,6 @@ import { withRouter } from "react-router";
 import Dialog from "material-ui/Dialog";
 import Snackbar from "material-ui/Snackbar";
 import FlatButton from "material-ui/FlatButton";
-import Perf from "react-addons-perf";
 // custom components
 import MainAppbar from "./MainAppbar";
 // Themes

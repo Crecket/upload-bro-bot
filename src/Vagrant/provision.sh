@@ -40,4 +40,5 @@
     echo -e "Starting pm2 in dev mode..."
         sudo npm run pm2:dev --prefix /var/www/upload-bro-bot
     echo -e "= Running pm2 startup command"
+        sudo pm2 save
         sudo pm2 startup
