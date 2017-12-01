@@ -12,9 +12,10 @@ cp .env.example .env
 npm run build
 vagrant up
 ```
-2. Enter the correct keys in the env file for all the providers.
+2. Enter the correct keys in the env file for all the providers in the environment file.
 3. Setup SFTP to sync your this project folder to the `/var/www/upload-bro-bot` folder on the vagrant box (IP: 192.168.33.10)
-4. Add `uploadbro.local.dev` to your hostfile and ensure the ssl certificates in `src/Vagrant/tls` are trusted by the browser
+4. Add `uploadbro.local.dev` to your hostfile if you don't have [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater) installed
+5. Optionally you can trust the ssl certificates in `src/Vagrant/tls` to prevent ssl errors or create your own
 
 ## Development
 Development is done by running the vagrant box and building the files on your local project folder.
